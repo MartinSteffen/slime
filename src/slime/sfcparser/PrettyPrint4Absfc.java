@@ -3,7 +3,7 @@
  * Pretty printer for abstract SFC trees {@link slime.absfc.SFCabtree}
  * @author Initially provided by Karsten Stahl. <br>
  * @author modified for SFCabtree by Marco Wendel. <br>
- * @version $Id: PrettyPrint4Absfc.java,v 1.1 2002-06-28 20:01:08 swprakt Exp $
+ * @version $Id: PrettyPrint4Absfc.java,v 1.2 2002-07-02 12:29:48 swprakt Exp $
  */
 
 package slime.sfcparser;
@@ -106,15 +106,17 @@ public class PrettyPrint4Absfc {
 	System.out.println(whiteSpace(column) + "[Statements] ");
 	for (Iterator i = sfcabtree.stmtlist.iterator(); i.hasNext();)
 	    pp_long.print((Absynt)i.next());
-	System.out.println(whiteSpace(column) + "[Processes] ");
+	/* 
+	   System.out.println(whiteSpace(column) + "[Processes] ");
 	for (Iterator i = sfcabtree.proclist.iterator(); i.hasNext();)
 	    prettyprint.print((slime.absynt.absfc.Process)i.next());
 	System.out.println(whiteSpace(column) + "[VariableList] ");
-	for (Iterator i = sfcabtree.varlist.iterator(); i.hasNext();)
+       	  for (Iterator i = sfcabtree.varlist.iterator(); i.hasNext();)
 	    prettyprint.print((Variable)i.next());
 	System.out.println(whiteSpace(column) + "[DeclarationList] ");
 	for (Iterator i = sfcabtree.declist.iterator(); i.hasNext();)
 	    prettyprint.print((Declaration)i.next());
+	*/
     }
     
     private void output(StmtIf ifstmt){

@@ -4,11 +4,14 @@
  * converts a given {@link slime.absfc.SFCabtree} to<br>
  * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.5 2002-06-28 20:30:49 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.6 2002-07-02 12:29:47 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
+ * Revision 1.5  2002/06/28 20:30:49  swprakt
+ * updated package information
+ *
  * Revision 1.4  2002/06/28 15:04:55  swprakt<br>
  * Thanks for removing the entry ./sfcparser<br>
  * and forgetting ./editor/resources/images.<br>
@@ -124,15 +127,17 @@ public class Absfc2SFCConverter {
      * <b>convertTree</b>
      * runs 2 phases on the given SFCabtree:<br>
      * 1. gather all processes and write their steps/transitions - their <br>
-     *    sfc information to the {@link slime.absynt.absfc.Process} data <br>
-     *    {@link slime.absynt.absfc.Process.internalStepList}, <br>
-     *    {@link slime.absynt.absfc.Process.internalTransitionList}, <br>
-     *    {@link slime.absynt.absfc.Process.internalActionList}, <br>
-     *    {@link slime.absynt.absfc.Process.internalDeclarationList} and <br>
-     *    in a later version to {@link slime.absynt.absfc.Process.internalProcessList} <br>
+     *    sfc information to the
+     * @see slime.absynt.absfc.Process data <br>
+     * @see slime.absynt.absfc.Process.internalStepList, <br>
+     * @see slime.absynt.absfc.Process.internalTransitionList, <br>
+     * @see slime.absynt.absfc.Process.internalActionList, <br>
+     * @see slime.absynt.absfc.Process.internalDeclarationList and <br>
+     *    in a later version to 
+     * @see slime.absynt.absfc.Process.internalProcessList <br>
      * 2. process the whole SFCabtree and link the process-sfc-parts to the
      *    whole generated program-sfc. <br>
-     * it then return the generated {@link slime.absynt.SFC}.
+     * it then return the generated @see slime.absynt.SFC.
      * @author initially provided by Marco Wendel<br>
      * @version 1.1 should be running good<br>
      * @param slime.absynt.absfc.SFCabtree srctree the input meta-tree to convert<br>
@@ -475,13 +480,19 @@ public class Absfc2SFCConverter {
 	    LinkedList              targetStepList   = new LinkedList();
 	    slime.absynt.Transition transition       = null;
 	    /** add Assignment to actionlist */
+	    System.out.println("next: adding assignment to sap-list for action.");
 	    actionlist.add( lass ); 
 	    /** create new action */
+	    System.out.println("next: creating new action with number "+actionCounter+".");
 	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
 	    /** increase actioncounter */
+	    System.out.println("next: increasing actionCounter.");
 	    actionCounter++;
+	    System.out.println("next: adding new action to myActionlist.");
+	    myActionList.add( lact );
 	    outeractionlist.add( lact );
 	    /** create new targetstep */
+	    System.out.println("next: creating new step with actionlist.");
 	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
 	    /** increase stepcounter */
 	    myStepList.add( targetStep );	    
@@ -566,6 +577,8 @@ public class Absfc2SFCConverter {
 	    actionlist.add( ldecl ); // add Declaration to actionlist
 	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
 	    actionCounter++;
+	    System.out.println("next: adding new action to myActionlist.");
+	    myActionList.add( lact );
 	    outeractionlist.add( lact );
 	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
 	    stepCounter++; // increase stepCounter
@@ -624,6 +637,7 @@ public class Absfc2SFCConverter {
 	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
 	    actionCounter++;
 	    outeractionlist.add( lact );
+	    myActionList.add( lact );
 	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
 	    stepCounter++;
 	    sourceStep = (slime.absynt.Step)lastStartStep;
@@ -681,6 +695,7 @@ public class Absfc2SFCConverter {
 	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
 	    actionCounter++;
 	    outeractionlist.add( lact );
+	    myActionList.add( lact );
 	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
 	    stepCounter++;
 	    sourceStep = (slime.absynt.Step)lastStartStep;

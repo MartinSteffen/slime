@@ -4,10 +4,13 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.11 2002-06-28 20:30:50 swprakt Exp $
+    * $Id: SFC.lex,v 1.12 2002-07-02 12:29:48 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.11  2002/06/28 20:30:50  swprakt
+   /* updated package information
+   /*
    /* Revision 1.10  2002/06/28 20:01:08  swprakt
    /* Modified PrettyPrint for use with slime.absfc.SFCabtree,
    /* may now use it to debug Absfc2SFCConverter. I will try
@@ -70,6 +73,7 @@ import java_cup.runtime.Symbol;
     * %line	-	yyline() contains the current line in src-file
     * %function - 	use instead of next_Token()
     * %notunix	-	does not care about ^M :) (skips \r)
+    * %ignorecase
     * %init{
     * %init}
     * %yy_eof
@@ -82,7 +86,6 @@ import java_cup.runtime.Symbol;
 %implements java_cup.runtime.Scanner
 %function next_token
 %notunix
-%ignorecase
 %full
 %public
 %eofval{
@@ -96,7 +99,7 @@ c1      = ("//".*)
 c2      = ("/*".*"*/")
 c3      = ("(*".*"*)")
 comment	= ({c1}|{c2}|{c3})
-space	= [\ \r\t\f\n\b\015\012]+
+space	= [\ \r\t\f\n\b]+
 alpha   = [A-Za-z]
 extra   = ( "!" | "$" | "%" | "/" | "(" | ")" | "=" | "?" | "[" | "]" | "{" | "}" | "\" | "_" | "." | ":" | ";" | "#" | "*" )
 letter	= ({alpha}|"_")
@@ -118,23 +121,6 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "}"        {return new Symbol(slime.sfcparser.SFCSymbols.RPSET); 	/* */}
 "("        {return new Symbol(slime.sfcparser.SFCSymbols.LPAREN); 	/* */}
 ")"        {return new Symbol(slime.sfcparser.SFCSymbols.RPAREN); 	/* */}
-"SFC"      {return new Symbol(slime.sfcparser.SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
-"input"    {return new Symbol(slime.sfcparser.SFCSymbols.INPUT); 	/* syntax !? */}
-"output"   {return new Symbol(slime.sfcparser.SFCSymbols.OUTPUT); 	/* syntax !? */}
-"split"    {return new Symbol(slime.sfcparser.SFCSymbols.SPLIT); 	/* */}
-"join"     {return new Symbol(slime.sfcparser.SFCSymbols.JOIN); 	/* */}
-"process"  {return new Symbol(slime.sfcparser.SFCSymbols.PROCESS); 	/* */}
-"if"       {return new Symbol(slime.sfcparser.SFCSymbols.IF); 		/* */}
-"else"     {return new Symbol(slime.sfcparser.SFCSymbols.ELSE); 	/* */}
-"while"    {return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
-"repeat"   {return new Symbol(slime.sfcparser.SFCSymbols.REPEAT); 	/* */}
-"until"    {return new Symbol(slime.sfcparser.SFCSymbols.UNTIL); 	/* */}
-"skip"     {return new Symbol(slime.sfcparser.SFCSymbols.SKIP); 	/* Class Skip */}
-":="       {return new Symbol(slime.sfcparser.SFCSymbols.ASSIGN); 	/* Class Assign */}
-"int"      {return new Symbol(slime.sfcparser.SFCSymbols.INTTYPE); 	/* Class IntType */}
-"bool"     {return new Symbol(slime.sfcparser.SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
-"true"     {return new Symbol(slime.sfcparser.SFCSymbols.TRUE);	        /* */}
-"false"    {return new Symbol(slime.sfcparser.SFCSymbols.FALSE); 	/* */}
 "+"        {return new Symbol(slime.sfcparser.SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
 "-"        {return new Symbol(slime.sfcparser.SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
 "*"        {return new Symbol(slime.sfcparser.SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
@@ -151,6 +137,23 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 ","        {return new Symbol(slime.sfcparser.SFCSymbols.COMMA); 	/* */}
 "."        {return new Symbol(slime.sfcparser.SFCSymbols.DOT); 		/* */}
 "#"        {return new Symbol(slime.sfcparser.SFCSymbols.HASH); 	/* */}
+"SFC"      {return new Symbol(slime.sfcparser.SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
+"input"    {return new Symbol(slime.sfcparser.SFCSymbols.INPUT); 	/* syntax !? */}
+"output"   {return new Symbol(slime.sfcparser.SFCSymbols.OUTPUT); 	/* syntax !? */}
+"split"    {return new Symbol(slime.sfcparser.SFCSymbols.SPLIT); 	/* */}
+"join"     {return new Symbol(slime.sfcparser.SFCSymbols.JOIN); 	/* */}
+"process"  {return new Symbol(slime.sfcparser.SFCSymbols.PROCESS); 	/* */}
+"if"       {return new Symbol(slime.sfcparser.SFCSymbols.IF); 		/* */}
+"else"     {return new Symbol(slime.sfcparser.SFCSymbols.ELSE); 	/* */}
+"while"    {return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
+"repeat"   {return new Symbol(slime.sfcparser.SFCSymbols.REPEAT); 	/* */}
+"until"    {return new Symbol(slime.sfcparser.SFCSymbols.UNTIL); 	/* */}
+"skip"     {return new Symbol(slime.sfcparser.SFCSymbols.SKIP); 	/* Class Skip */}
+"="       {return new Symbol(slime.sfcparser.SFCSymbols.ASSIGN); 	/* Class Assign */}
+"int"      {return new Symbol(slime.sfcparser.SFCSymbols.INTTYPE); 	/* Class IntType */}
+"bool"     {return new Symbol(slime.sfcparser.SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
+"true"     {return new Symbol(slime.sfcparser.SFCSymbols.TRUE);	        /* */}
+"false"    {return new Symbol(slime.sfcparser.SFCSymbols.FALSE); 	/* */}
 {identif}  {return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 {number}   {return new Symbol(slime.sfcparser.SFCSymbols.INTEGER, new Integer( yytext() ) );/* t INTEGER */}
 .          {System.out.println( "Error during lexical analysis"+

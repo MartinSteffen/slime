@@ -1,5 +1,4 @@
 package slime.sfcparser;
-import slime.absynt.Expr;
 import java.io.*;
 
 /**
@@ -7,10 +6,17 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.8 2002-06-28 20:01:07 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.9 2002-07-02 12:29:47 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.8  2002/06/28 20:01:07  swprakt
+/* Modified PrettyPrint for use with slime.absfc.SFCabtree,
+/* may now use it to debug Absfc2SFCConverter. I will try
+/* to check in a fully functional SFCParser incl. nested
+/* statements within one week, so 'round about 05/07/2002.
+/* (mwe)
+/*
 /* Revision 1.7  2002/06/28 08:03:12  swprakt
 /* old versions did conflict with "global" Makefile
 /* in src/slime, albeight the GLOBAL Makefile should
@@ -127,7 +133,7 @@ public class ParserTest {
 	    System.exit(1);
 	} catch (Exception e) {
 	    System.err.println( "ParserTest: " + e.toString() );
-	    System.out.println( treestring );
+	    // System.out.println( treestring );
 	    System.exit(1);
 	} // end of try-catch
     } // end of main

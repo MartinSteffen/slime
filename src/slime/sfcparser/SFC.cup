@@ -15,11 +15,17 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.10 2002-06-29 21:23:07 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.11 2002-07-02 12:29:48 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2002/06/29 21:23:07  swprakt
+ * Finally I provide my fully functioning JLex.jar
+ * and java_cup.jar. The files were created on
+ * october 30. 2000. These are the latest versions
+ * that can be obtained from the internet.
+ *
  * Revision 1.9  2002/06/28 08:03:12  swprakt
  * old versions did conflict with "global" Makefile
  * in src/slime, albeight the GLOBAL Makefile should
@@ -138,7 +144,7 @@ action code {:
  * @param java.lang.String outputString - the ParserOutput which should be displayed
  */
     public void pOut(int lineFlag, java.lang.String outputString) {
-	boolean viewOutputOnStdOut = true;
+	boolean viewOutputOnStdOut = false;
 	boolean debug = true;
 	if (viewOutputOnStdOut) {
 	    if (lineFlag==1) {
@@ -174,7 +180,7 @@ parser code {:
  * @param java.lang.String outputString - the ParserOutput which should be displayed
  */
     public void pOut(int lineFlag, java.lang.String outputString) {
-	boolean viewOutputOnStdOut = true;
+	boolean viewOutputOnStdOut = false;
 	boolean debug = true;
 	if (viewOutputOnStdOut) {
 	    if (lineFlag==1) {
@@ -358,8 +364,8 @@ terminal REPEAT, UNTIL;					  // repeat, until
 
 // --------------------------------------------------------------------------- 
 /// Non terminals (tokens processed further by the parser)
-non terminal    sfcbegin;
-non terminal    stmt,stmtatomic;
+
+non terminal    Object                          sfcbegin;
 
 non terminal    slime.absynt.absfc.SFCabtree	sfcprogram;
 non terminal 	slime.absynt.Expr		expr; 
@@ -371,6 +377,8 @@ non terminal    Integer				op;
 non terminal    LinkedList			stmtlist;
 non terminal    LinkedList                      stmtblock;
 
+non terminal    slime.absynt.absfc.Statement    stmt;
+non terminal    slime.absynt.absfc.Statement    stmtatomic;
 non terminal    slime.absynt.absfc.StmtAssign	assignment;
 non terminal    slime.absynt.absfc.StmtDecl	vardeclaration;
 non terminal    slime.absynt.absfc.StmtInput	stmtinput;
@@ -388,20 +396,11 @@ non terminal    LinkedList                      processlist;
 non terminal    LinkedList                      procidlist;
 
 /// Precedences and Associativity
- precedence left BOOLTYPE, INTTYPE;                         // bool, int, string
- precedence left IDENTIFIER;				   // Strings
- precedence left INPUT, OUTPUT;                             // input, output 
+precedence right SEMICOLON;				   // end-of-simple-statement
 precedence left ADD, SUB;				   // +, -
 precedence left MUL, DIV;				   // *,/; MOD=%
 precedence left AND, OR, NEQ, LT, LEQ, GT, GEQ, EQ;	   // &&; ||, !=, <,<=,>,>=,==
 precedence left NOT;					   // !
- precedence left ELSE, WHILE, REPEAT;			   // else, while, repeat
- precedence left IF;					   // if
-// precedence left LPFIELD, RPFIELD;			   // [,]
- precedence left LPAREN;
- precedence right RPAREN;				   // (,)
- precedence left LPSET;
- precedence right RPSET;			 	   // {,}
 
 
 // --------------------------------------------------------------------------- 
@@ -456,7 +455,6 @@ stmtlist ::=  stmt:s
 	       ll_stmtlist.addLast( s );
 	       RESULT=ll_stmtlist;
 	       :} 
-/* Dies hier hat zu Fehlern gefuehrt:  |  stmtblock:b   {:  RESULT=b;  :} */
            |  stmt:s  
               stmtlist:sl 
               {:  
@@ -477,16 +475,6 @@ stmtblock ::=  LPSET
 		   :} 
             |
 	       LPSET
-               stmt:l
-               RPSET {: 
-	           pOut( 1, " { // now being within a block " );
-		   LinkedList ll_stmtblock = new LinkedList();
-		   ll_stmtblock.add(l);
-		   RESULT=ll_stmtblock; 
-		   :} 
-            |
-	    
-	       LPSET
                RPSET 
                {:
 	          pOut( 1, " {} // now being within an empty block " );
@@ -499,21 +487,22 @@ stmtblock ::=  LPSET
 ;
 
 /** STMT ------------------------------------------------- **/
-stmt ::=	stmtatomic
-|	stmtif
-|	stmtifelse
-|	stmtloopwhile
-|	stmtlooprepeat
-|	stmtsplit
-|	stmtjoin
-|	stmtdummy
+stmt ::=
+	stmtatomic:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtif:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtifelse:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtloopwhile:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtlooprepeat:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtsplit:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtjoin:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtdummy:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
 ;
 
 /** STMTATOMIC ------------------------------------------- **/
-stmtatomic ::=	vardeclaration
-|	assignment
-|	stmtoutput
-|	stmtinput		
+stmtatomic ::=	vardeclaration:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}
+|	assignment:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}
+|	stmtoutput:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}
+|	stmtinput:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}		
 ;
 
 /** STMTIF ----------------------------------------------- **/
@@ -522,7 +511,6 @@ stmtif ::= IF
            expr:e
            RPAREN
            stmtblock:b 
-           SEMICOLON
            {: 
               pOut( 1, " if (expr) { " );
 	      RESULT = new slime.absynt.absfc.StmtIf( 
@@ -539,7 +527,6 @@ stmtifelse ::=	IF
                 stmtblock:b1 
                 ELSE
                 stmtblock:b2
-                SEMICOLON 
                 {: 
 	          pOut( 1, " if (expr) {b1} else {b2}  " );
 		   RESULT = new slime.absynt.absfc.StmtIfElse( 
@@ -556,7 +543,6 @@ stmtloopwhile ::= WHILE
                   expr:e 
                   RPAREN  
                   stmtblock:b 
-                  SEMICOLON
                   {: 
 		   // pOut( 1, " while (expr) {b} " );
 		     RESULT = new slime.absynt.absfc.StmtWhile( 
@@ -832,11 +818,11 @@ INTEGER:i
     pOut( 3, i.toString() ); 
     java.lang.Integer opCode = i;
     int opCodeValue = opCode.intValue();
-    System.out.println("before constval-INTEGER-RESULT");
+    //System.out.println("before constval-INTEGER-RESULT");
     slime.absynt.Constval cint = new slime.absynt.Constval( opCodeValue );
-    System.out.println("after constval-INTEGER-Constval");
+    //System.out.println("after constval-INTEGER-Constval");
     RESULT = cint;  
-    System.out.println("after constval-INTEGER-RESULT");
+    //System.out.println("after constval-INTEGER-RESULT");
 :}
 
 ;
