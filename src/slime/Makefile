@@ -1,7 +1,7 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.13 2002-06-26 18:09:01 swprakt Exp $
+# $Id: Makefile,v 1.14 2002-06-28 15:04:54 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -21,7 +21,8 @@ PACKAGEDIRS   = absynt\
 	        layout\
 	        editor\
 	        checks\
-	        simulator
+	        simulator\
+		sfcparser
 #	        gui\
 #	        utils\
 #                io
@@ -36,11 +37,7 @@ all:	packets $(patsubst %.java,%.class,$(wildcard *.java))
 debug:	; make JAVACOPTS="-g" all
 
 run:	all
-	java gui.Gui
-
-
-
-
+	java slime.gui.SlimeStart
 
 packets:
 	(cd ./absynt; make)
@@ -51,16 +48,20 @@ packets:
 	(cd ./checks; make)
 	(cd ./simulator; make)
 	(cd ./io; make)
+	(cd ./sfcparser; make)
 
 jar:
 	jar cvf slime.jar ./absynt/*.class \
+	    ./absynt/absfc/*.class
 	    ./utils/*.class \
             ./editor/*.class\
+	    ./editor/resources/images/*\
             ./gui/*.class\
 	    ./simulator/*.class\
 	    ./checks/*.class\
-	    ./io/*.class
-
+	    ./io/*.class\
+	    ./sfcparser/*.class
+		
 
 jarinstall: 
 	cp snot_v*.jar $(BASELINESDIR)
@@ -74,7 +75,7 @@ clean:
 	(cd ./gui; make clean)
 	(cd ./checks; make clean)
 	(cd ./simulator; make clean)
-
+	/cd ./sfcparser; make clean)
 
 
 %.class:	%.java

@@ -3,11 +3,16 @@
  * Absfc2SFCConverter.java<br>
  *
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.3 2002-06-27 14:30:56 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.4 2002-06-28 15:04:55 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
- * $Log: not supported by cvs2svn $<br>
+ * $Log: not supported by cvs2svn $
+ * Revision 1.3  2002/06/27 14:30:56  swprakt
+ * tried to remove Error 19: "_public ugliness",
+ * now header comments consist of two parts, one
+ * for javadoc and one containing CVS Versio log.
+ *<br>
  * Revision 1.2  2002/06/26 06:33:03  swprakt<br>
  * Makefile geaendert nun mit fuer Slime gueltigem CLASSPATH "../..".<br>
  * Absfc2SFCConverter.java nun in slime.sfcparser-package.<br>
@@ -495,8 +500,28 @@ public class Absfc2SFCConverter {
 
     // --------------------------------------------------------------------
     /**
+     * <b>newStep</b><br>
+     * creates a new {@link slime.absynt.Step} <br>
+     * and adds it to {@link slime.sfcparser.Absfc2SFCConverter.myStepList} <br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     * @return slime.absynt.Step the new step.<br>
+     **/
+    public slime.absynt.Step newStep() {
+	slime.absynt.Step out = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
+	myStepList.add( out );
+	dbgOut(0,"New step nr. "+stepCounter+" created and added to myStepList");
+	stepCounter++;
+	return out;
+    } // end of newStep
+    // --------------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------------
+    /**
      * <b>processDecl</b><br>
-     * processes a {@link slime.absynt.absfc.StmtDecl <br>
+     * processes a {@link slime.absynt.absfc.StmtDecl} <br>
      * and creates the needed steps and transitions and <br>
      * adds them to myStepList and myTransitionList. <br>
      * The latest step wihtin the flow is assumed to be myStep <br>
