@@ -15,11 +15,15 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.15 2002-07-04 16:27:18 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.16 2002-07-04 16:51:29 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.15  2002/07/04 16:27:18  swprakt
+ * New Versions without the expressions-operations-precedence-error
+ * and with added support for doubles and for-loops.
+ *
  * Revision 1.14  2002/07/03 16:50:09  swprakt
  * SFC generates and does not conflic with PrettyPrint.
  * Previous conflicts with PrettyPrint occured because
@@ -652,21 +656,21 @@ stmtloopwhile ::= WHILE
 ;
 
 /** STMTLOOPFOR ----------------------------------------------- **/
-stmtloopfor ::=   FOR LPAREN vartype:vt var:v EQ expr:e1
+stmtloopfor ::=   FOR LPAREN vartype:vt var:v ASSIGN expr:e1
                   SEMICOLON expr:e2 SEMICOLON stmt:s RPAREN  
                   stmtblock:blockInFor 
                   {: 
 		  RESULT = new slime.absynt.absfc.StmtFor( vt, v, e1, e2, s, blockInFor ); 
 		   :}
 |
-                  FOR LPAREN var:v EQ expr:e1
+                  FOR LPAREN var:v ASSIGN expr:e1
                   SEMICOLON expr:e2 SEMICOLON stmt:s RPAREN  
                   stmtblock:blockInFor 
                   {: 
 		  RESULT = new slime.absynt.absfc.StmtFor( v, e1, e2, s, blockInFor ); 
 		   :}
 |
-                  FOR LPAREN var:v EQ expr:e1 SEMICOLON expr:e2 SEMICOLON RPAREN  
+                  FOR LPAREN var:v ASSIGN expr:e1 SEMICOLON expr:e2 SEMICOLON RPAREN  
                   stmtblock:blockInFor 
                   {: 
 		  RESULT = new slime.absynt.absfc.StmtFor( v, e1, e2, blockInFor ); 
