@@ -1,5 +1,5 @@
 #########################################################################
-## $Id: Status,v 1.2 2002-05-08 11:55:57 swprakt Exp $
+## $Id: Status,v 1.3 2002-05-08 11:56:25 swprakt Exp $
 #########################################################################
 
 
@@ -42,7 +42,9 @@ For the meeting at 8.5.02:
 	     > how to store programs?
 	     > 
 
-	- layout: stand-alone compilable!
+	- layout: 
+	     > stand-alone compilable!
+	     > fast progress claimed
 
 	- absynt: nothing new, if the checks are gone + if we
 	          are supposed to do something there, we propose
