@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.13 2002-06-25 06:56:07 swprakt Exp $
+## $Id: Errors.txt,v 1.14 2002-06-25 06:59:45 swprakt Exp $
 ###########################################################
 
 
@@ -31,7 +31,9 @@ Rules of the game:
           the author should at least confirm the error.
   
         - If the error has been removed or otherwise been dealt
-	  with, it should be copied to the bottom of the file
+	  with, the reporter should be informed explicitely, who can
+	  check whether he think's it's indeed repaired, and the 
+	  entry should be copied to the bottom of the file
 	  to the repaired errors section
 
 
@@ -52,7 +54,7 @@ Error 10:      Makefile missing
 
 Error 9:       structure
  package:      parser/absynt
- status:       reported 25.6.02. Steffen (also asked Marco via email, no reply)
+ status:       reported 25.6.02. Steffen (also asked Marco via email, no reply, I guess)
  class:        non-fatal, but doesn't look nice
  description:  Is the deep structure under absynt needed?
                if not we shoud remove it (also from the repos)
