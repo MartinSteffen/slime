@@ -8,12 +8,15 @@ import java.util.LinkedList;
 import java.util.Hashtable;
 
 /**
- * For the Slime project of the Fortgeschrittenen-Praktikum.
+ * An object of this class is used to paint a sfc on an Graphics object.
+ * <br><br>
+ * Status: about 50% complete <br>
+ * Known bugs: parallel branches are not shown correctly, some more trouble with steps with more than one transition 
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.8 2002-06-12 18:52:04 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.9 2002-06-14 11:21:03 swprakt Exp $
  */
 
-final class SFCPainter{
+public final class SFCPainter{
 
     private static final int STEP_HEIGHT = 30;
     protected static final int ACTION_GAP = 10;
@@ -21,11 +24,17 @@ final class SFCPainter{
     private ESFC      eSFC;
     private SFC       sfc;
 
+    /**
+     * Constructs a painter for the given ESFC.
+     */
     protected SFCPainter(ESFC eSFC) {
 	this.eSFC = eSFC;
 	this.sfc  = eSFC.getSFC();
     }
 
+    /**
+     * Paints the sfc on the given Graphics object.
+     */
     protected void paintSFC(Graphics g) {
 	g.setFont(this.eSFC.getFont());
 	this.paintTransitions(g);

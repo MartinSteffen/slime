@@ -1,25 +1,35 @@
 package slime.editor;
 
 import slime.absynt.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
 
 /**
- * For the Slime project of the Fortgeschrittenen-Praktikum.
+ * An object of this class is used to add some functionality to the sfc.
+ * <br><br>
+ * Status: nearly complete,  but i am not satisfied wit it <br>
+ * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.8 2002-06-12 18:52:02 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.9 2002-06-14 11:21:03 swprakt Exp $
  */
 
-final class ESFC{
+public final class ESFC{
 
+    /*
+     * Some color definitions for the SFC
+     */
     private static final Color INITIAL            = Color.darkGray;
     private static final Color SOURCE             = Color.blue;
     private static final Color TARGET             = Color.red;
     private static final Color STEP_NORMAL        = Color.black;
     private static final Color TRANSITION_NORMAL  = Color.gray;
 
+    /*
+     * The font used for the SFC
+     */
     private static final Font DATA_FONT =
     new Font( "Sanserif", Font.PLAIN, 12 );
     
@@ -30,9 +40,16 @@ final class ESFC{
     private DrawBoard  drawBoard;
     private Object     selectedObject;
     private Object     markedObject;
+
+    /*
+     * 
+     */
     private boolean    checked;
     private boolean    layouted;
     
+    /*
+     * Sets the colors for all steps and transitions for the given SFC. 
+     */
     protected ESFC(SFC sfc) {
 	this.sfc    = sfc;
 	this.colors = this.createColorHashtable();
@@ -40,136 +57,251 @@ final class ESFC{
 	this.targetSteps = new LinkedList();
     }
 
+    /*
+     * Returns the font used by this ESFC.
+     */
     protected Font getFont() {
 	return DATA_FONT;
     }
 
+    /*
+     * Returns the SFC of this ESFC.
+     */
     protected SFC getSFC() {
 	return this.sfc;
     }
 
+    /*
+     * Returns the selected Object of this SFC.
+     */ 
     protected Object getSelectedObject() {
 	return this.selectedObject;
     }
 
+    /*
+     * Selects the given objekt of this SFC. It does not check
+     * wether the objekt belongs to the SFC or not.
+     */
     protected void setSelectedObject(Object o) {
 	this.selectedObject = o;
     }
 
+    /*
+     * Sets the DrawBoard for this ESFC.
+     */
     protected void setDrawBoard(DrawBoard drawBoard) {
 	this.drawBoard = drawBoard;
     }
 
+    /*
+     * Returns the DrawBoard used by this ESFC.
+     */
+    protected DrawBoard getDrawBoard() {
+	return this.drawBoard;
+    }
+
+    /*
+     * Marks this ESFC as checked or unchecked.
+     */
     protected void setChecked(boolean flag) {
 	this.checked = flag;
 	if (!flag)
 	    this.setLayouted(flag);
     }
 
+    /*
+     * Returns true if the SFC is cheched.
+     */
     protected boolean isChecked() {
 	return this.checked;
     }
 
+    /*
+     * Marks this ESFC as layouted or not layouted.
+     */
     protected void setLayouted(boolean flag) {
 	this.layouted = flag;
     }
 
+    /*
+     * Returns true if the SFC is layouted. 
+     */
     protected boolean isLayouted() {
 	return this.layouted;
     }
 
-    protected DrawBoard getDrawBoard() {
-	return this.drawBoard;
-    }
-
+    /*
+     * Returns a list steps which are marked as source.
+     */
     protected LinkedList getSourceSteps() {
 	return this.sourceSteps;
     }
 
+    /*
+     * Returns a list steps which are marked as target.
+     */
     protected LinkedList getTargetSteps() {
 	return this.targetSteps;
     }
 
+    /*
+     * Returns the number of steps which are marked as source.
+     */
     protected int getNumberOfSourceSteps() {
 	return this.sourceSteps.size();
     }
 
+    /*
+     * Returns the number of steps which are marked as target.
+     */
     protected int getNumberOfTargetSteps() {
 	return this.targetSteps.size();
     }
 
+    /*
+     * Removes highlightning from all steps in the sourcelist
+     * and sets this sourcelist to an empty list.
+     */
     protected void clearSourceSteps() {
-	for (int i=0; i<this.sourceSteps.size(); i++) {
-	    Step step = (Step)this.sourceSteps.get(i);
-	    this.colors.put(step, STEP_NORMAL);
-	}
-	this.sourceSteps = new LinkedList();
+	this.clearSteps(this.sourceSteps);
     }
 
+    /*
+     * Removes highlightning from all steps in the sourcelist
+     * and sets this targetlist to an empty list.
+     */
     protected void clearTargetSteps() {
-	for (int i=0; i<this.targetSteps.size(); i++) {
-	    Step step = (Step)this.targetSteps.get(i);
-	    this.colors.put(step, STEP_NORMAL);
-	}
-	this.targetSteps = new LinkedList();
+	this.clearSteps(this.targetSteps);
     }
 
+
+    /*
+     * Removes highlightning from all steps in the given list
+     * and sets this list to an empty list.
+     */
+    private void clearSteps(LinkedList listOfSteps) {
+	for (int i=0; i<listOfSteps.size(); i++) {
+	    Step step = (Step)listOfSteps.get(i);
+	    this.colors.put(step, STEP_NORMAL);
+	}
+	listOfSteps = new LinkedList();
+    }
+
+    /*
+     * Removes the given step from this SFC and all transitions
+     * which are connected to this step. If neccessary it is
+     * removed from the sourcelist or the targetlist.
+     */
     protected void removeStep(Step step) {
+	// Remove it from sourcelist if neccessary.
 	this.removeSourceStep(step);
+
+	// Remove it from targetlist if neccessary.
 	this.removeTargetStep(step);
+
+	// Remove all transitions which are connected with the step.
   	LinkedList transitionList = this.sfc.transs;
   	for (int i=0; i<transitionList.size(); i++) {
   	    Transition transition = (Transition)transitionList.get(i);
-  	    LinkedList source = transition.source;
-  	    LinkedList target = transition.target;
-  	    for (int s=0; s<source.size(); s++) {
-  		Step sStep = (Step)source.get(s);
-  		if (sStep == step)
-  		    source.remove(s--);
-  	    }
-  	    for (int t=0; t<target.size(); t++) {
-  		Step tStep = (Step)target.get(t);
-  		if (tStep == step)
-  		    target.remove(t--);
-  	    }
-  	    if ((source.size() == 0) || (target.size() == 0))
+	    if (isStepConnectedWithTransition(step, transition))	
   		transitionList.remove(i--);
   	}
+
+	// Remove it from this SFC.
   	this.sfc.steps.remove(step);
+
+	// Remove color entry in hashtable.
 	this.colors.remove(step);
+
+	// Set istep to null if step was istep.
 	if (step == this.sfc.istep)
 	    this.sfc.istep = null;
+
+	// Mark as uncheck.
 	this.setChecked(false);
     }
 
+    /*
+     * Returns true if the given step is connected as source or target
+     * to the given transition.
+     */
+    private boolean isStepConnectedWithTransition(Step step, Transition transition) {
+	LinkedList source = transition.source;
+	for (int s=0; s<source.size(); s++) 
+	    if (step == (Step)source.get(s))
+		return true;
+	LinkedList target = transition.target;
+	for (int t=0; t<target.size(); t++) 
+	    if (step == (Step)target.get(t))
+		return true;
+	return false;
+    }
+
+    /*
+     * Removes the given step from the sourcelist.
+     */
     protected void removeSourceStep(Step step) {
 	this.sourceSteps.remove(step);
 	this.colors.put(step, STEP_NORMAL);
     }
 
+    /*
+     * Removes the given step from the targetlist.
+     */
     protected void removeTargetStep(Step step) {
 	this.targetSteps.remove(step);
 	this.colors.put(step, STEP_NORMAL);
     }
 
+    /* 
+     * The given step will be added to the sourcelist if it is not
+     * already in and will be removed optinally from the targetlist.
+     * Otherwise it will be removed from the sourcelist.
+     */ 
     protected void addSourceStep(Step step) {
+	if (this.isSourceStep(step)) {
+	    this.removeSourceStep(step);
+	    return;
+	}
+	if (this.isTargetStep(step)) 
+	    this.removeTargetStep(step);
 	this.sourceSteps.add(step);
 	this.colors.put(step, SOURCE);
     }
 
+    /* 
+     * The given step will be added to the targetlist if it is not
+     * already in and will be removed optinally from the sourcelist.
+     * Otherwise it will be removed from the targetlist.
+     */ 
     protected void addTargetStep(Step step) {
+	if (this.isTargetStep(step)) {
+	    this.removeTargetStep(step);
+	    return;
+	}
+	if (this.isSourceStep(step)) 
+	    this.removeSourceStep(step);
 	this.targetSteps.add(step);
 	this.colors.put(step, TARGET);
     }
 
+    /*
+     * Returns true if the given step is a source step.
+     */
     protected boolean isSourceStep(Step step) {
 	return (this.sourceSteps.indexOf(step) != -1);
     }
 
+    /*
+     * Returns true if the given step is a target step.
+     */
     protected boolean isTargetStep(Step step) {
 	return (this.targetSteps.indexOf(step) != -1);
     }
     
+    /*
+     * Creates the color hashtable for this SFC.
+     */
     private Hashtable createColorHashtable() {
 	Hashtable colors = new Hashtable();
 	for (int nr=0; nr<this.sfc.steps.size(); nr++) { 
@@ -186,6 +318,9 @@ final class ESFC{
 	return colors;
     }
 
+    /*
+     * Adds a new step with the given name at the given position.
+     */
     protected Step addStep(String name, int x, int y) {
 	Step step = new Step(name);
 	Position position = new Position((float)x, (float)y);
@@ -196,8 +331,13 @@ final class ESFC{
 	return step;
     }
 
+    /*
+     * Adds a new transition with the given source and target steps and
+     * the given expression as guard.
+     */
     protected void addTransition(LinkedList source, Expr expr, LinkedList target) {
 	Transition transition = new Transition(source, expr, target);
+	System.out.println(source.size());
 	this.sfc.transs.add(transition);
 	colors.put(transition, TRANSITION_NORMAL);
 	this.clearSourceSteps();
@@ -205,15 +345,25 @@ final class ESFC{
 	this.setChecked(false);
     }
 
+    /*
+     * Return the color hashtable used for this SFC.
+     */
     protected Hashtable getColorHashtable() {
 	return this.colors;
     }
 
+    /*
+     * Highlights the given object by setting the color value
+     * in the color hashtable for this object.
+     */
     protected void highlight(Object key, Color color) {
 	if (this.colors.containsKey(key))
 	    this.colors.put(key, color);
     }
 
+    /*
+     * Set the color value
+     */
     protected void deHighlight(Object key) {
 	if (key instanceof Transition)
 	    this.highlight(key, TRANSITION_NORMAL);
@@ -226,17 +376,17 @@ final class ESFC{
 	    this.highlight(key, STEP_NORMAL);
     }
 
-    public static int getWidth(Step step) {
+    /*
+     * Returns the width of the name-box of the given step. 
+     */
+    protected static int getWidth(Step step) {
 	final int MIN_WIDTH = 30;
-
 	JPanel panel = new JPanel();
-	int length = panel.getFontMetrics(DATA_FONT).stringWidth(step.name);
-
-	int width = length + 8;
+	int    width = 8 + panel.getFontMetrics(DATA_FONT).stringWidth(step.name);
 	return (MIN_WIDTH > width) ? MIN_WIDTH : width;
     }
 
-    public static int getWidthOfActionList(LinkedList actions) {
+    protected static int getWidthOfActionList(LinkedList actions) {
 	int size = actions.size();
 	if (size == 0)
 	    return 0;
@@ -246,8 +396,7 @@ final class ESFC{
 
 	for (int i=0; i<size; i++) {
 	    StepAction stepAction = (StepAction)actions.get(i);
-	    //int length = stepAction.a_name.length();
-	    int length = panel.getFontMetrics(DATA_FONT).stringWidth(stepAction.a_name);
+	    int        length = panel.getFontMetrics(DATA_FONT).stringWidth(stepAction.a_name);
 
 	    if (length > max)
 		max = length;
@@ -255,7 +404,13 @@ final class ESFC{
 	return SFCPainter.ACTION_GAP+max+8;
     }
 
-    public String print(Absynt absynt) {
+    /*
+     * AB HIER FOLGT DIE NOTLOESUNG FUER DIE ERMMITTLUNG VON STRING-REPRAESENTATIONEN 
+     * DER EINZELNEN SFC OBJECTE .... :-(
+     *
+     */
+    
+    protected String print(Absynt absynt) {
 	if(absynt != null) {
 	    if(absynt instanceof slime.absynt.Action)
 		return output((slime.absynt.Action)absynt);
@@ -291,7 +446,7 @@ final class ESFC{
 	return "*";
     }
 		       
-    public String output(slime.absynt.Action action){
+    protected String output(slime.absynt.Action action){
 	String s = action.a_name + ": ";
 	for (Iterator i = action.sap.iterator(); i.hasNext();) {
 	    s += print((Stmt)i.next());
@@ -301,14 +456,14 @@ final class ESFC{
 	return s;
     }
     
-    public String output(StepAction stepaction){
+    protected String output(StepAction stepaction){
 	String s = "[StepAction] ";
 	s += print(stepaction.qualifier);
 	s += print(stepaction.a_name);
 	return s;
     }
 
-    public String output(ActionQualifier aqf){
+    protected String output(ActionQualifier aqf){
 	String s="[unknown] ";
 	if(aqf instanceof Nqual)
 	    s="[N] ";
@@ -316,14 +471,14 @@ final class ESFC{
 	return s;
     }
 
-    public String output(Step step) {
+    protected String output(Step step) {
 	String s = "[Step] " + step.name + " ";
 	for (Iterator i = step.actions.iterator(); i.hasNext();)
 	    s += print((StepAction)i.next());
 	return s;
     }
 
-    public String output(Declaration dec) {
+    protected String output(Declaration dec) {
 	String s = "";
 	s += print(dec.type) + " ";
 	s += print(dec.var) + ":=";
@@ -331,29 +486,29 @@ final class ESFC{
 	return s;
     }
     
-    public String output(Skip skip){
+    protected String output(Skip skip){
 	return "[Skip] ";
     }
     
-    public String output(Stmt stmt){
+    protected String output(Stmt stmt){
 	String s = "";
 	return s;
     }
 
-    public String output(Variable variable){
+    protected String output(Variable variable){
 	String s = variable.name;
 	//s += print(variable.type);
 	return s;
     }
 
-    public String output(Assign assign){
+    protected String output(Assign assign){
 	String s = "";
 	s += print(assign.var)+":=";
 	s += print(assign.val);
 	return s;
     }
 
-    public String output(B_expr bexpr){
+    protected String output(B_expr bexpr){
 	String s = "";
 	s += print(bexpr.left_expr);
 	s += print(bexpr.op);
@@ -361,7 +516,7 @@ final class ESFC{
 	return s;
     }
 
-    public String output(Expr expr){
+    protected String output(Expr expr){
 	String s = "";
 	if(expr instanceof B_expr)
 	    return output((B_expr)expr);
@@ -374,7 +529,7 @@ final class ESFC{
 	return s;
     }    
     
-    public String output(U_expr uexpr){
+    protected String output(U_expr uexpr){
 	String s = "";
 	s += print(uexpr.op);
 	s += print(uexpr.sub_expr);
@@ -434,11 +589,10 @@ final class ESFC{
     	return string;
     }
 
-    public String output(Constval constval){
+    protected String output(Constval constval){
 	String s = "";
         if(constval != null){
             s = constval.val.toString();
-	    //prettyprint.print(constval.type);
 	}
 	return s;
     }
@@ -460,6 +614,104 @@ final class ESFC{
 	return string;
     }    
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

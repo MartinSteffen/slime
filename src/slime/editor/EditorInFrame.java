@@ -12,29 +12,15 @@ import javax.swing.event.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * <br><br>
- * There are some new functions but the help button is out of date. 
- * Wait for later updates. Sometimes the editor crashes because of
- * unchecked SFC's. Please report all other crashes and bugs !!!
- * 
+ * Status: alway complete, since it is for testing only<br>
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.7 2002-06-12 18:52:04 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.8 2002-06-14 11:21:03 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
 
     private Editor editor;
-
    
-    /**
-     * Creates an editor with an 'empty' SFC. Do not use it yet.
-     */
-    private EditorInFrame() {
-	this(new Editor());
-    }
-
-    /**
-     * Creates an editor with the given SFC.
-     */
     private EditorInFrame(Editor editor) {
 	this.editor = editor;
 	this.initWindow("SFC-Editor v.0.3");

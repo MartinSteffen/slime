@@ -1,15 +1,15 @@
-
 package slime.layout;
 
 import slime.absynt.*;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.awt.*;
+import javax.swing.*;
 
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: Layouter.java,v 1.9 2002-06-13 08:24:54 swprakt Exp $
+ * @version $Id: Layouter.java,v 1.10 2002-06-14 11:21:05 swprakt Exp $
  */
 
 public final class Layouter {
@@ -132,6 +132,8 @@ public final class Layouter {
 
 	this.graph = bucketSortList;
 	this.debug.repaint();
+	DebugGraphics g = new DebugGraphics();
+	this.paint(g);
 	return this.sfc;
     }
 
@@ -247,7 +249,7 @@ public final class Layouter {
 		    int preSource = this.getIntStepNumber(stepList.get(s-1));
 		    Step target = (Step)this.sfc.steps.get(preSource);
 		    int preX = (int)(target.pos.x);
-		    int stepWidth = target.name.length()*7+8;
+		    int stepWidth = target.name.length()*8+8;
 		    if (stepWidth < 30)
 			stepWidth = 30;
 		    LinkedList actions = target.actions;
@@ -270,8 +272,8 @@ public final class Layouter {
 		sourceStep2.pos.x = x;
 	    }
 	}
-
-	this.paintSteps(g, this.graph);
+	return;
+	//this.paintSteps(g, this.graph);
     }
 
     private void paintSteps(Graphics g, StepList[] graph) {

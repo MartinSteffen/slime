@@ -9,12 +9,12 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DebugWindow.java,v 1.5 2002-06-12 18:52:05 swprakt Exp $
+ * @version $Id: DebugWindow.java,v 1.6 2002-06-14 11:21:04 swprakt Exp $
  */
 
 class DebugWindow extends JFrame {
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final int WIDTH = 760, HEIGHT = 600;
 
     private JTextArea textArea;
@@ -77,7 +77,8 @@ class DebugWindow extends JFrame {
     }
 
     public void paint(Graphics g) {
-	layouter.paint(g);
+	if (DEBUG)
+	    layouter.paint(g);
     }
 
     public static void main(String[] argv) {

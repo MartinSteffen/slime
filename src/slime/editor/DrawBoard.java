@@ -6,12 +6,15 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * For the Slime project of the Fortgeschrittenen-Praktikum.
+ * An object of this class is used to draw a sfc on it.
+ * <br><br>
+ * Status: nearly complete, only some docs are missing <br>
+ * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.9 2002-06-12 18:52:02 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.10 2002-06-14 11:21:02 swprakt Exp $
  */
 
-final class DrawBoard extends Canvas
+public final class DrawBoard extends Canvas
     implements MouseListener, MouseMotionListener, KeyListener {
 
     private static final int START_WIDTH = 640, START_HEIGHT = 480;
@@ -149,11 +152,14 @@ final class DrawBoard extends Canvas
     public void keyReleased(KeyEvent e) {
     }
 
+    /**
+     * This method updates the size of this DrawBoard 
+     * and paints the sfc with a SFCPainter.
+     */
     public void paint(Graphics g) {
 	super.paint(g);
 	this.updateSize();
-	SFCPainter sfcPainter = new SFCPainter(this.eSFC);
-	sfcPainter.paintSFC(g);
+	(new SFCPainter(this.eSFC)).paintSFC(g);
     }
 }
 

@@ -7,14 +7,21 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.border.*;
+import java.io.*;
+import java.util.zip.*;
 
 /**
- * For the Slime project of the Fortgeschrittenen-Praktikum.
+ * An object of this class represents a part of the editor display.
+ * It contains a status message line and several buttons for operating
+ * on a sfc.
+ * <br><br>
+ * Status: nearly complete <br>
+ * known bugs: - (But some expected) <br>
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.2 2002-06-12 18:52:04 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.3 2002-06-14 11:21:03 swprakt Exp $
  */
 
-final class MenuAndStatePanel extends JPanel {
+public final class MenuAndStatePanel extends JPanel {
 
     private Editor     editor;
     private JButton    checkButton;    
@@ -25,6 +32,11 @@ final class MenuAndStatePanel extends JPanel {
     private JButton    variableButton;
     private JTextField statusMessage;
 
+    /**
+     * Constructs a JPanel for an editor with several 
+     * buttons and a status message line.
+     * @param editor The editor to which this Panel should belong to.
+     */
     protected MenuAndStatePanel(Editor editor) {
 	this.editor = editor;
 
@@ -44,17 +56,24 @@ final class MenuAndStatePanel extends JPanel {
 	this.addCheckButton(south);
 	this.addLayoutButton(south);
 	this.addSimulateButton(south);
-	south.setBackground(Color.lightGray);
+	south.setBackground(Editor.BACKGROUND_COLOR);
 	this.add(south, BorderLayout.SOUTH);
 
 	this.setBorder(this.editor.getTitledBorder("Menu & Status"));
-	this.setBackground(Color.lightGray);
+	this.setBackground(Editor.BACKGROUND_COLOR);
     }
 
+    /**
+     * Writes the given message into the status message line. 
+     */
     protected void setStatusMessage(String message) {
 	this.statusMessage.setText(message);
     }
 
+    /**
+     * A call of this method checks the current selected sfc in the editor
+     * and enables buttons depending on the result of the check.
+     */
     protected void enableButtons() {
 	ESFC eSFC = editor.getExtendedSelectedSFC();
 	this.guardButton.setEnabled(eSFC != null);
@@ -126,6 +145,18 @@ final class MenuAndStatePanel extends JPanel {
 	this.actionButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Add new action.");
+		    String fN = "snapshot.sfc";
+		    try {
+			FileInputStream fOS = new FileInputStream(fN);
+			GZIPInputStream gZOS = new GZIPInputStream(fOS);
+			ObjectInputStream oOS = new ObjectInputStream(gZOS);
+			Object o = oOS.readObject();
+			editor.add((SFC)o);
+			oOS.close();
+		    } catch (IOException ioe)
+		    {System.out.println("Fehler beim Laden");
+		    } catch (ClassNotFoundException cnfe)
+		    {System.out.println("Fehler beim Laden");}
 		}
 	    });
 	panel.add(this.actionButton);
@@ -136,8 +167,32 @@ final class MenuAndStatePanel extends JPanel {
 	this.guardButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Add new guard.");
+		    String fN = "snapshot.sfc";
+		    try {
+			FileOutputStream fOS = new FileOutputStream(fN);
+			GZIPOutputStream gZOS = new GZIPOutputStream(fOS);
+			ObjectOutputStream oOS = new ObjectOutputStream(gZOS);
+			SFC sfc = editor.getSelectedSFC();
+			oOS.writeObject(sfc);
+			oOS.flush();
+			oOS.close();
+		    } catch (IOException ioe)
+		    {System.out.println("Fehler beim Speichern");}
 		}
 	    });
 	panel.add(this.guardButton);
     }
 }    
+    
+    
+    
+
+    
+
+
+
+
+
+
+
+

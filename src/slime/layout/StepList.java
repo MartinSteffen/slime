@@ -6,7 +6,7 @@ import java.util.LinkedList;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: StepList.java,v 1.3 2002-06-12 18:52:06 swprakt Exp $
+ * @version $Id: StepList.java,v 1.4 2002-06-14 11:21:05 swprakt Exp $
  */
 
 class StepList {

@@ -15,12 +15,17 @@ import javax.swing.border.*;
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
+ * <br><br>
+ * Status: about 70% should be implemented. <br>
+ * Known bugs: Some semantic problems. <br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.12 2002-06-12 19:52:58 swprakt Exp $
+ * @version $Id: Editor.java,v 1.13 2002-06-14 11:21:03 swprakt Exp $
  */
 
 public final class Editor extends JComponent 
     implements ChangeListener, MouseListener {
+
+    protected static final Color BACKGROUND_COLOR = Color.lightGray;
 
     private static final int WIDTH = 100, HEIGHT = 300;
 
@@ -29,38 +34,27 @@ public final class Editor extends JComponent
     private static final int TARGET_MODE = 2; // t
     private static final int REMOVE_MODE = 3; // r
 
-    private int counter;
-
-    // Guards über "g" setzen
-    // Alle Markierungen löschen über "c"
-
-
     // ScrollPane Action
     // entf -> remove selected items in list and SFC!!!
     // double click -> change (but not name!!!)
     
     
-    private int mode = EDIT_MODE;
+    private int               mode                = EDIT_MODE;
+    private int               counter; // For SFC without name
     
-    private ESFCList     eSFCList;
-    private ESFC         eSFC;
-    private JTabbedPane  drawBoardTabbedPane = new JTabbedPane();
-    private JScrollPane  guardList = new JScrollPane();
-    private JScrollPane  actionList = new JScrollPane();
-    private JScrollPane  declaringList = new JScrollPane();
-    private JList        actionJList;
-    private JList        guardJList;
+    private ESFCList          eSFCList            = new ESFCList();
+    private ESFC              eSFC                = null;
+    private JTabbedPane       drawBoardTabbedPane = new JTabbedPane();
+    private static ScrollPane helpPane;
+    private JScrollPane       guardList           = new JScrollPane();
+    private JScrollPane       actionList          = new JScrollPane();
+    private JScrollPane       declaringList       = new JScrollPane();
+    private JList             actionJList;
+    private JList             guardJList;
     private MenuAndStatePanel menuAndStatePanel;
-    private ScrollPane  helpPane;
 
-    // Toggel to transition mode by pressing t
-    // Toggel to step mode by pressing s
-    // Toogel to remove mode by presseing r
-    
-    
-    
     /**
-     * Creates an editor with an 'empty' SFC. Do not use it yet.
+     * Creates an editor with an 'empty' SFC.
      */
     public Editor() {
 	this(new SFC());
@@ -73,7 +67,6 @@ public final class Editor extends JComponent
 	this.menuAndStatePanel = new MenuAndStatePanel(this);
 	this.drawBoardTabbedPane.addChangeListener(this);
 	this.addHelpPane();
-	this.eSFCList = new ESFCList();
 	this.add(sfc);
 	this.initWindow("SFC-Editor");
     }
@@ -102,21 +95,26 @@ public final class Editor extends JComponent
 	this.eSFCList.add(this.eSFC);
 	this.addTabbedPane(this.eSFC);
     }
-
+    
+    /**
+     * Return the current selected ESFC of this editor or null if no ESFC is selected.
+     */
     protected ESFC getExtendedSelectedSFC() {
 	return this.eSFC;
     }
 
     /**
-     * Returns the actual SFC used by the editor.
+     * Returns the actual SFC used by the editor or null if no SFC is selected.
      */
     public SFC getSelectedSFC() {
-	return this.eSFC.getSFC();
+	if (this.eSFC != null)
+	    return this.eSFC.getSFC();
+	return null;
     }
 
     private void initWindow(String title) {
 	this.setSize(WIDTH, HEIGHT);
-	this.setBackground(Color.lightGray);
+	this.setBackground(BACKGROUND_COLOR);
 	this.setLayout(new BorderLayout());
 	this.add(menuAndStatePanel, BorderLayout.SOUTH);
 	this.add(this.getCenterPanel(), BorderLayout.CENTER);
@@ -138,15 +136,15 @@ public final class Editor extends JComponent
 	    this.getDeclaringList();
 	} else {
 	    JList list = new JList();
-	    list.setBackground(Color.lightGray);
+	    list.setBackground(BACKGROUND_COLOR);
 	    list.setFixedCellWidth(150);
 	    this.guardList.setViewportView(list);
 	    list = new JList();
-	    list.setBackground(Color.lightGray);
+	    list.setBackground(BACKGROUND_COLOR);
 	    list.setFixedCellWidth(150);
 	    this.actionList.setViewportView(list);
 	    list = new JList();
-	    list.setBackground(Color.lightGray);
+	    list.setBackground(BACKGROUND_COLOR);
 	    list.setFixedCellWidth(150);
 	    this.declaringList.setViewportView(list);
 	}
@@ -170,11 +168,11 @@ public final class Editor extends JComponent
 	    o = guards.toArray();
 	}
 	guardJList = new JList(o);
-	guardJList.setBackground(Color.lightGray);
+	guardJList.setBackground(BACKGROUND_COLOR);
 	guardJList.addMouseListener(this);
 	guardList.setViewportView(guardJList); // = new JScrollPane(guardJList);
 	guardList.setBorder(this.getTitledBorder("Guards"));
-	guardList.setBackground(Color.lightGray);
+	guardList.setBackground(BACKGROUND_COLOR);
 	guardJList.setFixedCellWidth(150);
 	return guardList;
     }
@@ -200,10 +198,10 @@ public final class Editor extends JComponent
 	    }
 	}
 	this.actionJList = new JList(o);
-	actionJList.setBackground(Color.lightGray);
+	actionJList.setBackground(BACKGROUND_COLOR);
 	actionList.setViewportView(this.actionJList); // = new JScrollPane(this.actionJList);
 	actionList.setBorder(this.getTitledBorder("Actions"));
-	actionList.setBackground(Color.lightGray);
+	actionList.setBackground(BACKGROUND_COLOR);
 	actionJList.setFixedCellWidth(150);
 	return actionList;
     }
@@ -222,14 +220,17 @@ public final class Editor extends JComponent
 	    }
 	}
 	JList list = new JList(o);
-	list.setBackground(Color.lightGray);
+	list.setBackground(BACKGROUND_COLOR);
 	declaringList.setViewportView(list); // = new JScrollPane(list);
 	declaringList.setBorder(this.getTitledBorder("Declarations"));
-	declaringList.setBackground(Color.lightGray);
+	declaringList.setBackground(BACKGROUND_COLOR);
 	list.setFixedCellWidth(150);
 	return declaringList;
     }    
 
+    /**
+     * Returns a titled border with the given name.
+     */
     protected TitledBorder getTitledBorder(String title) {
 	TitledBorder titledBorder = new TitledBorder(title);
 	titledBorder.setTitleFont(new Font("Courier", Font.PLAIN, 14));
@@ -240,7 +241,7 @@ public final class Editor extends JComponent
     private JPanel getCenterPanel() {
 	JPanel panel = new JPanel();
 	panel.add(this.drawBoardTabbedPane);
-	panel.setBackground(Color.lightGray);
+	panel.setBackground(BACKGROUND_COLOR);
 	panel.setBorder(this.getTitledBorder("SFC's"));
 	return panel;
     }
@@ -254,13 +255,13 @@ public final class Editor extends JComponent
     }
 
     private void  addHelpPane() {
-	this.helpPane = new ScrollPane();
+	helpPane = new ScrollPane();
 	helpPane.setSize(640,480);
 	JTextArea tA = new JTextArea(20,40);
 	tA.append("- Add a new step ...\n"
-		  +"Leftclick on a free place on the drawboard.\n\n");
+		  +"Leftclick on a free place on the drawboard. You may mark the step as initial and bind some actions from the action list to it. Marking a step as initial sets the old initial step to normal step.\n\n");
 	tA.append("- Delete a step ...\n"
-		  +"Switch with 'r' to REMOVE-mode and leftclick on the step.\n\n");
+		  +"Switch with 'r' to REMOVE-mode and leftclick on the step. All transitions which are connected with this step will also be deleted.\n\n");
 	tA.append("- Move a step ...\n"
 		  +"Switch with 'e' to EDIT-mode and drag the step with the left mousebutton hold down.\n\n");
 	tA.append("- Move a group of steps ...\n"
@@ -273,8 +274,10 @@ public final class Editor extends JComponent
 		  +"Switch with 's' to SOURCE-mode and leftclick on the step.\n\n");
 	tA.append("- Mark a step as target ...\n"
 		  +"Switch with 't' to TARGET-mode and leftclick on the step.\n\n");
+	tA.append("- Unmark all steps ...\n"
+		  +"Press 'c' to unmark all source and target steps.\n\n");
 	tA.append("- Add transition(s) between marked source and target steps ...\n"
-		  +"Press 'g'. Actually there is no possibility to choose a guard. Wait for later versions :-).\n\n");
+		  +"Press 'g' and select or input a guard.\n\n");
 	tA.setEnabled(false);
 	tA.setWrapStyleWord(true);
 	tA.setLineWrap(true);
@@ -418,14 +421,8 @@ public final class Editor extends JComponent
 		this.menuAndStatePanel.enableButtons();
 	    }
 	    else if (mode == SOURCE_MODE) 
-		if (this.eSFC.isSourceStep(step))
-		    this.eSFC.removeSourceStep(step);
-		else
 		    this.eSFC.addSourceStep(step);
 	    else if (mode == TARGET_MODE)
-		if (this.eSFC.isTargetStep(step))
-		    this.eSFC.removeTargetStep(step);
-		else
 		    this.eSFC.addTargetStep(step);
 	}
 	else {
@@ -518,7 +515,7 @@ public final class Editor extends JComponent
 	    this.toggleMode(REMOVE_MODE);
 	}
 	if (c == (new String("c")).charAt(0)) {
-	    this.menuAndStatePanel.setStatusMessage("Removed als marks");
+	    this.menuAndStatePanel.setStatusMessage("Unmarked all steps");
 	    this.eSFC.clearSourceSteps();
 	    this.eSFC.clearTargetSteps();
 	}
@@ -532,18 +529,19 @@ public final class Editor extends JComponent
 		return;
 	    }
 
-	    Object[] o;
-	    SFC sfc = this.eSFC.getSFC();
-	    if (sfc == null)
-		o = new Object[0];
-	    else {
+	    Object[] o   = new Object[0];
+	    SFC      sfc = this.eSFC.getSFC();
+
+	    if (sfc != null) {
 		LinkedList transitionList = sfc.transs;
-		LinkedList guards = new LinkedList();
+		LinkedList guards         = new LinkedList();
+
 		for (int i=0; i<transitionList.size(); i++) {
 		    Transition transition = (Transition)transitionList.get(i);
-		    Expr guard = transition.guard;
-		    String name = this.eSFC.output(guard);
-		    if (!this.isStringInList(guards, name))
+		    Expr       guard      = transition.guard;
+		    String     name       = this.eSFC.output(guard);
+
+		    if (!this.isStringInList(guards, name)) 
 			guards.add(name);
 		}
 	    o = guards.toArray();
@@ -584,62 +582,59 @@ public final class Editor extends JComponent
 			    if (this.eSFC.output(guard).equals(name))
 				eGuard = guard;
 			}
-			this.menuAndStatePanel.setStatusMessage("New transition(s) added");
+			this.menuAndStatePanel.setStatusMessage("New transition added");
 			this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
 						eGuard, 
 						this.eSFC.getTargetSteps());
 			this.toggleMode(SOURCE_MODE);
 		    }
 		} else {
-
-	    String exprString = ((JTextField)message[1]).getText();
-	    Expr expr = null;
-
-	    slime.utils.ExprParser parser = new slime.utils.ExprParser();
-	    try {
-		expr = parser.parseExpr(exprString);
-	    } catch (ParseException e) {
-		this.menuAndStatePanel.setStatusMessage("Parser fails on Expr");
-	    } catch (Exception e) {
-		this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
-	    }
-	    
-	    if (expr != null) {
-		
-		this.menuAndStatePanel.setStatusMessage("New transition(s) added");
-		this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
-					expr, 
-					this.eSFC.getTargetSteps());
-		this.toggleMode(SOURCE_MODE);
-		this.updateWindow();
-	    }
-	    
-	    //this.menuAndStatePanel.setStatusMessage("Expression input not parsed yet");
+		    
+		    String exprString = ((JTextField)message[1]).getText();
+		    Expr expr = null;
+		    
+		    slime.utils.ExprParser parser = new slime.utils.ExprParser();
+		    try {
+			expr = parser.parseExpr(exprString);
+		    } catch (ParseException e) {
+			this.menuAndStatePanel.setStatusMessage("Parser fails on Expr");
+		    } catch (Exception e) {
+			this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
+		    }
+		    
+		    if (expr != null) {
+			
+			this.menuAndStatePanel.setStatusMessage("New transition(s) added");
+			this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
+						expr, 
+						this.eSFC.getTargetSteps());
+			this.toggleMode(SOURCE_MODE);
+			this.updateWindow();
+		    }
+		    
 		}
 	    }
 	}
     }
-
+    
     public void mouseClicked(MouseEvent e) {
 	e.consume();
-	if (this.eSFC == null)
-	    return;
-	Object[] selectedValues = this.guardJList.getSelectedValues();
+	if (this.eSFC == null) return;
+	Object[]   selectedValues = this.guardJList.getSelectedValues();
 	LinkedList transitionList = this.eSFC.getSFC().transs;
+	
 	for (int i=0; i<transitionList.size(); i++) {
 	    Transition transition = (Transition)transitionList.get(i);
+	    Expr       guard      = transition.guard;
+	    String     name       = this.eSFC.output(guard);
+	    
 	    this.eSFC.deHighlight(transition);
-	    Expr guard = transition.guard;
-	    String name = this.eSFC.output(guard);
-	    for (int j=0; j<selectedValues.length; j++) {
-		String name2 = (String)selectedValues[j];
-		if (name2.equals(name))
+	    for (int j=0; j<selectedValues.length; j++)
+		if (((String)selectedValues[j]).equals(name))
 		    this.eSFC.highlight(transition, Color.green);
-	    }
 	}
-	ScrollPane c = (ScrollPane)this.drawBoardTabbedPane.getSelectedComponent();
-	DrawBoard d = (DrawBoard)c.getComponent(0); // FIX ME: So nicht, aber es geht :-)
-	d.repaint();
+	
+	this.eSFC.getDrawBoard().repaint();
     }
 
     public void mouseEntered(MouseEvent e) {
