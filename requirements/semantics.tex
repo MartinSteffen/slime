@@ -1,22 +1,18 @@
 \section{Semantics}
 \label{sec:semantics}
 
-The section informally describes the semantics of \textit{Sequential
-  Function Charts (SFC's)}, as realized in the tool \Slime.  The semantics
-is defined for successfully \emph{checked} SFC's (cf.\ 
-Section~\ref{sec:checks}); unchecked SFC's don't have a meaning.
-Especially, the simulator, which realizes the semantics, can assume checked
-syntax.
+The section informally describes the semantics of \textit{Sequential Function
+  Charts (SFC's)}, as realized in the tool \Slime.  The semantics is defined
+for successfully \emph{checked} SFC's (cf.\ Section~\ref{sec:checks});
+unchecked SFC's don't have a meaning.  Especially, the simulator, which
+realizes the semantics, can assume checked syntax.
+
+
 
 \subsection{Sequential Function Charts}
 
 We explain the semantics with the help of the example from
 Figure~\ref{fig:SFC}.
-
-
-
-
-
 
 
 \ifweb
@@ -44,61 +40,84 @@ Figure~\ref{fig:SFC}.
 \fi
 
 
-
-
-
 The SFC's consist of nodes, called \emph{steps}, to which \emph{actions} are
-associated, and \emph{transitionen} between steps, decorated with boolean
+associated, and \emph{transitions} between steps, decorated with boolean
 \emph{guards.} Always, one ore more of the steps are active and the actions
-associate with this active steps are executed within one cylcle.  The
+associate with this active steps are executed within one cycle.  The
 transition from $s_1$ to both $s_2$ and $s_3$ (with double horizontal line) is
-a \emph{parallel} branching: if this transition is taken, 
-$s_1$ is deactivated and both $s_2$ and $s_3$ get activated.
+a \emph{parallel} branching: if this transition is taken, $s_1$ is deactivated
+and both $s_2$ and $s_3$ get activated.  Since this is one transition, and
+each transition has exactly one guard, the guard is labeled on the upper part
+of the transition.
+
+In contrast, the ``branching'' from $s_3$ to $s_5$ and $s_6$ is no real
+branching, it is just an abbreviation for two different transitions: one
+leading from $s_3$ to $s_5$, the other leading from $s_3$ to $s_6$.
+Therefore, the guards are labeled to the lower parts, since each transition
+has exactly one guard.
 
 The topmost step (marked specifically) is \emph{initial.}  The ''N'' on the
 left-hand side of the actions is a \emph{qualifier}, stating that the action
 is to be executed in each cycle in which the step is active. There are other
-qualifiers, too, but we neglect them for the teme being,
-Qualifier, die wir aber erst einmal vernachlässigen.
+qualifiers, too, but we will neglect them unless we find good reasons for
+taking them into account.
 
 The behavior of an SFC during one \emph{cycle} is as follows.
 \begin{enumerate}
-\item reading inputs from the environment
-\item executing the actions from the active steps
-\item evaluate the guards
-\item take transition(s) (if possible)
-\item write outputs
+\item Reading inputs from the environment.
+\item Executing the actions from the active steps.  This is done in two steps
+  as follows:
+  \begin{enumerate}
+  \item Assemble all active actions (as a set, so each action appears at most
+    one time).
+  \item Execute the assembled actions in an arbitrary order.
+  \end{enumerate}
+\item Evaluate the guards.\footnote{If one does not allow propositions like
+    \emph{step\_1\_is\_active}, taking a transition can only disable another
+    transition by deactivating its source steps, the guards will remain true.}
+\item Take transition(s) (if possible).
+\item Write outputs.
 \end{enumerate}
 The cycle is executed repeatedly.  The parts for \emph{reading inputs} and
 \emph{writing outputs} are irrelevant for us, as we consider closed systems
-ony, i.e., systems whose variables are changed only by the system itself, but
+only, i.e., systems whose variables are changed only by the system itself, but
 not by the outside.
 
-Each transition is equipped by a \emph{guard,} i.e., a boolean expression. A transition can be taken only if the guard evaluates to true.
+Each transition is equipped by a \emph{guard,} i.e., a boolean expression. A
+transition can be taken only if the guard evaluates to true, and, if all the
+source steps of the transition are active.  We do not enforce the target steps
+to be disabled.\footnote{If during a run a transition is taking which enters
+  an already active step, the SFC is either built using a strange programming
+  style or there is a mistake.  But in principle, there seems to be no reason
+  to enforce target steps to be deactive.}
 
 If more than one step is active in a parallel branch, the execution of the
 corresponding action is chosen \emph{non-deterministically}. This means,
 they can be executed in an arbitrary order (\emph{interleaving semantics}).
+
+There is a second source of non-determinism, namely the set of actions
+associated to the active steps.  These actions will be first assembled, and
+then non-deterministically executed.  Each action will only be executed once,
+even if an action is associated to two different active steps.
+
 Consequently, a program may have a number of different execution runs.  The
-simulator could realize the different runs in that it asks the user, in
-which order the actions should be performed. An alternative is, to determie
-the order by a random generator.
+simulator could realize the different runs in that it asks the user, in which
+order the actions should be performed, and which transition should be taken if
+several are possible.  An alternative is, to determine the order by a random
+generator.
 
+The transition from $s_4$ and $s_7$ to $s_8$ closes the parallel branch again.
+Such a transition can be taken only, if \emph{all} source steps are active. In
+other words, this transition can be taken if it's guard evaluates to true and
+furthermore both $s_4$ and $s_7$ are active.
 
-The transition from $s_4$ and $s_5$ to $s_8$ closes the parallel branch
-again.  Such a transition can be taken only, if \emph{all} source, steps
-are active. In other words, this transition can be taken if it's guard
-evaluates to true and furthermore both $s_4$ und $s_5$ are active.
 
 
 \subsection{States}
 \label{sec:states}
 
-
 The global state of a program is given by the assignment to all variables and
 the set of all active steps.
-
-
 
 
 
