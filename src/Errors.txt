@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.126 2002-07-07 14:45:11 swprakt Exp $
+## $Id: Errors.txt,v 1.127 2002-07-07 14:55:06 swprakt Exp $
 ###########################################################
 
 
@@ -40,6 +40,13 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+Errors 66:    interface
+ package:     checks
+ class:       non-fatal, design-question
+ status:      reported, Steffen, 7.7.02
+ description:  inconsistency in the interface of Typechecker.check and 
+              Wellformed.check, one throws CheckException, the other WException.
 Error 65:     interface
  class:       non-fatal
  status:      reported, Steffen 7.7.02
@@ -198,7 +205,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.126 2002-07-07 14:45:11 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.127 2002-07-07 14:55:06 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
