@@ -15,11 +15,15 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.16 2002-07-04 16:51:29 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.17 2002-07-04 17:56:11 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.16  2002/07/04 16:51:29  swprakt
+ * For-Loop now partially functioning, a better modifierstatement-handling
+ * was added to my wishlist. (mwe)
+ *
  * Revision 1.15  2002/07/04 16:27:18  swprakt
  * New Versions without the expressions-operations-precedence-error
  * and with added support for doubles and for-loops.
@@ -946,6 +950,12 @@ expr:l ADD expr:r {:  // PLUS + 0
  RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+ADD expr:r {:  // PLUS + 0
+ java.lang.Integer opCode = new java.lang.Integer(0);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( opCodeValue, r ); 
+    :} 
+|
 expr:l SUB expr:r {:  // MINUS - 1
  java.lang.Integer opCode = new java.lang.Integer(1);
  int opCodeValue = opCode.intValue();
@@ -964,10 +974,22 @@ expr:l MUL expr:r {: // TIMES * 2
  RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+MUL expr:r {: // TIMES * 2 "wrong expression"
+ java.lang.Integer opCode = new java.lang.Integer(2);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
+    :} 
+|
 expr:l DIV expr:r {: // DIV / 3
  java.lang.Integer opCode = new java.lang.Integer(3);
  int opCodeValue = opCode.intValue();
  RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+DIV expr:r {: // DIV / 3  "wrong expression"
+ java.lang.Integer opCode = new java.lang.Integer(3);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
     :} 
 |
 expr:l AND expr:r {: // AND && 4
@@ -976,10 +998,22 @@ expr:l AND expr:r {: // AND && 4
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+AND expr:r {: // AND && 4 "wrong expression"
+    java.lang.Integer opCode = new java.lang.Integer(4);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
+    :} 
+|
 expr:l OR expr:r {: // OR || 5
  java.lang.Integer opCode = new java.lang.Integer(5);
  int opCodeValue = opCode.intValue();
  RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+OR expr:r {: // OR || 5 "wrong expression"
+ java.lang.Integer opCode = new java.lang.Integer(5);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
     :} 
 |
 NOT expr:r {: // NEG (NOT) ! 6
@@ -994,10 +1028,22 @@ expr:l EQ expr:r {: // EQ == 7
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+EQ expr:r {: // EQ == 7 "wrong expression"
+    java.lang.Integer opCode = new java.lang.Integer(7);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
+    :} 
+|
 expr:l LT expr:r {: // LESS < 8
  java.lang.Integer opCode = new java.lang.Integer(8);
  int opCodeValue = opCode.intValue();
  RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+LT expr:r {: // LESS < 8 "wrong expression"
+ java.lang.Integer opCode = new java.lang.Integer(8);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.U_expr( l, opCodeValue, r ); 
     :} 
 |
 expr:l GT expr:r {: // GREATER > 9
@@ -1006,10 +1052,22 @@ expr:l GT expr:r {: // GREATER > 9
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+GT expr:r {: // GREATER > 9 "wrong expression"
+    java.lang.Integer opCode = new java.lang.Integer(9);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
+    :} 
+|
 expr:l LEQ expr:r {: // LEQ <= 10
     java.lang.Integer opCode = new java.lang.Integer(10);
     int opCodeValue = opCode.intValue();
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+LEQ expr:r {: // LEQ <= 10 "wrong expression"
+    java.lang.Integer opCode = new java.lang.Integer(10);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
     :} 
 |
 expr:l GEQ expr:r {: // GEQ >= 11
@@ -1018,10 +1076,22 @@ expr:l GEQ expr:r {: // GEQ >= 11
  RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+GEQ expr:r {: // GEQ >= 11 "wrong expression"
+ java.lang.Integer opCode = new java.lang.Integer(11);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
+    :} 
+|
 expr:l NEQ expr:r {: // NEQ != 12
     java.lang.Integer opCode = new java.lang.Integer(12);
     int opCodeValue = opCode.intValue();
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+NEQ expr:r {: // NEQ != 12 "wrong expression"
+    java.lang.Integer opCode = new java.lang.Integer(12);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
     :} 
 |
 expr:l MOD expr:r {: // MOD % 13
@@ -1035,6 +1105,14 @@ expr:l POW expr:r {: // POW ^ 14
     int opCodeValue = opCode.intValue();
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
+
+expr:l NOT expr:r {: // NEG (NOT) ! 6 "very wrong expression" - does the checker check this, what is about precedence?
+    java.lang.Integer opCode = new java.lang.Integer(6);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( opCodeValue, r ); 
+    :} 
+|
+
 ;
 
 
