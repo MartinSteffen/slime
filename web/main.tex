@@ -1,0 +1,193 @@
+
+
+
+\input{switches}
+
+\documentclass[11pt,german]{article}
+\usepackage{hevea}
+%\usepackage{url}
+\usepackage{babel}
+\usepackage{epsfig}
+\usepackage{tfheader}
+\usepackage{a4wide}
+\usepackage[latin1]{inputenc}
+
+\input{macros}
+
+
+\title{{\huge\bf \textsl{S}equentia\textsl{l} Funct\textsl{i}on Charts
+    \textsl{M}odeling \textsl{E}nvironment (aka.\ \Slime)}}
+%\author{}
+%\url{}{Martin Steffen}}
+\date{}
+
+
+
+\ifweb
+
+\htmlfoot{\hrulefill{}
+  {\footnotesize Pages last (re-)generated \today}}
+\renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}  
+\fi
+
+
+
+
+\begin{document}
+\vspace{-2cm}
+
+
+%\pagestyle{empty}
+
+\begin{rawhtml}
+<a href="http://www.techfak.uni-kiel.de/">
+  <img border=0 alt="[Technical Faculty]" height=20  src="/images/tflogo.gif"></a>
+<hr>
+\end{rawhtml}
+
+
+\maketitle{}
+
+
+\section*{Pflichtenheft}
+\label{sec:pflichtenheft}
+
+Die folgende Liste enthält das Pflichtenheft. Der erste Eintrag ist
+jeweils der \emph{aktuelle.}
+
+
+\begin{center}
+  \begin{tabular}[t]{r@{\quad}l@{\quad\quad}l@{\quad\quad}p{9cm}}
+    1.
+    & 
+    \url{pflichtenheft1/}{Version 1}
+    &
+    10.\ April 2002
+    & 
+    Originalversion zu Beginn
+  \end{tabular}
+\end{center}
+
+
+
+\input{zeitplan}
+
+\section*{Arbeitsgruppen}
+\label{sec:gruppen}
+
+Jedes der Teams bearbeitet i.d.R.\ ein Java-Paket. Die Beschreibung der
+Aufgabenstellung findet sich im Pflichtenheft.
+
+\iffalse
+\begin{table}[htbp]
+  \centering
+  \begin{tabular}[t]{l@{\quad\quad}l}
+     Paket  &  Gruppe
+     \\\hline
+     Gui/Integration & 
+     \\
+     Editor &
+     \\
+     Checks & 
+     \\
+     SMV-Backend
+     &
+     \\
+     Simulator
+     &
+  \end{tabular}
+  \caption{Gruppeneinteilung}
+  \label{tab:gruppen}
+\end{table}
+\fi
+
+
+
+Die \emph{Mailadressen} der Teilnehmner finden sich (intern) unter
+\begin{verbatim}
+      $WORKDIR/Slime/org/gruppen.txt
+\end{verbatim}
+
+
+\section*{Baselines}
+\label{sec:Baselines}
+
+
+Die \emph{Baselines} sind hier zur schnelleren Referenz als \emph{Javaarchiv}
+\texttt{slime\_v[x].jar} festgehalten, wobei \texttt{[x]} die Nummber des
+Schnappschusses ist. Als Entwickler mit Zugriff auf das Quellcoderepositorium
+kann man die Entwicklungsschritte sie natürlich mittels \cvs{} wieder
+zurückholen. Zum Ausführen der Archivs speichere man die Datei
+\texttt{slime\_v[x].jar} an einen geeigneten Platz, und rufe
+
+\begin{verbatim}
+  java -classpath [geeigneter_platz]/slime_v[x].jar gui.Gui
+\end{verbatim}
+auf; alternativ kann man auch fest
+\begin{verbatim}
+ export CLASSPATH=[geeigneter_platz]/slime_v[x].jar
+\end{verbatim}
+setzen, dann kann man sich die option \texttt{-classpath} schenken.
+
+
+\medskip
+
+\begin{tabular}{llll}
+  3. & \url{baselines/slime\_v3.0.jar}{Baseline 3}
+  &
+  Parser an Bord
+  &
+  1. Juli 2001
+  \\
+  2. & \url{baselines/snot\_v2.0.jar}{Baseline 2}
+  &
+  Simulator an Bord
+  &
+  13. Juni 2001
+  \\
+  1. & \url{baselines/snot\_v1.0.jar}{Baseline 1}
+  &
+  erste Gesamtkompilation
+  &
+  5. Juni 2001
+\end{tabular}
+
+\section*{HTML-Dokumentation}
+\label{sec:html-doc}
+
+
+
+Zur schnelleren Orientierung wird die mit \javadoc{} dokumentierte
+Implementierung im Netz bereitgestellt. Die Seiten werden bei größeren
+Entwicklungsschritten aufgefrischt.
+
+\begin{center}
+  \importantxx{Dokumentation \url{doc}{Slime}}: momentan (\today): 
+  momentan leer
+\end{center}
+
+
+
+
+
+
+\input{konventionen}
+
+
+
+\bibliographystyle{alpha}
+
+
+
+\bibliography{string,etc,oop,crossref}
+
+
+\end{document}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
