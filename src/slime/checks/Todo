@@ -1,6 +1,12 @@
+################################################################
+## $Id: Todo,v 1.4 2002-06-24 17:43:57 swprakt Exp $
+################################################################
 
 
 
+
+  - currnently, eveerything is public for testing,
+    make parts of it private.
 
 
   - make a clean structure/name conventions etc.
@@ -11,9 +17,6 @@
 
   - Exceptions:
 
-	 - unboolean guard
-	 - undeclared variable
-	 - variable declared twice?
 	 -
 	
 	
