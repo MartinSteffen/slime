@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.157 2002-07-09 07:11:03 swprakt Exp $
+n## $Id: Errors.txt,v 1.158 2002-07-09 08:37:49 swprakt Exp $
 ###########################################################
 
 
@@ -52,6 +52,13 @@ Rules of the game:
 
 
 
+
+Error 72:    crash
+ package:    all (jar-archive secondcompilation-sep)
+ class:      fatal, user-visible
+ status:     reported Ben Lukoschus, 9.7.02
+ description: invoking the jar-file with java version "1.2.2" crashes (!) the 
+             X-Window system.
 
 
 
@@ -230,7 +237,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.157 2002-07-09 07:11:03 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.158 2002-07-09 08:37:49 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
