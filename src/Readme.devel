@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Readme.devel,v 1.3 2002-04-17 08:10:26 swprakt Exp $
+# $Id: Readme.devel,v 1.4 2002-04-17 08:14:01 swprakt Exp $
 #######################################################
 
 
@@ -45,18 +45,4 @@ o Files and directories
 
          templates/     How to mark the package and to
                         use cvs-logs in java-doc comments.
-
-
-
-
-
-
-           
-
-
-       
-
-                   
-                    
-        
 
