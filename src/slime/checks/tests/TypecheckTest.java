@@ -9,7 +9,7 @@ import slime.absynt.*;
  * A little testing of the typechecker, using the parser
  * code ``recycled'' from sfcparser.ParserTest.java
  * @author Martin Steffen
- * @version $Id: TypecheckTest.java,v 1.4 2002-07-05 19:24:56 swprakt Exp $
+ * @version $Id: TypecheckTest.java,v 1.5 2002-07-05 19:39:40 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
@@ -69,6 +69,7 @@ public class TypecheckTest {
       System.exit(1);
     } catch (Exception e) {
       System.err.println( "TypecheckTest: " + e.toString() );
+      System.err.println( "TypecheckTest: " + e.getMessage() );
       // System.out.println( treestring );
       System.exit(1);
     } // end of try-catch

@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.26 2002-07-05 19:10:22 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.27 2002-07-05 19:39:40 swprakt Exp $
  */
 
 public class Typecheck {
@@ -282,7 +282,8 @@ public class Typecheck {
             catch (Exception e) {
 	      System.out.println("here we go");
 	      System.out.println(e.getMessage());
-	      throw (TypeMismatch)(e);
+	      //	      throw (TypeMismatch)(e);  // probably wrong
+	      throw (TypecheckException)(e);  // probably wrong
             }
             // this last try-catch-throw is a type-cast for
             // exceptions. The visitor is declared to throw the most
@@ -419,6 +420,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.26  2002/07/05 19:10:22  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.25  2002/07/05 18:08:06  swprakt
 //    I added the visitor wrapper for typechecking SFC's
 //
@@ -525,6 +529,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.26 2002-07-05 19:10:22 swprakt Exp $
+//    $Id: Typecheck.java,v 1.27 2002-07-05 19:39:40 swprakt Exp $
 //
 //---------------------------------------------------------------------

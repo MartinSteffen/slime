@@ -1,5 +1,5 @@
 #########################################################################
-## $Id: Status,v 1.13 2002-07-02 07:03:31 swprakt Exp $
+## $Id: Status,v 1.14 2002-07-05 19:39:39 swprakt Exp $
 #########################################################################
 
 
@@ -7,6 +7,11 @@
 
 Project-internal status file, currently informally formatted.
 -------------------------------------------------------------
+
+
+Status for the meeting at Julu 10:
+	- 
+	- parser:        finished.
 
 
 Status for the meeting at July 3.:
