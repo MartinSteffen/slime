@@ -4,8 +4,8 @@
   \andalso
   \vec{x} = \Varin
   }{
-  (\sigma,\eta,\waitinput) \transin{v}
-  (\sigma,\eta',\doneinput{\act(\sigma)})
+  (S,\eta,\inputstatus) \transin{v}
+  (S,\eta',\calcstatus{\act(S)})
   }
 
 \\
@@ -15,9 +15,9 @@
   \andalso
   \eta' = \sem{}{a}(\eta)
   }{
-  (\sigma,\eta,\doneinput{A}) 
+  (S,\eta,\calcstatus{A}) 
   \trans{}
-  (\sigma,\eta',\doneinput{A\without a})
+  (S,\eta',\calcstatus{A\without a})
   }
 
 \infrule{No-Act}{
@@ -25,28 +25,41 @@
   T = \{
   S_s \edge{g} S_t \in T
   \suchthat
-  S_s \subseteq \sigma
+  S_s \subseteq S
   \land
   \sem{\eta}{g} = \ltrue \}
   }{
-  (\sigma,\eta,\doneinput{\emptyset})
+  (S,\eta,\calcstatus{\emptyset})
   \trans{}
-  (\sigma,\eta,\finished{T})
+  (S,\eta,\outputstatus{T})
   }
 
 \\
 
-\infrule{Next-Steps}{%
+\infrule{Trans}{%
   t =  S_s \edge{g} S_t
  \in T
   \andalso
-  S_s  \subseteq \sigma
+  S_s  \subseteq S
   \andalso
-  \sigma' = (\sigma \union S_t) \without S_s
+  S' = (S \union S_t) \without S_s
   }{
-  (\sigma,\eta,\finished{T})
+  (S,\eta,\outputstatus{T})
   \trans{}
-  (\sigma',\eta,\finished{T \without t})
+  (S',\eta,\outputstatus{T \without t})
+  }
+
+\\
+\infrule{No-Trans}{%
+  S_s \edge{g} S_t
+ \in T
+  \andalso
+  S_s  \not\subseteq S
+  \andalso
+  }{
+  (S,\eta,\outputstatus{T})
+  \trans{}
+  (S,\eta,\outputstatus{T \without t})
   }
 
 \\
@@ -56,8 +69,8 @@
   \andalso
   \vec{x} = \Varout
   }{%
-  (\sigma,\eta, \finished{\emptyset}) \transout{\vec{v}}
-  (\sigma,\eta,\waitinput)
+  (S,\eta, \outputstatus{\emptyset}) \transout{\vec{v}}
+  (S,\eta,\inputstatus)
   }
 
 %%% Local Variables: 

@@ -24,6 +24,8 @@
 
 \newcommand{\suchthat}{\mathrel{\mid}}
 \newcommand{\union}  {\cup}
+\newcommand{\intersect}  {\cap}
+\newcommand{\sizeof}[1]  {{\mid}{#1}{\mid}}
 \newcommand{\sem}    [2]        {[\![#2]\!]_{#1}}      %semantics
 
 \newenvironment{diagram}{\begin{displaymath}}{\end{displaymath}}
@@ -107,6 +109,7 @@
 
 
 %%% SFCs
+\newcommand{\init}          {\mathit{init}}
 \newcommand{\act}           {\mathit{act}}
 \newcommand{\Act}           {\mathit{Act}}
 \newcommand{\States}        {\mathit{States}}
@@ -122,13 +125,14 @@
 \newcommand{\target}        {\mathit{tar}}
 \newcommand{\guard}         {\mathit{guard}}
 \newcommand{\Expr}          {\mathit{Expr}}
+\newcommand{\OF}            {\mathrel{:}}
 
 \newcommand{\setto}[2]             {{\scriptstyle [#1\mathop{\mapsto}#2]}}  %setto{x}{v} : [x|->v]  {}
 \newcommand{\substfor}[2]   {}
 
-\newcommand{\waitinput}     {\mathit{W}}%{\mathit{WAITINPUT}}
-\newcommand{\doneinput}[1]  {\mathit{D(#1)}}%{\mathit{DONEINPUT(#1)}}
-\newcommand{\finished}[1]   {\mathit{F(#1)}}%{\mathit{FINISHED(#1)}}
+\newcommand{\inputstatus}       {\mathsf{I}}%{\mathit{WAITINPUT}}
+\newcommand{\calcstatus}[1]     {\mathsf{C}(#1)}%{\mathit{DONEINPUT(#1)}}
+\newcommand{\outputstatus}[1]   {\mathsf{O}(#1)}%{\mathit{FINISHED(#1)}}
 
 
 

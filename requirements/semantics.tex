@@ -1,19 +1,18 @@
 \section{Semantics}
 \label{sec:semantics}
 
-The section informally describes the semantics of \textit{Sequential
-  Function Charts (SFC's)}, as (to be) realized in the tool \Slime.  The
-semantics is defined for successfully \emph{checked} SFC's (cf.\ 
+The section describes the semantics of \textit{Sequential Function Charts
+  (SFC's)}, as (to be) realized in the tool \Slime.  The semantics is
+defined for successfully \emph{checked} SFC's (cf.\ 
 Section~\ref{sec:checks}); unchecked SFC's don't have a meaning.
 Especially, the simulator, which realizes the semantics, can assume checked
 syntax.
 
+\subsection{Informal semantics}
+\label{sec:semantics.informal}
 
-
-\subsection{Sequential Function Charts}
-
-We explain the semantics with the help of the example from
-Figure~\ref{fig:SFC}.
+We start informally and explain the semantics with the help of the example
+from Figure~\ref{fig:SFC}.
 
 
 \ifweb
@@ -79,18 +78,14 @@ The behavior of an SFC during one \emph{cycle} is as follows.
 \item Take transition(s) (if possible).
 \item Write outputs.
 \end{enumerate}
-The cycle is executed repeatedly.  The parts for \emph{reading inputs} and
-\emph{writing outputs} are irrelevant for us, as we consider closed systems
-only, i.e., systems whose variables are changed only by the system itself, but
-not by the outside.
 
-Each transition is equipped by a \emph{guard,} i.e., a boolean expression. A
-transition can be taken only if the guard evaluates to true, and, if all the
-source steps of the transition are active.  We do not enforce the target steps
-to be disabled.\footnote{If during a run a transition is taking which enters
-  an already active step, the SFC is either built using a strange programming
-  style or there is a mistake.  But in principle, there seems to be no reason
-  to enforce target steps to be deactive.}
+Each transition is equipped by a \emph{guard,} i.e., a boolean expression.
+A transition can be taken only if the guard evaluates to true, and, if all
+the source steps of the transition are active.  We do not enforce the
+target steps to be disabled.\footnote{If during a run a transition is
+  taking which enters an already active step, the SFC is either built using
+  a strange programming style or there is a mistake.  But in principle,
+  there seems to be no reason to enforce target steps to be inactive.}
 
 If more than one step is active in a parallel branch, the execution of the
 corresponding action is chosen \emph{non-deterministically}. This means,
@@ -114,79 +109,101 @@ furthermore both $s_4$ and $s_7$ are active.
 
 
 
-\subsection{States}
-\label{sec:states}
-
-The global state of a program is given by the assignment to all variables and
-the set of all active steps.
-
-
 \subsection{Formal semantics}
+\label{sec:semantics.formal}
 
 In this section, we define the operational semantics for SFCs as realized
-in \Slime. An SFC-program is as a tuple $(S,s_i,T,\Var,\act)$, where $S$ is
-the (finite) set of steps, $s_i \in S$ the initial step, and $T$ the set of
-transitions, where $T \subseteq 2^S \times \Expr \times 2^S$ and $\Expr$ is
-the set of expressions. We write $s, s' \ldots$ for typical elements of
-$\Steps$ $t,t', t_1, \ldots$ for typical transitions. The set $\Var$ is the
-set of \emph{variables} where we silently assume all variables to be well
-typed.\footnote{This corresponds to the agreement, that the simulator can
-  rely on \emph{checked} syntax.}  By the typing, some variables are marked
-as input or output variables or both, and we write $\Varin$ and $\Varout$
-for the corresponding subsets of $\Var$. Variables that are neither input
-nor output variable we call \emph{local} variable from the set $\Varloc$
+in \Slime. An SFC-program is as a tuple $(S,s_\init,T,\Var,\act)$, where
+$S$ is the (finite) set of steps, $s_i \in S$ the initial step, and $T$ the
+set of transitions, where $T \subseteq 2^S \times \Expr \times 2^S$ and
+$\Expr$ is the set of expressions as given by the abstract syntax. For
+transitions $S_s \edge{g} S_t$, we assume the following restrictions: the
+sets of sources and targets non-empty and disjoint, and either the the set
+sources contains just one step, or else the set of targets, i.e., $S_s
+\not= \emptyset \not= S_t$, $S_s \intersect S_t = \emptyset$, and
+$\sizeof{S_s} = 1$ or $\sizeof{S_s} = 1$.
+
+We write $s, s' \ldots$ for typical elements steps and $t,t', t_1, \ldots$
+for typical transitions, and we will also write $S_s \edge{g} S_t$ for
+transitions, where $S_s$ and $S_t$ are the sets of source and target steps,
+respectively, and $g$ is a boolean expression, the \emph{guard} of the
+transition. The set $\Var$ is the set of \emph{variables} where we silently
+assume all variables and expressions to be well typed.\footnote{This
+  corresponds to the agreement, that the simulator can rely on
+  \emph{checked} syntax.}  By the typing, some variables are marked as
+input or output variables or both, and we write $\Varin$ and $\Varout$ for
+the corresponding subsets of $\Var$.  Variables that are neither input nor
+output variable we call \emph{local} variable from the set $\Varloc$.  The
+last component $\act \of S \to 2^\Act$ finally attaches a set of actions to
+each steps.\footnote{The example from above in Figure~\ref{fig:SFC} is
+  simplified insofar, as it contains at most \emph{one} action per step.}
+We will use the function analogously also on sets of steps.
 
 
- The last component $\act \of S \to
-2^\Act$ finally attaches a set of actions to each steps.\footnote{The
-  example from above in Figure~\ref{fig:SFC} is simplified insofar, as it
-  contains at most \emph{one} action per step.}
-
-
-\subsubsection{Stores and states}
+\subsubsection{Stores and configurations}
 
 
 
 
 
 The global \emph{store} contains the values of all variables and is
-modelled as a mapping $\Store = \Var \to D$; we use $\eta$ as typical
-element. A \emph{state} $\sigma \of \Sigma = 2^\Steps \times \Store \times
-\States$ of a program is characterised by a set of active steps together
-with a store.
+modeled as a mapping $\Store = \Var \to D$, where $D$ stands for the data
+domain and again we will assume the values in the store to be type
+consistent; we use $\eta$ as typical element of $\Store$. A
+\emph{configuration} $\gamma \OF 2^S\times \Store \times \Status$ of a
+program is characterized by a set of active steps together with a store.
+The third component of a configuration of type $\Status$ is used to control
+the various phases of the system behavior and can be either $\inputstatus$
+(``input''), or $\calcstatus{A}$ (``calculating'') where $A$ is a set of
+actions, or $\outputstatus{T}$ (``output''), where $T$ is a set of
+transitions.
 
-The initial state
 
 
 
 \subsubsection{Operational semantics}
 
 
-The operational rules are shown in Figure~\ref{tab:operationalsemantics}.
-An execution cycle start by reading the input (cf.\ rule \rn{Input}), when
+The operational rules are shown in Figure~\ref{tab:operationalsemantics},
+specifying the labeled transition relation $\trans{l}$ between system
+configurations. The labeled transitions $\transin{\vec{v}}$ and
+$\transout{\vec{v}}$ are used to mark reading the input and writing the
+output variables; all other transitions are unlabeled and internal.
+Initially, the system starts in its initial step waiting for input, i.e., 
+\emph{initial} configuration $\gamma_\init$ is given by
+$(\{s_\init\},\eta_\init,\inputstatus)$, where the initial store
+$\eta_\init$ evaluates all booleans to $\lfalse$ and all integers to $0$.
+
+An execution cycle starts by reading the input (cf.\ rule \rn{Input}), when
 the system is currently in the waiting state. After updating the store
 $\eta$ by assigning values to all input variable as read from the
-environment, the system goes into stage where executing all currently
-active actions given by $\act{\sigma}$, which are collected in rule
-\rn{Input} into the status. In the next stage, the system executes
-non-deterministically one action after the other as given in rule \rn{Act}.
-In this rule $\sem{}{a}$ is the state-transforming effect of the statement
-belonging to the action $a$, i.e., $\sem{}{a}(\eta)$ is the state after
-executing $a$. Since actions contain only sequences of variable
-assignments, we omit a formal definition of the update semantics of
-actions. When no action is left, all currently enabled transitions are
-collected, i.e., the transitions whose source steps are all active and
-whose guards evaluate to $\ltrue$ (cf.\ rule \rn{No-Act}). The rule
-\rn{Next-Steps} calucates the set of active successor steps by working off
-the transitions from $\finished{T}$ one after the other. Note that this
-rule and rule \rn{No-Act} do not have side effects.\footnote{The
-  formulation in \rn{No-Act} collecting all enabled transitions and
-  afterwards calculating the successors with \rn{Next-Steps} rests on the
-  assumption that the guards are side-effect free. Especially, there are
-  no expressions checking for enabledness of transitions.} When the
-transitions are worked-off, output is written in the last stage of the
-cycle and the system enters phase where it waits for new input again (cf.\ 
-rule \rn{Output}).
+environment, and goes into the next stage. In doing so, it collects all
+active actions given by $\act(\sigma)$ into the status.  In the next stage,
+the system executes non-deterministically one action after the other as
+given in rule \rn{Act}.  In this rule $\sem{}{a} \OF \Store \to \Store$ is
+the state-transforming effect of the statement belonging to the action $a$,
+i.e., $\sem{}{a}(\eta)$ is the store after executing $a$ when starting in
+$\eta$.  Since actions contain only sequences of variable assignments, we
+omit a formal definition of the update semantics of actions. When no action
+is left, all currently enabled transitions are collected, i.e., the
+transitions whose source steps are all active and whose guards evaluate to
+$\ltrue$ (cf.\ rule \rn{No-Act}). The rule \rn{Trans} calculates the set of
+active successor steps by working off the enabled transitions from
+$\outputstatus{T}$ one after the other, while disabled transitions are
+discarded by rule \rn{No-Trans}.\footnote{The formulation in \rn{No-Act}
+  collecting all enabled transitions and afterwards calculating the
+  successors with \rn{Trans} and \rn{No-Trans} rests on two assumptions:
+  First, the guards are side-effect free and especially there are no
+  expressions checking for activeness of steps. Secondly, for the division
+  of work between \rn{Trans} and \rn{No-Trans} to be sensible, it must be
+  an invariant of the system that a transition discarded by \rn{No-Trans}
+  would not become enabled by enlarging the set of active steps in
+  \rn{Trans}. In case of a structured use of parallelism (fork/join), where
+  especially sequential dependencies between the parallel parts are
+  avoided, this assumption will hold. This could be a task of the
+  check-group.} When the transitions are worked-off, output is written in
+the last stage of the cycle and the system enters the phase where it waits
+for new input again (cf.\ rule \rn{Output}).
 
 
 \begin{table}[htbp]
