@@ -9,7 +9,7 @@ import slime.absynt.*;
  * this class.
 
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: Typeerrors.java,v 1.1 2002-06-14 09:22:52 swprakt Exp $
+ * @version  $Id: Typeerrors.java,v 1.2 2002-06-14 11:59:10 swprakt Exp $
  */
 
 
@@ -17,6 +17,11 @@ import slime.absynt.*;
 public class Typeerrors {
   public class TypecheckException extends CheckException {
   }
+
+  public class UnbooleanGuard extends TypecheckException {}
+  
+  public class UndeclaredVarible extends TypecheckException{}
+
 }
 
 
@@ -25,5 +30,8 @@ public class Typeerrors {
 //	----------------------------------------
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/06/14 09:22:52  swprakt
+//	*** empty log message ***
+//	
 //	
 //---------------------------------------------------------------------
