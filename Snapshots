@@ -1,6 +1,6 @@
 
 ########################################################
-## $Id: Snapshots,v 1.9 2002-07-09 06:15:52 swprakt Exp $
+## $Id: Snapshots,v 1.10 2002-07-09 09:26:25 swprakt Exp $
 ########################################################
 
 This file contains, for quick reference, a list of the major development
@@ -15,8 +15,10 @@ the form snapshot<nr> as those are reserved for the global snapshots.
 
 
 
- secondcompilation-sep: 9.07.2002
-	    everything compiles (the check's is commented out from the makefile, though)
+ secondcompilation-sep: [9.07.2002]
+
+	    Everything compiles (the check's is commented out from the makefile, though)
+
 	    This baseline does not correspond to any actual state in space-time,
 	    I went back in time for a few classes to make it fit together.
 	    The classes are:
