@@ -1,5 +1,5 @@
 ######################################################
-# $Id: Readme,v 1.3 2002-06-10 14:41:57 swprakt Exp $
+# $Id: Readme,v 1.4 2002-06-25 15:47:02 swprakt Exp $
 ######################################################
 
 
@@ -29,3 +29,10 @@ To test it:
 
 	java utils.TestParser
 
+following java files will be generated:
+ExprParser.java
+Parser.java
+Yylex.java
+sym.java
+
+do not check them in plz
