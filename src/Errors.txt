@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.97 2002-07-06 06:17:28 swprakt Exp $
+## $Id: Errors.txt,v 1.98 2002-07-06 06:29:29 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -38,9 +38,12 @@ Rules of the game:
 
 Error 54:    type check
  class:      to consider
+ package:    checks
  status:     reported, 6.7.02, Steffen
  description: see what the type checker does with example sfc1?
              is that correct? (undeclared variable)
+
+	     It seems that the variable is never added
  
 
 Error 53:    hacks
@@ -119,7 +122,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.97 2002-07-06 06:17:28 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.98 2002-07-06 06:29:29 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
