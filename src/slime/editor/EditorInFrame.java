@@ -12,9 +12,9 @@ import javax.swing.event.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * <br><br>
- * Status: alway complete, since it is for testing only<br>
+ * Status: always complete, since it is for testing only<br>
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.8 2002-06-14 11:21:03 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.9 2002-06-20 11:25:06 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
@@ -23,7 +23,7 @@ public final class EditorInFrame extends JFrame {
    
     private EditorInFrame(Editor editor) {
 	this.editor = editor;
-	this.initWindow("SFC-Editor v.0.3");
+	this.initWindow("SFC-Editor v.0.9");
     }
 
     private void initWindow(String title) {

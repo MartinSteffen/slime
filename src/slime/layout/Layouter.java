@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: Layouter.java,v 1.10 2002-06-14 11:21:05 swprakt Exp $
+ * @version $Id: Layouter.java,v 1.11 2002-06-20 11:25:07 swprakt Exp $
  */
 
 public final class Layouter {
@@ -217,7 +217,7 @@ public final class Layouter {
 	    for (int s=0; s<stepList.size(); s++) {
 		Step target = stepList.get(s);
 		Position pos = new Position((float)(s*(this.STEP_WIDTH)),
-					    (float)(i*(this.STEP_HEIGHT+40)));
+					    (float)(i*(this.STEP_HEIGHT+50)));
 		//if (i == 2)
 		//    pos = new Position((float)((s+1)*(this.STEP_WIDTH+10)),
 		//		       (float)(20+i*(this.STEP_HEIGHT+10)));

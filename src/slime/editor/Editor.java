@@ -14,12 +14,12 @@ import javax.swing.border.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * <BR> <BR>
- * Feel free to play around with this initial version of an SFC-editor.  
+ * Feel free to play around with this non-trivial version of an SFC-editor.  
  * <br><br>
- * Status: about 70% should be implemented. <br>
- * Known bugs: Some semantic problems. <br>
+ * Status: about 80% should be implemented. <br>
+ * Known bugs: Some semantic problems. But who cares if there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.13 2002-06-14 11:21:03 swprakt Exp $
+ * @version $Id: Editor.java,v 1.14 2002-06-20 11:25:06 swprakt Exp $
  */
 
 public final class Editor extends JComponent 
@@ -39,18 +39,15 @@ public final class Editor extends JComponent
     // double click -> change (but not name!!!)
     
     
-    private int               mode                = EDIT_MODE;
-    private int               counter; // For SFC without name
+    private int               mode                  = EDIT_MODE;
     
-    private ESFCList          eSFCList            = new ESFCList();
-    private ESFC              eSFC                = null;
-    private JTabbedPane       drawBoardTabbedPane = new JTabbedPane();
+    private ESFCList          eSFCList              = new ESFCList();
+    private ESFC              eSFC                  = null;
+    private JTabbedPane       drawBoardTabbedPane   = new JTabbedPane();
     private static ScrollPane helpPane;
-    private JScrollPane       guardList           = new JScrollPane();
-    private JScrollPane       actionList          = new JScrollPane();
-    private JScrollPane       declaringList       = new JScrollPane();
-    private JList             actionJList;
-    private JList             guardJList;
+    private ScrollList        guardScrollList;
+    private ScrollList        actionScrollList;
+    private ScrollList        declarationScrollList;
     private MenuAndStatePanel menuAndStatePanel;
 
     /**
@@ -65,6 +62,40 @@ public final class Editor extends JComponent
      */
     public Editor(SFC sfc) {
 	this.menuAndStatePanel = new MenuAndStatePanel(this);
+	this.menuAndStatePanel.setMode("E");
+	this.menuAndStatePanel.setBorder(
+	    this.getTitledBorder("Menu & Status"));
+
+	this.declarationScrollList = new ScrollList(BACKGROUND_COLOR, 
+						    "Add new declaration");
+	this.declarationScrollList.setBorder(
+	    this.getTitledBorder("Declarations"));
+	this.declarationScrollList.getButton().addActionListener(
+	    new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    menuAndStatePanel.setStatusMessage(
+			"Adding new declaration ... .Not implemented yet, waiting for next parser version :-)");
+		}
+	    });
+
+	this.guardScrollList = new ScrollList(BACKGROUND_COLOR);
+	this.guardScrollList.setBorder(
+	    this.getTitledBorder("Guards"));
+
+	this.actionScrollList = new ScrollList(BACKGROUND_COLOR, 
+					       "Add new action");
+	this.actionScrollList.setBorder(this.getTitledBorder("Actions"));
+	this.actionScrollList.getList().addMouseListener(
+	    new ActionListListener(this));
+	this.actionScrollList.getButton().addActionListener(
+	    new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    menuAndStatePanel.setStatusMessage(
+			"Adding new action ...");
+		    addAction();
+		}
+	    });
+
 	this.drawBoardTabbedPane.addChangeListener(this);
 	this.addHelpPane();
 	this.add(sfc);
@@ -86,6 +117,15 @@ public final class Editor extends JComponent
 	this.updateWindow();
     }
 
+    public void closeSelectedSFC() {
+	this.eSFCList.remove(this.eSFC);
+	int index = this.drawBoardTabbedPane.getSelectedIndex();
+	this.drawBoardTabbedPane.removeTabAt(index);
+	this.drawBoardTabbedPane.setSelectedIndex(index-1);
+	ChangeEvent e = new ChangeEvent(this.drawBoardTabbedPane);
+	this.stateChanged(e);
+    } 
+
     /**
      * Adds the given sfc to the editor in a seperate DrawBoard.
      */
@@ -95,6 +135,14 @@ public final class Editor extends JComponent
 	this.eSFCList.add(this.eSFC);
 	this.addTabbedPane(this.eSFC);
     }
+
+    protected void add(SFC sfc, String name) {
+	int i = name.lastIndexOf('.');
+	name = name.substring(0,i);
+	sfc.name = name;
+	this.add(sfc);
+    }
+
     
     /**
      * Return the current selected ESFC of this editor or null if no ESFC is selected.
@@ -120,113 +168,33 @@ public final class Editor extends JComponent
 	this.add(this.getCenterPanel(), BorderLayout.CENTER);
 	JPanel westPanel = new JPanel();
 	westPanel.setLayout( new BorderLayout() );
-	westPanel.add(this.guardList, BorderLayout.NORTH);
-	westPanel.add(this.actionList, BorderLayout.CENTER);
-	westPanel.add(this.declaringList, BorderLayout.SOUTH);
+	westPanel.add(this.guardScrollList,
+		      BorderLayout.NORTH);
+	westPanel.add(this.actionScrollList,
+		      BorderLayout.CENTER);
+	westPanel.add(this.declarationScrollList, 
+		      BorderLayout.SOUTH);
 	this.add(westPanel, BorderLayout.WEST);
 	this.updateWindow();
 	this.setBorder(this.getTitledBorder("Editor"));
 	this.setVisible(true);
     }
 
-    private void updateWindow() {
+    /**
+     * Updates the editors components.
+     */
+    public void updateWindow() {
 	if (this.eSFC != null) {
-	    this.getGuardList();
-	    this.getActionList();
-	    this.getDeclaringList();
+	    SFC sfc = this.eSFC.getSFC();
+	    this.guardScrollList.setList(sfc.transs);
+	    this.actionScrollList.setList(sfc.actions);
+	    this.declarationScrollList.setList(sfc.declist);
 	} else {
-	    JList list = new JList();
-	    list.setBackground(BACKGROUND_COLOR);
-	    list.setFixedCellWidth(150);
-	    this.guardList.setViewportView(list);
-	    list = new JList();
-	    list.setBackground(BACKGROUND_COLOR);
-	    list.setFixedCellWidth(150);
-	    this.actionList.setViewportView(list);
-	    list = new JList();
-	    list.setBackground(BACKGROUND_COLOR);
-	    list.setFixedCellWidth(150);
-	    this.declaringList.setViewportView(list);
+	    this.guardScrollList.removeList();
+	    this.actionScrollList.removeList();
+	    this.declarationScrollList.removeList();
 	}
     }
-
-    private JScrollPane getGuardList() {
-	Object[] o;
-	SFC sfc	= this.eSFC.getSFC();
-	if (sfc == null)
-	    o = new Object[0];
-	else {
-	    LinkedList transitionList = sfc.transs;
-	    LinkedList guards = new LinkedList();
-	    for (int i=0; i<transitionList.size(); i++) {
-		Transition transition = (Transition)transitionList.get(i);
-		Expr guard = transition.guard;
-		String name = this.eSFC.output(guard);
-		if (!this.isStringInList(guards, name))
-		    guards.add(name);
-	    }
-	    o = guards.toArray();
-	}
-	guardJList = new JList(o);
-	guardJList.setBackground(BACKGROUND_COLOR);
-	guardJList.addMouseListener(this);
-	guardList.setViewportView(guardJList); // = new JScrollPane(guardJList);
-	guardList.setBorder(this.getTitledBorder("Guards"));
-	guardList.setBackground(BACKGROUND_COLOR);
-	guardJList.setFixedCellWidth(150);
-	return guardList;
-    }
-
-    private boolean isStringInList(LinkedList list, String string) {
-	for (int i=0; i<list.size(); i++) 
-	    if (list.get(i).toString().equals(string))
-		return true;
-	return false;
-    }
-
-    private JScrollPane getActionList() {
-	Object[] o;
-	SFC sfc = this.eSFC.getSFC();
-	if (sfc == null)
-	    o = new Object[0];
-	else {
-	    LinkedList aList = sfc.actions;
-	    o = new Object[aList.size()];
-	    for (int i=0; i< aList.size(); i++) {
-		String s = this.eSFC.output((slime.absynt.Action)aList.get(i));
-		o[i] = s;
-	    }
-	}
-	this.actionJList = new JList(o);
-	actionJList.setBackground(BACKGROUND_COLOR);
-	actionList.setViewportView(this.actionJList); // = new JScrollPane(this.actionJList);
-	actionList.setBorder(this.getTitledBorder("Actions"));
-	actionList.setBackground(BACKGROUND_COLOR);
-	actionJList.setFixedCellWidth(150);
-	return actionList;
-    }
-
-    private JScrollPane getDeclaringList() {
-	Object[] o;
-	SFC sfc = this.eSFC.getSFC();
-	if (sfc == null)
-	    o = new Object[0];
-	else {
-	    LinkedList dList = sfc.declist;
-	    o = new Object[dList.size()];
-	    for (int i=0; i< dList.size(); i++) {
-		String s = this.eSFC.output((slime.absynt.Declaration)dList.get(i));
-		o[i] = s;
-	    }
-	}
-	JList list = new JList(o);
-	list.setBackground(BACKGROUND_COLOR);
-	declaringList.setViewportView(list); // = new JScrollPane(list);
-	declaringList.setBorder(this.getTitledBorder("Declarations"));
-	declaringList.setBackground(BACKGROUND_COLOR);
-	list.setFixedCellWidth(150);
-	return declaringList;
-    }    
 
     /**
      * Returns a titled border with the given name.
@@ -248,9 +216,9 @@ public final class Editor extends JComponent
 
     private void addTabbedPane(ESFC eSFC) {
 	ScrollPane jsp = new ScrollPane();
-	jsp.setSize(640,480);
+	jsp.setSize(700,480);
 	jsp.add(eSFC.getDrawBoard());
-	this.drawBoardTabbedPane.add("SFC "+counter++, jsp);
+	this.drawBoardTabbedPane.add(eSFC.getSFC().name, jsp);
 	this.drawBoardTabbedPane.setSelectedComponent(jsp);
     }
 
@@ -267,9 +235,9 @@ public final class Editor extends JComponent
 	tA.append("- Move a group of steps ...\n"
 		  +"Mark the set of steps you wish to move as a set of source or target steps and move them like one step.\n\n");
 	tA.append("- Change the name of a step ...\n"
-		  +"Double click on the step.\n\n");
+		  +"Switch with 'e' to EDIT-mode and click on the step.\n\n");
 	tA.append("- Mark a step as initial ...\n"
-		  +"Double click on the step and check the 'Initial step' button.\n\n");
+		  +"Switch with 'e' to EDIT-mode, click on the step and check the 'Initial step' button.\n\n");
 	tA.append("- Mark a step as source ...\n"
 		  +"Switch with 's' to SOURCE-mode and leftclick on the step.\n\n");
 	tA.append("- Mark a step as target ...\n"
@@ -278,6 +246,11 @@ public final class Editor extends JComponent
 		  +"Press 'c' to unmark all source and target steps.\n\n");
 	tA.append("- Add transition(s) between marked source and target steps ...\n"
 		  +"Press 'g' and select or input a guard.\n\n");
+	tA.append("- Modify an action in the action list ...\n"
+		  +"Double click on the action in the list.\n\n");
+	tA.append("- Change a guard at a transition ...\n"
+		  +"Switch with 'e' to EDIT-mode and click on the guard.\n\n");
+
 	tA.setEnabled(false);
 	tA.setWrapStyleWord(true);
 	tA.setLineWrap(true);
@@ -287,47 +260,23 @@ public final class Editor extends JComponent
 	this.drawBoardTabbedPane.setSelectedComponent(helpPane);
     }
     
-    protected void evaluateDoubleMouseClickOn(int x, int y) {
-	Step step = this.determineSelectedStep(this.eSFC.getSFC().steps, x, y);
-	if (step != null) {
-	    this.menuAndStatePanel.setStatusMessage("Change step attributes.");
-	    this.stepDialogWindow("Change step ...", step, x, y);
-	}
-    }
-
     private void stepDialogWindow(String title, Step step, int x, int y) {
 
-	Object[] o;
-	SFC sfc = this.eSFC.getSFC();
-	if (sfc == null)
-	    o = new Object[0];
-	else {
-	    LinkedList aList = sfc.actions;
-	    o = new Object[aList.size()];
-	    for (int i=0; i< aList.size(); i++) {
-		String s = this.eSFC.output((slime.absynt.Action)aList.get(i));
-		o[i] = s;
-	    }
-	}
-	JList actionJList = new JList(o);
-	JScrollPane actionList = new JScrollPane(actionJList);
-	
-
+	ScrollList actionScrollList = new ScrollList(BACKGROUND_COLOR, 
+						     this.eSFC.getSFC().actions);
 	int[] selectedIndices = this.getActionIndices(step);
-	actionJList.setSelectedIndices(selectedIndices);
+	actionScrollList.setSelectedIndices(selectedIndices);
 
 	boolean isIStep = (step == this.eSFC.getSFC().istep);
-	Object[] message = new Object[7];
+	Object[] message = new Object[5];
 	String name = "";
 	if (step != null)
 	    name = step.name;
-	message[0] = "Name";
+	message[0] = "Name:";
 	message[1] = (new JTextField(name));
-	message[2] = (new JRadioButton("Initial step", isIStep));
-	message[3] = "SAP";
-	message[4] = (new JTextField(""));
-	message[5] = "Existing actions";
-	message[6] = (actionList);
+	message[2] = "Choose actions:";
+	message[3] = (actionScrollList.getScrollList());
+	message[4] = (new JRadioButton("Initial step", isIStep));
 	String[] options = {"Ok", "Cancel"};
 	
 	int result = JOptionPane.showOptionDialog(
@@ -345,38 +294,12 @@ public final class Editor extends JComponent
 	    if (step == null)
 		step = this.eSFC.addStep(((JTextField)message[1]).getText(), x, y);
 	    step.name = ((JTextField)message[1]).getText();
-	    if (((JRadioButton)message[2]).isSelected())
+	    if (((JRadioButton)message[4]).isSelected())
 		this.eSFC.getSFC().istep = step;
 	    else
 		if (isIStep)
 		    this.eSFC.getSFC().istep = null;
-	    String sapString = ((JTextField)message[4]).getText();
-	    LinkedList sap = new LinkedList();
-
-	    // FIX ME: Name schon vorhanden ??
-	    // FIX ME: Name muss gewaehlt werden koennen
-	    // FIX ME: Neue Variablen muessen eingefuegt werden
-	    // FIX ME: Testen, ob Varaiblen schon vorhanden sind und ob Typ gleich ist.
-	    if (!sapString.equals("")) {
-		slime.utils.Parser parser = new slime.utils.Parser();
-		try {
-		    sap = parser.parseSAP(sapString);
-		} catch (ParseException e) {
-		    this.menuAndStatePanel.setStatusMessage("Parser fails on SAP");
-		} catch (Exception e) {
-		    this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
-		}
-	    }
-	    step.actions = this.getStepActions(actionJList);
-	    if (sap.size() != 0) {
-		slime.absynt.Action action = new slime.absynt.Action(((JTextField)message[1]).getText(), sap);
-		step.actions.add(new StepAction(new Nqual(), ((JTextField)message[1]).getText()));
-		this.eSFC.getSFC().actions.add(action);
-		this.updateWindow();
-	    }
-		
 	}
-	//this.pack();
     }
     
     // FIX ME: Auf jeden Fall optimieren !!!
@@ -412,28 +335,51 @@ public final class Editor extends JComponent
     }
 
     protected void evaluateSingleMouseClickOn(int x, int y) {
-	Step step = this.determineSelectedStep(this.eSFC.getSFC().steps, x, y);
-	if (step != null) {
-	    if (mode == REMOVE_MODE) {
-		this.eSFC.removeStep(step);
-		this.updateWindow();
-		this.menuAndStatePanel.setStatusMessage("Step "+step.name+" removed.");
-		this.menuAndStatePanel.enableButtons();
-	    }
-	    else if (mode == SOURCE_MODE) 
+	Object object = this.determineSelectedItem(x, y);
+	if (object != null) {
+	    if (object instanceof Step) {
+		Step step = (Step)object;
+		if (mode == REMOVE_MODE) {
+		    this.eSFC.removeStep(step);
+		    this.menuAndStatePanel.setStatusMessage("Step "
+							    +step.name
+							    +" removed.");
+		    this.menuAndStatePanel.enableButtons();
+		}
+		else if (mode == SOURCE_MODE) 
 		    this.eSFC.addSourceStep(step);
-	    else if (mode == TARGET_MODE)
+		else if (mode == TARGET_MODE)
 		    this.eSFC.addTargetStep(step);
+		else if (mode == EDIT_MODE) {
+		    this.menuAndStatePanel.setStatusMessage("Change step.");
+		    this.stepDialogWindow("Change step ...", step, x, y);
+		}
+	    } else if (object instanceof Transition) {
+		Transition transition = (Transition)object;
+		if (mode == REMOVE_MODE) {
+		    this.eSFC.removeTransition(transition);
+		} 
+		else if (mode == EDIT_MODE) {
+		    this.menuAndStatePanel.setStatusMessage("Change guard.");
+		    Expr guard = this.chooseAGuardDialog(ESFC.output(transition.guard));
+		    if (guard != null) {
+			transition.guard = guard;
+			this.menuAndStatePanel.setStatusMessage("Guard changed.");
+		    } else
+			this.menuAndStatePanel.setStatusMessage("Guard not changed.");
+		}
+	    }
 	}
 	else {
 	    this.menuAndStatePanel.setStatusMessage("Adding a new step.");
 	    this.stepDialogWindow("New step ...", null, x, y);
 	}
+	this.updateWindow();
     }
     
     protected void evaluateMouseDragged(int x0, int y0, int x1, int y1) {
 	if (mode == EDIT_MODE) {
-	    Step step = this.determineSelectedStep(this.eSFC.getSFC().steps, x0, y0);
+	    Step step = this.determineSelectedStep(x0, y0);
 	    if (step != null) {
 		LinkedList stepList = new LinkedList();
 		stepList.add(step);
@@ -458,23 +404,50 @@ public final class Editor extends JComponent
     }
 
     protected boolean evaluateMouseMoved(int x, int y) {
-	Step step = this.determineSelectedStep(this.eSFC.getSFC().steps, x, y);
+	Object object = this.determineSelectedItem(x, y);
 	Object o = this.eSFC.getSelectedObject();
-	this.eSFC.setSelectedObject(step);
-	if (step != o) {
-	    int[] selectedIndices = this.getActionIndices(step);
-	    this.actionJList.setSelectedIndices(selectedIndices);
+	this.eSFC.setSelectedObject(object);
+	if (object != o) {
+	    if (object instanceof Step) {
+		int[] selectedIndices = this.getActionIndices((Step)object);
+		this.actionScrollList.setSelectedIndices(selectedIndices);
+	    }
 	}
-	return (step != o);
+	return (object != o);
     }
 
-    private Step determineSelectedStep(LinkedList stepList, int x, int y) {
+    private Step determineSelectedStep(int x, int y) {
+	Object object = this.determineSelectedItem(x, y);
+	if (object instanceof Step)
+	    return (Step)object;
+	return null;
+    }
+
+    private Object determineSelectedItem(int x, int y) {
+	LinkedList stepList = this.eSFC.getSFC().steps;
 	int stepNumber = 0;
+
 	while (stepNumber < stepList.size()) {
 	    Step step = (Step)stepList.get(stepNumber);
 	    if (isInStep(step, x, y))
 		return step;
 	    stepNumber += 1;
+	}
+
+	Hashtable guardPositions = this.eSFC.getGuardPositions();
+	LinkedList transitions = this.eSFC.getSFC().transs;
+	for (int i=0; i<transitions.size(); i++) {
+	    Transition transition = (Transition)transitions.get(i);
+	    if (guardPositions.containsKey(transition)) {
+		Position position = (Position)guardPositions.get(transition);
+		int x2 = (int)position.x;
+		int y2 = (int)position.y;
+		if (((x+2) >= x2) &&
+		    ((y+3) >= y2) &&
+		    ((x-11) <= x2) &&
+		    ((y-3) <= y2))
+		    return transition;
+	    }
 	}
 	return null;
     }
@@ -499,18 +472,22 @@ public final class Editor extends JComponent
 
     protected void evaluateKeyTyped(char c) {
 	if (c == (new String("e")).charAt(0)) {
+	    this.menuAndStatePanel.setMode("E");
 	    this.menuAndStatePanel.setStatusMessage("Toggled to EDIT-mode");
 	    this.toggleMode(EDIT_MODE);
 	}
 	if (c == (new String("s")).charAt(0)) {
+	    this.menuAndStatePanel.setMode("S");
 	    this.menuAndStatePanel.setStatusMessage("Toggled to SOURCE-mode");
 	    this.toggleMode(SOURCE_MODE);
 	}
 	if (c == (new String("t")).charAt(0)) {
+	    this.menuAndStatePanel.setMode("T");
 	    this.menuAndStatePanel.setStatusMessage("Toggled to TARGET-mode");
 	    this.toggleMode(TARGET_MODE);
 	}
 	if (c == (new String("r")).charAt(0)) {
+	    this.menuAndStatePanel.setMode("R");
 	    this.menuAndStatePanel.setStatusMessage("Toggled to REMOVE-mode");
 	    this.toggleMode(REMOVE_MODE);
 	}
@@ -528,49 +505,47 @@ public final class Editor extends JComponent
 		this.menuAndStatePanel.setStatusMessage("No target step(s) selected");
 		return;
 	    }
+	    Expr guard = this.chooseAGuardDialog("");
+	    if (guard != null) {
+		this.menuAndStatePanel.setStatusMessage("New transition added");
+		this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
+					guard, 
+					this.eSFC.getTargetSteps());
+		this.eSFC.clearSourceSteps();
+		this.eSFC.clearTargetSteps();
+		this.toggleMode(SOURCE_MODE);
+		this.updateWindow();
+	    } 
+	}
+    }
 
-	    Object[] o   = new Object[0];
-	    SFC      sfc = this.eSFC.getSFC();
-
-	    if (sfc != null) {
-		LinkedList transitionList = sfc.transs;
-		LinkedList guards         = new LinkedList();
-
-		for (int i=0; i<transitionList.size(); i++) {
-		    Transition transition = (Transition)transitionList.get(i);
-		    Expr       guard      = transition.guard;
-		    String     name       = this.eSFC.output(guard);
-
-		    if (!this.isStringInList(guards, name)) 
-			guards.add(name);
-		}
-	    o = guards.toArray();
-	    }
-	    JList guardJList = new JList(o);
-	    guardJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	    JScrollPane guardList = new JScrollPane(guardJList);
-	    
-	    Object[] message = new Object[4];
-	    message[0] = "Expression";
-	    message[1] = (new JTextField(""));
-	    message[2] = "Existing guards";
-	    message[3] = (guardList);
-	    String[] options = {"Ok", "Cancel"};
-	    
-	    int result = JOptionPane.showOptionDialog(
-		null,
-		message,
-		"Add new transition",
-		JOptionPane.DEFAULT_OPTION,
-		JOptionPane.PLAIN_MESSAGE,
-		null,
-		options,
-		options[0]);
-	    if (result == 0) {
-		this.eSFC.setChecked(false);
-		this.menuAndStatePanel.enableButtons();
-		if (((JTextField)message[1]).getText().equals("")) {
-		    String name = (String)guardJList.getSelectedValue();
+    private Expr chooseAGuardDialog(String oldExpr) { 
+	ScrollList guardScrollList = new ScrollList(BACKGROUND_COLOR,
+						    this.eSFC.getSFC().transs);
+	guardScrollList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	
+	Object[] message = new Object[4];
+	message[0] = "Expression";
+	message[1] = (new JTextField(oldExpr));
+	message[2] = "Existing guards";
+	message[3] = (guardScrollList.getScrollList());
+	String[] options = {"Ok", "Cancel"};
+	
+	int result = JOptionPane.showOptionDialog(
+	    null,
+	    message,
+	    "Choose a guard",
+	    JOptionPane.DEFAULT_OPTION,
+	    JOptionPane.PLAIN_MESSAGE,
+	    null,
+	    options,
+	    options[0]);
+	if (result == 0) {
+	    this.eSFC.setChecked(false);
+	    this.menuAndStatePanel.enableButtons();
+	    if (((JTextField)message[1]).getText().equals("")) {
+		JList list = guardScrollList.getList();
+		    String name = (String)list.getSelectedValue();
 		    if (name == null) {
 			this.menuAndStatePanel.setStatusMessage("No guard selected");
 		    } else {
@@ -582,45 +557,149 @@ public final class Editor extends JComponent
 			    if (this.eSFC.output(guard).equals(name))
 				eGuard = guard;
 			}
-			this.menuAndStatePanel.setStatusMessage("New transition added");
-			this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
-						eGuard, 
-						this.eSFC.getTargetSteps());
-			this.toggleMode(SOURCE_MODE);
+			return eGuard;
 		    }
-		} else {
-		    
-		    String exprString = ((JTextField)message[1]).getText();
-		    Expr expr = null;
-		    
-		    slime.utils.ExprParser parser = new slime.utils.ExprParser();
-		    try {
-			expr = parser.parseExpr(exprString);
-		    } catch (ParseException e) {
-			this.menuAndStatePanel.setStatusMessage("Parser fails on Expr");
-		    } catch (Exception e) {
-			this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
-		    }
-		    
-		    if (expr != null) {
-			
-			this.menuAndStatePanel.setStatusMessage("New transition(s) added");
-			this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
-						expr, 
-						this.eSFC.getTargetSteps());
-			this.toggleMode(SOURCE_MODE);
-			this.updateWindow();
-		    }
-		    
+	    } else {
+		
+		String exprString = ((JTextField)message[1]).getText();
+		Expr expr = null;
+		
+		slime.utils.ExprParser parser = new slime.utils.ExprParser();
+		try {
+		    expr = parser.parseExpr(exprString);
+		} catch (ParseException e) {
+		    this.menuAndStatePanel.setStatusMessage("Parser fails on Expr");
+		} catch (Exception e) {
+		    this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
 		}
+		return expr;
 	    }
 	}
+	return null;
     }
     
+    protected void reactOnChangeOfAction() {
+	int[] indices = this.actionScrollList.getSelectedIndices();
+
+	if (indices.length == 0)
+	    return;
+	
+	LinkedList actions = this.eSFC.getSFC().actions;
+	slime.absynt.Action action = 
+	    (slime.absynt.Action)actions.get(indices[0]);
+	this.changeAction(action);
+    }
+    
+    private void changeAction(slime.absynt.Action action) {
+	String name       = action.a_name;
+	String sapString  = ESFC.output(action);
+	int index = sapString.indexOf(' ');
+	sapString = sapString.substring(index+1);
+	slime.absynt.Action newAction =
+	    dialogForAction(name, sapString, "Change action");
+	if (newAction != null) {
+	    // Folgendes if notwendig? Kann ja immer gemacht werden ...
+	    if (!name.equals(newAction.a_name)) {
+		if (!this.eSFC.actionNameExists(newAction.a_name)) {
+		    action.a_name = newAction.a_name;
+		    LinkedList steps = this.eSFC.getSFC().steps;
+		    for (int i=0; i<steps.size(); i++) {
+			Step step = (Step)steps.get(i);
+			LinkedList stepActions = step.actions;
+			for (int j=0; j<stepActions.size(); j++) {
+			    StepAction stepAction = (StepAction)stepActions.get(j);
+			    if (name.equals(stepAction.a_name))
+				stepAction.a_name = newAction.a_name;
+			}
+		    }
+		} else {
+		    this.menuAndStatePanel.setStatusMessage("New name of action already exists, try again :-)");
+		}
+	    }
+	    action.sap = newAction.sap;
+	    this.menuAndStatePanel.setStatusMessage("Action changed.");
+	    this.updateWindow();
+	} else {
+	    this.menuAndStatePanel.setStatusMessage("Action has not changed.");
+	}	    
+    }
+
+    private void addAction() {
+	slime.absynt.Action newAction =
+	    dialogForAction("", "", "Add new action");
+	if (newAction != null) { 
+	    if (!this.eSFC.actionNameExists(newAction.a_name)) {
+  		this.eSFC.getSFC().actions.add(newAction);
+		this.menuAndStatePanel.setStatusMessage("New action added.");
+		this.updateWindow();
+	    } else {
+		this.menuAndStatePanel.setStatusMessage("Name of action already exists. Modify action by double clicking on it in this list.");
+	    }
+	} else {
+	    this.menuAndStatePanel.setStatusMessage("No action added.");
+	}
+    }
+
+    private slime.absynt.Action dialogForAction(String name, 
+						String sapString, 
+						String title) {
+	Object[] message = new Object[4];
+	message[0] = "Name:";
+	message[1] = (new JTextField(name));
+	message[2] = "SAP:";
+	message[3] = (new JTextField(sapString));
+	String[] options = {"Ok", "Cancel"};
+	
+	int result = JOptionPane.showOptionDialog(
+	    null,
+	    message,
+	    title,
+	    JOptionPane.DEFAULT_OPTION,
+	    JOptionPane.PLAIN_MESSAGE,
+	    null,
+	    options,
+	    options[0]);
+
+	if (result == 0) {
+	    this.eSFC.setChecked(false);
+	    this.menuAndStatePanel.enableButtons();
+	    sapString = ((JTextField)message[3]).getText();
+  	    if (!sapString.equals("")) {
+  		slime.utils.Parser parser = new slime.utils.Parser();
+  		try {
+  		    LinkedList sap = parser.parseSAP(sapString);
+		    slime.absynt.Action action = 
+			new slime.absynt.Action(((JTextField)message[1]).getText(), sap);
+		    return action;
+		} catch (ParseException e) {
+  		    this.menuAndStatePanel.setStatusMessage("Parser fails on SAP");
+  		} catch (Exception e) {
+  		    this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
+  		}
+  	    }
+	}
+	return null;
+    }
+
+    /**
+     * Highlights the given object iff it is part of a SFC. Actually the
+     * object may be a step or a transition.
+     */
+    public void highlight(Object object) {
+	this.eSFC.highlight(object, Color.yellow);
+    }
+
+    /**
+     * Removes highlight effect from the given object.
+     */
+    public void deHighlight(Object object) {
+	this.eSFC.deHighlight(object);
+    }
+
     public void mouseClicked(MouseEvent e) {
 	e.consume();
 	if (this.eSFC == null) return;
-	Object[]   selectedValues = this.guardJList.getSelectedValues();
+	Object[]   selectedValues = this.guardScrollList.getSelectedValues();
 	LinkedList transitionList = this.eSFC.getSFC().transs;
 	
 	for (int i=0; i<transitionList.size(); i++) {

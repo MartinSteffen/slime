@@ -11,13 +11,13 @@ import javax.swing.*;
  * Status: nearly complete, only some docs are missing <br>
  * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.10 2002-06-14 11:21:02 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.11 2002-06-20 11:25:05 swprakt Exp $
  */
 
 public final class DrawBoard extends Canvas
     implements MouseListener, MouseMotionListener, KeyListener {
 
-    private static final int START_WIDTH = 640, START_HEIGHT = 480;
+    private static final int START_WIDTH = 700, START_HEIGHT = 480;
 
     private int     mousePressedOnX, mousePressedOnY;
     private int     mouseReleasedOnX, mouseReleasedOnY;
@@ -73,8 +73,8 @@ public final class DrawBoard extends Canvas
 	minY -= 30;
 	maxX -= minX;
 	maxY -= minY;
-	if (maxX < 640)
-	    maxX = 640;
+	if (maxX < 700)
+	    maxX = 700;
 	if (maxY < 450)
 	    maxY = 450;
 	for (int i=0; i<sfc.steps.size(); i++) {
@@ -88,13 +88,8 @@ public final class DrawBoard extends Canvas
     
     public void mouseClicked(MouseEvent e) {
 	e.consume();
-	int amountOfClicks = e.getClickCount();
-	if (amountOfClicks == 1)
-	    this.editor.evaluateSingleMouseClickOn(this.mousePressedOnX, 
-						   this.mousePressedOnY);
-	else if (amountOfClicks == 2)
-	    this.editor.evaluateDoubleMouseClickOn(this.mousePressedOnX, 
-						   this.mousePressedOnY);
+	this.editor.evaluateSingleMouseClickOn(this.mousePressedOnX, 
+					       this.mousePressedOnY);
 	this.repaint();
     }
 

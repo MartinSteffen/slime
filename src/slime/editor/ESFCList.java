@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * Status: complete <br>
  * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: ESFCList.java,v 1.3 2002-06-14 11:21:03 swprakt Exp $
+ * @version $Id: ESFCList.java,v 1.4 2002-06-20 11:25:05 swprakt Exp $
  */
 
 public final class ESFCList {
@@ -36,6 +36,14 @@ public final class ESFCList {
     }
 
     /**
+     * Removes the given ESFC from this eSFCList.
+     */ 
+    protected void remove(ESFC eSFC) {
+	if (this.contains(eSFC)) 
+	    this.eSFCList.remove(eSFC);
+    }
+
+    /**
      * Gets the ESFC from the specified position of this eSFCList. 
      * or null if the position is out of range.
      * @param pos Position of the ESFC in this list.
@@ -53,6 +61,10 @@ public final class ESFCList {
      */
     protected boolean contains(ESFC eSFC) {
 	return (this.eSFCList.indexOf(eSFC) != -1);
+    }
+
+    protected int size() {
+	return this.eSFCList.size();
     }
 }
     

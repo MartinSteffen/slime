@@ -13,7 +13,7 @@ import java.util.Hashtable;
  * Status: about 50% complete <br>
  * Known bugs: parallel branches are not shown correctly, some more trouble with steps with more than one transition 
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.9 2002-06-14 11:21:03 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.10 2002-06-20 11:25:06 swprakt Exp $
  */
 
 public final class SFCPainter{
@@ -23,6 +23,8 @@ public final class SFCPainter{
 
     private ESFC      eSFC;
     private SFC       sfc;
+    private int[]     incoming;
+    private int[]     outgoing;
 
     /**
      * Constructs a painter for the given ESFC.
@@ -37,6 +39,7 @@ public final class SFCPainter{
      */
     protected void paintSFC(Graphics g) {
 	g.setFont(this.eSFC.getFont());
+	this.calculateIncomingAndOutgoingTransitions();
 	this.paintTransitions(g);
 	this.paintSteps(g);
     }
@@ -78,8 +81,37 @@ public final class SFCPainter{
 	}
     }
 
+    private void calculateIncomingAndOutgoingTransitions() {
+	incoming = new int[this.sfc.steps.size()];
+	outgoing = new int[this.sfc.steps.size()];
+	LinkedList transitions = this.sfc.transs;
+	for (int i=0; i<transitions.size(); i++) {
+	    Transition transition = (Transition)transitions.get(i);
+	    LinkedList sources = transition.source;
+
+	    for (int j=0; j<sources.size(); j++) {
+		outgoing[this.getStepNumber((Step)sources.get(j))] += 1;
+	    }
+	    LinkedList targets = transition.target;
+
+	    for (int j=0; j<targets.size(); j++) {
+		incoming[this.getStepNumber((Step)targets.get(j))] += 1;
+	    }
+	}
+    }
+
+    private int getStepNumber(Step step) {
+	LinkedList steps = this.sfc.steps;
+	for (int i=0; i<steps.size(); i++) 
+	    if (step == (Step)steps.get(i))
+		return i;
+	return -1;
+    }
+
     private void paintTransitions(Graphics g) {
+	Object selectedObject = this.eSFC.getSelectedObject();
 	Hashtable colors = this.eSFC.getColorHashtable();
+	Hashtable guardPositions = new Hashtable();
 	LinkedList transitionList = this.sfc.transs;
 	int gap = 20;
 	for (int i=0; i<transitionList.size(); i++) {
@@ -89,22 +121,35 @@ public final class SFCPainter{
 	    boolean openClosure = target.size() > 1;
 	    boolean closingClosure = source.size() > 1;
 	    String name = this.eSFC.output(transition.guard);
+
 	    for (int s=0; s<source.size(); s++) {
 		Step sStep = (Step)source.get(s);
 		Position sPosition = sStep.pos;
 		int x0 = (int)sStep.pos.x;
 		int y0 = (int)sStep.pos.y;
+
 		for (int t=0; t<target.size(); t++) {
 		    Step tStep = (Step)target.get(t);
 		    Position tPosition = tStep.pos;
 		    int x1 = (int)tStep.pos.x;
 		    int y1 = (int)tStep.pos.y;
-		    g.setColor((Color)colors.get(transition));
+
+		    if (transition == selectedObject)
+			g.setColor(Color.red);
+		    else
+			g.setColor((Color)colors.get(transition));
+		    
 		    if (y0 < y1) {
-			int yOffset = (y1-y0-30)/2;
+			int yOffset = 20; //(y1-y0-30)/2;
+			if (closingClosure || (incoming[this.getStepNumber(tStep)] > 1))
+			    yOffset = (y1-y0-50);
 			g.drawLine(x0+15, y0+30, x0+15, y0+30+yOffset);
 			g.drawLine(x0+15, y0+30+yOffset, x1+15, y0+30+yOffset);
 			g.drawLine(x1+15, y0+30+yOffset, x1+15, y1);
+			if (openClosure)
+			    g.drawLine(x0+15, y0+33+yOffset, x1+15, y0+33+yOffset);
+			if (closingClosure)
+			    g.drawLine(x0+15, y0+27+yOffset, x1+15, y0+27+yOffset);
 		    } else {
 			int x0Offset = -40;
 			int x1Offset = -40-(x1-x0);
@@ -118,18 +163,32 @@ public final class SFCPainter{
 			g.drawLine(x1+15+x1Offset, y1-gap, x1+15, y1-gap);
 			g.drawLine(x1+15, y1-gap, x1+15, y1);
 		    }
-		    if (openClosure) {
+		    if (openClosure || (incoming[this.getStepNumber(tStep)] > 1)) {
 			g.drawLine(x0+10, y0+30+gap/2, x0+20, y0+30+gap/2);
 			g.setColor(Color.gray);
 			g.drawString(name, x0+23, y0+30+gap/2+2);
-		    } else {
+			guardPositions.put(transition, 
+					   new Position((float)(x0+10), 
+							(float)(y0+30+gap/2)));
+		    } else if (closingClosure || (outgoing[this.getStepNumber(sStep)] > 1)){
 			g.drawLine(x1+10, y1-gap/2, x1+20, y1-gap/2);
 			g.setColor(Color.gray);
 			g.drawString(name, x1+23, y1-gap/2+2);
-		    }
+			guardPositions.put(transition, 
+					   new Position((float)(x1+10), 
+							(float)(y1-gap/2)));
+		    } else {
+			g.drawLine(x0+10, y0+30+gap/2, x0+20, y0+30+gap/2);
+			g.setColor(Color.gray);
+			g.drawString(name, x0+23, y0+30+gap/2+2);
+			guardPositions.put(transition, 
+					   new Position((float)(x0+10), 
+							(float)(y0+30+gap/2)));
+		    } 
 		}
 	    }
 	}
+	this.eSFC.setGuardPositions(guardPositions);
     }
 }
 
