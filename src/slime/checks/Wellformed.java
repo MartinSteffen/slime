@@ -12,9 +12,9 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.10 2002-07-09 14:49:08 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.11 2002-07-09 16:06:45 swprakt Exp $
  * <p>
- * The checker consists of various well-formed errors (combinded into one exception) together with the
+ * The checker consists of various well-formed errors (combined into one exception) together with the
  * checker proper, which recurs over the abstract syntax.
  * 
  * Using internally the visitor pattern, the design is 
@@ -197,6 +197,9 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.10  2002/07/09 14:49:08  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.9  2002/07/09 14:28:40  swprakt
 //    Well-formed checked finished. (but untested).  The functionality is as
 //    documented in java-doc. It might be that the implementation requires
