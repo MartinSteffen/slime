@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.162 2002-07-09 13:10:45 swprakt Exp $
+## $Id: Errors.txt,v 1.163 2002-07-09 13:21:44 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,22 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+Error 76:     design/hack
+ package:     checker
+ class:       non-fatal
+ status:      reported, Steffen, 9.7.02
+ description: in the consistency checker:
+               the use of a hashtable for steps is not really
+              justified. Is there a better data-structre for that?
+
+Error 75:    semantic error 
+ package:    checker/absynt
+ class:      fatal
+ status:     reported by code inspection, Steffen, 9.7.02, untested,
+ description: I expect, that we need an explicit equals-method in steps
+             to make it work?
 
 
 Error 74:    inconsistency, docu
@@ -236,7 +252,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.162 2002-07-09 13:10:45 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.163 2002-07-09 13:21:44 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
