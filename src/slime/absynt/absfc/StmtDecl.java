@@ -37,34 +37,76 @@ public class StmtDecl extends Statement implements Serializable {
 
   public StmtDecl ( slime.absynt.Variable  _var, 
                     slime.absynt.Type      _type,
-		    slime.absynt.Expr      _expr) {
-    var  = _var;
-    type = _type;
-    expr = _expr;
+		    slime.absynt.B_expr    _expr) {
+    val      = null; // has to evaluated from expression
+    var      = _var;
+    type     = _type;
+    expr     = _expr;
+    isexpr   = true;
     hasvalue = true;
     nodetype = "declaration";
-    isexpr = true;
   }
 
   public StmtDecl ( slime.absynt.Variable  _var, 
-                    slime.absynt.Type      _type ) {
-    var  = _var;
-    type = _type;
-    val  = null;
+                    slime.absynt.Type      _type,
+		    slime.absynt.U_expr    _expr) {
+    val      = null;  // has to evaluated from expression
+    var      = _var;
+    type     = _type;
+    expr     = _expr;
+    isexpr   = true;
+    hasvalue = true;
     nodetype = "declaration";
-    hasvalue = false;
-    isexpr = false;
   }
 
-  public StmtDecl () {
-    var  = null;
-    type = null;
-    val  = null;
+  public StmtDecl ( slime.absynt.Variable  _var, 
+                    slime.absynt.Type      _type,
+		    slime.absynt.Expr      _expr) {
+    val      = null;  // has to evaluated from expression
+    var      = _var;
+    type     = _type;
+    expr     = _expr;
+    isexpr   = true;
+    hasvalue = true;
     nodetype = "declaration";
-    hasvalue = false;
-    hascontent = false;
-    isexpr = false;
   }
+
+
+
+  public StmtDecl ( slime.absynt.Variable  _var, 
+                    slime.absynt.Type      _type ) {
+    var      = _var;
+    type     = _type;
+    hasvalue = false;
+    isexpr   = false;
+    nodetype = "declaration";
+    if (type instanceof slime.absynt.BoolType) {
+	val = new slime.absynt.Constval( (boolean)false );
+    } else if (type instanceof slime.absynt.IntType) {
+        val = new slime.absynt.Constval( (int)0 );
+    } else if (type instanceof slime.absynt.DoubleType) {
+        val = new slime.absynt.Constval( (double)0.0 );
+    } else if (type instanceof slime.absynt.UndefType) {
+        val = null;
+	System.out.println("slime.absynt.absfc.StmtDecl: slime.absynt.UnknownType detected !");
+    } else if (type instanceof slime.absynt.UnitType) {
+        val = null;
+	System.out.println("slime.absynt.absfc.StmtDecl: slime.absynt.UnitType detected !");
+    } else {
+	val = null;
+	System.out.println("slime.absynt.absfc.StmtDecl: wrong type-entry in declaration detected !");
+    } // end if-type-instanceof-chain	
+ } // end StmtDecl( Variable, Type )
+
+  public StmtDecl () {
+    var        = null;
+    type       = null;
+    val        = null;
+    nodetype   = "declaration";
+    hasvalue   = false;
+    hascontent = false;
+    isexpr     = false;
+  } // end of standard constructor
 
     private void readObject(java.io.ObjectInputStream stream)
 	throws java.io.IOException,java.lang.ClassNotFoundException {
