@@ -1,17 +1,6 @@
 ########################################################
-## $Id: Makefile,v 1.5 2002-07-04 11:31:41 swprakt Exp $
+## $Id: Makefile,v 1.6 2002-07-10 06:01:06 swprakt Exp $
 ########################################################
-
-##TEST:
-## $Log: not supported by cvs2svn $
-## Revision 1.4  2002/07/04 11:30:03  swprakt
-## OK
-##
-## Revision 1.3  2002/07/04 11:28:58  swprakt
-## *** empty log message ***
-##
-
-
 
 
 
