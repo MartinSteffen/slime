@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.61 2002-07-04 12:39:42 swprakt Exp $
+## $Id: Errors.txt,v 1.62 2002-07-04 13:00:03 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,17 +34,41 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+Error 34(2):  expression parser
+ package:     parser
+ class:       fatal
+ status:      reporter, 4. Juli 02, Steffen
+ description: I played aroud with the parser, to spot the 
+              reason for Error 34.
+              -  java slime.sfcparser.ParserTest -e "1*1 + 1"
+	      gives 1*(1+1), which is wrong:
+
+              [src @ gollum] > java slime.sfcparser.ParserTest -e "1*1 + 1"
+              [B_expr] 
+              |   [Constval] 1
+              |   <TIMES> 
+              |   [B_expr] 
+              |   |   [Constval] 1
+              |   |   <PLUS> 
+              |   |   [Constval] 1
+
+	      The result is independant of the order of the lines
+              precedence left MUL, DIV;				   // *,/; MOD=%
+              precedence left ADD, SUB;				   // +, -
+	      in the parser!
+
+	      
 
 Error 37:  expres. parser
  package:  parser
  class:    doubtful
- status:   reported, 4.Juli.02
+ status:   reported, 4.Juli.02, Steffen
  description:  java slime.sfcparser.ParserTest -e "-1 + -4" parst
              dies als -(1 + (-4)). Das ist vermutlich nicht 
 	     so gewollt, nat"urlicher w"are
 	     
 	             (-1) + (-4)
-	       
+
  
 
 Error 23: deprecation
