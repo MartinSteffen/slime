@@ -1,13 +1,8 @@
-
 ###############################################################
-## $Id: Makefile,v 1.1 2002-07-19 05:15:58 swprakt Exp $
+## $Id: Makefile,v 1.2 2002-07-19 05:16:23 swprakt Exp $
 ###############################################################
 
 TARGET=ms@vires.informatik.uni-kiel.de:/home/ms/SLIMEREVIEW/toburn
-
-clean:
-	\rm -rf toburn/*
-
 
 upload:
 	scp -r swprakt@sokrates:/home/swprakt/cvsroot/Slime $(TARGET)/cvsroot
@@ -21,4 +16,6 @@ upload:
 
 uploadmail:
 	scp -r ms@goofy:/home/ms/Mail/*slime* $(TARGET)/Mail
+
+
 
