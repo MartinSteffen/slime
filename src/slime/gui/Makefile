@@ -6,6 +6,13 @@
 
 all:	$(patsubst %.java,%.class,$(wildcard *.java))
 
+
+#### temporary target
+
+run:
+	java slime.gui.SlimeStart
+
+
 debug:	; make JAVACOPTS="-g" all
 
 %.class:	%.java

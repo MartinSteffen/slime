@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.169 2002-07-10 06:10:04 swprakt Exp $
+## $Id: Errors.txt,v 1.170 2002-07-10 06:25:13 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,15 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 88:    window dimension
+ package:    gui (or editor?)
+ class:      public non-nicety
+ status:     reported 10.7.02, Steffen
+ description: starting gui, then clicking new gives an editor
+             window quite larger than my window screen (under Xwindows, fvwm2)
+	     Could depend also on the screen resolution or the window system.
+
+
 Error 87:    type mismatch
  package:    checker.
  class:      fatal, but out-of-sync
@@ -44,7 +53,7 @@ Error 87:    type mismatch
 
 	      Probably this is due to the fact, that the equals-methods have
 	      been temporarily removed from the absynt (the tests
-	      had been sucessful before)
+	      had been sucessful before.)
 
 Error 76:    docu/German/English
  package:    gui
@@ -265,7 +274,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.169 2002-07-10 06:10:04 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.170 2002-07-10 06:25:13 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
