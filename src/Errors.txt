@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.42 2002-07-02 08:04:57 swprakt Exp $
+## $Id: Errors.txt,v 1.43 2002-07-02 08:06:50 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,11 +34,17 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-
+Error 30:     grammar
+ package:     sfcparser (cup)
+ class:       question  (by code inspection)
+ status:      reported, 2.7.02, Steffen
+ description: what's the difference between stmtlist and stmtblock?
+              can they be merged?
+              
 
 Error 29:     grammar for stmt
  package:     sfcparser (cup)
- class:       question 
+ class:       question  (by code inspection)
  status:      reported, 2.7.02, Steffen
  description: what does LinkedList.addAll() do? Is the order ok?
 	      (Line 904 of SFC.cup v1.10)
