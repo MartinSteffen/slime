@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.45 2002-07-02 08:24:57 swprakt Exp $
+## $Id: Errors.txt,v 1.46 2002-07-02 08:36:06 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -39,10 +39,14 @@ Rules of the game:
 
 Error 31:     grammar for stmtblock
  package:     sfcparser.SFC.cup v.10
- class:       question (by code inspection)
+ class:       dubious (by code inspection)
  status:      reported, 2.7.02, Steffen
  description: overlap in the clauses of stmtblock and stmtlist
-               for the case {stmt}?
+               for the case {stmt}?:
+
+	       stmtlist can containt 1 stmt
+	       and stmtblock = {stmt} | {stmtlist}
+
 
 
        
