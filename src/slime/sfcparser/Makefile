@@ -1,9 +1,14 @@
 ##########################
-# $Id: Makefile,v 1.10 2002-07-12 06:26:15 swprakt Exp $                       
+# $Id: Makefile,v 1.11 2002-07-12 06:27:37 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.10  2002/07/12 06:26:15  swprakt
+# flag -expect 9 removed from the call of the parser (cf. Error #73)
+#
+# [Steffen]
+#
 # Revision 1.9  2002/07/08 13:10:06  swprakt
 # Small changes due to adding assignment-declarations-values
 # as remarked by Andreas Niemann. (mwe)
