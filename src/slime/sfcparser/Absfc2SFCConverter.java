@@ -1,14 +1,19 @@
-// --------------------------------------------------------------------
+ // --------------------------------------------------------------------
 /**
  * Absfc2SFCConverter.java<br>
  * converts a given {@link slime.absfc.SFCabtree} to<br>
  * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.9 2002-07-03 16:50:08 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.10 2002-07-03 19:41:25 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2002/07/03 16:50:08  swprakt
+ * SFC generates and does not conflic with PrettyPrint.
+ * Previous conflicts with PrettyPrint occured because
+ * noone felt responsible for input & output. (mwe)
+ *
  * Revision 1.8  2002/07/02 19:26:48  swprakt
  * Now supporting StepActions, but the PrettyPrint.java
  * fails at Action... Tomorrow we will have a chart
@@ -134,25 +139,45 @@ public class Absfc2SFCConverter {
      * @see slime.sfcparser.ParserTest for an example
      **/
     public Absfc2SFCConverter( slime.absynt.absfc.SFCabtree absfcobj ) {
-	stepCounter       = 0;  // for enumberating steps
-	transitionCounter = 0;  // for enumberating transitions
-	statementCounter  = 0;  // for enumberating statements
-	actionCounter     = 0;  // for enumberating actions
-	processCounter    = 0;  // for enumberating processes
-	runNr             = 0;  // current state of tree processing - see notes
-	debugflag         = true;  // turn stdout debugoutput on/off
-	collectProcs      = true;  // first run gathers all processes
-	curInProc         = false; // determines whether currently in process or main
+	stepCounter             = 0; // for enumberating steps
+	transitionCounter       = 0; // for enumberating transitions
+	statementCounter        = 0; // for enumberating statements
+	actionCounter           = 0; // for enumberating actions
+	processCounter          = 0; // for enumberating processes
+	procStepCounter         = 0; // for enumberating steps within processes
+	procTransitionCounter   = 0; // for enumberating transitions within processes
+	procStatementCounter    = 0; // for enumberating statements within processes
+	procDeclarationCounter  = 0; // for enumberating declarations within processes
+	procActionCounter       = 0; // for enumberating actions within processes
+	procProcessCounter      = 0; // for enumberating subprocesses within processes
+	runNr                   = 0; // current state of tree processing - see notes
+	debugflag               = true;  // turn stdout debugoutput on/off
+	collectProcs            = true;  // first run gathers all processes
+	curInProc               = false; // determines whether currently in process or main
 	slime.absynt.SFC theSFC = new slime.absynt.SFC(); //null
-	myStepList	  = new LinkedList();
-	myDeclarationList = new LinkedList();
-	myTransitionList  = new LinkedList();
-	myActionList      = new LinkedList();
-	myProcessList	  = new LinkedList();
-	myIStep           = new slime.absynt.Step( "initial Step" );
-	theSFC = convertTree( absfcobj );
+	myStepList	        = new LinkedList(); // the global steplist
+	myDeclarationList       = new LinkedList(); // the global declarationlist
+	myTransitionList        = new LinkedList(); // the global transitionslist
+	myActionList            = new LinkedList(); // the global actionlist
+	myProcessList	        = new LinkedList(); // the global processlist
+	myIStep                 = new slime.absynt.Step( "initial Step" ); // the initial step
+	theSFC                  = convertTree( absfcobj ); // do the convertion
     } // end constructor Absfc2SFCConverter( slime.absynt.absfc.SFCabtree )
+    // --------------------------------------------------------------------
  
+
+
+    // --------------------------------------------------------------------
+    /**
+     * <b>getSFC</b>
+     * returns the generated SFC-Object<br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.1 should be running good<br>
+     * @see slime.absynt.absfc.SFCabtree for the input format
+     * @see slime.absynt.SFC for the output format
+     * @see slime.sfcparser.ParserTest for an example
+     * @return slime.absynt.SFC the generated SFC.
+     **/
     public slime.absynt.SFC getSFC() {
 	return theSFC;
     } // end getSFC
@@ -214,9 +239,6 @@ public class Absfc2SFCConverter {
 	int dC = srctree.decCnt  = 0;
 	/** clean the process counters and the internal myProcessList */
 	clearProcessCounters();
-	processCounter         = 0;
-	runNr                  = 0;
-	myProcessList	       = new LinkedList();
 	/** link end of init SFC to begin of program */
 	slime.absynt.Step beginProgramStep = initializeSFC();
 	slime.absynt.Step nextStmtStartStep = beginProgramStep;
@@ -1407,8 +1429,6 @@ public class Absfc2SFCConverter {
 	    slime.absynt.Step       procStartStep    = null;
 	    slime.absynt.Step       procEndStep      = null;
 	if (collectProcs) {
-	    /** add this process to the global processlist */
-	    myProcessList.add( tmpNode );
 	    /** remember that from now on being within a process */
 	    curInProc = true;
 	    /** empty global myStepList, myTransitionList, myDeclarationList, myActionList
@@ -1430,10 +1450,12 @@ public class Absfc2SFCConverter {
 	    tmpNode.end_step = (slime.absynt.Step)procEndStep;
 	    // myStepList.add( procEndStep ); was already added in processStatementList ...
 	    dbgOut( 2 , "Process: - finished processing stmtlist" );
-	    tmpNode.internalStepList        = (LinkedList)myStepList;
-	    tmpNode.internalTransitionList  = (LinkedList)myTransitionList;
-	    tmpNode.internalActionList      = (LinkedList)myActionList;
-	    tmpNode.internalDeclarationList = (LinkedList)myDeclarationList;
+	    tmpNode.internalStepList.addAll( myStepList );
+	    tmpNode.internalTransitionList.addAll( myTransitionList );
+	    tmpNode.internalActionList.addAll( myActionList );
+	    tmpNode.internalDeclarationList.addAll( myDeclarationList );
+	    /** add this process to the global processlist */
+	    myProcessList.add( tmpNode );
 	    /** this process was processed so we have to increase processCounter */
 	    processCounter++;
 	    /** propagate that current process was left */

@@ -1,4 +1,4 @@
-// $Id: example.2.sfc,v 1.2 2002-07-03 18:28:34 swprakt Exp $
+// $Id: example.2.sfc,v 1.3 2002-07-03 19:41:25 swprakt Exp $
 SFC five_exclamationmark{
 // 
 // compute 5! = 120
@@ -13,7 +13,7 @@ SFC five_exclamationmark{
  res = 1;
  while (x1>x2) {
 	res = res * x1;
-	x1--;
+	x1 = x1 - 1;
  }
 // end   
 // SFC for the computation of 5!

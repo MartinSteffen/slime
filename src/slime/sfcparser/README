@@ -46,12 +46,10 @@ SFCParseException.java:
 ParserTest.java:
 		Commandline Testtool for the SFCParser
 
-examples/:	Subdirectory containing some examples for the
-		SFC language parsable by SFCParser.
-		
-apidoc/:	Subdirectory containing the javadoc documentation
+examples.?.sfc:	Some examples for the SFC language parsable by SFCParser.
+		Some examples do still not function.		
 
-Kiel, 28.6.2002
+Kiel, 03.07.2002
 Marco Wendel
 mwe@informatik.uni-kiel.de
 

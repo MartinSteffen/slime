@@ -1,4 +1,4 @@
-// $Id: example.3.sfc,v 1.2 2002-07-03 18:28:34 swprakt Exp $
+// $Id: example.3.sfc,v 1.3 2002-07-03 19:41:26 swprakt Exp $
 SFC ParallelTest{
 // 
 // Example for parallel processes
@@ -59,7 +59,7 @@ process proc3name{
 
 } // end split
 
-join(proc1,proc2,procname3);
+join( proc1 , proc2, proc3name );
 if (y1 > y2) {               // Process 1 has won race
 	z1 = true;        
 } else { 
