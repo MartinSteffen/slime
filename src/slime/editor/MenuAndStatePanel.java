@@ -22,7 +22,7 @@ import java.io.File;
  * Status: nearly complete <br>
  * known bugs: - (But some expected) <br>
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.6 2002-07-05 14:14:36 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.7 2002-07-06 12:22:29 swprakt Exp $
  */
 
 public final class MenuAndStatePanel extends JPanel {
@@ -108,13 +108,18 @@ public final class MenuAndStatePanel extends JPanel {
      * and enables buttons depending on the result of the check.
      */
     protected void enableButtons() {
+	boolean simActive = editor.getSimulatorActive();
+	boolean checked;
+	boolean layouted;
+
 	ESFC eSFC = editor.getExtendedSelectedSFC();
-	this.loadButton.setEnabled(true);
+	if (simActive) eSFC = null;
+	this.newButton.setEnabled(!simActive);
+	this.loadButton.setEnabled(!simActive);
+	this.parseButton.setEnabled(!simActive);
 	this.saveButton.setEnabled(eSFC != null);
 	this.closeButton.setEnabled(eSFC != null);
 	this.checkButton.setEnabled(eSFC != null);
-	boolean checked;
-	boolean layouted;
 	if (eSFC == null) { 
 	    checked = false;
 	    layouted = false;
@@ -221,7 +226,8 @@ public final class MenuAndStatePanel extends JPanel {
 	this.simulateButton = this.getSmallGapButton("Simulate", "simulate");
 	this.simulateButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
-		    statusMessage.setText("Simulator not yet implemented.");
+		    SimulatorTest simTest = new SimulatorTest(editor);
+		    simTest.start();
 		}
 	    });
 	panel.add(this.simulateButton);
@@ -454,7 +460,25 @@ class SFCFileFilter extends javax.swing.filechooser.FileFilter {
     }
 }
 
-    
+class SimulatorTest extends Thread {
+
+    Editor editor;
+
+    SimulatorTest(Editor editor) {
+	this.editor = editor;
+	this.editor.setSimulatorActive(true);
+    }
+
+    public void run() {
+	editor.getItemFromList(editor.getSelectedSFC().steps,
+			       "Select one step.");
+	editor.getItemFromList(editor.getSelectedSFC().transs,
+			       "Select one transition.");
+	editor.getItemFromList(editor.getSelectedSFC().actions,
+			       "Select one action.");
+	this.editor.setSimulatorActive(false);
+    }
+}    
     
 
     

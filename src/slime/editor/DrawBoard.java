@@ -13,7 +13,7 @@ import java.lang.reflect.*;
  * Status: nearly complete, only some docs are missing <br>
  * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.12 2002-07-05 14:14:35 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.13 2002-07-06 12:22:29 swprakt Exp $
  */
 
 public final class DrawBoard extends Canvas

@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
  * Status: complete <br> 
  * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: ScrollList.java,v 1.1 2002-06-20 11:32:03 swprakt Exp $
+ * @version $Id: ScrollList.java,v 1.2 2002-07-06 12:22:30 swprakt Exp $
  */
 
 public final class ScrollList extends JPanel{
@@ -36,7 +36,6 @@ public final class ScrollList extends JPanel{
      */
     protected ScrollList(Color color, LinkedList list) {
 	this.button = new JButton();
-	this.button.setEnabled(false);
 	this.setLayout(new BorderLayout());
 	this.setBackground(color);
 	this.list       = new JList();
@@ -58,7 +57,7 @@ public final class ScrollList extends JPanel{
     protected ScrollList(Color color, 
 			 String name) {
 	this(color);
-	this.button = new JButton(name);
+	this.button.setText(name);
 	this.add(this.button, BorderLayout.SOUTH);
     }
 
@@ -125,8 +124,7 @@ public final class ScrollList extends JPanel{
 		scrollList.add(s);
 	}
 	this.list.setListData(scrollList.toArray());
-	if (scrollList.size() > 0)
-	    this.button.setEnabled(true);
+	this.button.setEnabled(true);
     }
 
     /*
@@ -143,8 +141,14 @@ public final class ScrollList extends JPanel{
      * Sets this list to an empty list.
      */
     protected void removeList() {
-	this.button.setEnabled(false);
 	this.setList(new LinkedList());
+    }
+
+    /**
+     * Disables this list by disabling this button.
+     */
+    protected void unuseable() {
+	this.button.setEnabled(false);
     }
 }
 

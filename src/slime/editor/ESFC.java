@@ -14,7 +14,7 @@ import java.lang.reflect.*;
  * Status: nearly complete,  but i am not satisfied with it <br>
  * Known bugs: update does not remove unused variables <br>
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.11 2002-07-05 14:14:36 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.12 2002-07-06 12:22:29 swprakt Exp $
  */
 
 public final class ESFC{
@@ -25,8 +25,9 @@ public final class ESFC{
     private static final Color INITIAL            = Color.darkGray;
     private static final Color SOURCE             = Color.blue;
     private static final Color TARGET             = Color.red;
-    private static final Color STEP_NORMAL        = Color.black;
+    private static final Color STEP_NORMAL        = Color.lightGray;
     private static final Color TRANSITION_NORMAL  = Color.gray;
+    private static final Color ACTION_NORMAL      = Color.white;
 
     /**
      * The font used for the SFC
@@ -184,6 +185,30 @@ public final class ESFC{
     }
 
     /**
+     * Returns the i-th action of the action list.
+     */
+    protected slime.absynt.Action getAction(int i) {
+	LinkedList actions = this.sfc.actions;
+
+	if ((i < 0) || (i >= actions.size())) return null;
+	
+	return (slime.absynt.Action)actions.get(i);
+    }
+
+    /**
+     * Returns the action with the given name.
+     */
+    protected slime.absynt.Action getAction(String name) {
+	LinkedList actions = this.sfc.actions;
+
+	for (int i=0; i<actions.size(); i++)
+	    if (((slime.absynt.Action)(actions.get(i))).a_name.equals(name))
+		return this.getAction(i);
+	
+	return null;
+    }
+
+    /**
      * Invoces the given method on the given object for every step as
      * the first argument together with the other given arguments.
      */
@@ -221,6 +246,20 @@ public final class ESFC{
 
 	for (int i=0; i<this.sfc.transs.size(); i++) {
 	    newArgs[0] = this.getTransition(i);
+	    this.forOne(o, m, newArgs);
+	}
+    }
+
+    /**
+     * Invoces the given method on the given object for every action as
+     * the first argument together with the other given arguments.
+     */
+    protected void forAllActions(Object o, String method, Object[] args) {
+	Object[] newArgs = this.getNewArgs(args);
+	Method   m       = this.getMethod(o, method);
+
+	for (int i=0; i<this.sfc.actions.size(); i++) {
+	    newArgs[0] = this.getAction(i);
 	    this.forOne(o, m, newArgs);
 	}
     }
@@ -452,15 +491,15 @@ public final class ESFC{
 	this.forAllTransitions(this, 
 			       "setDefaultColorInHastableForTransition",
 			       args);
+	this.forAllActions(this, 
+			   "setDefaultColorInHastableForAction",
+			   args);
 	return colors;
     }
 
     private void setDefaultColorInHastableForStep(Step step, 
 						  Hashtable colors) {
-	if (step == this.sfc.istep)
-	    colors.put(step, INITIAL);
-	else
-	    colors.put(step, STEP_NORMAL);
+	colors.put(step, STEP_NORMAL);
     }	
 
     private void setDefaultColorInHastableForTransition(Transition transition, 
@@ -468,6 +507,11 @@ public final class ESFC{
 	colors.put(transition, TRANSITION_NORMAL);
     }
 
+    private void setDefaultColorInHastableForAction(slime.absynt.Action action, 
+						    Hashtable colors) {
+	colors.put(action, ACTION_NORMAL);
+    }
+    
     /**
      * Adds a new step with the given name at the given position.
      */
@@ -491,6 +535,15 @@ public final class ESFC{
 	colors.put(transition, TRANSITION_NORMAL);
 	this.clearSourceSteps();
 	this.clearTargetSteps();
+	this.setChecked(false);
+    }
+
+    /**
+     * Adds the given action to this sfc.
+     */
+    protected void addAction(slime.absynt.Action action) {
+	this.sfc.actions.add(action);
+	colors.put(action, ACTION_NORMAL);
 	this.setChecked(false);
     }
 
@@ -519,10 +572,7 @@ public final class ESFC{
 	if (key instanceof Transition)
 	    this.highlight(key, TRANSITION_NORMAL);
 	else if (key instanceof Step)
-	    if (key == this.sfc.istep)
-		this.highlight(key, INITIAL);
-	    else
-		this.highlight(key, STEP_NORMAL);
+	    this.highlight(key, STEP_NORMAL);
 	else
 	    this.highlight(key, STEP_NORMAL);
     }
@@ -685,12 +735,12 @@ public final class ESFC{
 		return output((U_expr)absynt);
 	    if(absynt instanceof Constval)
 		return output((Constval)absynt);
-	    //	if(absynt instanceof Type)
-	    //  output((Type)absynt);
+	    if(absynt instanceof Type)
+	        return output((Type)absynt);
 	    //if(absynt instanceof BoolType)
-	    //    output((BoolType)absynt);
+		//    output((BoolType)absynt);
 	    //if(absynt instanceof IntType)
-	    //    output((IntType)absynt);
+		//    output((IntType)absynt);
 	    /*if(absynt instanceof M_Type)
 	      output((M_Type)absynt);*/
 	}
@@ -719,10 +769,9 @@ public final class ESFC{
     }
 
     protected static String output(ActionQualifier aqf){
-	String s="[unknown] ";
+	String s="";
 	if(aqf instanceof Nqual)
-	    s="[N] ";
-	s = "[Actionqualifier] " + s + " ";
+	    s="N ";
 	return s;
     }
 
@@ -860,22 +909,20 @@ public final class ESFC{
 	return s;
     }
 
+    protected static String output(Type type){
+	String string = new String();
+	if(type !=null){
+	    if(type instanceof BoolType)
+		string="[bool]";
+	    if(type instanceof IntType)
+		string="[int]";
+	}	    
+	return string;
+    }    
 
     private static String print(String string){
 	return string;
     }
-
-    private static String print(Type type){
-	String string;
-	string="[Type] ";
-	if(type !=null){
-	    if(type instanceof BoolType)
-		string="[bool] ";
-	    if(type instanceof IntType)
-		string="[int] ";
-	}	    
-	return string;
-    }    
 }
 
 

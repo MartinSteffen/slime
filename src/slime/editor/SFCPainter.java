@@ -10,16 +10,16 @@ import java.util.Hashtable;
 /**
  * An object of this class is used to paint a sfc on an Graphics object.
  * <br><br>
- * Status: about 50% complete <br>
+ * Status: about 80% complete <br>
  * Known bugs: parallel branches are not shown correctly, some more trouble with steps with more than one transition 
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.11 2002-07-05 14:14:36 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.12 2002-07-06 12:22:29 swprakt Exp $
  */
 
 public final class SFCPainter{
 
-    private static final int STEP_HEIGHT = 30;
-    protected static final int ACTION_GAP = 10;
+    private   static final int STEP_HEIGHT = 30;
+    protected static final int ACTION_GAP  = 10;
 
     private ESFC      eSFC;
     private SFC       sfc;
@@ -59,14 +59,15 @@ public final class SFCPainter{
 	int    y0   = (int)(step.pos.y);
 	int    stepWidth = this.eSFC.getWidth(step);
 	Object selectedObject = this.eSFC.getSelectedObject();
-	g.drawString(text, x0+4, y0+6+STEP_HEIGHT/2);
+	
+	if (step == selectedObject)
+	    g.setColor(Color.magenta);
+	g.fillRect(x0, y0, stepWidth-1, STEP_HEIGHT-1);
+	g.setColor(Color.black);
 	g.drawRect(x0, y0, stepWidth-1, STEP_HEIGHT-1);
+	g.drawString(text, x0+5, y0+6+STEP_HEIGHT/2);
 	if (step == this.sfc.istep)
 	    g.drawRect(x0+2, y0+2, stepWidth-5, STEP_HEIGHT-5);
-	if (step == selectedObject) {
-	    g.setColor(Color.yellow);
-	    g.drawRect(x0-1, y0-1, stepWidth+1, STEP_HEIGHT+1);
-	}
 	LinkedList actions = step.actions;
 	if (actions.size() != 0) {
 	    g.setColor(Color.gray);
@@ -74,9 +75,30 @@ public final class SFCPainter{
 	    for (int i=0; i< actions.size(); i++) {
 		StepAction stepAction = (StepAction)actions.get(i);
 		String name = stepAction.a_name;
-		g.drawString(name, x0+4+ACTION_GAP+stepWidth, y0+11+i*15);
+		String qualifier = this.eSFC.output(stepAction.qualifier);
+		int qual = 12;
+		
+		slime.absynt.Action action = this.eSFC.getAction(name);
+		if (stepAction == selectedObject)
+		    g.setColor(Color.magenta);
+		else {
+		    Hashtable colors = this.eSFC.getColorHashtable();
+		    Color color = (Color)colors.get(action);
+		    g.setColor(color);
+		}
+		g.fillRect(x0+ACTION_GAP+stepWidth, 
+			   y0+i*15, name.length()*7 + 8+ qual, 15);
+		g.setColor(Color.gray);
+		
+		g.drawString(qualifier, x0+2+ACTION_GAP+stepWidth, y0+11+i*15);
+		g.drawString(name, x0+4+ACTION_GAP+stepWidth+qual, y0+11+i*15);
 		//FIX ME: *7 muss noch weg!
-		g.drawRect(x0+ACTION_GAP+stepWidth, y0+i*15, name.length()*7 + 8, 15);
+		g.drawRect(x0+ACTION_GAP+stepWidth, 
+			   y0+i*15, name.length()*7 + 8+ qual, 15);
+		g.drawLine(x0+ACTION_GAP+stepWidth+qual,
+			   y0+i*15,
+			   x0+ACTION_GAP+stepWidth+qual,
+			   y0+(i+1)*15);
 	    }
 	}
     }
@@ -137,7 +159,7 @@ public final class SFCPainter{
 		    int y1 = (int)tStep.pos.y;
 
 		    if (transition == selectedObject)
-			g.setColor(Color.red);
+			g.setColor(Color.magenta);
 		    else
 			g.setColor((Color)colors.get(transition));
 		    

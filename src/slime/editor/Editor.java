@@ -3,6 +3,7 @@ package slime.editor;
 import slime.absynt.*;
 import slime.layout.*;
 import slime.utils.*;
+
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.awt.*;
@@ -14,24 +15,31 @@ import javax.swing.border.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * <BR> <BR>
- * Feel free to play around with this non-trivial version of an SFC-editor.  
+ * Feel free to play around with this version of an SFC-editor.  
  * <br><br>
- * Status: about 90% should be implemented. <br>
+ * Status: complete. <br>
  * Known bugs: Some semantic problems. 
  * But who cares when there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.17 2002-07-05 14:14:36 swprakt Exp $
+ * @version $Id: Editor.java,v 1.18 2002-07-06 12:22:29 swprakt Exp $
  */
+
+// FIX ME: Double Buffering dringend notwendig !!!
+// FIX ME: Selektierte Items muessen zuletzt gezeichnet werden !!!
 
 public final class Editor extends JComponent implements ChangeListener {
 
     protected static final Color BACKGROUND_COLOR = Color.lightGray;
     protected static final Color HIGHLIGHT_COLOR  = Color.yellow;
+    protected static final Color SELECTABLE_COLOR = Color.orange;
 
     private static final int EDIT_MODE   = 0; 
     private static final int SOURCE_MODE = 1; 
     private static final int TARGET_MODE = 2; 
     private static final int REMOVE_MODE = 3; 
+
+    private boolean           simulatorActive       = false;
+    private Object            selectedItem          = null;
 
     private int               mode                  = EDIT_MODE;
     
@@ -91,6 +99,8 @@ public final class Editor extends JComponent implements ChangeListener {
 						    "Add new declaration");
 	this.declarationScrollList.setBorder(
 	    this.getTitledBorder("Declarations"));
+	this.declarationScrollList.getList().addMouseListener(
+	    new DeclarationListListener(this));
 	this.declarationScrollList.getButton().addActionListener(
 	    new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
@@ -152,8 +162,6 @@ public final class Editor extends JComponent implements ChangeListener {
 	int index = this.drawBoardTabbedPane.getSelectedIndex();
 	this.drawBoardTabbedPane.removeTabAt(index);
 	this.drawBoardTabbedPane.setSelectedIndex(index-1);
-	//ChangeEvent e = new ChangeEvent(this.drawBoardTabbedPane);
-	//this.stateChanged(e);
     } 
 
     /**
@@ -201,6 +209,15 @@ public final class Editor extends JComponent implements ChangeListener {
 	return null;
     }
 
+    protected void setSimulatorActive(boolean active) {
+	this.simulatorActive = active;
+	this.menuAndStatePanel.enableButtons();
+    }
+
+    protected boolean getSimulatorActive() {
+	return this.simulatorActive;
+    }
+
     private void initWindow(String title) {
 	this.setBackground(BACKGROUND_COLOR);
 	this.setLayout(new BorderLayout());
@@ -234,6 +251,11 @@ public final class Editor extends JComponent implements ChangeListener {
 	    this.actionScrollList.removeList();
 	    this.declarationScrollList.removeList();
 	}
+	if ((this.eSFC == null) || this.getSimulatorActive()) {
+	    this.guardScrollList.unuseable();
+	    this.actionScrollList.unuseable();
+	    this.declarationScrollList.unuseable();
+	}	
     }
 
     /**
@@ -266,30 +288,37 @@ public final class Editor extends JComponent implements ChangeListener {
 	helpPane = new ScrollPane();
 	helpPane.setSize(640,480);
 	JTextArea tA = new JTextArea(20,40);
+	tA.append("\n*** STEPS ***\n\n");
 	tA.append("- Add a new step ...\n"
 		  +"Leftclick on a free place on the drawboard. You may mark the step as initial and bind some actions from the action list to it. Marking a step as initial sets the old initial step to normal step.\n\n");
 	tA.append("- Delete a step ...\n"
 		  +"Switch with 'r' to REMOVE-mode and leftclick on the step. All transitions which are connected with this step will also be deleted.\n\n");
-	tA.append("- Move a step ...\n"
-		  +"Switch with 'e' to EDIT-mode and drag the step with the left mousebutton hold down.\n\n");
-	tA.append("- Move a group of steps ...\n"
-		  +"Mark the set of steps you wish to move as a set of source or target steps and move them like one step.\n\n");
 	tA.append("- Change the name of a step ...\n"
 		  +"Switch with 'e' to EDIT-mode and click on the step.\n\n");
 	tA.append("- Mark a step as initial ...\n"
-		  +"Switch with 'e' to EDIT-mode, click on the step and check the 'Initial step' button.\n\n");
+		  +"Switch with 'e' to EDIT-mode, click on the step and check the 'Initial step' toggle button.\n\n");
 	tA.append("- Mark a step as source ...\n"
 		  +"Switch with 's' to SOURCE-mode and leftclick on the step.\n\n");
 	tA.append("- Mark a step as target ...\n"
 		  +"Switch with 't' to TARGET-mode and leftclick on the step.\n\n");
 	tA.append("- Unmark all steps ...\n"
 		  +"Press 'c' to unmark all source and target steps.\n\n");
+	tA.append("- Move a step ...\n"
+		  +"Switch with 'e' to EDIT-mode and drag the step with the left mousebutton hold down.\n\n");
+	tA.append("- Move a group of steps ...\n"
+		  +"Mark the set of steps you wish to move as a set of source or target steps and move them like one step.\n\n");
+
+	tA.append("\n*** TRANSITIONS ***\n\n");
 	tA.append("- Add transition(s) between marked source and target steps ...\n"
 		  +"Press 'g' and select or input a guard.\n\n");
-	tA.append("- Modify an action in the action list ...\n"
-		  +"Double click on the action in the list.\n\n");
 	tA.append("- Change a guard at a transition ...\n"
 		  +"Switch with 'e' to EDIT-mode and click on the guard.\n\n");
+
+
+	tA.append("\n*** ACTIONS ***\n\n");
+	tA.append("- Modify an action in the action list ...\n"
+		  +"Double click on the action in the list.\n\n");
+
 
 	tA.setEnabled(false);
 	tA.setWrapStyleWord(true);
@@ -377,6 +406,12 @@ public final class Editor extends JComponent implements ChangeListener {
 
     protected void evaluateSingleMouseClickOn(int x, int y) {
 	Object object = this.determineSelectedItem(x, y);
+	if (getSimulatorActive()) {
+	    if (object instanceof StepAction)
+		object = (Object)this.eSFC.getAction(((StepAction)object).a_name);
+	    this.selectedItem = object;
+	    return;
+	}
 	if (object != null) {
 	    if (object instanceof Step) {
 		Step step = (Step)object;
@@ -419,6 +454,8 @@ public final class Editor extends JComponent implements ChangeListener {
     }
     
     protected void evaluateMouseDragged(int x0, int y0, int x1, int y1) {
+	if (this.getSimulatorActive())
+	    return;
 	if (mode == EDIT_MODE) {
 	    Step step = this.determineSelectedStep(x0, y0);
 	    if (step != null) {
@@ -465,14 +502,15 @@ public final class Editor extends JComponent implements ChangeListener {
     }
 
     private Object determineSelectedItem(int x, int y) {
-	LinkedList stepList = this.eSFC.getSFC().steps;
-	int stepNumber = 0;
 
-	while (stepNumber < stepList.size()) {
-	    Step step = (Step)stepList.get(stepNumber);
-	    if (isInStep(step, x, y))
+	LinkedList stepList = this.eSFC.getSFC().steps;
+	for (int i=0; i<stepList.size(); i++) {
+	    Step step = (Step)stepList.get(i);
+	    if (this.isInStep(step, x, y))
 		return step;
-	    stepNumber += 1;
+	    StepAction stepAction = isInAction(step, x, y);
+	    if (stepAction != null)
+		return stepAction;
 	}
 
 	Hashtable guardPositions = this.eSFC.getGuardPositions();
@@ -490,6 +528,7 @@ public final class Editor extends JComponent implements ChangeListener {
 		    return transition;
 	    }
 	}
+
 	return null;
     }
     
@@ -500,15 +539,36 @@ public final class Editor extends JComponent implements ChangeListener {
 	    position = new Position(0.0f, 0.0f);
 	    step.pos = position;
 	}
-	int xOfStep       = (int)position.x;
-	int yOfStep       = (int)position.y;
-	int stepWidth     = this.eSFC.getWidth(step);
+	int xOfStep   = (int)position.x;
+	int yOfStep   = (int)position.y;
+	int stepWidth = this.eSFC.getWidth(step);
 
 	if (x < xOfStep)               return false;
 	if (y < yOfStep)               return false;
 	if (x > (xOfStep + stepWidth)) return false;
 	if (y > (yOfStep + 30))        return false;
 	return true;
+    }
+
+    private StepAction isInAction(Step step, int x, int y) {
+	Position position = step.pos;
+	// FIX-ME: Checker?
+	if (position == null) {
+	    position = new Position(0.0f, 0.0f);
+	    step.pos = position;
+	}
+	int xOfStep     = (int)position.x;
+	int yOfStep     = (int)position.y;
+	int stepWidth   = this.eSFC.getWidth(step);
+	int stepActions = step.actions.size();
+	xOfStep += (stepWidth + SFCPainter.ACTION_GAP);
+	stepWidth = 13;
+	if (x < xOfStep)                    return null;
+	if (y < yOfStep)                    return null;
+	if (x > (xOfStep + stepWidth))      return null;
+	if (y >= (yOfStep + stepActions*15)) return null;
+	int number = (y - yOfStep) / 15;
+	return (StepAction)(step.actions).get(number);
     }
 
     protected int toggleMode(int newMode) {
@@ -634,6 +694,8 @@ public final class Editor extends JComponent implements ChangeListener {
     }
     
     protected void reactOnChangeOfAction() {
+	if (this.getSimulatorActive()) return;
+
 	int[] indices = this.actionScrollList.getSelectedIndices();
 
 	if (indices.length == 0)
@@ -684,7 +746,7 @@ public final class Editor extends JComponent implements ChangeListener {
 	    dialogForAction("", "", "Add new action");
 	if (newAction != null) { 
 	    if (!this.eSFC.actionNameExists(newAction.a_name)) {
-  		this.eSFC.getSFC().actions.add(newAction);
+  		this.eSFC.addAction(newAction);
 		this.menuAndStatePanel.setStatusMessage("New action added.");
 		this.updateWindow();
 	    } else {
@@ -695,9 +757,43 @@ public final class Editor extends JComponent implements ChangeListener {
 	}
     }
 
+    protected void reactOnChangeOfDeclaration() {
+	if (this.getSimulatorActive()) return;
+
+	int[] indices = this.declarationScrollList.getSelectedIndices();
+
+	if (indices.length == 0)
+	    return;
+	
+	LinkedList declist = this.eSFC.getSFC().declist;
+	Declaration declaration = 
+	    (Declaration)declist.get(indices[0]);
+	this.changeDeclaration(declaration);
+    }
+
+    private void changeDeclaration(Declaration declaration) {
+	String variable = declaration.var.name;
+	String value    = ESFC.output(declaration.val);
+	String io       = new String();
+	if (declaration.var.inputvar) io += "in";
+	if (declaration.var.outputvar) io += "out";
+	String type     = ESFC.output(declaration.type);
+	Declaration newDeclaration =
+	    dialogForDeclaration(variable, value, io, type, "Change declaration");
+	if (newDeclaration != null) {
+	    if (!(declaration.var.name).equals(newDeclaration.var.name))
+		declaration.var  = newDeclaration.var;
+	    declaration.type = newDeclaration.type;
+	    declaration.val  = newDeclaration.val;
+	    this.updateWindow();
+	} else {
+	    this.menuAndStatePanel.setStatusMessage("Declaration has not changed.");
+	}	    
+    }
+
     private void addDeclaration() {
 	slime.absynt.Declaration newDeclaration =
-	    dialogForDeclaration("", "", "Add new declaration");
+	    dialogForDeclaration("", "", "", "[bool]", "Add new declaration");
 	if (newDeclaration != null) { 
 	    this.eSFC.getSFC().declist.add(newDeclaration);
 	    this.menuAndStatePanel.setStatusMessage("New declaration added.");
@@ -748,26 +844,34 @@ public final class Editor extends JComponent implements ChangeListener {
 	return null;
     }
 
-    private slime.absynt.Declaration dialogForDeclaration(String variable, 
-							  String constant, 
-							  String title) {
+    private Declaration dialogForDeclaration(String variable, 
+					     String constant,
+					     String io,
+					     String type,
+					     String title) {
 	ButtonGroup  ioGroup = new ButtonGroup();
-	JRadioButton none    = new JRadioButton("none", true);
+	JRadioButton none    = new JRadioButton("none");
 	JRadioButton in      = new JRadioButton("IN");
 	JRadioButton out     = new JRadioButton("OUT");
 	JRadioButton inout   = new JRadioButton("INOUT");
+	if (io.equals(""))      none.setSelected(true);
+	if (io.equals("in"))    in.setSelected(true);
+	if (io.equals("out"))   out.setSelected(true);
+	if (io.equals("inout")) inout.setSelected(true);
 	none.setActionCommand( "" );
-	in.setActionCommand( "in " );
-	out.setActionCommand( "out " );
-	inout.setActionCommand( "inout " );
+	in.setActionCommand( "in" );
+	out.setActionCommand( "out" );
+	inout.setActionCommand( "inout" );
 	ioGroup.add(none); 
 	ioGroup.add(in);
 	ioGroup.add(out);
 	ioGroup.add(inout);
 
 	ButtonGroup  typeGroup = new ButtonGroup();
-	JRadioButton boolType  = new JRadioButton("BOOL", true);
+	JRadioButton boolType  = new JRadioButton("BOOL");
 	JRadioButton intType   = new JRadioButton("INT");
+	if (type.equals("[bool]")) boolType.setSelected(true);
+	if (type.equals("[int]"))  intType.setSelected(true);
 	boolType.setActionCommand( "bool " );
 	intType.setActionCommand( "int " );
 	typeGroup.add(boolType);
@@ -810,8 +914,8 @@ public final class Editor extends JComponent implements ChangeListener {
   	    this.eSFC.setChecked(false);
   	    this.menuAndStatePanel.enableButtons();
   	    String decString = new String();
-	    decString += typeGroup.getSelection().getActionCommand();
-	    decString += ioGroup.getSelection().getActionCommand();
+	    decString += typeGroup.getSelection().getActionCommand()+" ";
+	    decString += ioGroup.getSelection().getActionCommand()+" ";
 	    decString += ((JTextField)message[1]).getText();
 	    decString += " := ";
 	    decString += ((JTextField)message[3]).getText();
@@ -842,6 +946,30 @@ public final class Editor extends JComponent implements ChangeListener {
      */
     public void deHighlight(Object object) {
 	this.eSFC.deHighlight(object);
+    }
+
+    public slime.absynt.Absynt getItemFromList(LinkedList items,
+					       String     message) {
+	this.getColors(items);
+	this.menuAndStatePanel.setStatusMessage(message);
+	this.selectedItem = null;
+	this.stateChanged(null);
+	while (!items.contains(this.selectedItem)) {}
+	this.setColors(items);
+	this.stateChanged(null);
+	return (slime.absynt.Absynt)this.selectedItem;
+    }
+
+    private void getColors(LinkedList objects) {
+	Hashtable colors = this.eSFC.getColorHashtable();
+
+	for (int i=0; i<objects.size(); i++) 
+	    colors.put(objects.get(i), SELECTABLE_COLOR);
+    }
+    
+    private void setColors(LinkedList objects) {
+	for (int i=0; i<objects.size(); i++) 
+	    this.eSFC.deHighlight(objects.get(i));
     }
 }
 

@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * <br><br>
  * Status: always complete, since it is for testing only<br>
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.10 2002-06-24 13:37:58 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.11 2002-07-06 12:22:29 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
@@ -23,7 +23,7 @@ public final class EditorInFrame extends JFrame {
    
     private EditorInFrame(Editor editor) {
 	this.editor = editor;
-	this.initWindow("SFC-Editor v.0.9");
+	this.initWindow("SFC-Editor v.1.0");
     }
 
     private void initWindow(String title) {
