@@ -1,5 +1,21 @@
+
      Pretty Printer
      **************
 
 The pretty printer prints out an ascii representation of an abstract SFC.  It
-is only used for debugging purposes.
+is only used for debugging purposes.  The public methods are 
+
+  print(SFC)		for SFC's and
+  print(...)		  most of its parts
+  printSAP(LinkedList)	for SAP programs
+
+
+     Parser
+     ******
+
+The parser can be used to parse SAP programs given as strings.  The public
+methods for that is
+
+  LinkedList  parseSAP(String)
+
+

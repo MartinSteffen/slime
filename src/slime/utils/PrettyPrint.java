@@ -2,7 +2,7 @@
 /**
  * Pretty printer for SFC's
  * @author Initially provided by Karsten Stahl.
- * @version $Id: PrettyPrint.java,v 1.1 2002-04-16 13:57:54 swprakt Exp $
+ * @version $Id: PrettyPrint.java,v 1.2 2002-06-07 15:04:18 swprakt Exp $
  */
 
 
@@ -21,9 +21,11 @@ public class PrettyPrint {
     public static final int NORM_TAB = 4;
 
 
+    public PrettyPrint() {
+        this(NORM_COLUMN, NORM_TAB);
+    }
 
-
-    public PrettyPrint(int i, int j) {
+    private PrettyPrint(int i, int j) {
         try {
             column = i >= 0 ? i - i % j : 0;
             tab = j >= 0 ? j : NORM_TAB;
@@ -35,7 +37,7 @@ public class PrettyPrint {
         tab = NORM_TAB;
     }
 
-    public PrettyPrint(int i, int j, boolean _steps_long) {
+    private PrettyPrint(int i, int j, boolean _steps_long) {
 	steps_long = _steps_long;
         try {
             column = i >= 0 ? i - i % j : 0;
@@ -48,10 +50,8 @@ public class PrettyPrint {
         tab = NORM_TAB;
     }
 
-    public PrettyPrint() {
-        this(NORM_COLUMN, NORM_TAB);
-    }
-    
+// ---------------------------------------------------------------------------
+
     /* public print methode
      * Hier wird gecheckt welche Instanz das uebergebene Objekt hat
      * und output wird aufgerufen.
@@ -96,8 +96,24 @@ public class PrettyPrint {
 	      output((M_Type)absynt);*/
 	}
     }
-		   
-    public void output(SFC sfc) {
+
+    public void printSAP(LinkedList _sap) {
+	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	System.out.println("[StmtList] ");
+	for (Iterator i = _sap.iterator(); i.hasNext();)
+	    prettyprint.print((Stmt)i.next());
+    }
+
+    public void printExpession(LinkedList _sap) {
+	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
+	System.out.println("[StmtList] ");
+	for (Iterator i = _sap.iterator(); i.hasNext();)
+	    prettyprint.print((Stmt)i.next());
+    }
+
+// ---------------------------------------------------------------------------
+
+    private void output(SFC sfc) {
 	System.out.println(whiteSpace(column) + "[SFC] ");
 	/*	       
 	 * Neuen Abstand erzeugen...die naechste Spalte ist einen
@@ -120,7 +136,7 @@ public class PrettyPrint {
 	    prettyprint.print((Declaration)i.next());
     }
     
-    public void output(Transition transition){
+    private void output(Transition transition){
 	System.out.println(whiteSpace(column) + "[Transition] " );
 	PrettyPrint pp = new PrettyPrint(column + tab, tab);
 	PrettyPrint prettyprint = new PrettyPrint(column + 2*tab, tab);
@@ -133,7 +149,7 @@ public class PrettyPrint {
 	    prettyprint.print((Step)i.next());
     }
 
-    public void output(Action action){
+    private void output(Action action){
 	System.out.println(whiteSpace(column) + "[Action] "
 			   + action.a_name);
 	PrettyPrint prettyprint = new PrettyPrint(column + 2*tab, tab);
@@ -142,14 +158,14 @@ public class PrettyPrint {
 	    prettyprint.print((Stmt)i.next());
     }
 
-    public void output(StepAction stepaction){
+    private void output(StepAction stepaction){
 	System.out.println(whiteSpace(column) + "[StepAction] ");
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	prettyprint.print(stepaction.qualifier);
 	prettyprint.print(stepaction.a_name);
     }
 
-    public void output(ActionQualifier aqf){
+    private void output(ActionQualifier aqf){
 	String string="[unknown] ";
 	if(aqf instanceof Nqual)
 	    string="[N] ";
@@ -157,7 +173,7 @@ public class PrettyPrint {
 			   + string);
     }
 
-    public void output(Step step) {
+    private void output(Step step) {
 	System.out.println(whiteSpace(column) + "[Step] " + step.name);
 	if (steps_long) {
 	    PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
@@ -166,7 +182,7 @@ public class PrettyPrint {
 	}
     }
 
-    public void output(Declaration dec) {
+    private void output(Declaration dec) {
 	System.out.println(whiteSpace(column) + "[Declaration] ");
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	prettyprint.print(dec.var);
@@ -174,30 +190,30 @@ public class PrettyPrint {
 	prettyprint.print(dec.val);
     }
     
-    public void output(Skip skip){
+    private void output(Skip skip){
 	System.out.println(whiteSpace(column) +"[Skip] ");
     }
     
-    public void output(Stmt stmt){
+    private void output(Stmt stmt){
 	System.out.println(whiteSpace(column) +"[Stmt] ");
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
     }
 
-    public void output(Variable variable){
+    private void output(Variable variable){
 	System.out.println(whiteSpace(column)+"[Variable] " + 
 			   variable.name);
 	PrettyPrint prettyprint = new PrettyPrint(column +tab, tab);
 	prettyprint.print(variable.type);
     }
 
-    public void output(Assign assign){
+    private void output(Assign assign){
 	System.out.println(whiteSpace(column) + "[Assign] ");
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	prettyprint.print(assign.var);
 	prettyprint.print(assign.val);
     }
 
-    public void output(B_expr bexpr){
+    private void output(B_expr bexpr){
 	System.out.println(whiteSpace(column) + "[B_expr] ");
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	prettyprint.print(bexpr.left_expr);
@@ -205,12 +221,12 @@ public class PrettyPrint {
 	prettyprint.print(bexpr.right_expr);
     }
 
-    public void output(Expr expr){
+    private void output(Expr expr){
 	System.out.println(whiteSpace(column) + "[Expr] " );
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
     }    
     
-    public void output(U_expr uexpr){
+    private void output(U_expr uexpr){
 	System.out.println(whiteSpace(column) + "[U_Expr] ");
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
 	prettyprint.print(uexpr.op);
@@ -274,7 +290,7 @@ public class PrettyPrint {
     	System.out.println(whiteSpace(column)+ s);
     }
 
-    public void output(Constval constval){
+    private void output(Constval constval){
         if(constval != null){
             System.out.println(whiteSpace(column) + "[Constval] " + 
                                constval.val);
@@ -318,8 +334,11 @@ public class PrettyPrint {
 //	Pretty-Printer
 //	--------------
 //
-//	$Id: PrettyPrint.java,v 1.1 2002-04-16 13:57:54 swprakt Exp $
+//	$Id: PrettyPrint.java,v 1.2 2002-06-07 15:04:18 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:57:54  swprakt
+//	Slime initial version
+//	
 //	
 //---------------------------------------------------------------------
