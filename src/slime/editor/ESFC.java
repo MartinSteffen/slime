@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.6 2002-06-10 18:07:22 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.7 2002-06-12 08:39:35 swprakt Exp $
  */
 
 final class ESFC{
@@ -20,6 +20,9 @@ final class ESFC{
     private static final Color STEP_NORMAL        = Color.black;
     private static final Color TRANSITION_NORMAL  = Color.gray;
 
+    private static final Font DATA_FONT =
+    new Font( "Sanserif", Font.PLAIN, 12 );
+    
     private SFC        sfc;
     private LinkedList sourceSteps;
     private LinkedList targetSteps;
@@ -27,12 +30,18 @@ final class ESFC{
     private DrawBoard  drawBoard;
     private Object     selectedObject;
     private Object     markedObject;
+    private boolean    checked;
+    private boolean    layouted;
     
     protected ESFC(SFC sfc) {
 	this.sfc    = sfc;
 	this.colors = this.createColorHashtable();
 	this.sourceSteps = new LinkedList();
 	this.targetSteps = new LinkedList();
+    }
+
+    protected Font getFont() {
+	return DATA_FONT;
     }
 
     protected SFC getSFC() {
@@ -49,6 +58,24 @@ final class ESFC{
 
     protected void setDrawBoard(DrawBoard drawBoard) {
 	this.drawBoard = drawBoard;
+    }
+
+    protected void setChecked(boolean flag) {
+	this.checked = flag;
+	if (!flag)
+	    this.setLayouted(flag);
+    }
+
+    protected boolean isChecked() {
+	return this.checked;
+    }
+
+    protected void setLayouted(boolean flag) {
+	this.layouted = flag;
+    }
+
+    protected boolean isLayouted() {
+	return this.layouted;
     }
 
     protected DrawBoard getDrawBoard() {
@@ -112,6 +139,7 @@ final class ESFC{
 	this.colors.remove(step);
 	if (step == this.sfc.istep)
 	    this.sfc.istep = null;
+	this.setChecked(false);
     }
 
     protected void removeSourceStep(Step step) {
@@ -164,6 +192,7 @@ final class ESFC{
 	step.pos = position;
 	this.sfc.steps.add(step);
 	colors.put(step, STEP_NORMAL);
+	this.setChecked(false);
 	return step;
     }
 
@@ -173,6 +202,7 @@ final class ESFC{
 	colors.put(transition, TRANSITION_NORMAL);
 	this.clearSourceSteps();
 	this.clearTargetSteps();
+	this.setChecked(false);
     }
 
     protected Hashtable getColorHashtable() {
@@ -198,9 +228,11 @@ final class ESFC{
 
     public static int getWidth(Step step) {
 	final int MIN_WIDTH = 30;
-	final int WIDTH_PER_CHARACTER = 7;
-	int lengthOfName = step.name.length();
-	int width = WIDTH_PER_CHARACTER * lengthOfName + 8;
+
+	JPanel panel = new JPanel();
+	int length = panel.getFontMetrics(DATA_FONT).stringWidth(step.name);
+
+	int width = length + 8;
 	return (MIN_WIDTH > width) ? MIN_WIDTH : width;
     }
 
@@ -209,13 +241,18 @@ final class ESFC{
 	if (size == 0)
 	    return 0;
 	int max = 0;
+	
+	JPanel panel = new JPanel();
+
 	for (int i=0; i<size; i++) {
 	    StepAction stepAction = (StepAction)actions.get(i);
-	    int length = stepAction.a_name.length();
+	    //int length = stepAction.a_name.length();
+	    int length = panel.getFontMetrics(DATA_FONT).stringWidth(stepAction.a_name);
+
 	    if (length > max)
 		max = length;
 	}
-	return SFCPainter.ACTION_GAP+max*7+8;
+	return SFCPainter.ACTION_GAP+max+8;
     }
 
     public String print(Absynt absynt) {
@@ -416,9 +453,9 @@ final class ESFC{
 	string="[Type] ";
 	if(type !=null){
 	    if(type instanceof BoolType)
-		string="[BoolType] ";
+		string="[Bool] ";
 	    if(type instanceof IntType)
-		string="[IntType] ";
+		string="[Int] ";
 	}	    
 	return string;
     }    

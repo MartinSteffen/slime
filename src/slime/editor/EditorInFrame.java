@@ -17,7 +17,7 @@ import javax.swing.event.*;
  * unchecked SFC's. Please report all other crashes and bugs !!!
  * 
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.5 2002-06-10 18:07:23 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.6 2002-06-12 08:39:35 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
@@ -41,12 +41,10 @@ public final class EditorInFrame extends JFrame {
     }
 
     private void initWindow(String title) {
-	this.setSize(WIDTH, HEIGHT);
-	this.setBackground(Color.white);
+	this.setSize(10, 10);
+	this.setBackground(Color.lightGray);
 	this.setTitle(title);
-	this.getContentPane().setLayout( new BorderLayout() );
-	this.getContentPane().add(this.getCenterPanel(), BorderLayout.CENTER);
-	this.getContentPane().add(this.getCenterPanel(), BorderLayout.SOUTH);
+	this.getContentPane().add(this.getCenterPanel());
 	this.setVisible(true);
 	this.addWindowListener( new WindowAdapter() {
 		public void windowClosing(WindowEvent e) {
@@ -56,18 +54,24 @@ public final class EditorInFrame extends JFrame {
 	this.pack();
     }
 
-    private Panel getCenterPanel() {
-	Panel panel = new Panel();
+    private JPanel getCenterPanel() {
+	JPanel panel = new JPanel();
 	panel.add(this.editor);
+	panel.setBackground(Color.lightGray);
 	return panel;
+    }
+
+    public void paint(Graphics g) {
+	super.paint(g);
+	this.pack();
     }
 
     public static void main(String[] argv) {
 	SFC sfc1 = Example.getExample1();
 	SFC sfc2 = Example.getExample1();
-	Constval cfalse = new Constval (false);
 	BoolType btype = new BoolType();
 	Variable v_x = new Variable ("a", btype);
+	Constval cfalse = new Constval (false);
 	Declaration dec_x = new Declaration(v_x, btype, cfalse);
 	sfc2.declist.add(dec_x);
 	for (int i=0; i < sfc1.steps.size(); i++) {
