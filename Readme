@@ -1,5 +1,5 @@
 ############################################################
-## $Id: Readme,v 1.5 2002-04-24 15:53:09 swprakt Exp $
+## $Id: Readme,v 1.6 2002-07-02 15:01:30 swprakt Exp $
 ############################################################
 
 
@@ -15,6 +15,7 @@ The package contains the following files and subdirectories:
   
 
     o requirements/    informal description of the task
+    o evaluation/      end-of-semester evaluation, summary (including talk)
     o web/               The web-site for coordination,
                          tracking the progress etc.
     o org/               internal information about members etc
