@@ -1,13 +1,15 @@
 #################################################################
-# $Id: Todo,v 1.14 2002-07-10 14:32:50 swprakt Exp $
+# $Id: Todo,v 1.15 2002-07-10 17:04:31 swprakt Exp $
 ################################################################
 
 
 
 
-  - 
+  - 1-n/n-1 checking
+  - finer checks
 
   - fill in the rest of messages
+
   - overwrite the equals-method
 
   - currently, eveerything is public for testing,

@@ -6,10 +6,18 @@ import java.io.Serializable;
  * Type for doubles
  * 
  * @author initially provided by Marco Wendel
- * @version $Id: DoubleType.java,v 1.7 2002-07-10 15:38:22 swprakt Exp $
+ * @version $Id: DoubleType.java,v 1.8 2002-07-10 17:04:29 swprakt Exp $
  */
  /*
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2002/07/10 15:38:22  swprakt
+ * The accept-method is inherited from the abstract
+ * super type Type. It throws an exception, as the
+ * DoubleType is currently not required in the
+ * visitor-interface.
+ *
+ * [Steffen]
+ *
  * Revision 1.6  2002/07/10 14:31:56  swprakt
  * *** empty log message ***
  *
@@ -42,5 +50,11 @@ public class DoubleType  extends Type implements Serializable {
   // we inherit the acceptor method from the abstract class Type,
   // which throws an exception.
 
+  public boolean equals (Type t) {
+    return  (t instanceof  DoubleType);
+  }
+
+
 }
+
 

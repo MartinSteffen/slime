@@ -15,8 +15,8 @@ import java.io.Serializable;
  * C-programmer (or Java-programmer etc) can think of the type
  * as Void.
  * 
- * @author Initially provided by Martin Steffen.
- * @version $Id: UnitType.java,v 1.2 2002-06-24 20:08:11 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+ * @version $Id: UnitType.java,v 1.3 2002-07-10 17:04:30 swprakt Exp $
  */
 
 
@@ -28,6 +28,14 @@ public class UnitType  extends Type implements Serializable {
     return ask.forBoolType();
   }
 
+
+  /** type equality.
+   */
+  public boolean equals (Type t) {
+    return  (t instanceof  UnitType);
+  }
+
+
 }
 
 
@@ -37,9 +45,15 @@ public class UnitType  extends Type implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: UnitType.java,v 1.2 2002-06-24 20:08:11 swprakt Exp $
+//	$Id: UnitType.java,v 1.3 2002-07-10 17:04:30 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2002/06/24 20:08:11  swprakt
+//	Types extended with visitor methods,
+//	also extended is the type ckecker, which is a visitor to the absynt.
+//	
+//	[Steffen]
+//	
 //	Revision 1.1  2002/06/14 06:13:31  swprakt
 //	*** empty log message ***
 //	

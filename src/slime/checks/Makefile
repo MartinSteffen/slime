@@ -7,6 +7,7 @@ all:	$(patsubst %.java,%.class,$(wildcard *.java))
 
 
 clean:
+	cd tests; make clean
 	\rm -f *.class *~
 
 localdoc:	;
@@ -14,5 +15,5 @@ localdoc:	;
 
 
 ######################################################
-## $Id: Makefile,v 1.3 2002-06-12 18:52:00 swprakt Exp $
+## $Id: Makefile,v 1.4 2002-07-10 17:04:31 swprakt Exp $
 ######################################################
