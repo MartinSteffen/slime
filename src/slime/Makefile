@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.18 2002-07-02 06:45:09 swprakt Exp $
+# $Id: Makefile,v 1.19 2002-07-02 07:01:13 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -20,11 +20,15 @@ BASELINESDIR  = $(WEBDIR)/baselines
 SNAPSHOTSDIR  = $(WEBDIR)/snapshots
 LOCALDOCDIR   = doc
 PACKAGEDIRS   = absynt\
+	        utils\
 	        layout\
 	        editor\
 	        checks\
 	        simulator\
-#		sfcparser # currently removed, it breaks compilation
+#		sfcparser
+
+
+#               
 #	        gui\
 #	        utils\
 #                io
@@ -48,8 +52,17 @@ packets:
 	(cd ./gui; make)
 	(cd ./checks; make)
 	(cd ./simulator; make)
-	(cd ./io; make)
-	(cd ./sfcparser; make)
+#	(cd ./io; make)
+#	(cd ./sfcparser; make)
+
+# the sfc-parser is temporarily commented out from
+# the compilation list, because of discrepancies in use of
+# CLASSPATH. Not to waste time in analysing as simple compilation
+# error, we just comment that out until an agreement is reached, sfc parser
+# continues in his directory with his settings and his own
+# choice of tools and at the same time
+# the rest of the packages use their settings.
+# We merge them as soon as possible. Steffen 2.07.02
 
 jar:
 	jar cvf slime.jar ./absynt/*.class \
