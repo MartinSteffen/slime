@@ -7,7 +7,7 @@ import java.io.Serializable;
  * They are very simply implemented as strings
  * 
  * @author Initially provided by Martin Steffen/Karsten Stahl.
- * @version $Id: Variable.java,v 1.6 2002-06-27 14:05:50 swprakt Exp $	
+ * @version $Id: Variable.java,v 1.7 2002-07-04 16:30:43 swprakt Exp $	
  */
 
 
@@ -47,13 +47,19 @@ public class Variable extends Expr implements Serializable {
 
 
 
+
 //----------------------------------------------------------------------
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Variable.java,v 1.6 2002-06-27 14:05:50 swprakt Exp $
+//	$Id: Variable.java,v 1.7 2002-07-04 16:30:43 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.6  2002/06/27 14:05:50  swprakt
+//	Overridden equals-method.
+//	
+//	[Steffen]
+//	
 //	Revision 1.5  2002/06/26 15:50:04  swprakt
 //	added input/output flags for variables
 //	

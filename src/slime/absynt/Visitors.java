@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Visitors for Slime abstract syntax (just for the fun of it)
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version  $Id: Visitors.java,v 1.11 2002-06-25 10:55:46 swprakt Exp $
+ * @version  $Id: Visitors.java,v 1.12 2002-07-04 16:30:43 swprakt Exp $
  */
 
 
@@ -30,6 +30,8 @@ public class Visitors {
   public interface IStmt {
     public Object forSkip() throws Exception;
     public Object forAssign(Variable x, Expr e) throws Exception;
+    public Object forInput(Variable x, Expr e) throws Exception;
+    public Object forOutput(Variable x, Expr e) throws Exception;
   }
     
 
@@ -63,10 +65,11 @@ public class Visitors {
   }
 
   public interface IType{
-    public Object forIntType() throws Exception;
-    public Object forBoolType() throws Exception;
-    public Object forUndefType() throws Exception;
-    public Object forUnitType()  throws Exception;
+      public Object forDoubleType() throws Exception;
+      public Object forIntType() throws Exception;
+      public Object forBoolType() throws Exception;
+      public Object forUndefType() throws Exception;
+      public Object forUnitType()  throws Exception;
   }
 
 }
@@ -77,8 +80,12 @@ public class Visitors {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Visitors.java,v 1.11 2002-06-25 10:55:46 swprakt Exp $
+//	$Id: Visitors.java,v 1.12 2002-07-04 16:30:43 swprakt Exp $
 // //	$Log: not supported by cvs2svn $
+// //	Revision 1.11  2002/06/25 10:55:46  swprakt
+// //	First iterator added for one linked list.
+// //	[Steffen]
+// //	
 // //	Revision 1.10  2002/06/25 08:01:17  swprakt
 // //	Stmt-visitor added. [Steffen]
 // //	

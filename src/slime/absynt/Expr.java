@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Abstract class for simple expressions
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Expr.java,v 1.7 2002-06-13 12:34:27 swprakt Exp $
+ * @version $Id: Expr.java,v 1.8 2002-07-04 16:30:42 swprakt Exp $
  */
 
 
@@ -30,8 +30,9 @@ public abstract class Expr extends Absynt implements Serializable{
   public final  static int LEQ     = 10;
   public final  static int GEQ     = 11;
   public final  static int NEQ     = 12;
-
-
+  public final  static int MOD     = 13;
+  public final  static int POW     = 14;
+ 
   //--------------------------------------------------
 
 
@@ -46,9 +47,12 @@ public abstract class Expr extends Absynt implements Serializable{
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Expr.java,v 1.7 2002-06-13 12:34:27 swprakt Exp $
+//	$Id: Expr.java,v 1.8 2002-07-04 16:30:42 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.7  2002/06/13 12:34:27  swprakt
+//	Started to add vistors + typechecks [M. Steffen]
+//	
 //	Revision 1.6  2002/06/13 08:10:38  swprakt
 //	Removed the visitor.
 //	

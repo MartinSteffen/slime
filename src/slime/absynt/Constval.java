@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Supported are integers and booleans.
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Constval.java,v 1.4 2002-06-13 12:34:27 swprakt Exp $
+ * @version $Id: Constval.java,v 1.5 2002-07-04 16:30:42 swprakt Exp $
  */
 
 
@@ -20,7 +20,7 @@ public class Constval  extends Expr implements Serializable {
   public Object val;
   
   /**
-   * 2 overloaded constructors. The value is stored as ``Object''
+   * 3 overloaded constructors. The value is stored as ``Object''
    */
   public Constval (boolean v) {
     val = new Boolean (v);}
@@ -28,6 +28,10 @@ public class Constval  extends Expr implements Serializable {
 
   public Constval (int v) {
     val = new Integer (v);}
+
+
+  public Constval (double v) {
+    val = new Double (v);}
 
   /**
      visitor acceptor
@@ -44,9 +48,12 @@ public class Constval  extends Expr implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Constval.java,v 1.4 2002-06-13 12:34:27 swprakt Exp $
+//	$Id: Constval.java,v 1.5 2002-07-04 16:30:42 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2002/06/13 12:34:27  swprakt
+//	Started to add vistors + typechecks [M. Steffen]
+//	
 //	Revision 1.3  2002/06/12 18:51:54  swprakt
 //	reorganization of the package-structure
 //	
