@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.64 2002-07-04 17:57:48 swprakt Exp $
+## $Id: Errors.txt,v 1.65 2002-07-05 05:57:20 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,11 +35,12 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
-Error 38:     COMPILARTION
+Error 38:     compile error
  package:     all
  class:       deadly fatal
  status:      reporter, 4. Juli 02, Steffen
  description: Extending the visitor screwed it up (checker does not compile any more)
+
 
 Error 34(2):  expression parser
  package:     parser
@@ -136,12 +137,6 @@ Error 6:       Makefile
   class:       fatal 
   description: top-level make does not work, make a better concept
 
-Error 5:       structure
-  package:     absynt/check
-  status:      reported 12.6.02, M. Steffen
-  class:       bad style
-  description: the public/protected etc structure is not nice,
-               use inner classes instead
 
 Error 4:       Manifest file, toplevel file
   package:     Gui
@@ -169,6 +164,11 @@ Error 1:  parser warnings
    class:  warning, non-fatal
    description: Parser grammar contains superfluous stuff
 	        (cf. lex/yacc output: 10 terminals declared but not used)
+
+
+
+-------------------- Repaired errors -------------------------
+
 
 Error 34:     expression parsing
  package:     sfcparser
@@ -203,8 +203,19 @@ Comment:       Since you won't set up your classpath according to the required o
 
 	       you may also look at error 36 and 36.2, 24, ...
 
+	       >>> This error has been explained, therefore it will
+	       be solved. Error 34 is kept until the tests succeed
+	       after the changes.
 
--------------------- Repaired errors -------------------------
+
+
+Error 5:       structure
+  package:     absynt/check
+  status:      reported 12.6.02, M. Steffen
+  class:       bad style
+  description: the public/protected etc structure is not nice,
+               use inner classes instead?
+	       I put it on the wish list
 
 
 Error 26:    clean up
