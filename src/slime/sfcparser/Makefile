@@ -1,9 +1,16 @@
 ##########################
-# $Id: Makefile,v 1.8 2002-06-28 20:01:07 swprakt Exp $                       
+# $Id: Makefile,v 1.9 2002-07-08 13:10:06 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.8  2002/06/28 20:01:07  swprakt
+# Modified PrettyPrint for use with slime.absfc.SFCabtree,
+# may now use it to debug Absfc2SFCConverter. I will try
+# to check in a fully functional SFCParser incl. nested
+# statements within one week, so 'round about 05/07/2002.
+# (mwe)
+#
 # Revision 1.7  2002/06/28 08:03:12  swprakt
 # old versions did conflict with "global" Makefile
 # in src/slime, albeight the GLOBAL Makefile should
@@ -52,8 +59,15 @@ JCUPLOGFILE=JCup.log
 
 all:	SFCParser.class Absfc2SFCConverter.class ParserTest.class
 
+testexpr:
+	java slime.sfcparser.ParserTest -e "((1*2*3*4*5*6*7)-(1+2+(3+4+(5+(6+(7*1))))))/(9+(-9)+1/1)"
+
+testDOS:
+	testsfc.bat
+
 test:
-	java slime.sfcparser.ParserTest
+	testsfc.sh
+	for i in `seq 0 8`; do less out.$i.txt;done
 
 Absfc2SFCConverter.class:
 	javac Absfc2SFCConverter.java

@@ -3,11 +3,15 @@ import java_cup.runtime.Symbol;
   /**
     *  <b>SFC.lex</b><br>
     *
-    * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.15 2002-07-04 16:27:19 swprakt Exp $
+    * initially provided by Marco Wendel <Marco.Wendel@gmx.info>
+    * $Id: SFC.lex,v 1.16 2002-07-08 13:10:07 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.15  2002/07/04 16:27:19  swprakt
+   /* New Versions without the expressions-operations-precedence-error
+   /* and with added support for doubles and for-loops.
+   /*
    /* Revision 1.14  2002/07/02 15:23:50  swprakt
    /* you may look at example.procs.sfc and the output
    /* output.procs.txt for an idea what i am doing

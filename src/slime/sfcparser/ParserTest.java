@@ -6,10 +6,15 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.12 2002-07-03 16:50:09 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.13 2002-07-08 13:10:06 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.12  2002/07/03 16:50:09  swprakt
+/* SFC generates and does not conflic with PrettyPrint.
+/* Previous conflicts with PrettyPrint occured because
+/* noone felt responsible for input & output. (mwe)
+/*
 /* Revision 1.11  2002/07/02 19:26:48  swprakt
 /* Now supporting StepActions, but the PrettyPrint.java
 /* fails at Action... Tomorrow we will have a chart
@@ -105,8 +110,8 @@ public class ParserTest {
 	slime.absynt.absfc.SFCabtree        absfctree = null;
 	slime.sfcparser.SFCParser           mySFCParser = null;
 	slime.sfcparser.Absfc2SFCConverter  theConverter = null;
-	slime.utils.PrettyPrint             prettyPrinter = new slime.utils.PrettyPrint();
-	// slime.sfcparser.PPActions prettyPrinter =  new slime.sfcparser.PPActions(); for the version without that StepAction...
+	// slime.utils.PrettyPrint  prettyPrinter = new slime.utils.PrettyPrint();
+	slime.sfcparser.PrettyPrint prettyPrinter =  new slime.sfcparser.PrettyPrint(); // will be used until problems with slime.utils are solved
 	slime.sfcparser.PrettyPrint4Absfc   prettyAbsfc = new slime.sfcparser.PrettyPrint4Absfc();
 
 	if ( (args.length == 0)  || (args.length > 100) )

@@ -1,5 +1,5 @@
 // ##################################################
-// # $Id: TODO,v 1.3 2002-07-03 18:06:45 swprakt Exp $ 
+// # $Id: TODO,v 1.4 2002-07-08 13:10:07 swprakt Exp $ 
 // # Author: initialy provided by Marco Wendel
 // ##################################################
 // # 
@@ -11,6 +11,11 @@
 // #
 // ##################################################
 // # $Log: not supported by cvs2svn $
+// # Revision 1.3  2002/07/03 18:06:45  swprakt
+// # some examples. example.5.sfc will not function.
+// # The status of input/output has not been solved until now.
+// # (mwe)
+// #
 // # Revision 1.2  2002/06/28 20:30:51  swprakt
 // # updated package information
 // #
@@ -51,75 +56,35 @@
 // ##################################################
 
 TASKS { 
-
 SELFASSIGNED {
-
-THINK { SFC language } ***OK***
-DO    { SFC create concrete syntax } ***OK***
-DO    { cup: non-terminals } ***OK***
-DO    { cup: program, declarations, constval } ***OK***
-THINK { cup: cup ==> absfc.SFCabtree ==> abstract syntax tree absynt } ***OK***
-THINK { cup: step-counting, -numbering, -replacement } ***OK***
-DO    { cup: parse to abstract SFC tree } ***OK***
-DO    { cup: simple assignments } ***OK***
-DO    { cup: expressions }  ***OK***
-THINK { cup: branches for if-then-else-recursion }  ***OK***
-DO    { cup: if-then-else - create dummy steps }  ***OK***
-DO    { cup: while - create dummy(NOP) steps, trueGuard(JMP) }  ***OK***
-DO    { cup: type declaration } ***OK***
-DO    { lex: unary operators -E +E } ***OK***
-DO    { cup: verify parser, especially PRECEDENCE ! } ***OK*** 
-      { cup: unexspected wrong interpretation of expression,
-             although precedence is set the right way... } 
-DO    { SFCabtree: debug Absfc2SFCConverter.java ! } ***INPROGRESS***
-
 } // end of SELFASSIGNED
-
-
 ASSIGNED_BY_OTHER {
-
-THINK {}
-DO    {}
-EXPORT{ <sample new function - providing sample new output> }
-
 } // end of ASSIGNED_BY_OTHERS
-
 } // end of TASKS
-
 
 MEETINGS {
     Wednesday 16:00h Ue1
     April 16 2002 Start of course
     April 23 2002 Assignment of modules
-    April 30 2002 Review of modules :( 
-    May 1 2002 "Tag der Arbeit" :)
-    May 8 2002 Talk about module parser and other modules :)
-    daily working
+    April 30 2002 Review of modules 
+    May 1 2002 "Tag der Arbeit" 
+    May 8 2002 Talk about modules 
     July 17 2002 End of course
     July 18 2002 Last meeting
-DO { create overview of module parser }
-DO { go to meetings :) }
-DO { }
-
+DO { final report }
 } // end of MEETINGS
 
 TEAM {
     * 1,ms@informatik.uni-kiel.de,	Martin Steffen,	TEACHING & CHECKS
     * 2,kst@informatik.uni-kiel.de,	Karsten Stahl, TEACHING & UTILS
     * 3,richter@thomas-richter.de,	Thomas Richter, TEACHING
-    - 4,BenjaminBahnsen@web.de,		Benjamin Bahnsen, (left EDITOR) 
     * 5,nbueck@web.de,			Norbert Bueck, GUI 
-    - 6,jenss@pclab.ifg.uni-kiel.de,	Jens Schneider von Deimling, unknown
     * 7,immograbe@gmx.de,		Immo Grabe, SIMULATOR
     * 8,ani@informatik.uni-kiel.de,	Andreas Niemann, EDITOR & PLACEMENT & GUI
-    - 9,f.picchiarellu@tiscalinet.it,	Fabrizio Piccharecci, (left CHECKS)
-    -10,jes@informatik.uni-kiel.de,	Jens Sch"onborn, unknown
-    -11,y_taskin@web.de,		Yasin Taskin, (left CHECKS)
     *12,mwe@informatik.uni-kiel.de,	Marco Wendel, PARSER
+    - 4,BenjaminBahnsen@web.de,		Benjamin Bahnsen, (left EDITOR) 
+    - 6,jenss@pclab.ifg.uni-kiel.de,	Jens Schneider von Deimling, (left course)
+    - 9,f.picchiarellu@tiscalinet.it,	Fabrizio Piccharecci, (left CHECKS)
+    -10,jes@informatik.uni-kiel.de,	Jens Sch"onborn, (left course)
+    -11,y_taskin@web.de,		Yasin Taskin, (left CHECKS)
 } // end of TEAM
-
-
-
-
-
-

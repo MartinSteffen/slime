@@ -14,12 +14,15 @@
  *    -  precedence, associativity
  *    -  grammar definition
  *
- * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.22 2002-07-04 18:08:47 swprakt Exp $
+ * @author initialy provided by Marco Wendel <Marco.Wendel@gmx.info>
+ * @version $Id: SFC.cup,v 1.23 2002-07-08 13:10:07 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.22  2002/07/04 18:08:47  swprakt
+ * End of test with Attic directory.(mwe)
+ *
  * Revision 1.18  2002/07/04 18:01:47  swprakt
  * This is the old version 1.16 rechecked as version 1.18 without any
  * shift-reduce-conflicts.
@@ -154,7 +157,6 @@
  **/
 
 // --------------------------------------------------------------------------- 
-
 // CUP specification for the SFC Parser
 package slime.sfcparser;
 import java_cup.runtime.*;
@@ -163,14 +165,15 @@ import java.io.*;
 import java.util.*;
 import java.lang.String;
 
-
-
 // --------------------------------------------------------------------------- 
-
 // Preliminaries to set up and use the scanner
-// init with {: scanner.init() :}; 
+// init with {: 
+//    scanner.init() 
+// :}; 
 /// executed before parsing see user_init
-// scan with {: return getScanner.next_token() :}; 
+// scan with {: 
+//    return getScanner.next_token() 
+// :}; 
 /// definition of the nextTokenFunction to use
 
 /*
@@ -191,7 +194,7 @@ import java.lang.String;
  * present; otherwise it returns getScanner().next_token().
  **/                                                               
 // public java_cup.runtime.Symbol scan() {
-//  return getScanner().next_token();
+  //  return getScanner().next_token();
 // } // end of scan
 
 // --------------------------------------------------------------------------- 
@@ -201,10 +204,9 @@ import java.lang.String;
  * it contains methods that can be used within the
  * actions of the defined grammar in the grammar part.
  **/
-
 action code {:
-
-    public LinkedList alist = new LinkedList(); /// a list for gathering the statement objects
+    public LinkedList alist = new LinkedList(); /// a list for gathering comments
+    // comment: jLint will be angry about that
 
 /** 
  * <b> pOut </b>
@@ -227,19 +229,12 @@ action code {:
 	    // show nothing
 	} // end of if-viewOutputOnStdOut
     } // end of pOut
-
-
-
-    :} // end of Action Code
-
+:} // end of Action Code
 // --------------------------------------------------------------------------- 
-
-
 /**
  * the parser code is placed into the parser class
  **/
 parser code {:
-
     SFCLex lexer;
 
 /** 
@@ -263,8 +258,6 @@ parser code {:
 	    // show nothing
 	} // end of if-viewOutputOnStdOut
     } // end of pOut
-
-
 
 /**
  * <b>CUP: report_fatal_error</b><br>
@@ -362,10 +355,8 @@ parser code {:
 	// SFCParser mySFCParserObj = new SFCParser();
 	// open input files, etc. here
 	// Symbol myParseTree = null;
-  
-	// Initialize the Abstract Syntax Tree for the Sequential Function Chart
+  	// Initialize the Abstract Syntax Tree for the Sequential Function Chart
 	slime.absynt.absfc.SFCabtree sfc2 = null;
-
 	try {
 	    FIS = new FileInputStream( sfcfile );
 	    lexer   = new SFCLex( FIS );
@@ -386,25 +377,36 @@ parser code {:
     } // end of parseFileToSFCabtree
 
 /** 
- * <b> parseFile </b>
- * @param java.io.File sourcefile - file to parse
- * @return abstract syntax tree with slime.absynt.sfc as root
+ * <b> parseFile </b> <br>
+ * 1. Creates an empty parsing object @see slime.absynt.absfc.SFCabtree. <br>
+ * 2. Creates an empty converter object @see slime.sfcparser.Absfc2SFCConverter. <br>
+ * 3. Creates an empty destination object @see slime.absynt.SFC. <br>
+ * 4. Creates an @see java.io.FileInputStream from the given @see java.io.File. <br>
+ * 5. Assigns the lexer a new @see slime.sfcparser.SFCLex and sets the scannner <br>
+ *    to be used by java_cup with @see java_cup.runtime.Main.setScanner. <br>
+ * 6. Calls @see slime.sfcparser.parse to get the SFCabtree. <br>
+ * 7. Creates a new @see slime.sfcparser.Absfc2SFCConverter to let the <br>
+ *    convertion of the SFCabtree finally begin. <br>
+ * 8. Retrieves the @see slime.absynt.SFC be calling @see slime.sfcparser.Absfc2SFCConverter.getSFC. <br>
+ * 9. Closes the given @see java.io.File. <br>
+ * 10. Returns the generated SFC. <br>
+ *  <br>
+ * @param java.io.File sourcefile - file to parse <br>
+ * @return abstract syntax tree with slime.absynt.sfc as root <br>
  * @throws SFCParseException <b> if something goes wrong</b>
+ * @throws 
  **/
     public slime.absynt.SFC parseFile(java.io.File sfcfile) throws Exception { // slime.sfcparser.SFCParseException {
 	boolean doDebugParse = true;
 	FileInputStream FIS = null;
-	// Process of parsing a file:
-	// create a parsing object
+	// Process of parsing a file:, create a parsing object
 	// SFCParser mySFCParserObj = new SFCParser();
 	// open input files, etc. here
 	// Symbol myParseTree = null;
-  
 	// Initialize the Abstract Syntax Tree for the Sequential Function Chart
 	slime.absynt.absfc.SFCabtree sfc2 = null;
 	slime.sfcparser.Absfc2SFCConverter  theConverter = null;
 	slime.absynt.SFC theSFC = null;
-
 	try {
 	    FIS = new FileInputStream( sfcfile );
 	    lexer   = new SFCLex( FIS );
@@ -414,13 +416,10 @@ parser code {:
 	    } else {
 		sfc2 = (slime.absynt.absfc.SFCabtree)parse().value; 
 	    } // end of if-doDebugParse
-	    
 	    // make the converting from SFCabtree to SFC begin
 	    theConverter = new slime.sfcparser.Absfc2SFCConverter( sfc2 );
-
 	    // get the generated SFC
 	    theSFC = theConverter.getSFC();
-
 	} catch (IOException ioe) {
 	  throw ioe;
 	} catch (Exception e) {
@@ -428,14 +427,12 @@ parser code {:
 	} finally {
 	    FIS.close();
 	} // end of try-catch
-
 	// return the generated SFC
 	return theSFC;      
     } // end of parseFile
 
-
 /** 
- * <b> parseExpression </b>
+ * <b> parseExpression </b> parses a string into a slime.absynt.Expr
  * @param java.lang.String sfcexpr - Expression to parse <br>
  * @return slime.absynt.Expr - abstract syntax expression <br>
  * @throws SFCParseException <b> if something goes wrong</b>
@@ -455,44 +452,32 @@ parser code {:
 	    throw new slime.sfcparser.SFCParseException("Error parsing expression");
 	} // end try catch
 	return expr;
-    }
-
-    :} // end of ParserCode
-
-// --------------------------------------------------------------------------- 
-
+    } // end parseExpression
+:} // end of ParserCode
 
 /// Terminals (tokens returned by the scanner)
 terminal DOT, HASH;
 terminal String IDENTIFIER;
 terminal Integer INTEGER;
 terminal Double DOUBLE;
-terminal ADD, SUB, MUL, DIV, MOD, POW, AND, OR, NOT;      // +, -, *, /, MOD=%, &&, ||, !
-terminal LPAREN, RPAREN, LPSET, RPSET, LPFIELD, RPFIELD;  // (,),{,}
-terminal LT, GT, LEQ, GEQ, EQ, NEQ, INC, DEC;             // <,>,<=,>=, =, ==,!=
-terminal COMMA, SEMICOLON;                                // ,,;
-terminal TRUE, FALSE;                                     // true, false
-terminal INTTYPE, BOOLTYPE, DOUBLETYPE;                   // int, bool
-terminal ASSIGN, SKIP;                                    // =,skip 
-terminal SPLIT, JOIN, PROCESS, COMMENT, SFCPRG;           // split, join, process, //, SFCPRG
-terminal IF, ELSE, WHILE, INPUT, OUTPUT;                  // if, else, while, input, output
-terminal REPEAT, UNTIL, FOR;				  // repeat, until
+terminal ADD, SUB, MUL, DIV, MOD, POW, AND, OR, NOT;     
+terminal LPAREN, RPAREN, LPSET, RPSET, LPFIELD, RPFIELD; 
+terminal LT, GT, LEQ, GEQ, EQ, NEQ, INC, DEC;            
+terminal COMMA, SEMICOLON;                               
+terminal TRUE, FALSE;                                    
+terminal INTTYPE, BOOLTYPE, DOUBLETYPE;                  
+terminal ASSIGN, SKIP;                                   
+terminal SPLIT, JOIN, PROCESS, COMMENT, SFCPRG;          
+terminal IF, ELSE, WHILE, INPUT, OUTPUT;                 
+terminal REPEAT, UNTIL, FOR;				 
 
-
-// --------------------------------------------------------------------------- 
 /// Non terminals (tokens processed further by the parser)
-
 non terminal    Object                          sfcbegin;
-
 non terminal    slime.absynt.absfc.SFCabtree	sfcprogram;
 non terminal 	slime.absynt.Expr		expr; 
 non terminal    slime.absynt.Variable		var;
 non terminal    slime.absynt.Type		vartype;
 non terminal    slime.absynt.Constval		constval;
-
-non terminal    LinkedList			stmtlist;
-non terminal    LinkedList                      stmtblock;
-
 non terminal    slime.absynt.absfc.Statement    stmt;
 non terminal    slime.absynt.absfc.Statement    stmtatomic;
 non terminal    slime.absynt.absfc.StmtAssign	assignment;
@@ -507,22 +492,19 @@ non terminal    slime.absynt.absfc.StmtRepeat	stmtlooprepeat;
 non terminal    slime.absynt.absfc.StmtSplit	stmtsplit;
 non terminal    slime.absynt.absfc.StmtJoin	stmtjoin;
 non terminal    slime.absynt.absfc.Comment	stmtdummy;
-
 non terminal    slime.absynt.absfc.Process	process;
-// non terminal    
 non terminal    LinkedList                      processlist;
 non terminal    LinkedList                      procidlist;
+non terminal    LinkedList			stmtlist;
+non terminal    LinkedList                      stmtblock;
 
 /// Precedences and Associativity
 precedence right SEMICOLON;				   // end-of-simple-statement
+precedence left AND, OR, NEQ, LT, LEQ, GT, GEQ, EQ;	   // &&; ||, !=, <,<=,>,>=,==
 precedence left ADD, SUB;				   // +, -
 precedence left MUL, DIV, MOD;				   // *,/; MOD=%
-precedence left AND, OR, NEQ, LT, LEQ, GT, GEQ, EQ;	   // &&; ||, !=, <,<=,>,>=,==
 precedence left POW;
 precedence left NOT;					   // !
-
-
-// --------------------------------------------------------------------------- 
 
 /// The SFC Grammar:
 start with sfcbegin;
@@ -530,13 +512,11 @@ start with sfcbegin;
 /** SFCBEGIN ------------------------------------------------- **/
 sfcbegin ::=	sfcprogram:p 
          {:  
-	     pOut( 1, "SFC " );
 	     RESULT = p;  
 	 :}
 	|       expr:e       
 	 {:	
              RESULT = (slime.absynt.Expr)e;  
-	     pOut( 1, "\n was a correct SFC-Expression \n" );	   
 	 :}
 ;
 
@@ -545,10 +525,8 @@ sfcprogram ::=	SFCPRG
                 IDENTIFIER:progname
                 stmtblock:b 
                 {: 
-		   pOut( 1, progname+" { // now SFC program begins " );
 		   RESULT=new slime.absynt.absfc.SFCabtree( 
 		      progname, (java.util.LinkedList)b ); 
-		 pOut( 1, " }");
 		 :}
 	    |	SFCPRG
                 IDENTIFIER:progname
@@ -558,18 +536,16 @@ sfcprogram ::=	SFCPRG
 		stmtlist:b2 
 		RPSET
                 {: 
-		   pOut( 1, progname+" { // now SFC program begins " );
 		    java.util.LinkedList blist = new java.util.LinkedList();
 		    blist.add(b1);blist.addAll(b2);
-		   RESULT=new slime.absynt.absfc.SFCabtree( 
-		      progname, (java.util.LinkedList)blist ); 
-		 :}
+		    RESULT=new slime.absynt.absfc.SFCabtree( progname,
+		           (java.util.LinkedList)blist ); 
+		:}
 ;
 
 /** STMTLIST ------------------------------------------------- **/
 stmtlist ::=  stmt:s        
               {:  
-	       pOut( 1, " // processing a single stmt of a stmtlist " );
 	       LinkedList ll_stmtlist = new LinkedList();
 	       ll_stmtlist.addLast( s );
 	       RESULT=ll_stmtlist;
@@ -577,7 +553,6 @@ stmtlist ::=  stmt:s
            |  stmt:s  
               stmtlist:sl 
               {:  
-		  pOut( 1, " // processing the head-stmt of a stmtlist " );
 		  LinkedList ll_stmtlist2 = new LinkedList();
 		  ll_stmtlist2.addLast( s );
 		  ll_stmtlist2.addAll( (java.util.LinkedList) sl );
@@ -589,40 +564,38 @@ stmtlist ::=  stmt:s
 stmtblock ::=  LPSET
                stmtlist:l
                RPSET {: 
-	           pOut( 1, " { // now being within a block " );
 		   RESULT=l; 
 		   :} 
             |
 	       LPSET
                RPSET 
                {:
-	          pOut( 1, " {} // now being within an empty block " );
 		   LinkedList ll_stmtblock2 = new LinkedList();
-		   ll_stmtblock2.addLast(
-		      new slime.absynt.absfc.Comment( "// empty block" ) 
-		  );
+		   ll_stmtblock2.addLast( 
+		   new slime.absynt.absfc.Comment( "// empty block" ) );
 		  RESULT=ll_stmtblock2;
 	       :}
 ;
 
 /** STMT ------------------------------------------------- **/
 stmt ::=
-	stmtatomic:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtif:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtifelse:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtloopwhile:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtloopfor:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtlooprepeat:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtsplit:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtjoin:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
-|	stmtdummy:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+      stmtatomic:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|         stmtif:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|     stmtifelse:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|  stmtloopwhile:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|    stmtloopfor:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+| stmtlooprepeat:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|      stmtsplit:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|       stmtjoin:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|      stmtdummy:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
 ;
 
 /** STMTATOMIC ------------------------------------------- **/
-stmtatomic ::=	vardeclaration:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}
+stmtatomic ::=
+    vardeclaration:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}
 |	assignment:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}
 |	stmtoutput:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}
-|	stmtinput:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}		
+|        stmtinput:sa {: RESULT = (slime.absynt.absfc.Statement) sa ; :}		
 ;
 
 /** STMTIF ----------------------------------------------- **/
@@ -632,10 +605,8 @@ stmtif ::= IF
            RPAREN
            stmtblock:b 
            {: 
-              pOut( 1, " if (expr) { " );
-	      RESULT = new slime.absynt.absfc.StmtIf( 
-		            e, (java.util.LinkedList)b 
-	      ); 
+	      RESULT = new slime.absynt.absfc.StmtIf( e,
+		            (java.util.LinkedList)b  ); 
 	    :}
 ;
 		
@@ -648,12 +619,9 @@ stmtifelse ::=	IF
                 ELSE
                 stmtblock:b2
                 {: 
-	          pOut( 1, " if (expr) {b1} else {b2}  " );
-		   RESULT = new slime.absynt.absfc.StmtIfElse( 
-		             e, 
+		   RESULT = new slime.absynt.absfc.StmtIfElse( e, 
 			     (java.util.LinkedList) b1, 
-			     (java.util.LinkedList) b2 
-		   );
+			     (java.util.LinkedList) b2 );
 		 :}
 ;
 
@@ -664,10 +632,8 @@ stmtloopwhile ::= WHILE
                   RPAREN  
                   stmtblock:blockInWhile 
                  {: 
-		   // pOut( 1, " while (expr) {b} " );
 		     RESULT = new slime.absynt.absfc.StmtWhile( 
-			         e, blockInWhile 
-		     ); 
+			         e, blockInWhile ); 
 		   :}
 ;
 
@@ -706,9 +672,9 @@ stmtlooprepeat ::= REPEAT
                    LPAREN
                    expr:e
                    RPAREN 
-                   {: pOut( 1, " repeat {b} until (expr) " );
+                   {:
 		      RESULT = new slime.absynt.absfc.StmtRepeat( 
-			          e, (java.util.LinkedList) b ); 
+		          e, (java.util.LinkedList) b ); 
 		    :}
                    SEMICOLON
 ; 
@@ -722,9 +688,8 @@ stmtoutput ::=	OUTPUT
                 RPAREN
                 SEMICOLON 
                 {: 
-	           pOut( 1, " output() " );
    		   RESULT = new slime.absynt.absfc.StmtOutput( 
-		              new slime.absynt.Variable(name), e ); 
+	              new slime.absynt.Variable(name), e ); 
 		 :}
 ;
 		
@@ -737,9 +702,8 @@ stmtinput ::=	INPUT
                 RPAREN
                 SEMICOLON 
                 {: 
-	          pOut( 1, " input()  " );
 		 RESULT = new slime.absynt.absfc.StmtInput( 
-		              new slime.absynt.Variable(name), e ); 
+	              new slime.absynt.Variable(name), e ); 
 		 :}
 ;
 
@@ -766,17 +730,21 @@ stmtdummy ::=	COMMENT:c
 		 :}
 /*
             |
-	    expr:l INC {: // INC ++ 
- java.lang.Integer opCode = new java.lang.Integer(1);
- int opCodeValue = opCode.intValue();
-    RESULT = new slime.absynt.B_expr( l, opCodeValue, new slime.absynt.Constval(1) ); 
-    :} 
-|
-expr:l DEC {: // DEC -- 
-    java.lang.Integer opCode = new java.lang.Integer(2);
-    int opCodeValue = opCode.intValue();
-    RESULT = new slime.absynt.B_expr( l, opCodeValue, new slime.absynt.Constval(1) ); 
-    :} 
+	    expr:l INC SEMICOLON {: // var++;
+		RESULT = new slime.absynt.asfc.StmtIncPost( l );
+	    :} 
+	    |
+	    expr:l DEC SEMICOLON {: // var--; 
+		    RESULT = new slime.absfc.StmtDecPost( l ); 
+	    :} 
+	    |
+	    INC expr:l SEMICOLON {: // ++var; 
+		RESULT = new slime.absynt.asfc.StmtIncPre( l );
+	    :} 
+	    |
+	    DEC expr:l SEMICOLON {: // --var; 
+		    RESULT = new slime.absfc.StmtDecPre( l ); 
+	    :} 
 */
 
 ;
@@ -787,7 +755,6 @@ assignment ::=	IDENTIFIER:vname
                 expr:e
                 SEMICOLON
                 {: 
-	          pOut( 1, " assignment ...  " );
 		 RESULT = new slime.absynt.absfc.StmtAssign( 
 		     new slime.absynt.Variable(vname), e ); 
 		 :}
@@ -798,7 +765,6 @@ vardeclaration::= vartype:vtype
                   IDENTIFIER:vname
                   SEMICOLON 
                   {: 
-	  	          pOut( 1, " declaration " );
 		   RESULT = new slime.absynt.absfc.StmtDecl( 
 		                new slime.absynt.Variable(vname), 
 				vtype ); 
@@ -809,14 +775,19 @@ vardeclaration::= vartype:vtype
 	          expr:e
 	          SEMICOLON 
                   {: 
-		      pOut( 1, " declaration " );
 		      RESULT = new slime.absynt.absfc.StmtDecl( 
 			           new slime.absynt.Variable(vname), 
 				   vtype, e );  
-                      // bei vartype evtl. non term aendern
-		      // falls fuer den checker der echte Type
-		      // verlorengeht. Ansonsten in der Absynt
-		      // den Typ durch Klassenattribut "merken"
+		   :} 		
+               |  vartype:vtype
+	          IDENTIFIER:vname
+	          ASSIGN
+	          constval:cval
+	          SEMICOLON 
+                  {: 
+		      RESULT = new slime.absynt.absfc.StmtDecl( 
+			           new slime.absynt.Variable(vname), 
+				   vtype, cval );  
 		   :} 		
 ;
 
@@ -826,10 +797,8 @@ stmtsplit ::= 	SPLIT
                 processlist:pl
                 RPSET 
                 {: 
-	          pOut( 1, " split  " );
 		    RESULT = new slime.absynt.absfc.StmtSplit(
-			       (java.util.LinkedList) pl 
-		    ); 
+			       (java.util.LinkedList) pl ); 
 		 :}
 ;
 
@@ -839,10 +808,8 @@ stmtjoin ::=	JOIN
                 procidlist:pidl
                 RPAREN 
                 {: 
-	          pOut( 1, " join  " );
 		   RESULT = new slime.absynt.absfc.StmtJoin( 
-		               (java.util.LinkedList) pidl 
-		   ); 
+		               (java.util.LinkedList) pidl ); 
 		 :}
                 SEMICOLON
 ;
@@ -887,9 +854,8 @@ process ::= PROCESS
             IDENTIFIER:name
             stmtblock:blockInProcess
             {: 
-	       RESULT= new slime.absynt.absfc.Process( 
-		            name, (java.util.LinkedList) blockInProcess
-	       ); 
+	       RESULT= new slime.absynt.absfc.Process( name,
+		        (java.util.LinkedList) blockInProcess ); 
 	     :}
 ;
 		
@@ -899,54 +865,31 @@ vartype ::= INTTYPE    {: RESULT = new slime.absynt.IntType(); :}
         |   DOUBLETYPE {: RESULT = new slime.absynt.DoubleType(); :} 
 ;
 
-
 /** VAR ---------------------------------------------- **/
 var ::= 
-
 IDENTIFIER:v
-{: pOut( 3, v ); RESULT = new slime.absynt.Variable( v ); :}
-
+{: RESULT = new slime.absynt.Variable( v ); :}
 ;
 
 /** CONSTVAL ---------------------------------------------- **/
 constval ::=
-
-TRUE 
-{:  pOut( 3, "true"); RESULT = new slime.absynt.Constval( true );  :}
-
+TRUE  {: RESULT = new slime.absynt.Constval( true );  :}
 |
-
-FALSE
-{:  
-    pOut( 3, "false" ); 
-    RESULT = new slime.absynt.Constval( false );  :}
-
+FALSE {: RESULT = new slime.absynt.Constval( false );  :}
 |  
-
 INTEGER:i 
-{:  
-    pOut( 3, i.toString() ); 
-    java.lang.Integer opCode = i;
+{:  java.lang.Integer opCode = i;
     int opCodeValue = opCode.intValue();
-    //System.out.println("before constval-INTEGER-RESULT");
     slime.absynt.Constval cint = new slime.absynt.Constval( opCodeValue );
-    //System.out.println("after constval-INTEGER-Constval");
     RESULT = cint;  
-    //System.out.println("after constval-INTEGER-RESULT");
 :}
-
 |
-
-DOUBLE:d
-{:  
-    pOut( 3, d.toString() ); 
-    double doubleValue = d.doubleValue();
+DOUBLE:d 
+{:  double doubleValue = d.doubleValue();
     slime.absynt.Constval cdouble = new slime.absynt.Constval( doubleValue );
     RESULT = cdouble;  
 :}
-
 ;
-
 
 /** EXPR -------------------------------------------------- **/
 expr ::= 
@@ -986,6 +929,7 @@ expr:l DIV expr:r {: // DIV / 3
  RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+
 expr:l AND expr:r {: // AND && 4
     java.lang.Integer opCode = new java.lang.Integer(4);
     int opCodeValue = opCode.intValue();
@@ -1010,6 +954,7 @@ expr:l EQ expr:r {: // EQ == 7
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 |
+
 expr:l LT expr:r {: // LESS < 8
  java.lang.Integer opCode = new java.lang.Integer(8);
  int opCodeValue = opCode.intValue();
@@ -1052,10 +997,3 @@ expr:l POW expr:r {: // POW ^ 14
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
     :} 
 ;
-/* Hello Martin, this is version 1.18, the version you 
- wanted to have is 1.17. It can not function, because it
- creates shift-reduce-conflicts, especially with the NEG !
- I decided to keep my old version. If we do need this 
- kind of wrong expressions, we should talk about it 
- next wednesday. (mwe) */
-
