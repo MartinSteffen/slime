@@ -1,5 +1,5 @@
 ################################################################
-## $Id: Todo,v 1.7 2002-06-25 05:22:57 swprakt Exp $
+## $Id: Todo,v 1.8 2002-06-25 06:17:58 swprakt Exp $
 ################################################################
 
 
@@ -12,6 +12,10 @@
      and those that are not expected to be seen in a real program, but
      introduced here just because we don't know how the programs
      are constructed.
+
+  - sort the type check code in some way.
+
+  - Perhaps make all Exceptions start with an E?
 
   - make a clean structure/name conventions etc.
 

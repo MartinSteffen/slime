@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.7 2002-06-25 05:22:57 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.8 2002-06-25 06:17:58 swprakt Exp $
  */
 
 public class Typecheck {
@@ -146,9 +146,11 @@ public class Typecheck {
 				  LinkedList target) throws CheckException {
 	try {
 	  Type t = (Type)guard.accept(new ExprV());
-	  if (t instanceof BoolType) // guards must be boolean
-	    return new UnitType();   // transitions don't give back a value
-	  else throw new CheckException();
+	  if (!(t instanceof BoolType)) // guards must be boolean
+	    throw new UnbooleanGuard();
+	  // source and targets are linked lists of steps.
+	  // they must iterated through and checked for well-typedness.
+	  return new UnitType();
 	}
 	catch (Exception e) {
 	  throw ((CheckException)e);
@@ -199,13 +201,46 @@ public class Typecheck {
       }
     }
   }
+
+       
+  /** Type checking visitor for a step.
+   *  A step has no value, only side-effects, i.e., type checking a step
+   *  either returns UnitType or raises an error.
+   */
+
+  public class StepV implements Visitors.IStep{
+    public Object forStep(String name, LinkedList actions) throws Exception {
+      // XXX we have to iterated through the action list.
+      return new UnitType();
+    }
+  }
+
+  /** Type checking visitor for a step action.
+   *  A step action is always well-typed (as also the action
+   *  qualifier deeper int the recursion is). Nevertheless, we 
+   *  implement it as visitor for uniformity and extensibility.
+   */
+  public class StepActionV implements Visitors.IStepAction{
+    public Object forStepAction(ActionQualifier qualifier,
+				String a_name) throws Exception {
+      qualifier.accept(new ActionQualifierV());
+      return new UnitType();
+    }
+  }
+
+  /** Type checking visitor for action qualified.
+   *  an action qualifier is always well-typed.
+   */
+  public class ActionQualifierV implements Visitors.IActionQualifier{
+    public Object forNqual(){return new UnitType();}
+  }
+
   /** Type checking visitor for a type itself.
    *  This is the end of the recursion and the visitor returns
    *  the object itself. The only thing that can goto wrong is that
    *  the
    */
-       
-      
+
   public class TypeV implements Visitors.IType{
     public Object forIntType() { 
       return new IntType();}
@@ -228,6 +263,11 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.7  2002/06/25 05:22:57  swprakt
+//    Type checking (as visitor) for declarations done.
+//
+//    [Steffen]
+//
 //    Revision 1.6  2002/06/24 20:08:12  swprakt
 //    Types extended with visitor methods,
 //    also extended is the type ckecker, which is a visitor to the absynt.
@@ -256,6 +296,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.7 2002-06-25 05:22:57 swprakt Exp $
+//    $Id: Typecheck.java,v 1.8 2002-06-25 06:17:58 swprakt Exp $
 //
 //---------------------------------------------------------------------
