@@ -1,5 +1,5 @@
 ###########################################################
-# $Id: Wishlist.txt,v 1.8 2002-07-12 07:02:48 swprakt Exp $
+# $Id: Wishlist.txt,v 1.9 2002-07-12 08:45:00 swprakt Exp $
 ###########################################################
 
 
@@ -34,3 +34,8 @@ o specific packages:
 
   > editor:
        - print facility
+
+
+
+  > others(parser):
+       - XML file format for storing and relaoding programs

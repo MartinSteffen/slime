@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.184 2002-07-12 06:23:11 swprakt Exp $
+## $Id: Errors.txt,v 1.185 2002-07-12 08:45:00 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -37,14 +37,6 @@ Rules of the game:
 
 
 
-Error 92:     saved data
- class:       publicly visible curiosity
- package:     all
- status:      reported, 12.7.02, Steffen
- description: execting the command ``file'' on a saved sfc gives:
-          file.sfc: gzip compressed data, deflated, last modified: Thu Jan  1 01:00:00 1970, os: MS-DOS
-            What the hell does this mean? Why does Java stamp it with MS-DOS?
- 
 Error 91:     jarfile 3 
  package:     parser + integration
  class:       fatal
@@ -196,22 +188,6 @@ Error 75:    semantic error
 
 
 
-Error 73:    parser warning
- package:    parser
- class:      unclear
- status:     reported, Martin Steffen 9.7.02
- description: what does the CUP-comment 
-
-                  0 conflicts detected (9 expected)
-
-              means? Is this something serious?
-	      Nope: it's the call of yacc:
-              java java_cup.Main -package slime.sfcparser -parser SFCParser -symbols SFCSymbols
-	            -nonterms -expect 9 < SFC.cup 
-		               ^^^^^^^^^^^^
-
-              We should remove it or explain why we expect 9 conflicts.
- 
 
 
 
@@ -398,7 +374,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.184 2002-07-12 06:23:11 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.185 2002-07-12 08:45:00 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -569,6 +545,34 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 92:     saved data
+ class:       publicly visible curiosity
+ package:     all
+ status:      reported, 12.7.02, Steffen, ignored
+ description: execting the command ``file'' on a saved sfc gives:
+          file.sfc: gzip compressed data, deflated, last modified: Thu Jan  1 01:00:00 1970, os: MS-DOS
+            What the hell does this mean? Why does Java stamp it with MS-DOS?
+ 
+
+
+Error 73:    parser warning
+ package:    parser
+ class:      unclear
+ status:     reported, Martin Steffen 9.7.02; done (I removed exprect 9), Steffen 10.7.02
+ description: what does the CUP-comment 
+
+                  0 conflicts detected (9 expected)
+
+              means? Is this something serious?
+	      Nope: it's the call of yacc:
+              java java_cup.Main -package slime.sfcparser -parser SFCParser -symbols SFCSymbols
+	            -nonterms -expect 9 < SFC.cup 
+		               ^^^^^^^^^^^^
+
+              We should remove it or explain why we expect 9 conflicts.
+ 
 
 
 Error 4:       Manifest file, toplevel file
