@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.36 2002-06-30 06:44:17 swprakt Exp $
+## $Id: Errors.txt,v 1.37 2002-07-01 07:36:00 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,16 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+
+Error 26:    clean up
+ package:    all
+ class:      non-fatal
+ status:     reported, 1.7.02
+ description: removed the unused directoroes from
+             the repos in the end, when the semester's
+	     over.
 
 Error 25:    Shift/reduce
  package:    sfcparser
