@@ -12,7 +12,7 @@ import slime.utils.*;
 
 /** a console test tool
  * @author <a href="mailto:richter@thomas-richter.de">Thomas Richter</a>
- * @version $Id: CheckTestConsole.java,v 1.4 2002-06-19 23:00:10 swprakt Exp $
+ * @version $Id: CheckTestConsole.java,v 1.5 2002-06-21 09:53:21 swprakt Exp $
  */
 public class CheckTestConsole {
     
@@ -56,7 +56,7 @@ public class CheckTestConsole {
         }
         try {
             // sFCVisitorChecks.isEmpty(sfc);
-            sfc.accept(new SFCVisitorChecks());
+            // sfc.accept(new SFCVisitorChecks());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -81,6 +81,9 @@ public class CheckTestConsole {
 ////////////////////////////////////////////////////////////////
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.4  2002/06/19 23:00:10  swprakt
+//    no message
+//
 //    Revision 1.3  2002/06/19 20:14:16  swprakt
 //    Checks -> SFCVisitorChecks [Thomas Richter]
 //    isEmpty [Thomas Richter]
