@@ -4,6 +4,8 @@ raw list.
 + good spec
 
 
+
+
 - not much people, many drop-outs
 
 - late info' that someone drops out -> late reaction
@@ -22,3 +24,6 @@ raw list.
 
 - technical problems with using cvs still mid of June (at least)
 
+
+- unsmart dealing with problems, not even to pretend as if something
+  is going on! (i.e. no reactions)
