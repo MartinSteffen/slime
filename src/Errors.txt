@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.40 2002-07-02 07:54:24 swprakt Exp $
+## $Id: Errors.txt,v 1.41 2002-07-02 08:04:29 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,14 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+Error 28:     grammar for stmt
+ package:     sfcparser (cup)
+ class:       question 
+ status:      reported, 2.7.02, Steffen
+ description: what does LinkedList.addAll() do? Is the order ok?
+	      (Line 904 of SFC.cup v1.10)
 
 Error 28:     grammar for stmt
  package:     sfcparser (cup)
