@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.167 2002-07-09 14:56:20 swprakt Exp $
+## $Id: Errors.txt,v 1.168 2002-07-10 06:05:22 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -51,11 +51,6 @@ Error 75:    semantic error
              to make it work?
 
 
-Error 74:    inconsistency, docu
- package:    checker
- class:      non-fatal
- status:     reported, Steffen, 9.7.02
- description: the requirements are less specific than javadoc.
 
 Error 73:    parser warning
  package:    parser
@@ -259,7 +254,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.167 2002-07-09 14:56:20 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.168 2002-07-10 06:05:22 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -441,6 +436,14 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 74:    inconsistency, docu
+ package:    checker
+ class:      non-fatal
+ status:     reported, Steffen, 9.7.02, done (updated the spec), Steffen
+ description: the requirements are less specific than javadoc.
+
 
 
 Error 76:     design/hack
