@@ -1,9 +1,11 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.16 2002-06-26 18:08:59 swprakt Exp $
+# $Id: Makefile,v 1.17 2002-06-27 16:50:47 swprakt Exp $
 #----------------------------------------------------------------------
-
+#
+# $Log: not supported by cvs2svn $
+#
 # The targets installing gobal web-infos can be executed only
 # by the maintainers
 
@@ -24,8 +26,13 @@ PACKAGEDIRS   = slime.absynt\
 	        slime.editor\
 	        slime.checks\
 	        slime.sfcparser\
-                slime.gui\
-		slime.simulator
+		slime.gui\
+		slime.gui.listener\
+		slime.gui.model\
+		slime.simulator\
+		Jlex\
+		java_cup\
+		java_cup.runtime
 #                io
 
 
@@ -42,17 +49,22 @@ debug:	; make JAVACOPTS="-g" all
 
 
 jar:
-	jar cvf snot.jar ./absynt/*.class \
-	    ./utils/*.class \
-            ./editor/*.class\
-            ./gui/*.class\
-	    ./simulator/*.class\
-	    ./checks/*.class\
-	    ./io/*.class
-
+	jar cvf slime.jar ./slime/absynt/*.class \
+	    ./slime/absynt/absfc/*.class \
+	    ./slime/utils/*.class \
+	    ./slime/editor/*.class\
+	    ./slime/editor/resources/images/*.* \
+	    ./slime/gui/listener/*.class \
+	    ./slime/gui/model/*.class \
+	    ./slime/gui/*.class \
+	    ./slime/layout/*.class \
+	    ./slime/simulator/*.class \
+	    ./slime/checks/*.class \
+	    ./slime/sfcparser/*.class
+	
 
 jarinstall: 
-	cp snot_v*.jar $(BASELINESDIR)
+	cp slime_v*.jar $(BASELINESDIR)
 
 
 clean:
