@@ -1,4 +1,4 @@
-// $Id: example.4.sfc,v 1.1 2002-07-03 18:06:46 swprakt Exp $
+// $Id: example.4.sfc,v 1.2 2002-07-03 18:28:34 swprakt Exp $
 SFC faculty{
 // 
 // compute n! 
@@ -17,7 +17,7 @@ SFC faculty{
 	i = i + 1;
 	res = res * i;
     } // end of while-i
-    print("Resultat",res);
+    // print("Resultat",res);
  } // end of if-n   
 
 // end   

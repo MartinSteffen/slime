@@ -1,4 +1,4 @@
-// $Id: example.3.sfc,v 1.1 2002-07-03 18:06:46 swprakt Exp $
+// $Id: example.3.sfc,v 1.2 2002-07-03 18:28:34 swprakt Exp $
 SFC ParallelTest{
 // 
 // Example for parallel processes
@@ -30,7 +30,7 @@ split {
 process proc1{
 	z1 = true;
 	while (z1==true) {
-		y1++
+		y1 = y+1;
 		if (z2==true) {
 			 z2 = false;
 		} else {
@@ -51,7 +51,7 @@ process proc2{
 
 process proc3name{
 	z3 = true;
-	while ((z3==true) && ((z1==true)||(z2==true)) {
+	while ( (z3==true) && ( ( z1 == true ) || ( z2 == true ) ) ) {
 		y3 = y3 - y2;
 	}
 	z3 = false;

@@ -1,3 +1,4 @@
+// $Id: example.8.sfc,v 1.1 2002-07-03 18:28:35 swprakt Exp $
 SFC testprog { 
 
 // it seems nobody feels responsible for input and output :(

@@ -1,4 +1,4 @@
-// $Id: example.6.sfc,v 1.1 2002-07-03 18:06:46 swprakt Exp $
+// $Id: example.6.sfc,v 1.2 2002-07-03 18:28:34 swprakt Exp $
 SFC fibonacci{
 // Commentline 1 all comment 'til EOL
    int n;
@@ -12,20 +12,27 @@ SFC fibonacci{
    if (n>=0) {
      i   = 1;
      sum = 1;
-     res = 0
+     res = 0;
      oldres = 0;
-     while (i<n) {           // n 0 1 2 3 4 5 6 7
-	i=i+1;               // i 1 1 1 2 3 4 5 6
-	oldres = res;        // o 0 0 0 1 1 2 3 5
-	res = sum;           // r 0 0 1 1 2 3 5 8
-        sum = sum + oldres;  // s 1 1 1 2 3 5 8 13
-	// print("i = ",i);       // output i
-        // print("sum = ", sum);  // output sum
+     while ( i < n ) {
+                // n 0 1 2 3 4 5 6 7
+	i = i + 1;  
+	             // i 1 1 1 2 3 4 5 6
+	oldres = res; 
+	       // o 0 0 0 1 1 2 3 5
+	res = sum;  
+	         // r 0 0 1 1 2 3 5 8
+        sum = sum + oldres; 
+	 // s 1 1 1 2 3 5 8 13
+	// print("i = ",i);        output i
+        // print("sum = ", sum);   output sum
      } // end of while-i
+     oldres = sum * n;
+     // oldres = sum % n;
      // print("n: ", n);
-     oldres = sum % n;
      // print("Sum: ", sum);
     } else {
+      int u;
       // print("n should be greater than 0"); // ***RFC*** see output/input-discussion
     } // end of if-n
 // end
