@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.168 2002-07-10 06:05:22 swprakt Exp $
+## $Id: Errors.txt,v 1.169 2002-07-10 06:10:04 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,11 +34,22 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 87:    type mismatch
+ package:    checker.
+ class:      fatal, but out-of-sync
+ status:     reported, 10.7.02, Steffen
+ description: make test gives an 
+              TypecheckTest: slime.checks.Typecheck$TypeMismatch: Type mismatch
+              TypecheckTest: Type mismatch
+
+	      Probably this is due to the fact, that the equals-methods have
+	      been temporarily removed from the absynt (the tests
+	      had been sucessful before)
 
 Error 76:    docu/German/English
  package:    gui
  class:      non-fatal
- status:     reported, 9.7.02
+ status:     reported, 9.7.02 Steffen
  description: the java-doc comments (if present) are in German and
               in English. It's tolerable, as the doc's are for internal use.
  
@@ -254,7 +265,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.168 2002-07-10 06:05:22 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.169 2002-07-10 06:10:04 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -438,10 +449,11 @@ Error 1:  parser warnings
 -------------------- Repaired errors -------------------------
 
 
+
 Error 74:    inconsistency, docu
  package:    checker
  class:      non-fatal
- status:     reported, Steffen, 9.7.02, done (updated the spec), Steffen
+ status:     reported, Steffen, 9.7.02, done (updated the spec), Steffentii
  description: the requirements are less specific than javadoc.
 
 
