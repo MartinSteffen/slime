@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.14 2002-06-25 16:52:26 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.15 2002-06-25 17:00:53 swprakt Exp $
  */
 
 public class Typecheck {
@@ -106,7 +106,10 @@ public class Typecheck {
 
   public class StepV implements Visitors.IStep{
     public Object forStep(String name, LinkedList actions) throws Exception {
-      // XXX we have to iterate through the action list.
+      for (Iterator i = actions.iterator(); i.hasNext(); ) {
+ 	StepAction sa  = (StepAction)i.next();
+	sa.accept(new StepActionV()); 
+      }
       return new UnitType();
     }
   }
@@ -306,6 +309,12 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.14  2002/06/25 16:52:26  swprakt
+//    all fields of SFC-clause are covered by the recusive
+//    visitor structure of the type checker.
+//
+//    [Steffen]
+//
 //    Revision 1.13  2002/06/25 10:55:47  swprakt
 //    First iterator added for one linked list.
 //    [Steffen]
@@ -361,6 +370,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.14 2002-06-25 16:52:26 swprakt Exp $
+//    $Id: Typecheck.java,v 1.15 2002-06-25 17:00:53 swprakt Exp $
 //
 //---------------------------------------------------------------------
