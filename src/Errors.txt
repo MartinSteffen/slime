@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.75 2002-07-05 10:20:14 swprakt Exp $
+## $Id: Errors.txt,v 1.76 2002-07-05 11:14:44 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,10 +35,33 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 43:     non-portanble code
+ package:     sfcparser (v1.22, not branched one)
+ class:       non-fatal currently, but makes code non-maintanable, breaks abstraction
+ status:      reported, 5.7.02 Steffen
+ description: The following is bad style:
+
+                  expr:l AND expr:r {: // AND && 4
+
+                  java.lang.Integer opCode = new java.lang.Integer(4);
+                  int opCodeValue = opCode.intValue();
+                   RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+
+
+               Better is:
+                  expr:l AND expr:r {: // AND && 4
+
+                  int opCodeValue = slime.absynt.Expr.AND
+                   RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+
+	      If we would decide to renumber the expression in the absynt (and the
+	      numbers are not part of the specification), the code will break.
+		   
+
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.75 2002-07-05 10:20:14 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.76 2002-07-05 11:14:44 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
