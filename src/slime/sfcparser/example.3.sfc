@@ -1,0 +1,154 @@
+// $Id: example.3.sfc,v 1.1 2002-07-03 18:06:46 swprakt Exp $
+SFC ParallelTest{
+// 
+// Example for parallel processes
+// 
+// Semaphors have not been a topic :) in this course
+//
+   int x1;
+   int x2;
+   int x3;
+   int y1;
+   int y2;
+   int y3;
+   bool z1;
+   bool z2;
+   bool z3; 
+// begin
+   x1 = 1;
+   x2 = 2;
+   x3 = 3;
+   y1 = 0;
+   y2 = 10;
+   y3 = 100;
+   z1 = false;
+   z2 = false;
+   z3 = false;
+
+split {
+
+process proc1{
+	z1 = true;
+	while (z1==true) {
+		y1++
+		if (z2==true) {
+			 z2 = false;
+		} else {
+			 z2 = true;
+		}	
+        }  
+	z1 = false;
+} // end proc1
+
+process proc2{
+	z2 = true;
+	while (z2==true) {
+		y2 = y2 - y1;
+		z1 = false;
+	}
+	z2 = false;
+} // end proc2
+
+process proc3name{
+	z3 = true;
+	while ((z3==true) && ((z1==true)||(z2==true)) {
+		y3 = y3 - y2;
+	}
+	z3 = false;
+} // end proc3name
+
+} // end split
+
+join(proc1,proc2,procname3);
+if (y1 > y2) {               // Process 1 has won race
+	z1 = true;        
+} else { 
+	if ( y2 > y3 ) {
+		z2 = true;
+	} else {
+	 	z3 = true;
+	}
+} // end if-y1>y2
+
+// output z1, z2, z3;  ***RFC*** the detailed syntax for the input/output operations
+//                     ***RFC*** should be discussed with the gui/editor and simulator group
+// end
+//
+// SFC for this parallel program
+//
+// dummy states are missing :( 
+// anyone wants to do this (maybe in emacs picture mode ?)
+//
+// int x1,x2,x3,y1,y2,y3; bool z1,z2,z3;
+//
+// +-----+
+// | S 1 |-// x1=1;x2=2;x3=3;y1=0;y2=10;y3=100;
+// +-----+    z1=false;z2=false;z3=false
+//    |
+//   --- true
+//    |
+//    \=======================================================================
+//      |                              |                            |
+//   +-----+                       +-----+                       +-----+z3=
+//   | S 2 |-// z1=true            | S 6 |-//z2=true             | S 9 |true
+//   +-----+                       +-----+                       +-----+
+//      |   \                     /    |              A=         /   |
+//   z1---   ---!z1           z2---   ---!z2      (z1||z2)&&z3---  ---!z3 ||        
+//      |     |                  |     |                       |    |
+//      +<--+ |    +-------------+     |            +----------+    | (!z2 &&
+//      |   | |    |             |     |            |          |    |
+// y1+----+ | |    |          +----+   |            |    y3 +----+  \  !z3 )
+//=y1| S3 | | |    |  y2=y2-y1| S7 |   \            |   =y3 | S10|   \
+//+1 +----+ | |    |  z1=false+----+    \           |   -y2 +----+    \
+//     |    | \    |             |  \    \          |       /   \      \
+//     |    |  \   |          z2---  \    \         |      /     \      |
+//     \     \  \  +-------------+  ---!z2 \        |  A ---     --- !A |
+//     |\     \  \                   |     |        |____/        |     |
+//     | \     \  \                  \    /                       \    /
+//     |  \     \  \                 +----+                       +----+
+//     |   \     \  \   z2=false//---| S8 |          z3=false//---| S11|
+//   z2| !z2\     \  \               +----+                       +----+
+//     |     \     \  \                |                            |
+//     |      \     \  \               |                            |
+//     |       \     \  \              |                            |
+//  +----+   +----+   \  \             |                            |
+//  | S4 |!z2| S5 |z2 |   \            |                            |
+//  +----+   +----+   |   |            |                            |
+//     |       |      |   |            |                            |
+//    ---z1   ---z1   |   |            |                            |
+//     |       |      |   |            |                            |
+//     +------>+----->+   |            |                            |
+//                        |            |                            |
+//                        ===========================================
+//                                       |
+//                                       |
+//                                    +-----+   
+//                                    | S12 |
+//                                    +-----+
+//                                   /       \
+//                                  /         \   
+//                       y1<=y2   ---        --- y1>y2
+//                                 |          |
+//                              +----+      +----+
+//                       SKIP//-| S13|      | S14|--//z1=true
+//                              +----+      +----+
+//                             /      \         \
+//                            /        \         \
+//                    y2>y3  ---      --- y2<=y3  \
+//                            |        |           \ 
+//                         +----+   +----+          \
+//                  z2=true| S15|   | S16| z3=true   \
+//                         +----+   +----+           |
+//                            |        |             |
+//                            |        |             |
+//                       true---      ---true   true---
+//                            |        |             |
+//                            |        |             |
+//                            ------------------------
+//                                       |
+//                                       |
+//                                    +-----+
+//                                    | S17 |
+//                                    +-----+
+//
+} // end of SFC program

@@ -1,0 +1,88 @@
+// $Id: example.4.sfc,v 1.1 2002-07-03 18:06:46 swprakt Exp $
+SFC faculty{
+// 
+// compute n! 
+//
+ int n;
+ int i;
+ int res;
+
+// begin 
+ // intput(n,n);
+ // n=10
+ if ( n >= 0 ) {
+    res = 1;
+    i = 0;
+    while (i < n) {
+	i = i + 1;
+	res = res * i;
+    } // end of while-i
+    print("Resultat",res);
+ } // end of if-n   
+
+// end   
+// SFC for the computation of n!
+// Here we have inserted the dummy states SKIP S3 and S5,
+// an optimization is possible.
+//
+//               int n;int i;int res
+//		       |
+//		  +--------+
+//                |  S 1   |-----// n=input(); 
+//                +--------+
+//                     |
+//                     |
+//              +--------------+
+//              |              |
+//              |              |
+//      n <= 0 ---            --- n > 0
+//              |              |
+//		|	       |
+//	        |           +----+
+//              |           | S2 |----// res = 1; i = 0;
+//              |           +----+
+//              |              |
+//              |              |
+//              |             --- true
+//              |              |
+//              |              |
+//		|	       |
+//	        |           +----+
+//              |           | S3 |----// SKIP
+//              |           +----+
+//              |              |
+//              |              |
+//              |         +----------+
+//              |         |          |
+//              |         |          |
+//              |  i>=n  ---        --- i < n
+//              |         |          |
+//              |         /          |
+//              |        /           +<----------------------------+
+//              |       /            |                             |
+//              |      /          +------+                         |
+//              |     /           | S 4  |----// i=i+1;res=res*i;  |
+//              |    |            +------+                         |
+//              |    |               |                             |
+//              |    |               |                             |
+//              |    |           +-------------+                   |
+//              |    |           |             |                   |
+//              |    |           |             |                   |
+//              |    |    i>=n  ---     i<n   ---                  |
+//              |    |           |             |                   |
+//              |    |           |             +-------------------+
+//              +----+-----------+
+//                   |
+//               +-----+
+//               | S5  |--// SKIP
+//               +-----+
+//                   |
+//                   |
+//                  --- true
+//                   |
+//                   |
+//               +-----+
+//               | S6  |--// print("Resultat:",res);
+//               +-----+
+//
+} // end of SFC program faculty

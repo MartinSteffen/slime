@@ -1,0 +1,26 @@
+// $Id: example.5.sfc,v 1.1 2002-07-03 18:06:46 swprakt Exp $
+SFC median{
+// Commentline 1 all comment 'til EOL
+   int n;
+   int i;
+   int sum;
+   double res;
+// begin 
+   n = getint();
+   int x[n];
+   if (n>0) {
+     i = 1;
+     sum = 0;
+     res = 0;
+     while (i<=n) {
+       int x[i] = getint();
+       sum = sum + x[i];
+     } // end of while-i
+     print("Sum: ", sum);
+     res = sum / n;
+     print("Median: ", res);
+    } else {
+      print("n must be greater than 0");
+    } // end of if-n
+// end
+} // end of SFC program median
