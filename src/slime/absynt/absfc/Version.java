@@ -6,13 +6,13 @@ import java.io.Serializable;
  * serialized objects of this package.
  *
  * @author initially provided by Marco Wendel.
- * @version  $Id: Version.java,v 1.1 2002-06-19 07:38:59 swprakt Exp $
+ * @version  $Id: Version.java,v 1.2 2002-06-19 08:31:49 swprakt Exp $
  */
 
 public class Version implements Serializable {
-    private static final int radix = 6;
+    private static final int radix = 40;
     private static long version;
-    private static String thisVersionString = "Slime v1.0";
+    private static String thisVersionString = "Slime1.0";
 
     Version() { 
 	renderVersion();
