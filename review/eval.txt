@@ -19,7 +19,7 @@ raw list.
 
 -  
 
-- late!!!! integration
+- late!!!! integration, planned was 12, June
 
 - smoothness
 
@@ -69,5 +69,5 @@ o make a time line, make a statistics
 
 
 ####################################################################################
-## $Id: eval.txt,v 1.10 2002-07-03 06:41:36 swprakt Exp $
+## $Id: eval.txt,v 1.11 2002-07-03 07:36:19 swprakt Exp $
 ####################################################################################
