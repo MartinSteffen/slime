@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.8 2002-07-09 13:51:56 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.9 2002-07-09 14:28:40 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors as exceptions together with the
  * checker proper, which recurs over the abstract syntax.
@@ -24,9 +24,12 @@ import slime.absynt.*;
  * <ul>
  *  <li> sfc non-nil
  *  <li> initial step contained in the set of steps.
+ *  <li> all steps and transitions are non-null.
  *  <li> no step occurs twice (by name)
  *  <li> no transition has a non-existing step as source or target (by name)
  * </ul>
+ * Note that test of non-nullness is not done for parts other than mentioned (for instance
+ * sap's etc.
  *
  */
 public class Wellformed {
@@ -50,9 +53,6 @@ public class Wellformed {
     public String getMessage(){return message;  }
   }
 
-
-
-
   public boolean check (SFC s) throws WException { 
     if (s == null)
       throw (new WException("sfc is empty")); 
@@ -60,17 +60,12 @@ public class Wellformed {
     (new Consistency()).check(s);
     return true;}
 
-
-
-
   /** Visitor for SFC's, the entry point of the recursion.
    *  To cope with contextual information, we use a  hash table.
    *  The key objects are the variables, the values are the types.
    *
    */
 
-
-  
 
   public class Initcheck {
     public boolean check (SFC s)  throws Wellformed.WException {
@@ -133,27 +128,59 @@ public class Wellformed {
 			   LinkedList declist) throws Exception {
 	for (Iterator i = steps.iterator(); i.hasNext(); ){
 	  Step s = (Step)i.next();
+	  if (s==null) throw new WException("null-step");
 	  pp.print(s);
 	  if (stepset.contains(s.name))
 	    throw new WException("duplicated step, named: " + s.name);  
 	  stepset.add(s.name);
 	}
+
+	for (Iterator i = transs.iterator(); i.hasNext(); ){
+	  Transition  t = (Transition)i.next();
+	  if (t==null) throw new WException("null transition");
+	  pp.print(t);
+	  t.accept(new TransitionV()); 
+	}
 	return (new Boolean(true)); // stub
       }
     }
+
+    /** Well-formed visitor for transitions.
+     * We check, whether all source and target steps are indeed
+     * listed in the previously collected set of steps.
+     */
+    class TransitionV implements Visitors.ITransition{
+      public Object forTransition(LinkedList source,
+				  Expr guard,
+				  LinkedList target) throws WException {
+	try {
+	  for (Iterator i = source.iterator(); i.hasNext(); ) {
+	    Step s  = (Step)i.next();
+	    s.accept(new StepV()); 
+	  }
+	  for (Iterator i = target.iterator(); i.hasNext(); ) {
+	    Step s  = (Step)i.next();
+	    s.accept(new StepV()); 
+	  }
+	  return (new Boolean(true));
+	}
+	catch (Exception e) {
+	  throw ((WException)e);
+	}
+      }
+    }
     
-    /** consistency  visitor for a step.
+    /** consistenct  visitor for one step. This means, checking 
+     *  whether the step (i.e., its name) has been defined.
      */
     
-//      class StepV implements Visitors.IStep{
-//        public Object forStep(String name, LinkedList actions) throws Exception {
-//  	for (Iterator i = actions.iterator(); i.hasNext(); ) {
-//  	  StepAction sa  = (StepAction)i.next();
-//  	sa.accept(new StepActionV()); 
-//  	}
-//  	return new UnitType();
-//        }
-//      }
+      class StepV implements Visitors.IStep{
+        public Object forStep(String name, LinkedList actions) throws Exception {
+	  if (!(stepset.contains(name)))
+	    throw new WException("undefined step as source/target of a transition");
+	  return new Boolean(true);
+        }
+      }
 
 
     
@@ -170,6 +197,12 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.8  2002/07/09 13:51:56  swprakt
+//    I check for uniqueness of steps now, where the steps
+//    are put into a Set (implemented by a hashtable).
+//
+//    [Steffen]
+//
 //    Revision 1.7  2002/07/09 13:00:24  swprakt
 //    *** empty log message ***
 //
