@@ -88,6 +88,37 @@ jeweils der \emph{aktuelle.}
 \input{review}
 \input{zeitplan}
 
+
+
+\subsection*{Group decision, as communicated via email}
+\label{decision}
+
+Just to be sure: here the \important{official decision} concerning the
+\texttt{CLASSPATH} etc. (same is in \texttt{Readme.devel}, but, as said,
+just to be sure).
+
+\begin{itemize}
+\item the \importantxx{checked-in} versions of cup and lex are
+  obligatory\footnote{They replace the ones previously used under
+    \texttt{/home/java}. In effect, they are the same, just checked in.}
+\item the following \importantxx{classpath} is obligatory:
+  \texttt{CLASSPATH=<WORKDIR>/Slime/src:<WORKDIR>/Slime/lib/JLex.jar:<WORKDIR>/Slime/lib/java_cup.jar:}
+  where of course the \texttt{<WORKDIR>} is a placeholder and it has to be
+  adapted by the individual user to his work directory.
+\item no \importantxx{generated} files nor \important{class} files will be
+  checked in (unless technical reasons call for it, in which case we will
+  discuss this in the light of the new arguments again
+\item no \importantxx{non-slime} code oder data will be checked in under
+  \texttt{CLASSPATH=<WORKDIR>/Slime/src}
+\item revisions \emph{log}s are useful and worth reading, but it's not
+  mandatory to read each other's logs.
+\end{itemize}
+
+
+
+
+
+
 \section*{Arbeitsgruppen}
 \label{sec:gruppen}
 
