@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.24 2002-07-05 13:41:38 swprakt Exp $
+# $Id: Makefile,v 1.25 2002-07-09 06:11:51 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -55,14 +55,10 @@ packets:
 #	(cd ./checks; make)
 #	(cd ./io; make)
 
-# the sfc-parser is temporarily commented out from
-# the compilation list, because of discrepancies in use of
-# CLASSPATH. Not to waste time in analysing as simple compilation
-# error, we just comment that out until an agreement is reached, sfc parser
-# continues in his directory with his settings and his own
-# choice of tools and at the same time
-# the rest of the packages use their settings.
-# We merge them as soon as possible. Steffen 2.07.02
+# the checks is temporarily commented out from
+# the compilation list, because of discrepancies with other packages
+# especially the extended interfaces in absynt wrt. to the visitor.
+# this will be resolved asap.  Steffen 2.07.02
 
 jar:
 	jar cvf slime.jar ./absynt/*.class \

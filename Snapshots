@@ -1,6 +1,6 @@
 
 ########################################################
-## $Id: Snapshots,v 1.8 2002-07-07 07:16:23 swprakt Exp $
+## $Id: Snapshots,v 1.9 2002-07-09 06:15:52 swprakt Exp $
 ########################################################
 
 This file contains, for quick reference, a list of the major development
@@ -14,6 +14,22 @@ the form snapshot<nr> as those are reserved for the global snapshots.
 
 
 
+
+ secondcompilation-sep: 9.07.2002
+	    everything compiles (the check's is commented out from the makefile, though)
+	    This baseline does not correspond to any actual state in space-time,
+	    I went back in time for a few classes to make it fit together.
+	    The classes are:
+
+	      absynt/    everything that has to do with the extended visitor
+	      sfcparser/ the line that required the sfcparser/PrettyPrint.java
+	
+	   Besides that it compiles now, the type-checker does not semantically
+	   work now, since by going back in time in absynt, the equals-methods
+	   are gone, as well.
+
+
+	    
 
 
  firstcompilaton-sep:   3.7.2002
