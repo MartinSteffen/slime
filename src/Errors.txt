@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.23 2002-06-26 18:08:59 swprakt Exp $
+## $Id: Errors.txt,v 1.24 2002-06-27 07:00:14 swprakt Exp $
 ###########################################################
 
 
@@ -39,6 +39,13 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+Error 19:     doc problem
+ package:     sfcparser.SFCLex
+ class:       _public_ ugliness
+ status:      reported, 27.6.02, Steffen
+ description: the web-page contain stuff that does not belong there:
+              http://www.informatik.uni-kiel.de/inf/deRoever/SS02/Java/Slime/doc/slime/sfcparser/SFCLex.html
 
 
 Error 18:      compilation broken
