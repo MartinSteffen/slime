@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.48 2002-07-02 14:30:11 swprakt Exp $
+## $Id: Errors.txt,v 1.49 2002-07-03 06:10:38 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,26 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+
+Error 34:     expression parsing
+ package:     sfcparser
+ class:       fatal
+ status:      reported (email), 3.7.02, Steffen
+ description:  java slime.sfcparser.ParserTest -e "(5*5*(1+3*3)+(9/7+1))"
+              gives in the last summand:
+
+	                9/(7+1)  :
+
+               |   |   |   <PLUS>
+               |   |   |   [B_expr]
+               |   |   |   |   [Constval] 9
+               |   |   |   |   <DIV>
+               |   |   |   |   [B_expr]
+               |   |   |   |   |   [Constval] 7
+               |   |   |   |   |   <PLUS>
+               |   |   |   |   |   [Constval] 1		
+ 
 
 Error 33:     grammar: stmt
  package:     sfcparser.SFC.cup v.10
