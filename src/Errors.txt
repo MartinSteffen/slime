@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.58 2002-07-03 17:18:12 swprakt Exp $
+## $Id: Errors.txt,v 1.59 2002-07-03 17:52:00 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -36,29 +36,6 @@ Rules of the game:
 
 <<<<<<< Errors.txt
 =======
-
-Error 26:    clean up
- package:    all
- class:      non-fatal
- status:     reported, 1.7.02
- description: removed the unused directoroes from
-             the repos in the end, when the semester's
-	     over.
- status:     commented, 03.07.02 mwe
-	     Someone with the login-information might help us by
-	     deleting src/JLex, src/java_cup, Slime/src/absynt,
-	     Slime/src/utils, Slime/src/io, Slime/src/Editor, ...
-	     BUT NOT Slime/src/slime
-
-	     If this was done you might have a good chance for
-	     getting the parser compiled with the wrong classpath:
-                CLASSPATH=/home/ms/Swprakt/Slime/src:/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:
-	     
-	    Otherwise the classpath has to be set the right way, for instance
-
-                CLASSPATH=/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:/home/ms/Swprakt/Slime/src
-
-	    This is caused by the way java searches for classes.
 
 Error 23: deprecation
  package:  gui
@@ -665,3 +642,28 @@ Error 24:    compilation broken
 	    	     
                 CLASSPATH=/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:/home/ms/Swprakt/Slime/src
 
+
+Error 26:    clean up
+ package:    all
+ class:      non-fatal
+ status:     reported, 1.7.02
+ description: removed the unused directoroes from
+             the repos in the end, when the semester's
+	     over.
+ status:     commented, 03.07.02 mwe
+	     Someone with the login-information might help us by
+	     deleting src/JLex, src/java_cup, Slime/src/absynt,
+	     Slime/src/utils, Slime/src/io, Slime/src/Editor, ...
+	     BUT NOT Slime/src/slime
+
+	     If this was done you might have a good chance for
+	     getting the parser compiled with the wrong classpath:
+                CLASSPATH=/home/ms/Swprakt/Slime/src:/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:
+	     
+	    Otherwise the classpath has to be set the right way, for instance
+
+                CLASSPATH=/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:/home/ms/Swprakt/Slime/src
+
+	    This is caused by the way java searches for classes.
+  status:   3.7.02 mwe
+	    Some seconds ago it was done: All src/JLex and src/java_cup were pruned.
