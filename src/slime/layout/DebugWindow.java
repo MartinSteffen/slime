@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DebugWindow.java,v 1.3 2002-05-22 12:25:07 swprakt Exp $
+ * @version $Id: DebugWindow.java,v 1.4 2002-05-30 13:04:37 swprakt Exp $
  */
 
 class DebugWindow extends JFrame {

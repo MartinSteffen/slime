@@ -6,44 +6,23 @@ import java.util.LinkedList;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: StepList.java,v 1.1 2002-05-07 12:50:15 swprakt Exp $
+ * @version $Id: StepList.java,v 1.2 2002-05-30 13:04:37 swprakt Exp $
  */
 
 class StepList {
 
     private LinkedList stepList;
 
-    /*
-     * Creates an empty steplist. 
-     */
     protected StepList() {
 	this.stepList = new LinkedList();
     }
 
-    /*
-     * Adds the given step to this steplist iff it is not contained. 
-     */
     protected void add(Step step) {
-	if (!this.contains(step))
-	    this.stepList.add(step);
-	//else if (DEBUG)
-	    
-	    
+	this.stepList.add(step);
     }
 
-    /*
-     * Returns the step at the specified position in this steplist.
-     */
-    protected Step get(int i) {
-	try {
-	    return (Step)this.stepList.get(i);
-	} catch (IndexOutOfBoundsException ioobe) {
-	    System.out.println("Someting went wrong while getting a step "
-			       +"out of a step list. The position is "+i
-			       +" and the size of this steplist is "
-			       +this.size()+".");
-	    return null;
-	}
+    protected Step get(int nr) {
+	return (Step)this.stepList.get(nr);
     }
 
     /*
