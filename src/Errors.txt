@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.77 2002-07-05 11:15:24 swprakt Exp $
+## $Id: Errors.txt,v 1.78 2002-07-05 11:37:41 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -37,7 +37,8 @@ Rules of the game:
 
 Error 43:     non-portanble code
  package:     sfcparser (v1.22, not branched one)
- class:       non-fatal currently, but makes code non-maintanable, breaks abstraction
+ class:       currenly non-fatal, in terms of compilation, but makes code non-maintanable, breaks abstraction,
+              must be changed, therefore.
  status:      reported, 5.7.02 Steffen
  description: The following is bad style:
 
@@ -50,7 +51,7 @@ Error 43:     non-portanble code
 
                Better is something like:
 
-                  expr:l AND expr:r {: // AND && 4
+1                  Exprx:l AND expr:r {: // AND && 4
 
                   int opCodeValue = slime.absynt.Expr.AND
                    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
@@ -62,7 +63,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.77 2002-07-05 11:15:24 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.78 2002-07-05 11:37:41 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
