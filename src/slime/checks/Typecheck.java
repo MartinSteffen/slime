@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.24 2002-07-05 16:50:54 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.25 2002-07-05 18:08:06 swprakt Exp $
  */
 
 public class Typecheck {
@@ -215,11 +215,10 @@ public class Typecheck {
     }
   }
 
-  /** type checking visitor for expressions.
+  /* The visitors must be wrapped.  I provide thus overloaded wrappers
+   * called ``check''.
    */
-
-
-  public slime.absynt.Type checkexprxxx (Expr e)  throws CheckException {
+  public slime.absynt.Type check (Expr e)  throws CheckException {
     try {
       slime.absynt.Type t = (slime.absynt.Type)(e.accept(new ExprV()));
       return t;
@@ -227,6 +226,21 @@ public class Typecheck {
     catch (Exception ex) {
       throw (CheckException)(ex);}
   }
+
+  public slime.absynt.Type check (SFC s)  throws CheckException {
+    try {
+      slime.absynt.Type t = (Type)(s.accept(new SFCV()));
+      return t;
+    }
+    catch (Exception ex) {
+      throw (CheckException)(ex);}
+  }
+
+  /** type checking visitor for expressions.
+   */
+
+
+
 
   public class ExprV implements Visitors.IExpr{
         
@@ -400,6 +414,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.24  2002/07/05 16:50:54  swprakt
+//    ok
+//
 //    Revision 1.23  2002/07/05 14:05:32  swprakt
 //    *** empty log message ***
 //
@@ -498,6 +515,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.24 2002-07-05 16:50:54 swprakt Exp $
+//    $Id: Typecheck.java,v 1.25 2002-07-05 18:08:06 swprakt Exp $
 //
 //---------------------------------------------------------------------
