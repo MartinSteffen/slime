@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.52 2002-07-03 06:58:40 swprakt Exp $
+## $Id: Errors.txt,v 1.53 2002-07-03 07:55:31 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,22 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+
+
+Error 35:     comp.errorsfcparser
+ package:     sfcparser/SFCParser.java 1.11
+ class:       fatal
+ status:      reported, 3.7.02, Steffen
+ description: 
+              SFCParser.java:1348: inconvertible types
+              found   : slime.absynt.absfc.Comment
+              required: slime.absynt.absfc.Statement
+		 RESULT = (slime.absynt.absfc.Statement) s ; 
+	
+             (NB: I still can't compile because of the controversy
+	      concerning CLASSPATH, etc), but trying to compile	
+	      gives this additional error.
 
 
 Errors35:
