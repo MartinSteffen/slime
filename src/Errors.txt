@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.32 2002-06-28 10:30:56 swprakt Exp $
+## $Id: Errors.txt,v 1.33 2002-06-28 10:33:29 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -32,6 +32,16 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+
+Error 18(2):   compilation broken (re-entered from repaired section)
+  package:     all
+  Class:      fatal and deadly!!!
+  status:     reported, 26.6.02, Boeck/Steffen
+	      27.06.02 (mwe) see mailling-list for solution
+              no common solution yet, will be decided 3.7.02 (Steffen, 28.6)
+  description: CLASSPATH-confusion (see emails
+
 
 Error 23: deprecation
  package:  gui
@@ -136,25 +146,6 @@ Error 19:     doc problem
  description: the web-page contain stuff that does not belong there:
               http://www.informatik.uni-kiel.de/inf/deRoever/SS02/Java/Slime/doc/slime/sfcparser/SFCLex.html
 
-Error 18:      compilation broken
-  package:     all
-  Class:      fatal and deadly!!!
-  status:     reported, 26.6.02, Boeck/Steffen
-	      27.06.02 (mwe) see mailling-list for solution
-	      all packages within slime are subpackages of slime,
-	      all other packages JLex/java_cup are packages
-	      that should be distributed together with Slime.jar.
-	      Our Classpath-Root is /home/swprakt/cvsroot/Slime/src.
-	      All compiler-command have to state a path relativ to
-	      this root, e.g. javac -classpath ../.. *.java
-  description: probably confusion with the new stuff added by 
-               sfc parser. (Well, not clear) Breaks everything!!! Probably name confusion
-	       with the sfcparser-Parser with the utils-Parser.
-
-	        The error in more than one sub-directory is a cup-error:
-
-                java java_cup.Main -symbols sym -parser Parser -nonterms -package utils SAP.cup  
-               Unrecognized option "SAP.cup"
 
 
 Error 16:      LEX/YACC
