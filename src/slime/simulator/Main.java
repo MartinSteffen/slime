@@ -1,3 +1,5 @@
+package slime.simulator;
+
 import slime.simulator.Test;
 
 
@@ -22,9 +24,9 @@ public class Main{
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: <dollar>
+//	$Id: Main.java,v 1.2 2002-06-26 11:11:18 swprakt Exp $
 //
-//	$Log: <dollar>
+//	$Log: not supported by cvs2svn $
 //	
 //---------------------------------------------------------------------
 
