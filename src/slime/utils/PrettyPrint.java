@@ -2,7 +2,7 @@
 /**
  * Pretty printer for SFC's
  * @author Initially provided by Karsten Stahl.
- * @version $Id: PrettyPrint.java,v 1.8 2002-07-11 06:51:12 swprakt Exp $
+ * @version $Id: PrettyPrint.java,v 1.9 2002-07-11 07:14:35 swprakt Exp $
  */
 
 
@@ -52,14 +52,12 @@ public class PrettyPrint {
 
 // ---------------------------------------------------------------------------
 
-    /* public print methode
-     * Hier wird gecheckt welche Instanz das uebergebene Objekt hat
-     * und output wird aufgerufen.
-     * Da wir auf die Instanz typecasten, reicht es aus
-     * die output methode entsprechend zu ueberladen
-     */
-    public void print(Absynt absynt) {
-	if(absynt != null) {
+  /** public print method for pretty printing.
+   *  It's overloaded to take care for the various cases.
+   */
+
+  public void print(Absynt absynt) {
+    if(absynt != null) {
 	    if(absynt instanceof SFC)
 		output((SFC)absynt);
 	    if(absynt instanceof Transition)
@@ -86,14 +84,6 @@ public class PrettyPrint {
 		output((U_expr)absynt);
 	    if(absynt instanceof Constval)
 		output((Constval)absynt);
-	    //	if(absynt instanceof Type)
-	    //  output((Type)absynt);
-	    //if(absynt instanceof BoolType)
-	    //    output((BoolType)absynt);
-	    //if(absynt instanceof IntType)
-	    //    output((IntType)absynt);
-	    /*if(absynt instanceof M_Type)
-	      output((M_Type)absynt);*/
 	}
     }
 
@@ -240,49 +230,49 @@ public class PrettyPrint {
     private void print(int op){
 	String string;
 	switch(op){
-	case 0 :
+	case Expr.PLUS :
 	    string ="<PLUS> ";
 	    break;
-	case 1:
+	case Expr.MINUS:
 	    string ="<MINUS> ";
 	    break;
-	case 2:
+	case Expr.TIMES:
 	    string ="<TIMES> ";
 	    break;
-	case 3:
+	case Expr.DIV:
 	    string ="<DIV> ";
 	    break;
-	case 4:
+	case Expr.AND:
 	    string ="<AND> ";
 	    break;
-	case 5:
+	case Expr.OR:
 	    string ="<OR> ";
 	    break;
-	case 6:
+	case Expr.NEG:
 	    string ="<NEG>";
 	    break;
-	case 7:
+	case Expr.EQ:
 	    string ="<EQ> ";
 	    break;
-	case 8:
+	case Expr.LESS:
 	    string ="<LESS> ";
 	    break;
-	case 9:
+	case Expr.GREATER:
 	    string ="<GREATER> ";
 	    break;
-	case 10:
+	case Expr.LEQ:
 	    string ="<LEQ> ";
 	    break;
-	case 11:
+	case Expr.GEQ:
 	    string ="<GEQ> ";
 	    break;
-	case 12:
+	case Expr.NEQ:
 	    string ="<NEQ> ";
 	    break;
-	case 13:
+	case Expr.MOD:
 	    string ="<MOD> ";
 	    break;
-	case 14:
+	case Expr.POW:
 	    string ="<POW> ";
 	    break;
 	default:
@@ -346,9 +336,12 @@ public class PrettyPrint {
 //	Pretty-Printer
 //	--------------
 //
-//	$Id: PrettyPrint.java,v 1.8 2002-07-11 06:51:12 swprakt Exp $
+//	$Id: PrettyPrint.java,v 1.9 2002-07-11 07:14:35 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.8  2002/07/11 06:51:12  swprakt
+//	I removed the >>>>> ``comments'' [Steffen]
+//	
 //	Revision 1.7  2002/07/08 13:19:34  swprakt
 //	uncommented some syntax errors. (mwe)
 //	<<<<<<<<<<<<<<
