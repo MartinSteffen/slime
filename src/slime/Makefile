@@ -1,6 +1,7 @@
+
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.11 2002-06-12 19:52:56 swprakt Exp $
+# $Id: Makefile,v 1.12 2002-06-13 09:28:12 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
