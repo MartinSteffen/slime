@@ -6,10 +6,17 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.11 2002-07-02 19:26:48 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.12 2002-07-03 16:50:09 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.11  2002/07/02 19:26:48  swprakt
+/* Now supporting StepActions, but the PrettyPrint.java
+/* fails at Action... Tomorrow we will have a chart
+/* expaining why to use such a construct as ActionQualifier
+/* and StepAction and Action and ...
+/* (mwe)
+/*
 /* Revision 1.10  2002/07/02 13:32:20  swprakt
 /* In my last checkin I promised to modify
 /* the PrettyPrint.java. The functioning
@@ -139,7 +146,7 @@ public class ParserTest {
 		mySFCParser = new slime.sfcparser.SFCParser();
 		// mSFCParser.debug=1;
 		System.out.println("ParserTest: before parseFile");
-		absfctree = mySFCParser.parseFile( sfcfile );
+		absfctree = mySFCParser.parseFileToSFCabtree( sfcfile );
 		System.out.println("ParserTest: before prettyAbsfc.print");
 		prettyAbsfc.print( absfctree );
 		System.out.println("ParserTest: before Absfc2SFCConverter");

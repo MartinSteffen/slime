@@ -19,14 +19,6 @@ ParserTest: before prettyAbsfc.print
 |   [Assignment] 
 |   |   [Variable] y
 |   |   [Constval] 5
-|   [Input] 
-|   |   [Variable]
-|   |   [Variable] z
-|   |   [Modified with expression]
-|   |   [B_expr] 
-|   |   |   [Variable] z
-|   |   |   <DIV> 
-|   |   |   [Constval] 2
 |   [If] 
 |   |   [if-case]
 |   |   |   [Assignment] 
@@ -260,239 +252,208 @@ ParserTest: before prettyAbsfc.print
 |   |   |   |   |   |   [Constval] 1000
 |   |   [Condition] 
 |   |   [Constval] true
-|   [Output] 
-|   |   [Variable]
-|   |   [Variable] y
-|   |   [Modified with expression]
-|   |   [B_expr] 
-|   |   |   [Variable] y
-|   |   |   <TIMES> 
-|   |   |   [Constval] 2
 ParserTest: before Absfc2SFCConverter
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 2 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 3 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 2.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
-StmtInput
-StmtInput - finished processing input
+New Program-Action nr. 0 created and added to myActionList
+New Program-step nr. 4 created and added to myStepList
 StmtIf
+New Program-step nr. 5 created and added to myStepList
+New Program-step nr. 6 created and added to myStepList
+New Program-step nr. 7 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 4.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 1 created and added to myActionList
+New Program-step nr. 8 created and added to myStepList
+New Program-step nr. 9 created and added to myStepList
 StmtIf - finished processing stmtlist
 StmtIfElse
+New Program-step nr. 10 created and added to myStepList
+New Program-step nr. 11 created and added to myStepList
+New Program-step nr. 12 created and added to myStepList
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 13 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 6.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 2 created and added to myActionList
+New Program-step nr. 14 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 7.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 3 created and added to myActionList
+New Program-step nr. 15 created and added to myStepList
 StmtIfElse - finished processing ifstmtlist
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 16 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 9.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 4 created and added to myActionList
+New Program-step nr. 17 created and added to myStepList
 StmtIfElse - finished processing elsestmtlist
+New Program-step nr. 18 created and added to myStepList
 StmtIf - finished processing stmtlist
 StmtRepeat
+New Program-step nr. 19 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 10.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 5 created and added to myActionList
+New Program-step nr. 20 created and added to myStepList
 StmtRepeat - finished processing stmtlist
+New Program-step nr. 21 created and added to myStepList
 StmtRepeat - finished processing repeat-until
 StmtWhile
+New Program-step nr. 22 created and added to myStepList
+New Program-step nr. 23 created and added to myStepList
+New Program-step nr. 24 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 11.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 6 created and added to myActionList
+New Program-step nr. 25 created and added to myStepList
 StmtWhile - finished processing stmtlist
+New Program-step nr. 26 created and added to myStepList
 StmtWhile - finished processing while
 StmtRepeat
+New Program-step nr. 27 created and added to myStepList
 StmtRepeat
+New Program-step nr. 28 created and added to myStepList
 StmtRepeat
+New Program-step nr. 29 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 12.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 7 created and added to myActionList
+New Program-step nr. 30 created and added to myStepList
 StmtRepeat - finished processing stmtlist
+New Program-step nr. 31 created and added to myStepList
 StmtRepeat - finished processing repeat-until
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 13.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 8 created and added to myActionList
+New Program-step nr. 32 created and added to myStepList
 StmtRepeat - finished processing stmtlist
+New Program-step nr. 33 created and added to myStepList
 StmtRepeat - finished processing repeat-until
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 14.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 9 created and added to myActionList
+New Program-step nr. 34 created and added to myStepList
 StmtRepeat - finished processing stmtlist
+New Program-step nr. 35 created and added to myStepList
 StmtRepeat - finished processing repeat-until
 StmtIfElse
+New Program-step nr. 36 created and added to myStepList
+New Program-step nr. 37 created and added to myStepList
+New Program-step nr. 38 created and added to myStepList
 StmtIfElse
+New Program-step nr. 39 created and added to myStepList
+New Program-step nr. 40 created and added to myStepList
+New Program-step nr. 41 created and added to myStepList
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 42 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 16.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 10 created and added to myActionList
+New Program-step nr. 43 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 17.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 11 created and added to myActionList
+New Program-step nr. 44 created and added to myStepList
 StmtIfElse - finished processing ifstmtlist
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 45 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 19.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 12 created and added to myActionList
+New Program-step nr. 46 created and added to myStepList
 StmtIfElse
+New Program-step nr. 47 created and added to myStepList
+New Program-step nr. 48 created and added to myStepList
+New Program-step nr. 49 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 20.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 13 created and added to myActionList
+New Program-step nr. 50 created and added to myStepList
 StmtIfElse - finished processing ifstmtlist
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 21.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 14 created and added to myActionList
+New Program-step nr. 51 created and added to myStepList
 StmtIfElse - finished processing elsestmtlist
+New Program-step nr. 52 created and added to myStepList
 StmtIf - finished processing stmtlist
 StmtIfElse - finished processing elsestmtlist
+New Program-step nr. 53 created and added to myStepList
 StmtIf - finished processing stmtlist
 StmtIfElse - finished processing ifstmtlist
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 54 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 23.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 15 created and added to myActionList
+New Program-step nr. 55 created and added to myStepList
 StmtRepeat
+New Program-step nr. 56 created and added to myStepList
 StmtDecl
-next: adding new action to myActionlist.
+New Program-step nr. 57 created and added to myStepList
 StmtDecl - finished processing declaration
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 25.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 16 created and added to myActionList
+New Program-step nr. 58 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 26.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 17 created and added to myActionList
+New Program-step nr. 59 created and added to myStepList
 StmtRepeat - finished processing stmtlist
+New Program-step nr. 60 created and added to myStepList
 StmtRepeat - finished processing repeat-until
 StmtIfElse - finished processing elsestmtlist
+New Program-step nr. 61 created and added to myStepList
 StmtIf - finished processing stmtlist
 StmtWhile
+New Program-step nr. 62 created and added to myStepList
+New Program-step nr. 63 created and added to myStepList
+New Program-step nr. 64 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 27.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 18 created and added to myActionList
+New Program-step nr. 65 created and added to myStepList
 StmtRepeat
+New Program-step nr. 66 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 28.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 19 created and added to myActionList
+New Program-step nr. 67 created and added to myStepList
 StmtWhile
+New Program-step nr. 68 created and added to myStepList
+New Program-step nr. 69 created and added to myStepList
+New Program-step nr. 70 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 29.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 20 created and added to myActionList
+New Program-step nr. 71 created and added to myStepList
 StmtIfElse
+New Program-step nr. 72 created and added to myStepList
+New Program-step nr. 73 created and added to myStepList
+New Program-step nr. 74 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 30.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 21 created and added to myActionList
+New Program-step nr. 75 created and added to myStepList
 StmtIfElse - finished processing ifstmtlist
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 31.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 22 created and added to myActionList
+New Program-step nr. 76 created and added to myStepList
 StmtIf
+New Program-step nr. 77 created and added to myStepList
+New Program-step nr. 78 created and added to myStepList
+New Program-step nr. 79 created and added to myStepList
 StmtAssign
-next: adding assignment to sap-list for action.
-next: creating new action with number 32.
-next: increasing actionCounter.
-next: adding new action to myActionlist.
-next: creating new step with actionlist.
+New Program-Action nr. 23 created and added to myActionList
+New Program-step nr. 80 created and added to myStepList
+New Program-step nr. 81 created and added to myStepList
 StmtIf - finished processing stmtlist
 StmtIfElse - finished processing elsestmtlist
+New Program-step nr. 82 created and added to myStepList
 StmtIf - finished processing stmtlist
 StmtWhile - finished processing stmtlist
+New Program-step nr. 83 created and added to myStepList
 StmtWhile - finished processing while
 StmtRepeat - finished processing stmtlist
+New Program-step nr. 84 created and added to myStepList
 StmtRepeat - finished processing repeat-until
 StmtWhile - finished processing stmtlist
+New Program-step nr. 85 created and added to myStepList
 StmtWhile - finished processing while
-StmtOutput
-StmtOutput - finished processing output
 Comment: nop
+New Program-step nr. 86 created and added to myStepList
 ParserTest: before getSFC
 ParserTest: before prettyPrinter.print
 [SFC] 
@@ -501,4 +462,1015 @@ ParserTest: before prettyPrinter.print
 |   [Step] 0
 |   [Step] 1
 |   [Step] 2
-ParserTest: java.lang.ClassCastException: slime.absynt.Action
+|   [Step] 3
+|   [Step] 4
+|   |   [StepAction] 
+|   |   |   0
+|   [Step] 5
+|   [Step] 6
+|   [Step] 7
+|   [Step] 8
+|   |   [StepAction] 
+|   |   |   1
+|   [Step] 9
+|   [Step] 10
+|   [Step] 11
+|   [Step] 12
+|   [Step] 13
+|   [Step] 14
+|   |   [StepAction] 
+|   |   |   2
+|   [Step] 15
+|   |   [StepAction] 
+|   |   |   3
+|   [Step] 16
+|   [Step] 17
+|   |   [StepAction] 
+|   |   |   4
+|   [Step] 18
+|   [Step] 19
+|   [Step] 20
+|   |   [StepAction] 
+|   |   |   5
+|   [Step] 21
+|   [Step] 22
+|   [Step] 23
+|   [Step] 24
+|   [Step] 25
+|   |   [StepAction] 
+|   |   |   6
+|   [Step] 26
+|   [Step] 27
+|   [Step] 28
+|   [Step] 29
+|   [Step] 30
+|   |   [StepAction] 
+|   |   |   7
+|   [Step] 31
+|   [Step] 32
+|   |   [StepAction] 
+|   |   |   8
+|   [Step] 33
+|   [Step] 34
+|   |   [StepAction] 
+|   |   |   9
+|   [Step] 35
+|   [Step] 36
+|   [Step] 37
+|   [Step] 38
+|   [Step] 39
+|   [Step] 40
+|   [Step] 41
+|   [Step] 42
+|   [Step] 43
+|   |   [StepAction] 
+|   |   |   10
+|   [Step] 44
+|   |   [StepAction] 
+|   |   |   11
+|   [Step] 45
+|   [Step] 46
+|   |   [StepAction] 
+|   |   |   12
+|   [Step] 47
+|   [Step] 48
+|   [Step] 49
+|   [Step] 50
+|   |   [StepAction] 
+|   |   |   13
+|   [Step] 51
+|   |   [StepAction] 
+|   |   |   14
+|   [Step] 52
+|   [Step] 53
+|   [Step] 54
+|   [Step] 55
+|   |   [StepAction] 
+|   |   |   15
+|   [Step] 56
+|   [Step] 57
+|   [Step] 58
+|   |   [StepAction] 
+|   |   |   16
+|   [Step] 59
+|   |   [StepAction] 
+|   |   |   17
+|   [Step] 60
+|   [Step] 61
+|   [Step] 62
+|   [Step] 63
+|   [Step] 64
+|   [Step] 65
+|   |   [StepAction] 
+|   |   |   18
+|   [Step] 66
+|   [Step] 67
+|   |   [StepAction] 
+|   |   |   19
+|   [Step] 68
+|   [Step] 69
+|   [Step] 70
+|   [Step] 71
+|   |   [StepAction] 
+|   |   |   20
+|   [Step] 72
+|   [Step] 73
+|   [Step] 74
+|   [Step] 75
+|   |   [StepAction] 
+|   |   |   21
+|   [Step] 76
+|   |   [StepAction] 
+|   |   |   22
+|   [Step] 77
+|   [Step] 78
+|   [Step] 79
+|   [Step] 80
+|   |   [StepAction] 
+|   |   |   23
+|   [Step] 81
+|   [Step] 82
+|   [Step] 83
+|   [Step] 84
+|   [Step] 85
+|   [Step] 86
+[TransitionList] 
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 0
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 1
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 1
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 2
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 2
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 3
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 3
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 4
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 4
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 5
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 5
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 6
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 5
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 7
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 7
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 8
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 6
+|   |   |   [Step] 8
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 9
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 9
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 10
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 10
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 11
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 10
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 12
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 12
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 13
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 13
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 14
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 14
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 15
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 11
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 16
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 16
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 17
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 15
+|   |   |   [Step] 17
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 18
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 18
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 19
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 19
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 20
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 20
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] z
+|   |   |   |   <GREATER> 
+|   |   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 19
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 20
+|   |   [B_expr] 
+|   |   |   [Variable] z
+|   |   |   <GREATER> 
+|   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 21
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 21
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 22
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 22
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 23
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 22
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 24
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 24
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 25
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 25
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 26
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 23
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 27
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 27
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 28
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 28
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 29
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 29
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 30
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 30
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] z
+|   |   |   |   <GREATER> 
+|   |   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 29
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 30
+|   |   [B_expr] 
+|   |   |   [Variable] z
+|   |   |   <GREATER> 
+|   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 31
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 31
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 32
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 32
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] z
+|   |   |   |   <GREATER> 
+|   |   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 28
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 32
+|   |   [B_expr] 
+|   |   |   [Variable] z
+|   |   |   <GREATER> 
+|   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 33
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 33
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 34
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 34
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] z
+|   |   |   |   <GREATER> 
+|   |   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 27
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 34
+|   |   [B_expr] 
+|   |   |   [Variable] z
+|   |   |   <GREATER> 
+|   |   |   [Constval] 32
+|   |   [TargetSteps] 
+|   |   |   [Step] 35
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 35
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 36
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 36
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 37
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 36
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 38
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 38
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 39
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 39
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 40
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 39
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 41
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 41
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 42
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 42
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 43
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 43
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 44
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 40
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 45
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 45
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 46
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 46
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 47
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 47
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] test
+|   |   |   |   |   <EQ> 
+|   |   |   |   |   [Constval] 4
+|   |   |   |   <AND> 
+|   |   |   |   [U_Expr] 
+|   |   |   |   |   <NEG>
+|   |   |   |   |   [Constval] false
+|   |   [TargetSteps] 
+|   |   |   [Step] 48
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 47
+|   |   [B_expr] 
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] test
+|   |   |   |   <EQ> 
+|   |   |   |   [Constval] 4
+|   |   |   <AND> 
+|   |   |   [U_Expr] 
+|   |   |   |   <NEG>
+|   |   |   |   [Constval] false
+|   |   [TargetSteps] 
+|   |   |   [Step] 49
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 49
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 50
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 48
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 51
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 50
+|   |   |   [Step] 51
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 52
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 44
+|   |   |   [Step] 52
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 53
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 37
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 54
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 54
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 55
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 55
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 56
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 56
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 57
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 57
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 58
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 58
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 59
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 59
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Constval] false
+|   |   |   |   <OR> 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <GREATER> 
+|   |   |   |   |   [Constval] 999999999
+|   |   [TargetSteps] 
+|   |   |   [Step] 56
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 59
+|   |   [B_expr] 
+|   |   |   [Constval] false
+|   |   |   <OR> 
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] y
+|   |   |   |   <GREATER> 
+|   |   |   |   [Constval] 999999999
+|   |   [TargetSteps] 
+|   |   |   [Step] 60
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 53
+|   |   |   [Step] 60
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 61
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 61
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 62
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 62
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 63
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 62
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 64
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 64
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 65
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 65
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 66
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 66
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 67
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 67
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 68
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 68
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] y
+|   |   |   |   <LESS> 
+|   |   |   |   [Constval] 1000
+|   |   [TargetSteps] 
+|   |   |   [Step] 69
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 68
+|   |   [B_expr] 
+|   |   |   [Variable] y
+|   |   |   <LESS> 
+|   |   |   [Constval] 1000
+|   |   [TargetSteps] 
+|   |   |   [Step] 70
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 70
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 71
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 71
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 72
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 72
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] y
+|   |   |   |   <GREATER> 
+|   |   |   |   [Constval] 500
+|   |   [TargetSteps] 
+|   |   |   [Step] 73
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 72
+|   |   [B_expr] 
+|   |   |   [Variable] y
+|   |   |   <GREATER> 
+|   |   |   [Constval] 500
+|   |   [TargetSteps] 
+|   |   |   [Step] 74
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 74
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 75
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 73
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 76
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 76
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 77
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 77
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] y
+|   |   |   |   <EQ> 
+|   |   |   |   [Constval] 499
+|   |   [TargetSteps] 
+|   |   |   [Step] 78
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 77
+|   |   [B_expr] 
+|   |   |   [Variable] y
+|   |   |   <EQ> 
+|   |   |   [Constval] 499
+|   |   [TargetSteps] 
+|   |   |   [Step] 79
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 79
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 80
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 78
+|   |   |   [Step] 80
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 81
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 75
+|   |   |   [Step] 81
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 82
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 82
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 83
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 69
+|   |   [U_Expr] 
+|   |   |   <NEG>
+|   |   |   [B_expr] 
+|   |   |   |   [Constval] false
+|   |   |   |   <OR> 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <GREATER> 
+|   |   |   |   |   [Constval] 1000
+|   |   [TargetSteps] 
+|   |   |   [Step] 66
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 69
+|   |   [B_expr] 
+|   |   |   [Constval] false
+|   |   |   <OR> 
+|   |   |   [B_expr] 
+|   |   |   |   [Variable] y
+|   |   |   |   <GREATER> 
+|   |   |   |   [Constval] 1000
+|   |   [TargetSteps] 
+|   |   |   [Step] 84
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 84
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 85
+|   [Transition] 
+|   |   [SourceSteps]
+|   |   |   [Step] 63
+|   |   [Constval] true
+|   |   [TargetSteps] 
+|   |   |   [Step] 86
+[ActionList] 
+|   [Action] 0
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [Constval] 5
+|   [Action] 1
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] z
+|   |   |   |   [Constval] 1
+|   [Action] 2
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] z
+|   |   |   |   [Constval] 6
+|   [Action] 3
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <DIV> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 4
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] test
+|   |   |   |   [Constval] 4
+|   [Action] 5
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] z
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 6
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [Constval] 1
+|   [Action] 7
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] z
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 8
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] z
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 9
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] z
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 10
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] z
+|   |   |   |   [Constval] 6
+|   [Action] 11
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <DIV> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 12
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] test
+|   |   |   |   [Constval] 4
+|   [Action] 13
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] test
+|   |   |   |   [Constval] 1
+|   [Action] 14
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] test
+|   |   |   |   [Constval] 8
+|   [Action] 15
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] test
+|   |   |   |   [Constval] 4
+|   [Action] 16
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] x
+|   |   |   |   [Constval] 9999999
+|   [Action] 17
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Variable] x
+|   [Action] 18
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [Constval] 1
+|   [Action] 19
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <PLUS> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 20
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <MINUS> 
+|   |   |   |   |   [Constval] 1
+|   [Action] 21
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <PLUS> 
+|   |   |   |   |   [Constval] 1
+|   [Action] 22
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <PLUS> 
+|   |   |   |   |   [Constval] 2
+|   [Action] 23
+|   |   [StmtList] 
+|   |   |   [Stmt] 
+|   |   |   [Assign] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] y
+|   |   |   |   |   <MINUS> 
+|   |   |   |   |   [Constval] 200
+[DeclarationList] 
+|   [Declaration] 
+|   |   [Variable] y
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] z
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] z
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] test
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] z
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] test
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] test
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] x
+|   |   [IntType] 

@@ -15,11 +15,17 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.13 2002-07-02 15:23:49 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.14 2002-07-03 16:50:09 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2002/07/02 15:23:49  swprakt
+ * you may look at example.procs.sfc and the output
+ * output.procs.txt for an idea what i am doing
+ * currently. The naming scheme for steps and actions has to
+ * be improved... (mwe)
+ *
  * Revision 1.12  2002/07/02 13:09:53  swprakt
  * "example.sfc" contains some constructs possible in this
  * sfc-language. output.txt is the output of
@@ -318,12 +324,12 @@ parser code {:
 */
 
 /** 
- * <b> parseFile </b>
+ * <b> parseFileToSFCabtree </b>
  * @param java.io.File sourcefile - file to parse
- * @return abstract syntax tree with slime.absynt.sfc as root
+ * @return abstract syntax tree with slime.absynt.absfc.SFCabtree as root
  * @throws SFCParseException <b> if something goes wrong</b>
  **/
-    public slime.absynt.absfc.SFCabtree parseFile(java.io.File sfcfile) throws Exception { // slime.sfcparser.SFCParseException {
+    public slime.absynt.absfc.SFCabtree parseFileToSFCabtree(java.io.File sfcfile) throws Exception { // slime.sfcparser.SFCParseException {
 	boolean doDebugParse = true;
 	FileInputStream FIS = null;
 	// Process of parsing a file:
@@ -352,6 +358,54 @@ parser code {:
 	    FIS.close();
 	} // end of try-catch
 	return sfc2;      
+    } // end of parseFileToSFCabtree
+
+/** 
+ * <b> parseFile </b>
+ * @param java.io.File sourcefile - file to parse
+ * @return abstract syntax tree with slime.absynt.sfc as root
+ * @throws SFCParseException <b> if something goes wrong</b>
+ **/
+    public slime.absynt.SFC parseFile(java.io.File sfcfile) throws Exception { // slime.sfcparser.SFCParseException {
+	boolean doDebugParse = true;
+	FileInputStream FIS = null;
+	// Process of parsing a file:
+	// create a parsing object
+	// SFCParser mySFCParserObj = new SFCParser();
+	// open input files, etc. here
+	// Symbol myParseTree = null;
+  
+	// Initialize the Abstract Syntax Tree for the Sequential Function Chart
+	slime.absynt.absfc.SFCabtree sfc2 = null;
+	slime.sfcparser.Absfc2SFCConverter  theConverter = null;
+	slime.absynt.SFC theSFC = null;
+
+	try {
+	    FIS = new FileInputStream( sfcfile );
+	    lexer   = new SFCLex( FIS );
+	    setScanner( lexer );
+	    if (doDebugParse) {
+		sfc2 = (slime.absynt.absfc.SFCabtree)parse().value;
+	    } else {
+		sfc2 = (slime.absynt.absfc.SFCabtree)parse().value; 
+	    } // end of if-doDebugParse
+	    
+	    // make the converting from SFCabtree to SFC begin
+	    theConverter = new slime.sfcparser.Absfc2SFCConverter( sfc2 );
+
+	    // get the generated SFC
+	    theSFC = theConverter.getSFC();
+
+	} catch (IOException ioe) {
+	  throw ioe;
+	} catch (Exception e) {
+	    throw e;
+	} finally {
+	    FIS.close();
+	} // end of try-catch
+
+	// return the generated SFC
+	return theSFC;      
     } // end of parseFile
 
 
@@ -646,6 +700,15 @@ stmtdummy ::=	COMMENT:c
                 {: 
 		   RESULT = new slime.absynt.absfc.Comment("nop"); 
 		 :}
+            |   DOT DOT DOT
+                {: 
+		   RESULT = new slime.absynt.absfc.Comment("..."); 
+		 :}
+            |   HASH
+                {: 
+		   RESULT = new slime.absynt.absfc.Comment("#"); 
+		 :}
+
 ;
 
 /** ASSIGNMENT ----------------------------------------------- **/

@@ -36,6 +36,7 @@ process p3 {
 
 join ( p1 , p2 , p3 );
 
-output( z, z );
+// look at example.sfc - output is currently not supported
+// output( z, z );
 
 } // end of SFC testprog

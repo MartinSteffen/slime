@@ -4,11 +4,18 @@
  * converts a given {@link slime.absfc.SFCabtree} to<br>
  * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.8 2002-07-02 19:26:48 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.9 2002-07-03 16:50:08 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2002/07/02 19:26:48  swprakt
+ * Now supporting StepActions, but the PrettyPrint.java
+ * fails at Action... Tomorrow we will have a chart
+ * expaining why to use such a construct as ActionQualifier
+ * and StepAction and Action and ...
+ * (mwe)
+ *
  * Revision 1.7  2002/07/02 15:23:49  swprakt
  * you may look at example.procs.sfc and the output
  * output.procs.txt for an idea what i am doing
@@ -59,7 +66,7 @@
 package slime.sfcparser; // absynt.absfc;
 import java.util.LinkedList;
 import java.util.Iterator;
-// import java.util.Stack;
+// import java.util.Stack; for someone who wants to enhance slime (supporting functions)
 import java.lang.String;
 import java.io.FileOutputStream;
 
@@ -89,12 +96,16 @@ public class Absfc2SFCConverter {
     private slime.absynt.SFC theSFC = null;
     /** global LinkedList's for the SFC Program	-
 	they stay the same for a single SFC */
-    protected LinkedList myStepList;
-    protected LinkedList myDeclarationList;
-    protected LinkedList myTransitionList;
-    protected LinkedList myActionList;
-    protected LinkedList myProcessList;
-    protected slime.absynt.Step myIStep;
+    private LinkedList myStepList;
+    private LinkedList myDeclarationList;
+    private LinkedList myTransitionList;
+    private LinkedList myActionList;
+    private LinkedList myProcessList;
+    private slime.absynt.Step myIStep;
+    /** switch whether output should be shown or redirected to outputfilename */
+    public boolean viewOutputOnStdOut = true;
+    /** used for output if viewOutputOnStdOut is false */
+    public String outputfilename = "sfc2dbgout.txt";
     // --------------------------------------------------------------------
 
 
@@ -114,8 +125,7 @@ public class Absfc2SFCConverter {
      *  new slime.absynt.absfc.Absfc2SFCConverter( theInputAbsfc );<br>
      * myWantedSFC = theConverter.getSFC();<br>
      * <br>
-     * </code>
-     *
+     * </code><br>
      * @author initially provided by Marco Wendel<br>
      * @version 1.1 should be running good<br>
      * @param slime.absynt.absfc.SFCabtree SFC2 the input meta-tree to convert<br>
@@ -152,6 +162,27 @@ public class Absfc2SFCConverter {
 
     // --------------------------------------------------------------------
     /**
+     * <b>cleanProcessCounters</b>
+     * sets all process-internal counters to zero.<br>
+     * The counters are mainly used for naming steps and actions,<br>
+     * but you may also use them for creating statistics.<br> 
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     **/
+    private void clearProcessCounters() {
+	procStepCounter        = 0;
+	procTransitionCounter  = 0;
+	procStatementCounter   = 0;
+	procDeclarationCounter = 0;
+	procActionCounter      = 0;
+	procProcessCounter     = 0;
+    } // end cleanProcessCounters
+    // --------------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------------
+    /**
      * <b>convertTree</b>
      * runs 2 phases on the given SFCabtree:<br>
      * 1. gather all processes and write their steps/transitions - their <br>
@@ -171,21 +202,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.absfc.SFCabtree srctree the input meta-tree to convert<br>
      * @return slime.absynt.SFC the generated slime.absynt.SFC tree.<br>
      **/
-    protected slime.absynt.SFC convertTree( slime.absynt.absfc.SFCabtree srctree) {
-	// have to be set here! if set in initialize SFC, convertion does
-	// stuck, because myProcessList is cleaned...
-	// if some time is left  we will have to methods:
-	// initializeSFC() and cleanSFC()
-	processCounter         = 0;
-	runNr                  = 0;
-	procStepCounter        = 0;
-	procTransitionCounter  = 0;
-	procStatementCounter   = 0;
-	procDeclarationCounter = 0;
-	procActionCounter      = 0;
-	procProcessCounter     = 0;
-	myProcessList	  = new LinkedList();
-
+    private slime.absynt.SFC convertTree( slime.absynt.absfc.SFCabtree srctree) {
 	String sfcname = (String) srctree.sfcprogname;
 	LinkedList s = (LinkedList) srctree.stmtlist;
 	LinkedList p = (LinkedList) srctree.proclist;
@@ -195,38 +212,31 @@ public class Absfc2SFCConverter {
 	int pC = srctree.procCnt = 0;
 	int vC = srctree.varCnt  = 0;
 	int dC = srctree.decCnt  = 0;
+	/** clean the process counters and the internal myProcessList */
+	clearProcessCounters();
+	processCounter         = 0;
+	runNr                  = 0;
+	myProcessList	       = new LinkedList();
 	/** link end of init SFC to begin of program */
 	slime.absynt.Step beginProgramStep = initializeSFC();
 	slime.absynt.Step nextStmtStartStep = beginProgramStep;
+	//*******************************************************************************
 	/** COLLECT ALL PROCESS-INFORMATION */
 	curInProc    = false;
 	collectProcs = true; 
-	/** iterate over all first-level-statements 
-	for (Iterator i = s.iterator(); i.hasNext();) {
-	    slime.absynt.absfc.Absfc currentStatement = 
-		(slime.absynt.absfc.Absfc) i.next();
-	    dbgOut( 2, "gathering processes - firstlevelstatement : " + currentStatement.nodetype ); 
-	    nextStmtStartStep = processStatementList( currentStatement, nextStmtStartStep );
-	} // end of for-i
-	*/
 	nextStmtStartStep = processStatementList( s, nextStmtStartStep );
+	//*******************************************************************************
 	/** NOW DO THE REAL RUN */
 	curInProc    = false;
 	collectProcs = false; 
 	/** reinitialize the SFC and all lists. this is  possible,
 	    because all processinformation is held within the SFC2 **/
+	myStepList.clear();
+	myTransitionList.clear();
+	myDeclarationList.clear();
+	myActionList.clear();
 	beginProgramStep = initializeSFC(); 
 	nextStmtStartStep = beginProgramStep;
-	/** iterate over all first-level-statements 
-	for (Iterator i = s.iterator(); i.hasNext();) {
-	    sC++; // increase firstlevel statementCounter
-	    slime.absynt.absfc.Absfc currentStatement = 
-		(slime.absynt.absfc.Absfc) i.next();
-	    dbgOut( 2, "firstlevelstatement nr. " + sC +
-		       " : " + currentStatement.nodetype ); 
-	    nextStmtStartStep = processStatementList( currentStatement, nextStmtStartStep );
-	} // end of for-i
-	*/
 	nextStmtStartStep = processStatementList( s, nextStmtStartStep );
 	/** last Step returned is the last step of the whole program */
 	slime.absynt.Step endProgramStep = nextStmtStartStep;
@@ -253,7 +263,7 @@ public class Absfc2SFCConverter {
      * @param <br>
      * @return slime.absynt.Step the latest step<br>
      **/
-    protected slime.absynt.Step initializeSFC(){
+    private slime.absynt.Step initializeSFC(){
 	/** initialize counters */
 	stepCounter       = 0;
 	transitionCounter = 0;
@@ -282,10 +292,7 @@ public class Absfc2SFCConverter {
 	// targetStepList.clear(); /** empty targetStepList */
 	targetStepList.addFirst( targetStep ); /** add step nr. 0 to sourceStepList */
 	slime.absynt.Transition transition = 
-	    new slime.absynt.Transition( 
-		sourceStepList,
-		trueGuard, 
-		targetStepList 
+	    new slime.absynt.Transition( sourceStepList, (slime.absynt.Expr)trueGuard, targetStepList 
 		); /** create transition nr. 0 */
 	transitionCounter++; /** increase transitionCounter */
 	// myTransitionList.clear();/** clear transitionList */
@@ -306,7 +313,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step startStep is the step to begin the first stmt with<br>
      * @return java.util.LinkedList - containing the counters<br>
      */
-    protected slime.absynt.Step processStatementList( 
+    private slime.absynt.Step processStatementList( 
 	java.util.LinkedList theStatementList, 
 	slime.absynt.Step startStep 
 	) {
@@ -314,9 +321,17 @@ public class Absfc2SFCConverter {
 	int procCnt = 0; /** Counter for processes */
 	int variCnt = 0; /** Counter for variables */
 	int declCnt = 0; /** Counter for declarations */
+	int wloopCnt = 0; /** Counter for whileloops */
+	int rloopCnt = 0; /** Counter for repeatloops */
+	/** you might want to save counters in the absfc structures... */
+	/** step returned by the process<Stmttype> methods for chaining
+	    the steps and transitions together */
         slime.absynt.Step returnedStep = new slime.absynt.Step("a step that will be returned");
+	/** step given as parameter for the process<Stmttype> methods for chaining
+	    the steps and transistions together */
 	slime.absynt.Step nextStmtStartStep = (slime.absynt.Step)startStep;
 	for (Iterator listIterator = theStatementList.iterator(); listIterator.hasNext();) {
+	    stmtCnt++;
 	    statementCounter++; // increase statementCounter
 	    slime.absynt.absfc.Absfc currentStatement =
 		(slime.absynt.absfc.Absfc) listIterator.next();
@@ -334,8 +349,11 @@ public class Absfc2SFCConverter {
 		    } else if ( currentStatement instanceof slime.absynt.absfc.StmtRepeat) {
                         returnedStep = processRepeat( (Object)currentStatement , nextStmtStartStep );
 		    } else if ( currentStatement instanceof slime.absynt.absfc.StmtAssign) {
+			variCnt++;
                         returnedStep = processAssign( (Object)currentStatement , nextStmtStartStep );
                     } else if ( currentStatement instanceof slime.absynt.absfc.StmtDecl) {
+			variCnt++;
+			declCnt++;
                         returnedStep = processDecl( (Object)currentStatement , nextStmtStartStep );
                     } else if ( currentStatement instanceof slime.absynt.absfc.StmtSplit) {
                         returnedStep = processSplit( (Object)currentStatement , nextStmtStartStep );
@@ -346,6 +364,7 @@ public class Absfc2SFCConverter {
                     } else if ( currentStatement instanceof slime.absynt.absfc.StmtOutput) {
                         returnedStep = processOutput( (Object)currentStatement , nextStmtStartStep );
 		    } else if ( currentStatement instanceof slime.absynt.absfc.Process) {
+			procCnt++;
                         returnedStep = processProcess( (Object)currentStatement , nextStmtStartStep );
 		    } else if ( currentStatement instanceof slime.absynt.absfc.Comment) {
                         returnedStep = processComment( (Object)currentStatement , nextStmtStartStep );
@@ -378,9 +397,7 @@ public class Absfc2SFCConverter {
      * @param java.lang.String outputString - the debug string to be displayed<br>
      * @return void<br>
      **/
-    protected void dbgOut(int lineFlag, java.lang.String outputString) {
-	boolean viewOutputOnStdOut = true;
-	String outputfilename = "sfc2dbgout.txt";
+    private void dbgOut(int lineFlag, java.lang.String outputString) {
 	if (viewOutputOnStdOut) {
 	    if (lineFlag==0) { /** simple printline */
 		System.out.println( outputString );
@@ -392,6 +409,8 @@ public class Absfc2SFCConverter {
 	    } // end of if-lineFlag
 	} else {
 	    // show nothing - insert your stringwriter here ...
+	    // currently using the two global+public variables
+	    // viewOutputOnStdOut & outputfilename
 	    try {
 		FileOutputStream fos = new FileOutputStream( outputfilename );
 		fos.write( outputString.getBytes() );
@@ -416,12 +435,12 @@ public class Absfc2SFCConverter {
      * @param String stepName - Name of step to search for<br>
      * @return slime.absynt.Step - the step with the name given by parameter<br>
      **/
-    protected slime.absynt.Step getStepByName(String stepName) {
+    private slime.absynt.Step getStepByName(String stepName) {
 	slime.absynt.Step aStep = null;
 	for (Iterator i = myStepList.iterator(); i.hasNext();) {
 	    slime.absynt.Step currentStep = 
 		(slime.absynt.Step) i.next();
-	    if ( stepName.equals( currentStep.name ) ) {
+	    if ( stepName.equals( (String)currentStep.name ) ) {
 		aStep = currentStep;
 	    } // end if-stepName.equals
 	} // end of for-i
@@ -444,12 +463,12 @@ public class Absfc2SFCConverter {
      * @param String variableName - Name of variable to search for<br>
      * @return slime.absynt.Variable - the variable with the name given by parameter<br>
      **/
-    protected slime.absynt.Variable getVariableByName(String variableName) {
+    private slime.absynt.Variable getVariableByName(String variableName) {
 	slime.absynt.Variable aVariable = null;
 	for (Iterator i = myDeclarationList.iterator(); i.hasNext();) {
 	    slime.absynt.Declaration currentDeclaration =
 		(slime.absynt.Declaration) i.next();
-	    if ( variableName.equals( currentDeclaration.var.name ) ) {
+	    if ( variableName.equals( (String)currentDeclaration.var.name ) ) {
 		aVariable = currentDeclaration.var;
 	    } // end if-variableName.equals
 	} // end of for-i
@@ -472,7 +491,7 @@ public class Absfc2SFCConverter {
      * @param String processName - Name of process to search for<br>
      * @return slime.absynt.absfc.Process - the process with the name given by parameter<br>
      **/
-    protected slime.absynt.absfc.Process getProcessByName(String processName) {
+    private slime.absynt.absfc.Process getProcessByName(String processName) {
 	slime.absynt.absfc.Process aProcess = null;
 	for (Iterator i = myProcessList.iterator(); i.hasNext();) {
 	    slime.absynt.absfc.Process currentProcess =
@@ -489,32 +508,78 @@ public class Absfc2SFCConverter {
 
 
 
-
     // --------------------------------------------------------------------
     /**
      * <b>newStep</b><br>
-     * creates a new {@link slime.absynt.Step} <br>
-     * and adds it to {@link slime.sfcparser.Absfc2SFCConverter.myStepList} <br>
+     * creates a new @see slime.absynt.Step <br>
+     * and adds it to @see slime.sfcparser.Absfc2SFCConverter.myStepList <br>
      * @author initially provided by Marco Wendel<br>
      * @version 1.0<br>
      * @return slime.absynt.Step the new step.<br>
      **/
-    public slime.absynt.Step newStep() {
+    private slime.absynt.Step newStep() {
 	slime.absynt.Step out = null;
 	if (curInProc && collectProcs) {
-	    out = new slime.absynt.Step( "p-"+((new Integer(processCounter)).toString())+
-					  "-"+((new Integer(procStepCounter)).toString()) );
+	    out = new slime.absynt.Step(
+		"p-"+((new Integer(processCounter)).toString())+
+		"-"+((new Integer(procStepCounter)).toString()) );
+	    dbgOut(0,"New Process-step nr. p-" 
+		   + processCounter + "-" 
+		   + procStepCounter 
+		   + " created and added to myStepList");
 	    procStepCounter++;
-	    dbgOut(0,"New Process-step nr. " + (procStepCounter-1) + " created and added to myStepList");
 	} else {
-	    out = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
+	    out = new slime.absynt.Step( 
+		(new Integer(stepCounter)).toString() );
+	    dbgOut(0,"New Program-step nr. " 
+		   + stepCounter 
+		   + " created and added to myStepList");
 	    stepCounter++;
-	dbgOut(0,"New Program-step nr. " + (stepCounter-1) + " created and added to myStepList");
-	}
+	} // end if-curInProc&&collectProcs
 	myStepList.add( out );
 	return out;
     } // end of newStep
     // --------------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------------
+    /**
+     * <b>newStep</b><br>
+     * creates a new @see slime.absynt.Step using the provided stepactionlist<br>
+     * and adds it to @see slime.sfcparser.Absfc2SFCConverter.myStepList <br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     * @param java.util.LinkedList stepactionlist contains the actions for the generated step.<br>
+     * @return slime.absynt.Step the new step.<br>
+     **/
+    private slime.absynt.Step newStep(LinkedList stepactionlist) {
+	slime.absynt.Step out = null;
+	if (curInProc && collectProcs) {
+	    out = new slime.absynt.Step(
+		"p-"+((new Integer(processCounter)).toString())+
+		"-"+((new Integer(procStepCounter)).toString()),
+		stepactionlist );
+	    dbgOut(0,"New Process-step nr. p-" 
+		   + processCounter + "-" 
+		   + procStepCounter 
+		   + " created and added to myStepList");
+	    procStepCounter++;
+	} else {
+	    out = new slime.absynt.Step( 
+		(new Integer(stepCounter)).toString(),
+		stepactionlist);
+	    dbgOut(0,"New Program-step nr. " 
+		   + stepCounter 
+		   + " created and added to myStepList");
+	    stepCounter++;
+	} // end if-curInProc&&collectProcs
+	myStepList.add( out );
+	return out;
+    } // end of newStep
+    // --------------------------------------------------------------------
+
+
 
     // --------------------------------------------------------------------
     /**
@@ -526,22 +591,31 @@ public class Absfc2SFCConverter {
      * @param LinkedList inlist contains the statements to use for the returned action
      * @return slime.absynt.Action the new action.<br>
      **/
-    public slime.absynt.Action newAction( LinkedList inlist ) {
+    private slime.absynt.Action newAction( LinkedList sap_inlist ) {
 	slime.absynt.Action out = null;
 	if (curInProc && collectProcs) {
-	    out = new slime.absynt.Action(  "p-"+((new Integer(processCounter)).toString())+
-					    ((new Integer(procActionCounter)).toString()), inlist );
+	    out = new slime.absynt.Action( 
+		"p-"+((new Integer(processCounter)).toString())+
+		((new Integer(procActionCounter)).toString()), sap_inlist );
+	    dbgOut(0,"New Process-Action nr. p-" 
+		   + processCounter + "-"
+		   + procActionCounter 
+		   + " created and added to myActionList");
 	    procActionCounter++;
-	    dbgOut(0,"New Process-Action nr. " + (procActionCounter-1) + " created and added to myActionList");
 	} else {
-	    out = new slime.absynt.Action( (new Integer(actionCounter)).toString(), inlist );
+	    out = new slime.absynt.Action( 
+		(new Integer(actionCounter)).toString(), sap_inlist );
+	    dbgOut(0,"New Program-Action nr. " 
+		   + actionCounter 
+		   + " created and added to myActionList");
 	    actionCounter++;
-	    dbgOut(0,"New Program-Action nr. " + (actionCounter-1) + " created and added to myActionList");
-	}
+	} // end if-curInProc&&collectProcs
 	myActionList.add( out );
 	return out;
     } // end of newAction
     // --------------------------------------------------------------------
+
+
 
     // --------------------------------------------------------------------
     /**
@@ -553,13 +627,82 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Action actionToUse action from which the name is taken for the stepaction.<br>
      * @return slime.absynt.StepAction the new StepAction.<br>
      **/
-    public slime.absynt.StepAction newStepAction( slime.absynt.Action actionToUse ) {
+    private slime.absynt.StepAction newStepAction( slime.absynt.Action actionToUse ) {
 	slime.absynt.StepAction out = null;
-	slime.absynt.ActionQualifier auaq = new slime.absynt.Nqual();
+	slime.absynt.ActionQualifier auaq = getActionQualifier(0); // new slime.absynt.Nqual();
 	String nameToPutInStepAction = actionToUse.a_name;
 	out = new slime.absynt.StepAction( auaq, nameToPutInStepAction );
 	return out;
     } // end of newStepAction
+    // --------------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------------
+    /**
+     * <b>getActionQualifier</b><br>
+     * returns a @see slime.absynt.ActionQualifier <br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     * @param int qualifiertype determines the type of the ActionQualifier
+     * @return slime.absynt.ActionQualifier depends on qualifiertype<br>
+     **/
+    private slime.absynt.ActionQualifier getActionQualifier( int qualifiertype ) {
+	switch (qualifiertype) {
+	    case 0 : return (new slime.absynt.Nqual()); 
+	    case 1 : return (new slime.absynt.Nqual()); 
+	    case 2 : return (new slime.absynt.Nqual()); 
+	    case 3 : return (new slime.absynt.Nqual()); 
+	    default : return (new slime.absynt.Nqual());
+	} // end switch-qualifiertype
+    } // end getActionQualifier
+    // --------------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------------
+    /**
+     * <b>newTransition</b><br>
+     * creates a new @see slime.absynt.Transition <br>
+     * and adds it to @see slime.sfcparser.Absfc2SFCConverter.myTransitionList.<br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     * @param LinkedList ssl <br>
+     * @param slime.absynt.Expr tg <br>
+     * @param LinkedList tsl <br>
+     **/
+    private void newTransition( LinkedList ssl, slime.absynt.Expr tg, LinkedList tsl ) {
+	slime.absynt.Transition out = new slime.absynt.Transition( ssl, tg, tsl );
+	transitionCounter++;
+	myTransitionList.add( out );
+	// return out;
+    } // end of newTransitionn
+    // --------------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------------
+    /**
+     * <b>newTransition</b><br>
+     * creates a new @see slime.absynt.Transition <br>
+     * and adds it to @see slime.sfcparser.Absfc2SFCConverter.myTransitionList.<br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     * @param slime.absynt.Step ss <br>
+     * @param slime.absynt.Expr tg <br>
+     * @param slime.absynt.Step ts <br>
+     * @return void<br>
+     **/
+    private void newTransition( slime.absynt.Step ss, slime.absynt.Expr tg, slime.absynt.Step ts ) {
+	LinkedList              sourceStepList   = new LinkedList();
+	LinkedList              targetStepList   = new LinkedList();
+	sourceStepList.add( ss );
+	targetStepList.add( ts );
+	slime.absynt.Transition out = new slime.absynt.Transition( sourceStepList, tg, targetStepList );
+	transitionCounter++;
+	myTransitionList.add( out );
+	// return out;
+    } // end of newTransitionn
     // --------------------------------------------------------------------
 
 
@@ -577,7 +720,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processAssign( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processAssign( Object curStmt, slime.absynt.Step lastStartStep ) {
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtAssign" );
 	    slime.absynt.absfc.StmtAssign tmpNode =
@@ -589,10 +732,7 @@ public class Absfc2SFCConverter {
 	    LinkedList              actionlist       = new LinkedList();
 	    LinkedList              outeractionlist  = new LinkedList();
 	    slime.absynt.Step       sourceStep       = null;            
-	    LinkedList              sourceStepList   = new LinkedList();
 	    slime.absynt.Step       targetStep       = null;            
-	    LinkedList              targetStepList   = new LinkedList();
-	    slime.absynt.Transition transition       = null;
 	    slime.absynt.StepAction stepaction       = null;
 	    /** add Assignment to actionlist */
 	    actionlist.add( lass ); 
@@ -601,25 +741,10 @@ public class Absfc2SFCConverter {
 	    stepaction = newStepAction( lact );
 	    outeractionlist.add( stepaction );
 	    /** create new targetstep */
-	    if (curInProc && collectProcs) {
-		targetStep = new slime.absynt.Step( (new Integer(procStepCounter)).toString(), outeractionlist );
-		procStepCounter++;
-	    } else {
-		targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-		stepCounter++;
-	    }
-	    myStepList.add( targetStep );	    
+	    targetStep = newStep( outeractionlist );
 	    /** sourcestep is the end step from the previous statement */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    /** clear already empty sourcesteplist */
-	    sourceStepList.clear();
-	    /** add old end step to sourcesteplist */
-	    sourceStepList.add( sourceStep );
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    return targetStep;
 	} else { /** currently collecting processes, 
 		     but this statement is not within a process,
@@ -644,7 +769,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processDecl( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processDecl( Object curStmt, slime.absynt.Step lastStartStep ) {
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtDecl" );
 	    slime.absynt.absfc.StmtDecl tmpNode =
@@ -654,10 +779,7 @@ public class Absfc2SFCConverter {
 	    slime.absynt.Expr        lexp            = tmpNode.expr;
 	    slime.absynt.Declaration ldecl           = null; 
 	    slime.absynt.Step        sourceStep      = null;            
-	    LinkedList               sourceStepList  = new LinkedList();
 	    slime.absynt.Step        targetStep      = null;            
-	    LinkedList               targetStepList  = new LinkedList();
-	    slime.absynt.Transition  transition      = null;
 	    LinkedList               actionlist      = new LinkedList();
 	    LinkedList               outeractionlist = new LinkedList();
 	    slime.absynt.Action      lact            = null;
@@ -666,28 +788,9 @@ public class Absfc2SFCConverter {
 	    ldecl = new slime.absynt.Declaration( lvar, ltyp, lconsv );
 	    declarationCounter++; // increase declarationCounter
 	    myDeclarationList.add( ldecl );
-	    actionlist.add( ldecl ); // add Declaration to actionlist
-	    lact = newAction( actionlist );
-	    stepaction = newStepAction( lact );
-	    outeractionlist.add( stepaction );
-	    /** create new targetstep */
-	    if (curInProc && collectProcs) {
-		targetStep = new slime.absynt.Step( (new Integer(procStepCounter)).toString(), outeractionlist );
-		procStepCounter++;
-	    } else {
-		targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-		stepCounter++;
-	    }
+	    targetStep = newStep();
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
-	    myStepList.add( targetStep );
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition(
-		sourceStepList, trueGuard, targetStepList ); // create transition
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    dbgOut( 2 , "StmtDecl - finished processing declaration" );
 	    return targetStep;
 	} else { /** currently collecting processes, 
@@ -713,7 +816,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processInput( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processInput( Object curStmt, slime.absynt.Step lastStartStep ) {
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtInput" );
 	    slime.absynt.absfc.StmtInput tmpNode =
@@ -722,10 +825,7 @@ public class Absfc2SFCConverter {
 	    slime.absynt.Expr       lexp           = tmpNode.val;
 	    slime.absynt.InputAction linp  = new slime.absynt.InputAction( "input", lvar, lexp ); /* HAS TO BE CREATED */
 	    slime.absynt.Step       sourceStep     = null;            
-	    LinkedList              sourceStepList = new LinkedList();
 	    slime.absynt.Step       targetStep     = null;            
-	    LinkedList              targetStepList = new LinkedList();
-	    slime.absynt.Transition transition     = null;
 	    LinkedList              actionlist     = new LinkedList();
 	    LinkedList              outeractionlist= new LinkedList();
 	    slime.absynt.Action     lact           = null;
@@ -734,24 +834,9 @@ public class Absfc2SFCConverter {
 	    lact = newAction( actionlist );
 	    stepaction = newStepAction( lact );
 	    outeractionlist.add( stepaction );
-	    /** create new targetstep */
-	    if (curInProc && collectProcs) {
-		targetStep = new slime.absynt.Step( (new Integer(procStepCounter)).toString(), outeractionlist );
-		procStepCounter++;
-	    } else {
-		targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-		stepCounter++;
-	    }
+	    targetStep = newStep( outeractionlist );
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
-	    myStepList.add( targetStep );
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition(
-		sourceStepList, trueGuard, targetStepList ); // create transition
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep ); // create transition
 	    dbgOut( 2 , "StmtInput - finished processing input" );
 	    return targetStep;
 	} else { /** currently collecting processes, 
@@ -777,7 +862,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processOutput( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processOutput( Object curStmt, slime.absynt.Step lastStartStep ) {
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtOutput" );
 	    slime.absynt.absfc.StmtOutput tmpNode =
@@ -786,10 +871,7 @@ public class Absfc2SFCConverter {
 	    slime.absynt.Expr       lexp           = tmpNode.val;
 	    slime.absynt.OutputAction loup = new slime.absynt.OutputAction( "output", lvar, lexp ); /* HAS TO BE CREATED */
 	    slime.absynt.Step       sourceStep     = null;            
-	    LinkedList              sourceStepList = new LinkedList();
 	    slime.absynt.Step       targetStep     = null;            
-	    LinkedList              targetStepList = new LinkedList();
-	    slime.absynt.Transition transition     = null;
 	    LinkedList              actionlist     = new LinkedList();
 	    LinkedList              outeractionlist= new LinkedList();
 	    slime.absynt.Action     lact           = null;
@@ -799,24 +881,8 @@ public class Absfc2SFCConverter {
 	    outeractionlist.add( lact );
 	    stepaction = newStepAction( lact );
 	    outeractionlist.add( stepaction );
-	    /** create new targetstep */
-	    if (curInProc && collectProcs) {
-		targetStep = new slime.absynt.Step( (new Integer(procStepCounter)).toString(), outeractionlist );
-		procStepCounter++;
-	    } else {
-		targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-		stepCounter++;
-	    }
-	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
-	    myStepList.add( targetStep );
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition(
-		sourceStepList, trueGuard, targetStepList ); // create transition
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    targetStep = newStep( outeractionlist );
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    dbgOut( 2 , "StmtOutput - finished processing output" );
 	    return targetStep;
 	} else { /** currently collecting processes, 
@@ -842,22 +908,15 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processComment (Object curStmt, slime.absynt.Step lastStartStep) {
+    private slime.absynt.Step processComment (Object curStmt, slime.absynt.Step lastStartStep) {
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    slime.absynt.absfc.Comment tmpNode = (slime.absynt.absfc.Comment) curStmt;
 	    String lcomment = tmpNode.content;
 	    dbgOut( 2 , "Comment: "+lcomment );
 	    slime.absynt.Step       sourceStep       = lastStartStep;            
-	    LinkedList              sourceStepList   = new LinkedList();
 	    slime.absynt.Step       targetStep	     = null;
-	    LinkedList              targetStepList   = new LinkedList();
-	    slime.absynt.Transition transition       = null;
 	    targetStep = newStep();
-	    sourceStepList.add( sourceStep );
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    return targetStep; // optional do a SkipAction here
 	} else { /** currently collecting processes, 
 		     but this statement is not within a process,
@@ -882,7 +941,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processIf (Object curStmt, slime.absynt.Step lastStartStep) {
+    private slime.absynt.Step processIf (Object curStmt, slime.absynt.Step lastStartStep) {
 	/** this makes it impossible to spawn new processes within an if-statement! */
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtIf" );
@@ -893,7 +952,6 @@ public class Absfc2SFCConverter {
 	    LinkedList                sourceStepList = new LinkedList();
 	    slime.absynt.Step         targetStep     = null;
 	    LinkedList                targetStepList = new LinkedList();
-	    slime.absynt.Transition   transition     = null;
 	    slime.absynt.Step         ifStart        = null;
 	    slime.absynt.Step         ifEnd          = null;
 	    slime.absynt.Step         ifcaseStart    = null;
@@ -908,42 +966,20 @@ public class Absfc2SFCConverter {
 	    */
 	    /** create ifStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)lastStartStep; // not required :)
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition(
-		(LinkedList)sourceStepList,
-		trueGuard, 
-		(LinkedList)targetStepList);
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    ifStart = (slime.absynt.Step)targetStep; /*** START OF IF-STATEMENT ***/
 	    /** create notifcaseStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)ifStart;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		(LinkedList)sourceStepList, 
-		new slime.absynt.U_expr( slime.absynt.Expr.NEG, ifguard ), 
-		(LinkedList)targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, 
+			   (slime.absynt.Expr)(new slime.absynt.U_expr( slime.absynt.Expr.NEG, ifguard )), 
+			   targetStep );
 	    ifEnd = (slime.absynt.Step)targetStep; /*** END OF IF-STATEMENT ***/
 	    /** create ifcaseStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)ifStart;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, ifguard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, ifguard, targetStep );
 	    ifcaseStart = (slime.absynt.Step)targetStep; /*** START OF IF-CASE ***/
 	    ifcaseEnd   = processStatementList( ifcase, ifcaseStart ); /*** END OF IF-CASE ***/
 	    /** create last transition, joining both cases */
@@ -955,9 +991,7 @@ public class Absfc2SFCConverter {
 	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStepList, (slime.absynt.Expr)trueGuard, targetStepList );
 	    dbgOut( 2 , "StmtIf - finished processing stmtlist" );
 	    return targetStep;
 	} else { /** currently collecting processes, 
@@ -983,7 +1017,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processIfElse( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processIfElse( Object curStmt, slime.absynt.Step lastStartStep ) {
 	/** this makes it impossible to spawn new processes within an if-else-statement! */
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtIfElse" );
@@ -996,7 +1030,6 @@ public class Absfc2SFCConverter {
 	    LinkedList              sourceStepList   = new LinkedList();
 	    slime.absynt.Step       targetStep       = null;            
 	    LinkedList              targetStepList   = new LinkedList();
-	    slime.absynt.Transition transition       = null;
 	    slime.absynt.Step       ifStart          = null;
 	    slime.absynt.Step       ifEnd            = null;
 	    slime.absynt.Step       ifcaseStart      = null;
@@ -1013,45 +1046,20 @@ public class Absfc2SFCConverter {
 	    */
 	    /** create ifStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		(LinkedList)sourceStepList, 
-		trueGuard, 
-		(LinkedList)targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    ifStart = (slime.absynt.Step)targetStep; /*** START OF IF-STATEMENT ***/
 	    /** create elsecaseStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)ifStart;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		(LinkedList)sourceStepList, 
-		new slime.absynt.U_expr( slime.absynt.Expr.NEG, ifguard ), 
-		(LinkedList)targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, 
+			   (slime.absynt.Expr)(new slime.absynt.U_expr( slime.absynt.Expr.NEG, ifguard )), 
+			   targetStep );
 	    elsecaseStart = (slime.absynt.Step)targetStep; /*** START OF ELSE-CASE ***/
 	    /** create ifcaseStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)ifStart;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		sourceStepList, 
-		ifguard, 
-		targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, ifguard, targetStep );
 	    ifcaseStart = (slime.absynt.Step)targetStep; /*** START OF IF-CASE ***/
 	    ifcaseEnd   = processStatementList( ifcase, ifcaseStart ); /*** END OF IF-CASE ***/
 	    dbgOut( 2 , "StmtIfElse - finished processing ifstmtlist" );
@@ -1066,12 +1074,7 @@ public class Absfc2SFCConverter {
 	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		sourceStepList, 
-		trueGuard, 
-		targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStepList, (slime.absynt.Expr)trueGuard, targetStepList );
 	    dbgOut( 2 , "StmtIf - finished processing stmtlist" );
 	    return targetStep;
 	} else { /** currently collecting processes, 
@@ -1097,17 +1100,14 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processWhile( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processWhile( Object curStmt, slime.absynt.Step lastStartStep ) {
 	/** this makes it impossible to spawn new processes within a while-statement! */
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtWhile" );
 	    slime.absynt.absfc.StmtWhile tmpNode =
 		(slime.absynt.absfc.StmtWhile) curStmt;
 	    slime.absynt.Step       sourceStep     = null;            
-	    LinkedList              sourceStepList = new LinkedList();
 	    slime.absynt.Step       targetStep     = null;            
-	    LinkedList              targetStepList = new LinkedList();
-	    slime.absynt.Transition transition     = null;
 	    LinkedList              wstmtlist      = tmpNode.stmtlist;
 	    slime.absynt.Expr       whileguard     = tmpNode.expr;
 	    slime.absynt.Step       whileStart     = null;
@@ -1123,52 +1123,27 @@ public class Absfc2SFCConverter {
 	    */
 	    /** create whileStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    whileStart = (slime.absynt.Step)targetStep; /*** START OF WHILE-STATEMENT ***/
 	    /** create whileEndStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)whileStart;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		sourceStepList, 
-		new slime.absynt.U_expr( slime.absynt.Expr.NEG, whileguard ), 
-		targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, 
+			   (slime.absynt.Expr)(new slime.absynt.U_expr( slime.absynt.Expr.NEG, whileguard )), 
+			   targetStep );
 	    whileEnd = (slime.absynt.Step)targetStep; /*** END OF WHILE-STATEMENT ***/
 	    /** create loopStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)whileStart;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, whileguard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, whileguard, targetStep );
 	    loopStart = (slime.absynt.Step)targetStep; /*** START OF LOOP ***/
 	    loopEnd   = processStatementList( wstmtlist, loopStart ); /*** END OF LOOP ***/
 	    dbgOut( 2 , "StmtWhile - finished processing stmtlist" );
 	    /** create last transition, from loop-End to whileStart */
 	    sourceStep = (slime.absynt.Step)loopEnd;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( whileStart );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    dbgOut( 2 , "StmtWhile - finished processing while" );
 	    return whileEnd;
 	} else { /** currently collecting processes, 
@@ -1194,7 +1169,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processRepeat( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processRepeat( Object curStmt, slime.absynt.Step lastStartStep ) {
 	/** this makes it impossible to spawn new processes within a repeat-statement! */
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtRepeat" );
@@ -1203,10 +1178,7 @@ public class Absfc2SFCConverter {
 	    LinkedList              rstmtlist      = tmpNode.stmtlist;
 	    slime.absynt.Expr       untilguard     = tmpNode.expr;
 	    slime.absynt.Step       sourceStep     = null;            
-	    LinkedList              sourceStepList = new LinkedList();
 	    slime.absynt.Step       targetStep     = null;            
-	    LinkedList              targetStepList = new LinkedList();
-	    slime.absynt.Transition transition     = null;
 	    slime.absynt.Step       repeatStart    = null;
 	    slime.absynt.Step       repeatEnd      = null;
 	    slime.absynt.Step       loopEnd        = null;
@@ -1222,43 +1194,21 @@ public class Absfc2SFCConverter {
 	    */
 	    /** create repeatStartStep and corresponding transition */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		(LinkedList)sourceStepList, 
-		trueGuard, 
-		(LinkedList)targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    repeatStart = (slime.absynt.Step)targetStep; /*** START OF REPEAT-STATEMENT ***/
 	    loopEnd  = processStatementList( rstmtlist, repeatStart ); /*** END OF LOOP ***/
 	    dbgOut( 2 , "StmtRepeat - finished processing stmtlist" );
 	    /** create looping from loopEnd to repeatStart and corresponding transition */
 	    sourceStep = (slime.absynt.Step)loopEnd;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = (slime.absynt.Step)repeatStart;
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		(LinkedList)sourceStepList, 
-		new slime.absynt.U_expr( slime.absynt.Expr.NEG, untilguard ), 
-		(LinkedList)targetStepList);
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, 
+			   (slime.absynt.Expr)(new slime.absynt.U_expr( slime.absynt.Expr.NEG, untilguard )), 
+			   targetStep );
 	    /** create transition leading out of loop */
 	    sourceStep = (slime.absynt.Step)loopEnd;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, untilguard, targetStepList );
-	    myTransitionList.add( transition );
-	    transitionCounter++;
+	    newTransition( sourceStep, untilguard, targetStep );
 	    repeatEnd = (slime.absynt.Step)targetStep; /*** END OF REPEAT-UNTIL ***/
 	    dbgOut( 2 , "StmtRepeat - finished processing repeat-until" );
 	    return repeatEnd;
@@ -1285,7 +1235,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processSplit( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processSplit( Object curStmt, slime.absynt.Step lastStartStep ) {
 	
         dbgOut( 2 , "StmtSplit" );
         slime.absynt.absfc.StmtSplit tmpNode =
@@ -1298,24 +1248,14 @@ public class Absfc2SFCConverter {
 	LinkedList              sourceStepList   = new LinkedList();
 	slime.absynt.Step       targetStep	 = null;            
 	LinkedList              targetStepList   = new LinkedList();
-	slime.absynt.Transition transition       = null;
 	slime.absynt.Step       splitStart       = null;
 	slime.absynt.Step       splitEnd         = null;
         slime.absynt.Step[]     procStart        = new slime.absynt.Step[ spawnedProcesses ];
         slime.absynt.Step[]     procEnd          = new slime.absynt.Step[ spawnedProcesses ];
 	/** create initial transition from last statement to split statement */
 	sourceStep = (slime.absynt.Step)lastStartStep;
-	sourceStepList.clear();
-	sourceStepList.add( sourceStep );
 	targetStep = newStep();
-	targetStepList.clear();
-	targetStepList.add( targetStep );
-	transition = new slime.absynt.Transition( 
-	    (LinkedList)sourceStepList, 
-	    trueGuard, 
-	    (LinkedList)targetStepList );
-	transitionCounter++;
-	myTransitionList.add( transition );
+	newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	splitStart = (slime.absynt.Step)targetStep;
 	/** empty targetStepList to fill it afterwards with all the processStartSteps */
 	targetStepList.clear();
@@ -1333,22 +1273,11 @@ public class Absfc2SFCConverter {
 	sourceStep = (slime.absynt.Step)splitStart;
 	sourceStepList.clear();
 	sourceStepList.add( sourceStep );
-	transition = new slime.absynt.Transition( 
-	    (LinkedList)sourceStepList, 
-	    trueGuard, 
-	    (LinkedList)targetStepList );
-	transitionCounter++;
-	myTransitionList.add( transition );
+	newTransition( sourceStepList, (slime.absynt.Expr)trueGuard, targetStepList );
 	/** create transition for normal program flow (main-process) */
 	sourceStep = (slime.absynt.Step)splitStart;
-	sourceStepList.clear();
-	sourceStepList.add( sourceStep );
 	targetStep = newStep();
-	targetStepList.clear();
-	targetStepList.add( targetStep );
-	transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	transitionCounter++;
-	myTransitionList.add( transition );
+	newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	splitEnd = (slime.absynt.Step)targetStep;
         dbgOut( 2 , "StmtSplit - finished processing processlist" );
 	return splitEnd;
@@ -1370,7 +1299,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processJoin( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processJoin( Object curStmt, slime.absynt.Step lastStartStep ) {
 	if ( (curInProc && collectProcs) || (!collectProcs) ) {
 	    dbgOut( 2 , "StmtJoin" );
 	    slime.absynt.absfc.StmtJoin tmpNode =
@@ -1383,23 +1312,13 @@ public class Absfc2SFCConverter {
 	    LinkedList              sourceStepList   = new LinkedList();
 	    slime.absynt.Step       targetStep       = null;            
 	    LinkedList              targetStepList   = new LinkedList();
-	    slime.absynt.Transition transition       = null;
 	    slime.absynt.Step       joinStart        = null;            
 	    slime.absynt.Step       joinEnd          = null;            
 	    slime.absynt.absfc.Process[] procArray   = new slime.absynt.absfc.Process[ nrofprocs ];
 	    /** create joinStartStep */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( 
-		sourceStepList, 
-		trueGuard, 
-		targetStepList );
-	    transitionCounter++;
-	    myTransitionList.add( transition );
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    joinStart = (slime.absynt.Step)targetStep;
 	    /** 
 	     * 2 Moeglichkeiten:
@@ -1437,23 +1356,15 @@ public class Absfc2SFCConverter {
 	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
+	    newTransition( sourceStepList, (slime.absynt.Expr)trueGuard, targetStepList );
 	    /*
 	      die join statements muessten interne variables bekommen ...
 	      slime.absynt.Expr joiningExpr = new slime.absynt.B_expr( ...
 	    */
-	    transitionCounter++;
-	    myTransitionList.add( transition );
 	    /** create joinEndStep */
 	    sourceStep = (slime.absynt.Step)targetStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    targetStep = newStep();
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	    transitionCounter++;
-	    myTransitionList.add( transition );
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    joinEnd = (slime.absynt.Step)targetStep;
 	    dbgOut( 2 , "StmtJoin - finished processing joining processes" );
 	    return joinEnd;
@@ -1480,14 +1391,14 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processProcess( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processProcess( Object curStmt, slime.absynt.Step lastStartStep ) {
 	    dbgOut( 2 , "Process: "+processCounter );
 	    slime.absynt.absfc.Process tmpNode =
 		(slime.absynt.absfc.Process) curStmt;
 	    /** add current Process to global process list */
 	    String                  pname            = tmpNode.name;
 	    LinkedList              pstmtlist        = tmpNode.stmtlist;
-	    // LinkedList              pdecllist        = tmpNode.decllist;
+	    // LinkedList              pdecllist        = tmpNode.decllist; we decided not to work with scopes ...
 	    slime.absynt.Step       sourceStep       = null;            
 	    LinkedList              sourceStepList   = new LinkedList();
 	    slime.absynt.Step       targetStep	     = null;            
@@ -1496,6 +1407,7 @@ public class Absfc2SFCConverter {
 	    slime.absynt.Step       procStartStep    = null;
 	    slime.absynt.Step       procEndStep      = null;
 	if (collectProcs) {
+	    /** add this process to the global processlist */
 	    myProcessList.add( tmpNode );
 	    /** remember that from now on being within a process */
 	    curInProc = true;
@@ -1505,20 +1417,18 @@ public class Absfc2SFCConverter {
 	    myTransitionList.clear();
 	    myDeclarationList.clear();
 	    myActionList.clear();
+	    /** clear all process-dependend counters */
+	    clearProcessCounters();
 	    /** create the start Step of the new process */
 	    java.lang.StringBuffer theStringBuffer = new java.lang.StringBuffer("");
 	    theStringBuffer.append("Process-").append( (new Integer( processCounter ).toString() ));
-	    theStringBuffer.append("-").append( ( new Integer( stepCounter ) ).toString() );
-	    sourceStep = new slime.absynt.Step( theStringBuffer.toString() );
-	    stepCounter++;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
-	    myStepList.add( sourceStep );
+	    theStringBuffer.append("-").append( ( new Integer( procStepCounter ) ).toString() );
+	    sourceStep = newStep(); // new slime.absynt.Step( theStringBuffer.toString() );
 	    procStartStep = (slime.absynt.Step)sourceStep;
 	    tmpNode.start_step = (slime.absynt.Step)procStartStep;
 	    procEndStep = processStatementList( pstmtlist, procStartStep );
 	    tmpNode.end_step = (slime.absynt.Step)procEndStep;
-	    myStepList.add( procEndStep );
+	    // myStepList.add( procEndStep ); was already added in processStatementList ...
 	    dbgOut( 2 , "Process: - finished processing stmtlist" );
 	    tmpNode.internalStepList        = (LinkedList)myStepList;
 	    tmpNode.internalTransitionList  = (LinkedList)myTransitionList;
@@ -1533,21 +1443,15 @@ public class Absfc2SFCConverter {
 	    dbgOut(2, "Process -> not in collectProcs now... ");
 	    /** get the lastStartStep from the split statement */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
-	    sourceStepList.clear();
-	    sourceStepList.add( sourceStep );
 	    /** get the processStartStep */
 	    procStartStep = (slime.absynt.Step)tmpNode.start_step;
 	    targetStep = (slime.absynt.Step)procStartStep;
-	    targetStepList.clear();
-	    targetStepList.add( targetStep );
-	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
-	    transitionCounter++;
-	    myTransitionList.add( transition );
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    /** get all information from the first run through this process 
 		and merge it with the global tree information */
-	    myStepList.addAll( tmpNode.internalStepList );
-	    myTransitionList.addAll( tmpNode.internalTransitionList );
-	    myActionList.addAll( tmpNode.internalActionList );
+	    myStepList.addAll(        tmpNode.internalStepList );
+	    myTransitionList.addAll(  tmpNode.internalTransitionList );
+	    myActionList.addAll(      tmpNode.internalActionList );
 	    myDeclarationList.addAll( tmpNode.internalDeclarationList );
 	    /** get the processEndStep */
 	    procEndStep = (slime.absynt.Step)tmpNode.end_step;
@@ -1571,7 +1475,7 @@ public class Absfc2SFCConverter {
      * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
-    protected slime.absynt.Step processSubprogram( Object curStmt, slime.absynt.Step lastStartStep ) {
+    private slime.absynt.Step processSubprogram( Object curStmt, slime.absynt.Step lastStartStep ) {
         dbgOut( 2 , "SFCabtree:" );
         slime.absynt.absfc.SFCabtree tmpNode =
             (slime.absynt.absfc.SFCabtree) curStmt;
@@ -1598,7 +1502,20 @@ public class Absfc2SFCConverter {
 
 
 
+/*
+  Lost crap:
+  ----------
 
+	// iterate over all first-level-statements 
+	for (Iterator i = s.iterator(); i.hasNext();) {
+	    sC++; // increase firstlevel statementCounter
+	    slime.absynt.absfc.Absfc currentStatement = 
+		(slime.absynt.absfc.Absfc) i.next();
+	    dbgOut( 2, "firstlevelstatement nr. " + sC +
+		       " : " + currentStatement.nodetype ); 
+	    nextStmtStartStep = processStatementList( currentStatement, nextStmtStartStep );
+	} // end of for-i
+ */
 
 
 

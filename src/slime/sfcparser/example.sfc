@@ -1,5 +1,11 @@
 SFC testprog { 
 
+// it seems nobody feels responsible for input and output :(
+// therefore they are currently not within the syntax
+// - visitors have to be defined for input/output
+// - 
+
+
  // **************************
  // declaration
  // **************************
@@ -13,9 +19,9 @@ SFC testprog {
 
 
  // **************************
- // input
+ // input - removed because of unclear implementation details
  // **************************
- input( z, z/2 );
+// input( z, z/2 );
 
 
  // **************************
@@ -115,9 +121,9 @@ SFC testprog {
 }
 
  // **************************
- // output
+ // output  - removed because of unclear implementation details
  // **************************
- output (y, y*2);
+// output (y, y*2);
 
  // **************************
  // skip
