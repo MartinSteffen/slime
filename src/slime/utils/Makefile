@@ -12,7 +12,7 @@ debug:	; make JAVACOPTS="-g" all
 %.class:	%.java
 		javac $(JAVACOPTS) $<
 
-TestParser.class: Parser.class TestParser.java ExprParser.class
+TestParser.class: Parser.class TestParser.java ExprParser.class DeclParser.class
 	javac TestParser.java
 
 Parser.class: Parser.java Yylex.java ParseException.java
@@ -20,6 +20,9 @@ Parser.class: Parser.java Yylex.java ParseException.java
 
 ExprParser.class: ExprParser.java ParseException.java
 	javac ExprParser.java sym.java Yylex.java ParseException.java
+
+DeclParser.class: DeclParser.java ParseException.java
+	javac DeclParser.java sym.java Yylex.java ParseException.java
 
 Yylex.java: SAP.lex
 	java JLex.Main SAP.lex >$(LEXLOGFILE)
@@ -30,6 +33,9 @@ Parser.java: SAP.cup
 
 ExprParser.java: Expr.cup
 	java java_cup.Main -symbols sym -parser ExprParser -nonterms -package $(PACKAGE) Expr.cup
+
+DeclParser.java: Decl.cup
+	java java_cup.Main -symbols sym -parser DeclParser -nonterms -package $(PACKAGE) Decl.cup
 
 tests: 
 	cd test; make all
@@ -47,6 +53,9 @@ www:
 
 # ------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 1.4  2002/06/10 14:41:57  swprakt
+#	added expression parser
+#	
 #	Revision 1.3  2002/06/07 15:04:17  swprakt
 #	added parser for SAP programs, added function printSAP() to PP
 #	

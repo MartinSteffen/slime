@@ -24,6 +24,9 @@ ident   = ({letter}({letter}|{digit})*)
 ")"                   { return new Symbol(sym.RPAREN);          }
 "skip"                { return new Symbol(sym.SKIP);            }
 ":="                  { return new Symbol(sym.ASSIGN);          }
+"in"                  { return new Symbol(sym.IN);              }
+"out"                 { return new Symbol(sym.OUT);             }
+"inout"               { return new Symbol(sym.INOUT);           }
 "int"                 { return new Symbol(sym.INT);             }
 "bool"                { return new Symbol(sym.BOOL);            }
 "true"                { return new Symbol(sym.TRUE);            }

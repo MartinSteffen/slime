@@ -8,7 +8,7 @@ import slime.absynt.*;
 
 /** Standalone file to test the parser on input files
  * @author Martin Steffen, Karsten Stahl
- * @version $Id: TestParser.java,v 1.4 2002-06-12 18:52:09 swprakt Exp $
+ * @version $Id: TestParser.java,v 1.5 2002-06-26 15:43:11 swprakt Exp $
  *
  * ============== //-->
  */
@@ -36,7 +36,15 @@ public class TestParser {
             System.out.println("parse: " + _s);
             slime.absynt.Expr e = eparser.parseExpr(_s);
             System.out.println("*** Test: pretty print the result of parsing ***");
-            pp.print(e);
+	    pp.print(e);
+
+            slime.utils.DeclParser dparser = new slime.utils.DeclParser();
+            System.out.println("Input declaration of form type [in|out|inout] var := val");
+            _s = in.readLine();
+            System.out.println("parse: " + _s);
+            slime.absynt.Declaration d = dparser.parseDecl(_s);
+            System.out.println("*** Test: pretty print the result of parsing ***");
+            pp.print(d);
 
         } catch (ParseException e){
             System.err.println(e.toString());

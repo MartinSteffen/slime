@@ -4,7 +4,7 @@
  * Offers the methods parseSAP and parseExpr 
  *
  * @author Karsten Stahl, Martin Steffen
- * @version $Id: SAP.cup,v 1.3 2002-06-12 18:52:08 swprakt Exp $
+ * @version $Id: SAP.cup,v 1.4 2002-06-26 15:43:11 swprakt Exp $
  *
  * The grammar definition contains 4 parts:
  *    -  initialization declarations and how to generate the parser
@@ -101,6 +101,7 @@ terminal         SKIP;
 terminal         INT, BOOL, NEQ, OR, PLUS, TIMES;
 terminal         AND, DIV, EQ, GEQ, GREATER, LEQ, LESS, MINUS, NEG;
 terminal         TRUE, FALSE;
+terminal         IN, OUT, INOUT;
 
 terminal String  IDENT;
 terminal Integer INTEGER;
