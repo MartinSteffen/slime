@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.66 2002-07-05 06:19:30 swprakt Exp $
+## $Id: Errors.txt,v 1.67 2002-07-05 07:32:50 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,22 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+Error 41:     super/sub confusion
+ package:     checks (but partially branched out)
+ class:       dubious
+ status:      reported, 5.7.02, Steffen
+ description: I don't understand the super/sub etc 
+              structure of the exceptions. Perhaps
+	      this is the cause of #40.
+
+Error 40:     typecheck expressions
+ package:     checks (but partially branched out)
+ class:       fatal
+ status:      reporter, 5.7.02, Steffen 
+ description: the type checker (expression) does not work as excpected,
+              it returns the correct exception but not
+	      the message (perhaps related to Error 41)
+ 
 
 Error 39:     parser command line
  package:     sfcparser
