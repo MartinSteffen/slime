@@ -15,11 +15,14 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.7 2002-06-27 19:39:36 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.8 2002-06-27 20:20:18 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.7  2002/06/27 19:39:36  swprakt
+ * slightly improved exceptionhandling
+ *
  * Revision 1.6  2002/06/27 14:30:57  swprakt
  * tried to remove Error 19: "_public ugliness",
  * now header comments consist of two parts, one
@@ -328,7 +331,7 @@ parser code {:
 
 
 /// Terminals (tokens returned by the scanner)
-terminal DOT;
+terminal DOT, HASH;
 terminal String IDENTIFIER;
 terminal Integer INTEGER;
 terminal ADD, SUB, MUL, DIV, AND, OR, NOT;           // +, -, *, /, MOD=%, &&, ||, !
@@ -396,14 +399,14 @@ start with sfcbegin;
 
 /** SFCBEGIN ------------------------------------------------- **/
 sfcbegin ::=	sfcprogram:p 
-	 {:  
+         {:  
 	     pOut( 1, "SFC " );
 	     RESULT = p;  
 	 :}
 	|       expr:e       
 	 {:	
-	     pOut( 1, "SFC-Expression" );	   
              RESULT = (slime.absynt.Expr)e;  
+	     pOut( 1, "\n was a correct SFC-Expression \n" );	   
 	 :}
 ;
 
@@ -714,19 +717,67 @@ vartype ::= INTTYPE    {: RESULT = new slime.absynt.IntType(); :}
 
 /** OP --------------------------------------------------- **/
 op ::=
-  ADD {: pOut(3," + ") ;RESULT=new Integer(0); :}  ///  0 PLUS
-| MUL {: pOut(3," * ") ;RESULT=new Integer(2); :} ///  2 TIMES
-| SUB {: pOut(3," - ") ;RESULT=new Integer(1); :} ///  1 MINUS
-| DIV {: pOut(3," / ") ;RESULT=new Integer(3); :}   ///  3 DIV
-| AND {: pOut(3," && ");RESULT=new Integer(4); :}   ///  4 AND
-|  OR {: pOut(3," || ");RESULT=new Integer(5); :}    ///  5 OR
-| NOT {: pOut(3," ! ") ;RESULT=new Integer(6); :}   ///  6 NEG
-|  EQ {: pOut(3," == ");RESULT=new Integer(7); :}    ///  7 EQ
-|  LT {: pOut(3," < ") ;RESULT=new Integer(8); :}  ///  8 LESS
-|  GT {: pOut(3," > ") ;RESULT=new Integer(9); :}/// 9 GREATER
-| LEQ {: pOut(3," <= ");RESULT=new Integer(10); :}   /// 10 LEQ
-| GEQ {: pOut(3," >= ");RESULT=new Integer(11); :}   /// 11 GEQ
-| NEQ {: pOut(3," != ");RESULT=new Integer(12); :}   /// 12 NEQ
+  ADD {: pOut(3," + ") ;
+       java.lang.Integer opCode = new java.lang.Integer(0);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  0 PLUS
+| MUL {: pOut(3," * ") ;
+       java.lang.Integer opCode = new java.lang.Integer(2);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  2 TIMES
+| SUB {: pOut(3," - ") ;
+       java.lang.Integer opCode = new java.lang.Integer(1);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  1 MINUS
+| DIV {: pOut(3," / ") ;
+       java.lang.Integer opCode = new java.lang.Integer(3);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  3 DIV
+
+| AND {: pOut(3," && ");
+       java.lang.Integer opCode = new java.lang.Integer(4);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  4 AND
+
+|  OR {: pOut(3," || ");
+       java.lang.Integer opCode = new java.lang.Integer(5);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  5 OR
+
+| NOT {: pOut(3," ! ") ;
+       java.lang.Integer opCode = new java.lang.Integer(6);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  6 NEG
+
+|  EQ {: pOut(3," == ");
+       java.lang.Integer opCode = new java.lang.Integer(7);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  7 EQ
+
+|  LT {: pOut(3," < ") ;
+       java.lang.Integer opCode = new java.lang.Integer(8);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  8 LESS
+
+|  GT {: pOut(3," > ") ;
+       java.lang.Integer opCode = new java.lang.Integer(9);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  9 GREATER
+
+| LEQ {: pOut(3," <= ");
+       java.lang.Integer opCode = new java.lang.Integer(10);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  10 LEQ
+
+| GEQ {: pOut(3," >= ");
+       java.lang.Integer opCode = new java.lang.Integer(11);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  11 GEQ
+
+| NEQ {: pOut(3," != ");
+       java.lang.Integer opCode = new java.lang.Integer(12);
+       int opCodeValue = opCode.intValue();
+       RESULT=opCode; :}  ///  12 NEQ
 ;
 
 /** VAR ---------------------------------------------- **/
@@ -746,19 +797,25 @@ TRUE
 |
 
 FALSE
-{:  pOut( 3, "false" ); RESULT = new slime.absynt.Constval( false );  :}
+{:  
+    pOut( 3, "false" ); 
+    RESULT = new slime.absynt.Constval( false );  :}
 
 |  
 
 INTEGER:i 
-{:  pOut( 3, i.toString() ); RESULT = new slime.absynt.Constval( i.intValue() );  :}
+{:  
+    pOut( 3, i.toString() ); 
+    java.lang.Integer opCode = i;
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.Constval( opCodeValue );  
+:}
 
 ;
 
 
 /** EXPR -------------------------------------------------- **/
 expr ::= 
-
 LPAREN 
 expr:e 
 RPAREN        
@@ -772,14 +829,20 @@ expr:l
 op:o 
 expr:r        
 {: 
-RESULT = new slime.absynt.B_expr( l, ((java.lang.Integer)o).intValue(), r ); :} // binary expression
+    java.lang.Integer opCode = o;
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+:} // binary expression
 
 |
 
 op:o 
 expr:e        
 {:  
-RESULT = new slime.absynt.U_expr( ((java.lang.Integer)o).intValue(), e); :} // unary expression
+    java.lang.Integer opCode = o;
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.U_expr( opCodeValue, e);
+:} // unary expression
 
 |
 

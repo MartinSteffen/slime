@@ -4,10 +4,13 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.7 2002-06-27 19:39:37 swprakt Exp $
+    * $Id: SFC.lex,v 1.8 2002-06-27 20:20:18 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.7  2002/06/27 19:39:37  swprakt
+   /* slightly improved exceptionhandling
+   /*
    /* Revision 1.6  2002/06/27 14:30:57  swprakt
    /* tried to remove Error 19: "_public ugliness",
    /* now header comments consist of two parts, one
@@ -64,10 +67,12 @@ import java_cup.runtime.Symbol;
 %full
 %public
 %eofval{
-    return new Symbol( SFCSymbols.DOT );
+    return new Symbol(SFCSymbols.EOF); //Symbol(-1);
 %eofval}
 %cup
-
+%eof{
+    // System.out.println("\nEOF");
+%eof}
 c1      = ("//".*)
 c2      = ("/*".*"*/")
 c3      = ("(*".*"*)")
@@ -126,11 +131,12 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "!="       {return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
 ","        {return new Symbol(SFCSymbols.COMMA); 	/* */}
 "."        {return new Symbol(SFCSymbols.DOT); 	/* */}
+"#"        {return new Symbol(SFCSymbols.HASH); 	/* END OF FILE, END OF EXPRESSION MARKER */}
 
 {identif}  {return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 {number}   {return new Symbol(SFCSymbols.INTEGER, 
-		   new Integer(yytext())); 		/* t INTEGER */}
+		   new Integer( yytext() ) ); 		/* t INTEGER */}
 .          {System.out.println( "Error during lexical analysis"+
 	    "\nLine number = "  + yyline + 
 	    "\nChar number = "  + yychar +
