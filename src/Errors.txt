@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.56 2002-07-03 09:26:11 swprakt Exp $
+## $Id: Errors.txt,v 1.57 2002-07-03 12:21:51 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -38,7 +38,7 @@ Rules of the game:
 Error 36.2:   re-generation difference (cf. Error 36)
  package:     sfcparser/SFCParser.java 1.11
  status:      reported, 3.7.02, Steffen
- class:       dubiousity, point to discuss
+ class:       fatal, version mess
  description: here a bit more info.
               I did the same experiment (especially same classpath)
               as in #36    but without
