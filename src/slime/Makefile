@@ -1,12 +1,18 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.14 2002-06-28 15:04:54 swprakt Exp $
+# $Id: Makefile,v 1.15 2002-06-28 15:07:31 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
 # by the maintainers
+# 
+# Why should the developers(students) not be informed about
+# what is happening with their files ??? (mwe)
+# $Log: not supported by cvs2svn $
+#
 
+#
 ######################################
 
 TOOLNAME      = Slime
