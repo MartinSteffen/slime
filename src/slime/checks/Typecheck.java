@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.9 2002-06-25 07:39:19 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.10 2002-06-25 07:52:11 swprakt Exp $
  */
 
 public class Typecheck {
@@ -92,7 +92,31 @@ public class Typecheck {
     }
   }
 
-  /** Visitor for expressions
+  /** Type checking visitor for a step action.
+   *  A step action is always well-typed (as also the action
+   *  qualifier deeper int the recursion is). Nevertheless, we 
+   *  implement it as visitor for uniformity and extensibility.
+   */
+  public class StepActionV implements Visitors.IStepAction{
+    public Object forStepAction(ActionQualifier qualifier,
+				String a_name) throws Exception {
+      qualifier.accept(new ActionQualifierV());
+      return new UnitType();
+    }
+  }
+
+  /** Type checking visitor for actions. An action does not return
+   *  a value, so it has type UnitType, when well-typed.
+   */
+
+  public class ActionV implements Visitors.IAction{
+    public Object forAction(String a_name, LinkedList sap) throws Exception{
+      // XXX add typechecking for sap
+      return new UnitType();
+    }
+  }
+
+  /** type checking visitor for expressions.
    */
     public class ExprV implements Visitors.IExpr{
         
@@ -231,18 +255,7 @@ public class Typecheck {
        
 
 
-  /** Type checking visitor for a step action.
-   *  A step action is always well-typed (as also the action
-   *  qualifier deeper int the recursion is). Nevertheless, we 
-   *  implement it as visitor for uniformity and extensibility.
-   */
-  public class StepActionV implements Visitors.IStepAction{
-    public Object forStepAction(ActionQualifier qualifier,
-				String a_name) throws Exception {
-      qualifier.accept(new ActionQualifierV());
-      return new UnitType();
-    }
-  }
+
 
   /** Type checking visitor for action qualified.
    *  an action qualifier is always well-typed.
@@ -279,6 +292,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.9  2002/06/25 07:39:19  swprakt
+//    acceptor added, typechecker extended for SFC-clause. [Steffen]
+//
 //    Revision 1.8  2002/06/25 06:17:58  swprakt
 //    type checking for action qualifiers and step actions done
 //    [Steffen]
@@ -316,6 +332,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.9 2002-06-25 07:39:19 swprakt Exp $
+//    $Id: Typecheck.java,v 1.10 2002-06-25 07:52:11 swprakt Exp $
 //
 //---------------------------------------------------------------------
