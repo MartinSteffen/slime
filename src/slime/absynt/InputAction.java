@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * and a program to be executed.
  *
  * @author initially provided by Marco Wendel.
- * @version $Id: InputAction.java,v 1.3 2002-07-04 16:30:42 swprakt Exp $
+ * @version $Id: InputAction.java,v 1.4 2002-07-10 13:56:14 swprakt Exp $
  */
 
 
@@ -24,11 +24,11 @@ public class InputAction extends Stmt implements Serializable {
   }
 
   /** visitor acceptor
-     */
+
    public Object accept (Visitors.IStmt ask) throws Exception {
        return ask.forInput( a_var , a_expr);
    }
-	     
+*/	     
   
 }
 
