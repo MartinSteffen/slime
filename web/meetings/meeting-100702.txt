@@ -1,0 +1,86 @@
+From nobody Wed Jul 10 17:58:59 2002
+X-From-Line: ms@informatik.uni-kiel.de  Wed Jul 10 17:29:22 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from gollum.informatik.uni-kiel.de (IDENT:UW48aWDA+qTR9r11GPasU3AtmzYLLqwJ@gollum [134.245.248.28])
+	by falbala.informatik.uni-kiel.de (8.12.5/8.12.5) with ESMTP id g6AFTLUa024179;
+	Wed, 10 Jul 2002 17:29:21 +0200 (MEST)
+Received: (from ms@localhost)
+	by gollum.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g6AFTLr24716;
+	Wed, 10 Jul 2002 17:29:21 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+To: swprakt+slime@informatik.uni-kiel.de
+Subject: Ged"achtnisnotiz der Besprechung vom 10.7.02
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Date: 10 Jul 2002 17:29:20 +0200
+Message-ID: <yfv4rf7d2jz.fsf@gollum.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Lines: 67
+Xref: gollum.informatik.uni-kiel.de sonstiges:10366
+X-Gnus-Article-Number: 10366   Wed Jul 10 17:39:57 2002
+
+
+
+Anwesend: Steffen, Wendel, Niemann, Grabe.
+Abwesend: Stahl, Richter, Boeck
+------------
+
+
+
+Status: alle anwesenden Gruppen sind in der ``chill-out'' phase, in der
+letzten Woche stehen keine gr"o"seren Dinge mehr an, was die Einzel-Pakete
+betrifft.
+
+Die letzte gr"o"sere Sache ist: Integration.
+
+
+Wendel/Steffen/Niemann haben die Schnittstellen-Inkonsistenzen bereinigt,
+d.h., es kompiliert nun ganz durch.
+
+Der zus"atzlicher PrettyPrinter wird entfernt [Wenn ich es richtig sehe,
+ist das bereits passiert].
+
+N"achste Woche passiert die Integration, wobei es, nachdem die
+Schnittstellen nun passen, keine gr"o"seren Probleme erwartet sind.
+
+Checks: es wird noch ein check auf 1-n und n-1 Verh"altnis in Transitionen
+implementiert (d.h., eine Transition kann nicht mehr als ein Source und
+gleichzeitig mehr als ein Target haben)
+
+Au"serdem: die messages der Exceptions von checks werden, wo n"otig, noch
+aussagekr"aftiger gemacht.
+
+
+Eventuell: Weiterhin wird in Absprache mit Editor ``feinere'' checks
+gemacht, dh. nicht einfach ein ganzen SFC von vorne bis hinten checken
+sondern nur ob eine Variable dazupasst.
+
+Die n"achste Woche Mittwoch gibt es kein Treffen. 
+
+N"ahere Info's zum Endreview (18.7.02) werden ggf. noch bekanntgegeben.
+
+
+
+Martin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
