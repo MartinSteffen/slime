@@ -4,8 +4,13 @@ raw list.
 + good spec
 
 
+- email-responsivity
 
-- not much people, many drop-outs, Karsten, too
+- late integration
+
+- smoothness
+
+- not much people, many drop-outs
 
 - late info' that someone drops out -> late reaction
 
@@ -13,18 +18,20 @@ raw list.
 
 - discipline/professionalism
 
+- flame wars
+
 - communication, no discussions, no feedback
 
 - too late communication of errors (for instance 
     change wishes for absynt.)
 
 
-- nothing checked in till 13 june by most of the groups
+- nothing checked in till 19 june by most of the groups
 
 - technical problems with using cvs still mid of June (at least)
 
 
-- unsmart dealing with problems, not even to pretend as if something
+- unsmart psychological dealing with problems, not even to pretend as if something
   is going on! (i.e. no reactions)
 
 
