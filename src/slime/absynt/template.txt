@@ -17,7 +17,7 @@ public class <xxxx> extends Absynt implements Serializable {
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
 //	$Id: <dollar>

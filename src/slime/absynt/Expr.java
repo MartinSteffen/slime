@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Abstract class for simple expressions
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Expr.java,v 1.1 2002-04-16 13:53:49 swprakt Exp $
+ * @version $Id: Expr.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $
  */
 
 
@@ -38,12 +38,15 @@ public abstract class Expr extends Absynt implements Serializable{
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Expr.java,v 1.1 2002-04-16 13:53:49 swprakt Exp $
+//	$Id: Expr.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:49  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------

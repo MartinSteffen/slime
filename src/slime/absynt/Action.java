@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * and a program to be executed.
  *
  * @author Initially provided by Martin Steffen.
- * @version $Id: Action.java,v 1.1 2002-04-16 13:53:43 swprakt Exp $
+ * @version $Id: Action.java,v 1.2 2002-04-16 19:02:52 swprakt Exp $
  */
 
 
@@ -27,12 +27,15 @@ public class Action  extends Absynt implements Serializable {
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Action.java,v 1.1 2002-04-16 13:53:43 swprakt Exp $
+//	$Id: Action.java,v 1.2 2002-04-16 19:02:52 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:43  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------

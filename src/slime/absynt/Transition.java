@@ -6,7 +6,7 @@ import java.util.LinkedList;
  * A transition of an SFC connects source and target step
  * and is labelled with a guard.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Transition.java,v 1.1 2002-04-16 13:53:57 swprakt Exp $	
+ * @version $Id: Transition.java,v 1.2 2002-04-16 19:02:56 swprakt Exp $	
  */
 
 
@@ -34,12 +34,15 @@ public class Transition extends Absynt implements Serializable {
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Transition.java,v 1.1 2002-04-16 13:53:57 swprakt Exp $
+//	$Id: Transition.java,v 1.2 2002-04-16 19:02:56 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:57  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------

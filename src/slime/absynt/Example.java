@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * 
  * The class offers an example for a program int abstract syntax.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Example.java,v 1.1 2002-04-16 13:53:48 swprakt Exp $	
+ * @version $Id: Example.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $	
  */
 
 
@@ -213,12 +213,15 @@ public class Example{
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Example.java,v 1.1 2002-04-16 13:53:48 swprakt Exp $
+//	$Id: Example.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:48  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------

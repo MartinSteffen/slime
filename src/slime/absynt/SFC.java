@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * Class for sfc-programs, the top level syntactic construct,
  * i.e., the entry point.
  * @author Initially provided by Martin Steffen.
- * @version $Id: SFC.java,v 1.1 2002-04-16 13:53:52 swprakt Exp $
+ * @version $Id: SFC.java,v 1.2 2002-04-16 19:02:55 swprakt Exp $
  */
 
 
@@ -50,12 +50,15 @@ public class SFC extends Absynt implements Serializable{
 
 
 //----------------------------------------------------------------------
-//	Abstract Syntax for Snot Programs
+//	Abstract Syntax for Slime Programs
 //	------------------------------------
 //
-//	$Id: SFC.java,v 1.1 2002-04-16 13:53:52 swprakt Exp $
+//	$Id: SFC.java,v 1.2 2002-04-16 19:02:55 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:52  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------

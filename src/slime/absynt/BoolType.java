@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Type for booleans.
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: BoolType.java,v 1.1 2002-04-16 13:53:46 swprakt Exp $
+ * @version $Id: BoolType.java,v 1.2 2002-04-16 19:02:53 swprakt Exp $
  */
 
 
@@ -17,12 +17,15 @@ public class BoolType  extends Type implements Serializable {
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: BoolType.java,v 1.1 2002-04-16 13:53:46 swprakt Exp $
+//	$Id: BoolType.java,v 1.2 2002-04-16 19:02:53 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:46  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------

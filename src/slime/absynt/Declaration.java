@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Declaration of a variables.
  * 
  * @author Initially provided by Karsten Stahl.
- * @version $Id: Declaration.java,v 1.1 2002-04-16 13:53:47 swprakt Exp $
+ * @version $Id: Declaration.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $
  */
 
 
@@ -24,12 +24,15 @@ public class Declaration extends Absynt implements Serializable {
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Declaration.java,v 1.1 2002-04-16 13:53:47 swprakt Exp $
+//	$Id: Declaration.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:47  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------

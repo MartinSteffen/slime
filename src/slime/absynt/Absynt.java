@@ -9,7 +9,7 @@ import java.io.Serializable;
  * so in most cases, the code is self-explanatory.
  * 
  * @author Initially provided by Martin Steffen.
- * @version  $Id: Absynt.java,v 1.1 2002-04-16 13:53:42 swprakt Exp $
+ * @version  $Id: Absynt.java,v 1.2 2002-04-16 19:02:52 swprakt Exp $
  */
 
 
@@ -23,11 +23,14 @@ abstract public class Absynt implements Serializable {
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Absynt.java,v 1.1 2002-04-16 13:53:42 swprakt Exp $
+//	$Id: Absynt.java,v 1.2 2002-04-16 19:02:52 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:42  swprakt
+//	Slime initial version
+//	
 //	
 //---------------------------------------------------------------------

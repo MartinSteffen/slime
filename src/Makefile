@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
-# developers' top-level Makefile for the Snot project
-# $Id: Makefile,v 1.2 2002-04-16 14:27:41 swprakt Exp $
+# developers' top-level Makefile for the Slime project
+# $Id: Makefile,v 1.3 2002-04-16 19:02:52 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only

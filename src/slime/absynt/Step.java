@@ -4,10 +4,10 @@ import java.util.LinkedList;
 
 
 /**
- * A step of a Snot-program.
+ * A step of a Slime-program.
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Step.java,v 1.1 2002-04-16 13:53:54 swprakt Exp $
+ * @version $Id: Step.java,v 1.2 2002-04-16 19:02:56 swprakt Exp $
  */
 
 
@@ -35,12 +35,15 @@ public class Step extends Absynt implements Serializable {
 
 
 //----------------------------------------------------------------------
-//	Abstract syntax for Snot programs
+//	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Step.java,v 1.1 2002-04-16 13:53:54 swprakt Exp $
+//	$Id: Step.java,v 1.2 2002-04-16 19:02:56 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/04/16 13:53:54  swprakt
+//	Slime initial version
+//	
 //	
 //	
 //---------------------------------------------------------------------
