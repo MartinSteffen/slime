@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.25 2002-07-05 18:08:06 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.26 2002-07-05 19:10:22 swprakt Exp $
  */
 
 public class Typecheck {
@@ -117,7 +117,7 @@ public class Typecheck {
    *  The key objects are the variables, the values are the types.
    *
    */
-  public class SFCV implements Visitors.ISFC{
+  class SFCV implements Visitors.ISFC{
     public Object forSFC(Step istep, 
 			 LinkedList steps,
 			 LinkedList transs,
@@ -156,7 +156,7 @@ public class Typecheck {
    *  either returns UnitType or raises an error.
    */
 
-  public class StepV implements Visitors.IStep{
+  class StepV implements Visitors.IStep{
     public Object forStep(String name, LinkedList actions) throws Exception {
       for (Iterator i = actions.iterator(); i.hasNext(); ) {
  	StepAction sa  = (StepAction)i.next();
@@ -171,7 +171,7 @@ public class Typecheck {
    *  qualifier deeper int the recursion is). Nevertheless, we 
    *  implement it as visitor for uniformity and extensibility.
    */
-  public class StepActionV implements Visitors.IStepAction{
+  class StepActionV implements Visitors.IStepAction{
     public Object forStepAction(ActionQualifier qualifier,
 				String a_name) throws Exception {
       qualifier.accept(new ActionQualifierV());
@@ -188,7 +188,7 @@ public class Typecheck {
    *  don't check this in the iteration again.
    */
 
-  public class ActionV implements Visitors.IAction{
+  class ActionV implements Visitors.IAction{
     public Object forAction(String a_name, LinkedList sap) throws Exception{
       for (Iterator i = sap.iterator(); i.hasNext(); ) {
  	Stmt sa  = (Stmt)i.next();
@@ -201,7 +201,7 @@ public class Typecheck {
   /** type checking visitor for statements.
    *  A statement does not return a value.
    */
-  public class StmtV implements Visitors.IStmt{
+  class StmtV implements Visitors.IStmt{
     public Object forSkip() throws Exception {
       return new UnitType();
     }
@@ -217,6 +217,11 @@ public class Typecheck {
 
   /* The visitors must be wrapped.  I provide thus overloaded wrappers
    * called ``check''.
+   */
+
+  /**
+   *  Type check routine for expressions, implemented as wrapper
+   *  around the corresponding visitor.
    */
   public slime.absynt.Type check (Expr e)  throws CheckException {
     try {
@@ -242,7 +247,7 @@ public class Typecheck {
 
 
 
-  public class ExprV implements Visitors.IExpr{
+  class ExprV implements Visitors.IExpr{
         
     public Object forB_Expr(Expr l, int o, Expr r) throws CheckException {
             // binary expressions
@@ -320,10 +325,10 @@ public class Typecheck {
     }
   }
 
-  /** Type checking visitor for action qualified.
+  /** Type checking visitor for action qualifier.
    *  an action qualifier is always well-typed.
    */
-  public class ActionQualifierV implements Visitors.IActionQualifier{
+  class ActionQualifierV implements Visitors.IActionQualifier{
     public Object forNqual(){return new UnitType();}
   }
 
@@ -334,7 +339,7 @@ public class Typecheck {
     /** Visitor for transitions
      */
   
-  public class TransitionV implements Visitors.ITransition{
+  class TransitionV implements Visitors.ITransition{
     public Object forTransition(LinkedList source,
 				Expr guard,
 				LinkedList target) throws CheckException {
@@ -365,7 +370,7 @@ public class Typecheck {
    *  non is allowed to be a nil-reference. Furthermore the type
    *  of the value must coincide with the declared type.
    */
-  public class DeclarationV implements Visitors.IDeclaration{
+  class DeclarationV implements Visitors.IDeclaration{
     public Object forDeclaration(Variable var, Type type, Constval val)
       throws CheckException {
       try{
@@ -393,7 +398,7 @@ public class Typecheck {
    *  the
    */
 
-  public class TypeV implements Visitors.IType{
+  class TypeV implements Visitors.IType{
     public Object forIntType() { 
       return new IntType();}
 
@@ -414,6 +419,11 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.25  2002/07/05 18:08:06  swprakt
+//    I added the visitor wrapper for typechecking SFC's
+//
+//    [Steffen]
+//
 //    Revision 1.24  2002/07/05 16:50:54  swprakt
 //    ok
 //
@@ -515,6 +525,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.25 2002-07-05 18:08:06 swprakt Exp $
+//    $Id: Typecheck.java,v 1.26 2002-07-05 19:10:22 swprakt Exp $
 //
 //---------------------------------------------------------------------

@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.88 2002-07-05 16:00:48 swprakt Exp $
+## $Id: Errors.txt,v 1.89 2002-07-05 19:12:06 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,33 +34,26 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-Error 49:   parser error (even if raised by type checker)
- class:     debatable, precedence is no nice
- package:   utils.parser
- status:    reported, Steffen, 5.7.2002
- description: 
-(1 <= 2) or  (-1 = (-2 * 4)) =>[B_expr] 
-|   [B_expr] 
-|   |   [Constval] 1
-|   |   <LEQ> 
-|   |   [Constval] 2
-|   <OR> 
-|   [U_Expr] 
-|   |   <MINUS> 
-|   |   [B_expr] 
-|   |   |   [Constval] 1
-|   |   |   <EQ> 
-|   |   |   [U_Expr] 
-|   |   |   |   <MINUS> 
-|   |   |   |   [B_expr] 
-|   |   |   |   |   [Constval] 2
-|   |   |   |   |   <TIMES> 
-|   |   |   |   |   [Constval] 4
-here we go
-General exception of the checks-package
-ParserTest: java.lang.ClassCastException: java.lang.ClassCastException
-make: *** [test] Error 1
 
+Errors 51:    cast
+ package:     checks
+ class:       fatal
+ status:      reported, 5.7.02, Steffen
+ description:        SFC sfc1 = Example.getExample1();
+                     slime.absynt.Type t = tc.check(sfc1);
+              gives
+                general typecheck exception
+                ParserTest: java.lang.ClassCastException: java.lang.ClassCastException
+
+Error 50:     precedence
+ package:     sfc-parser
+ class:       debatable
+ status:      reported, 5.7.02, Steffen
+ description: (code inspection):
+              lower the precendence of LEQ LT etc lower than +/*-.
+              precedence left MUL, DIV;				   // *,/; MOD=%
+              precedence left AND, OR, NEQ, LT, LEQ, GT, GEQ, EQ;	   // &&; ||, !=, <,<=,>,>=,==
+	      (cf.also #49)
 
 
 Error 46:   typecheck error
@@ -120,7 +113,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.88 2002-07-05 16:00:48 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.89 2002-07-05 19:12:06 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -302,6 +295,39 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 49:   parser error (even if raised by type checker)
+ class:     debatable, precedence is no nice
+ package:   utils.parser
+ status:    reported, Steffen, 5.7.2002, repaired: I changed the order
+            of the precedences in the Exp.cup file
+ description: 
+(1 <= 2) or  (-1 = (-2 * 4)) =>[B_expr] 
+|   [B_expr] 
+|   |   [Constval] 1
+|   |   <LEQ> 
+|   |   [Constval] 2
+|   <OR> 
+|   [U_Expr] 
+|   |   <MINUS> 
+|   |   [B_expr] 
+|   |   |   [Constval] 1
+|   |   |   <EQ> 
+|   |   |   [U_Expr] 
+|   |   |   |   <MINUS> 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Constval] 2
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 4
+here we go
+General exception of the checks-package
+ParserTest: java.lang.ClassCastException: java.lang.ClassCastException
+make: *** [test] Error 1
+
+
+
+
 
 Error 48:   parse error 
  class:     fatal
