@@ -9,7 +9,7 @@ Francesco Donini: d0na@libero.it                    (Checks)
 Fabrizio Picchiarecci: f.picchiarelli@tiscalinet.it (Checks)
 Immo Grabe: immograbe@gmx.de                        (Simulator)
 Marco Wendel: Marco.Wendel@gmxpro.net               (Parser)
-Andreas Niemann: ani@informatik.uni-kiel.de         (Plazierung)
+Andreas Niemann: ani@informatik.uni-kiel.de         (Layout)
 
 
 ----?
