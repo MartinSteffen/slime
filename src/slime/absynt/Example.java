@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * 
  * The class offers an example for a program int abstract syntax.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Example.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $	
+ * @version $Id: Example.java,v 1.3 2002-06-07 15:05:06 swprakt Exp $	
  */
 
 
@@ -21,6 +21,31 @@ public class Example{
 	LinkedList sal1 = new LinkedList();
 	sal1.addLast(new StepAction(new Nqual(), new String("act1")));
 	return sal1;
+    };
+
+    public static B_expr getExampleExpression1() {
+	BoolType btype = new BoolType();
+	Constval cfalse = new Constval (false);
+	Variable v_x = new Variable ("x", btype);
+	Variable v_y = new Variable ("y", btype);
+	B_expr e = new B_expr(v_x,Expr.AND,v_y);
+	return e;
+    };
+
+    public static LinkedList getExampleSAP1() {
+	BoolType btype = new BoolType();
+	Constval cfalse = new Constval (false);
+	Variable v_x = new Variable ("x", btype);
+	Variable v_y = new Variable ("y", btype);
+	Assign stmt1 =                 
+	    new Assign(v_x,                    // x := false
+		       new Constval(false));
+	Assign stmt2 =                 
+	    new Assign(v_y, v_x);                   // y := x
+	LinkedList sap = new LinkedList();
+	sap.addLast(stmt1);
+	sap.addLast(stmt2);
+	return sap;
     };
 
     public static SFC getExample1(){
@@ -216,9 +241,12 @@ public class Example{
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Example.java,v 1.2 2002-04-16 19:02:54 swprakt Exp $
+//	$Id: Example.java,v 1.3 2002-06-07 15:05:06 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2002/04/16 19:02:54  swprakt
+//	OK
+//	
 //	Revision 1.1  2002/04/16 13:53:48  swprakt
 //	Slime initial version
 //	
