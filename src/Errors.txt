@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.175 2002-07-10 06:41:45 swprakt Exp $
+## $Id: Errors.txt,v 1.176 2002-07-10 06:49:55 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,15 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+Error 82:     user interaction
+ package:     gui
+ class:       public non-nicety
+ status:      reported, 10.7.02, Steffen
+ description: the user has no way to escape from the load-window
+               (`cancel' or ``close'')
+              (and it throws one null-exception after the other, cf. #80).
+	      The only way is to shoot down the window.
 
 Error 81:     main-class
  package:     gui/all
@@ -304,7 +313,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.175 2002-07-10 06:41:45 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.176 2002-07-10 06:49:55 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
