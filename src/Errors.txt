@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.87 2002-07-05 15:56:20 swprakt Exp $
+## $Id: Errors.txt,v 1.88 2002-07-05 16:00:48 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,11 +34,12 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-Error 49:   type check error
- class:     fatal
- package:   checks
+Error 49:   parser error (even if raised by type checker)
+ class:     debatable, precedence is no nice
+ package:   utils.parser
  status:    reported, Steffen, 5.7.2002
- description: (1 <= 2) or  (-1 = (-2 * 4)) =>[B_expr] 
+ description: 
+(1 <= 2) or  (-1 = (-2 * 4)) =>[B_expr] 
 |   [B_expr] 
 |   |   [Constval] 1
 |   |   <LEQ> 
@@ -119,7 +120,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.87 2002-07-05 15:56:20 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.88 2002-07-05 16:00:48 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -299,19 +300,6 @@ Error 1:  parser warnings
 	        (cf. lex/yacc output: 10 terminals declared but not used)
 
 
-Errors47:   parser error
- class:     fatal 
- package:   utils/parser
- status:    reported: 5.7.02, Steffen
- description:  description: I thought the error was repaired:
-
-              1*2+3 =>[B_expr] 
-                  |   [Constval] 1
-                  |   <TIMES> 
-                  |   [B_expr] 
-                  |   |   [Constval] 2
-                  |   |   <PLUS> 
-                  |   |   [Constval] 3
 
 -------------------- Repaired errors -------------------------
 
