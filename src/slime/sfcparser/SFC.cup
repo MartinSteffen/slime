@@ -15,11 +15,16 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.9 2002-06-28 08:03:12 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.10 2002-06-29 21:23:07 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.9  2002/06/28 08:03:12  swprakt
+ * old versions did conflict with "global" Makefile
+ * in src/slime, albeight the GLOBAL Makefile should
+ * exist in src. (mwe)
+ *
  * Revision 1.8  2002/06/27 20:20:18  swprakt
  * The SFCSymbols.EOF symbol has is an int with value 0.
  * The YYlex.EOF is a symbol with int value -1.
@@ -383,20 +388,20 @@ non terminal    LinkedList                      processlist;
 non terminal    LinkedList                      procidlist;
 
 /// Precedences and Associativity
-// precedence left BOOLTYPE, INTTYPE;                         // bool, int, string
-// precedence left IDENTIFIER;				   // Strings
-// precedence left INPUT, OUTPUT;                             // input, output 
+ precedence left BOOLTYPE, INTTYPE;                         // bool, int, string
+ precedence left IDENTIFIER;				   // Strings
+ precedence left INPUT, OUTPUT;                             // input, output 
 precedence left ADD, SUB;				   // +, -
 precedence left MUL, DIV;				   // *,/; MOD=%
 precedence left AND, OR, NEQ, LT, LEQ, GT, GEQ, EQ;	   // &&; ||, !=, <,<=,>,>=,==
 precedence left NOT;					   // !
-// precedence left ELSE, WHILE, REPEAT;			   // else, while, repeat
-// precedence left IF;					   // if
+ precedence left ELSE, WHILE, REPEAT;			   // else, while, repeat
+ precedence left IF;					   // if
 // precedence left LPFIELD, RPFIELD;			   // [,]
-// precedence left LPAREN;
-// precedence right RPAREN;				   // (,)
-// precedence left LPSET;
-// precedence right RPSET;			 	   // {,}
+ precedence left LPAREN;
+ precedence right RPAREN;				   // (,)
+ precedence left LPSET;
+ precedence right RPSET;			 	   // {,}
 
 
 // --------------------------------------------------------------------------- 

@@ -4,10 +4,13 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFCLex.java,v 1.7 2002-06-28 20:30:50 swprakt Exp $
+    * $Id: SFCLex.java,v 1.8 2002-06-29 21:23:07 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.11  2002/06/28 20:30:50  swprakt
+   /* updated package information
+   /*
    /* Revision 1.10  2002/06/28 20:01:08  swprakt
    /* Modified PrettyPrint for use with slime.absfc.SFCabtree,
    /* may now use it to debug Absfc2SFCConverter. I will try
