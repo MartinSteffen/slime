@@ -1,3 +1,25 @@
+########################################################
+## $Id: Snapshots,v 1.2 2002-07-07 07:58:04 swprakt Exp $
+########################################################
+
+This file contains local snapshots for the checks-subdirectory. 
+
+They are of _local_ use, only, since the are not sync'ed with the rest
+(except that one can use the date to recover the matching state of the
+rest). For snapshots of global importance, see <SLIME>/Snapshots.
+
+
+  o  verbosetypechecker1:
+	version of the typechecker that correctly works for 
+	the sfc1 example of the requirements and is sprinkled
+	with print's to see what's going on.
+       
+
+
+
+
+
+
 
 
 
