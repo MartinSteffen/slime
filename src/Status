@@ -1,5 +1,5 @@
 #########################################################################
-## $Id: Status,v 1.1 2002-05-08 11:40:00 swprakt Exp $
+## $Id: Status,v 1.2 2002-05-08 11:55:57 swprakt Exp $
 #########################################################################
 
 
@@ -9,12 +9,73 @@ Project-internal status file, currently informally formatted.
 ------------------------------------------------------------
 
 
-Discussed for the meeting at 8.5.02:
+For the meeting at 8.5.02:
 
    
-    general questions/Problems
+    general questions/problems:
+
 	- everyone content with the semantics?
 	- what to do with missing check-group?
+	- presentation of the workgroups?
+	- How did everyone used the additional time?
+	- when should we start integration?
+
+
+     specific questions:
+
+	- what about the conventions proposed by Marco Wendel (and
+	  discussed on the mailing list?
+  
+              package-namen, bzw. restruckturierung des Verzeichnisses.
+
+          > till when should it be done (if at all)?	
+	  > Gui should make the Manifest + jarrable package
+
+     o single groups:
+
+        - requirements: fomal semantics provided, no comments 
+	     from the groups yet.
+
+	- Gui: 
+
+	     > ssh/cvs access works now?
+	     > how to store programs?
+	     > 
+
+	- layout: stand-alone compilable!
+
+	- absynt: nothing new, if the checks are gone + if we
+	          are supposed to do something there, we propose
+	          to cancel the iterator stuff.
+
+	    proposed: 
+	        > ``input x'': not done
+   	        >  privat field + accessors: not done
+	        >  iterators: not done, proposal to cancel this
+
+            postponed (last time): 
+	        > cloneable/singleton?
+
+	- editor: 
+	      > everything's clear? we got no feedback as yet!
+	      > discuss with the gui, how gui invokes editor etc.
+	         and also with the other groups
+
+	- parser:
+	     > feedback: ok
+	     > promised: syntax proposal/example-program
+	   
+	
+	 
+       
+	
+  
+	
+
+
+	    
+
+
 	
 
 	
