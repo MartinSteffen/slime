@@ -1,18 +1,14 @@
-
-
 package slime.checks;
-
 import java.lang.*;
 import java.util.*;
 import slime.absynt.*;
 
 
 
-
 /** Type checker for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms"  Target =main> Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.34 2002-07-11 05:52:36 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.35 2002-07-11 09:18:11 swprakt Exp $
  *
  * <p>
  * It consists of the various typecheck errors together with the
@@ -52,11 +48,10 @@ public class Typecheck {
 
 
   public class TEnv {
-    // Hashmap is more efficient that Hashtable (but not thread safe)
     private Hashtable e = new Hashtable();  
     public void add (String s, Type t) throws DuplicatedBinding { 
       if (e.containsKey(s))
-	throw new DuplicatedBinding();
+	throw new DuplicatedBinding(s);  // the string is the key object
       e.put(s,t);
     }
 
@@ -90,22 +85,33 @@ public class Typecheck {
 
 
   private class DuplicatedBinding extends Exception { // not for users
-    String message = "Environments assume unique bindings";
-    public String getMessage(){return message;  }
+    private Object  key = null;  // we need to be general since it is  intended
+    // as an error of the Hashtable.
+    
+
+    String message     = "Environments assume unique bindings";
+    String explanation = "This exception indicates an internal type checker error, indicating that\n the enviroment contains a duplicated binding. \n I will never publicly thrown.";
+    private DuplicatedBinding(Object _key) {
+      key = _key;
+    }
+    public String getMessage(){
+      return message;  }
+
+    public Object getKey(){
+      return key;
+    }
   }
 
-
-  public class  DuplicatedDeclaration extends TypecheckException {
-    String message = "Variable bound twice.";
-    String explanation = "No variable must be bound more than once";
-    public String getMessage(){return message;  }
-  }
 
   public  class NonuniqueDeclaration extends TypecheckException {
     String explanation = "No variable may occur twice int the declaration list";  
+    String message  = "Variable bound twice.";
+    public NonuniqueDeclaration(String varname) {
+      message  = "Variable " + varname + " bound twice.";
+    }
     public String getMessage(){return message;  }
   }
-    
+  
   public class UnbooleanGuard extends TypecheckException {
     String explanation = "The guard of a transition must be an expression\n of boolean type. This error indicates the occurrence of a\n well-typed guard-expression, but with a type other than a boolean." ;
     public String getMessage(){return message;  }
@@ -416,7 +422,13 @@ public class Typecheck {
 	    throw  new TypeMismatch();
 	  }
 	// --- add the binding x:T to the enviroment.
-	env.add(var.name, t_dec);  // 1: key, 2: value
+	try {
+	  env.add(var.name, t_dec);  // 1: key, 2: value
+	}
+	catch
+	  (DuplicatedBinding ex) {
+	  throw new NonuniqueDeclaration((String)ex.getKey());
+	}
 	return new UnitType(); 
       }
       catch (Exception e){
@@ -452,6 +464,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.34  2002/07/11 05:52:36  swprakt
+//    test for watches.
+//
 //    Revision 1.33  2002/07/07 14:57:45  swprakt
 //    ok for today [Steffen]
 //
@@ -599,6 +614,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.34 2002-07-11 05:52:36 swprakt Exp $
+//    $Id: Typecheck.java,v 1.35 2002-07-11 09:18:11 swprakt Exp $
 //
 //---------------------------------------------------------------------
