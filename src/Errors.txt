@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.34 2002-06-29 15:18:28 swprakt Exp $
+## $Id: Errors.txt,v 1.35 2002-06-29 15:22:47 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -56,7 +56,8 @@ Error 24:    compilation broken
 	     
              and in a workdir without the checked-in javacup and JLEX.
 	     different combinations of this choice are untested for
-	     compilability.
+	     compilability. Cause of error unknown
+	     
 
 Error 18(2):   compilation broken (re-entered from repaired section)
   package:     all
