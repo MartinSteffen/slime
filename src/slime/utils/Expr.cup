@@ -1,0 +1,177 @@
+
+/**
+ * Grammar (yacc) definition of the Expressions in SFC/SAP's.
+ * Offers the methods parseExpr 
+ *
+ * @author Karsten Stahl, Martin Steffen
+ * @version $Id: Expr.cup,v 1.1 2002-06-10 14:41:57 swprakt Exp $
+ *
+ * The grammar definition contains 4 parts:
+ *    -  initialization declarations and how to generate the parser
+ *    -  declaration of terminals and non-terminals
+ *    -  precedence, associativity
+ *    -  grammar proper
+ **/
+
+
+
+/*  ---- Preliminaries to set up and use the scanner.  ---- */
+
+
+package utils;
+
+import java_cup.runtime.*;
+import java.lang.String;
+import absynt.*;
+import utils.*;
+import java.util.*;
+import java.io.*;
+
+
+/**
+* The following 4 (optional) entries are for user-code insertions to the generated parser:
+*   - init:   executed before start parsing
+*   - scan:   how the parser asks for the next token
+*   - action: code will be placed in the action class. Used as auxiliary
+*             routines usable in the actions of the grammar.
+*   - parser: code will be _directly_ placed in the parser class
+**/
+
+
+// init with {: io.scanner.init(); :}; 
+// scan with {: return scanner.next_token(); :};  // equivalent to the default
+// action code {: :}
+
+
+// ---------------------------------------------------------------------------
+
+parser code {:
+  Yylex lexer;
+
+  public void report_fatal_error(String message, Object info) throws ParseException{
+    System.err.println(message);
+    throw new ParseException(message);
+  }
+  
+  public void report_error(String message, Object info){
+    System.err.println("[modul parser2] "+message);
+  }
+  
+  public void syntax_error(Symbol cur_token){
+    report_error("Syntax error! current symbol: "+cur_token, null);
+  }
+  
+  public void unrecovered_syntax_error(Symbol cur_token) throws ParseException{
+    done_parsing();       
+    report_fatal_error("[module parser2] fatal parsing error", null);
+  }
+
+
+   /** 
+    * public methods to parse a string
+    *
+    * @parameter 
+    * _sap - string to parse
+    * @optional
+    * _decl, _sfc - declaration list or sfc to use already given variables
+    * @return 
+    * abstract syntax tree with absynt.sfc as root
+    * @throws 
+    * java.Exception when broken.
+    */
+
+  public absynt.Expr parseExpr(java.lang.String _e) throws Exception {
+    lexer   = new Yylex(new StringReader(_e));
+    setScanner(lexer);
+    absynt.Expr e = (absynt.Expr)parse().value;
+    return e;
+  };
+
+  :}
+
+
+/* ------ Declaration of terminals and non-terminals ----- */
+/** 
+ * The choice of names for the non-terminals is directly inspired
+ * byte the extended abstract grammar.
+ */ 
+terminal         ASSIGN;
+terminal         LPAREN, RPAREN, COMMA, SEM, COLON;
+terminal         SKIP;
+terminal         INT, BOOL, NEQ, OR, PLUS, TIMES;
+terminal         AND, DIV, EQ, GEQ, GREATER, LEQ, LESS, MINUS, NEG;
+terminal         TRUE, FALSE;
+
+terminal String  IDENT;
+terminal Integer INTEGER;
+
+non terminal    absynt.Constval   constval;
+non terminal    LinkedList        sap;
+non terminal    absynt.Stmt       stmt;
+non terminal    absynt.Assign     assign;
+non terminal    absynt.Expr       expr;
+non terminal    absynt.Variable   var;
+non terminal    Integer           op;    // int does not work! RESULT must be an object
+
+
+/* ---        precedences and associativity ------- */
+
+
+precedence left PLUS, MINUS;
+precedence left TIMES, DIV;
+precedence left AND, OR, NEQ, LESS, LEQ, GREATER, GEQ, EQ;
+precedence left NEG;
+
+
+/* -----      The grammar proper ----------------- */
+start with expr;
+
+
+
+
+/** 
+ * Produktion:
+ * Program   ::= "program" IDENT "[" "]" ""
+ **/
+
+
+
+expr            ::= op:o expr:e
+                    {: RESULT = new absynt.U_expr(o.intValue(),e); :}
+                 |  expr:e1 op:o expr:e2
+                    {: RESULT = new absynt.B_expr(e1,o.intValue(),e2); :}
+                 |  LPAREN expr:e RPAREN
+                    {: RESULT = e; :}
+                 |  var:v
+                    {: RESULT = v; :}
+                 | constval:v
+                    {: RESULT = v; :}
+  ;
+
+op              ::= PLUS     {: RESULT= new Integer(absynt.Expr.PLUS); :}
+                 |  MINUS    {: RESULT= new Integer(absynt.Expr.MINUS); :}
+                 |  TIMES    {: RESULT= new Integer(absynt.Expr.TIMES); :}
+                 |  DIV      {: RESULT= new Integer(absynt.Expr.DIV); :}
+                 |  AND      {: RESULT= new Integer(absynt.Expr.AND); :}
+                 |  OR       {: RESULT= new Integer(absynt.Expr.OR); :}
+                 |  NEG      {: RESULT= new Integer(absynt.Expr.NEG); :}
+                 |  LESS     {: RESULT= new Integer(absynt.Expr.LESS); :}
+                 |  GREATER  {: RESULT= new Integer(absynt.Expr.GREATER); :}
+                 |  LEQ      {: RESULT= new Integer(absynt.Expr.LEQ); :}
+                 |  GEQ      {: RESULT= new Integer(absynt.Expr.GEQ); :}
+                 |  EQ       {: RESULT= new Integer(absynt.Expr.EQ); :}
+                 |  NEQ      {: RESULT= new Integer(absynt.Expr.NEQ); :}
+  ;
+
+var             ::= IDENT:v
+                     {: RESULT = new absynt.Variable(v); :}
+  ;
+
+constval        ::= TRUE 
+                    {:  RESULT = new absynt.Constval(true);  :}
+                 |  FALSE
+                    {:  RESULT = new absynt.Constval(false);  :}
+                 |  INTEGER:i 
+                    {:  RESULT = new absynt.Constval(i.intValue());  :}
+  ;
+

@@ -8,7 +8,7 @@ import absynt.*;
 
 /** Standalone file to test the parser on input files
  * @author Martin Steffen, Karsten Stahl
- * @version $Id: TestParser.java,v 1.2 2002-06-08 16:12:28 swprakt Exp $
+ * @version $Id: TestParser.java,v 1.3 2002-06-10 14:41:57 swprakt Exp $
  *
  * ============== //-->
  */
@@ -22,13 +22,22 @@ public class TestParser {
             utils.Parser parser = new utils.Parser();
             PrettyPrint pp = new PrettyPrint();
             System.out.println("Input SAP program:");
-            String _sap = new String();
+            String _s = new String();
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            _sap = in.readLine();
-            System.out.println("parse: " + _sap);
-            LinkedList sap = parser.parseSAP(_sap);
+            _s = in.readLine();
+            System.out.println("parse: " + _s);
+            LinkedList sap = parser.parseSAP(_s);
             System.out.println("*** Test: pretty print the result of parsing ***");
             pp.printSAP(sap);
+
+            utils.ExprParser eparser = new utils.ExprParser();
+            System.out.println("Input expression:");
+            _s = in.readLine();
+            System.out.println("parse: " + _s);
+            absynt.Expr e = eparser.parseExpr(_s);
+            System.out.println("*** Test: pretty print the result of parsing ***");
+            pp.print(e);
+
         } catch (ParseException e){
             System.err.println(e.toString());
             System.exit(1);

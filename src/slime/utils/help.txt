@@ -9,13 +9,36 @@ is only used for debugging purposes.  The public methods are
   print(...)		  most of its parts
   printSAP(LinkedList)	for SAP programs
 
+in class
 
-     Parser
-     ******
+  PrettyPring.class
+
+
+
+     Parser for SAP programs
+     ***********************
 
 The parser can be used to parse SAP programs given as strings.  The public
 methods for that is
 
   LinkedList  parseSAP(String)
+
+in class
+
+  Parser.class
+
+
+
+     Parser for expressions
+     **********************
+
+This parser parses expressions used in SAP programs and SFC guards given as
+strings.  The public methods for that is
+
+  absynt.Expr  parseExpr(String)
+
+in class
+
+  ExprParser.class
 
 

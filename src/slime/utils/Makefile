@@ -12,27 +12,33 @@ debug:	; make JAVACOPTS="-g" all
 %.class:	%.java
 		javac $(JAVACOPTS) $<
 
-TestParser.class: Parser.class TestParser.java
+TestParser.class: Parser.class TestParser.java ExprParser.class
 	javac TestParser.java
 
-Parser.class:	Parser.java Yylex.java ParseException.java
+Parser.class: Parser.java Yylex.java ParseException.java
 	javac Parser.java sym.java Yylex.java ParseException.java
 
-Yylex.java:		SAP.lex
+ExprParser.class: ExprParser.java ParseException.java
+	javac ExprParser.java sym.java Yylex.java ParseException.java
+
+Yylex.java: SAP.lex
 	java JLex.Main SAP.lex >$(LEXLOGFILE)
 	mv SAP.lex.java Yylex.java
 
-Parser.java:	SAP.cup
+Parser.java: SAP.cup
 	java java_cup.Main -symbols sym -parser Parser -nonterms -package $(PACKAGE) SAP.cup 
+
+ExprParser.java: Expr.cup
+	java java_cup.Main -symbols sym -parser ExprParser -nonterms -package $(PACKAGE) Expr.cup
 
 tests: 
 	cd test; make all
 
 clean:
-	\rm -f *.class *~ Yylex.java Scanner.lex.java sym.java Parser.java $(LEXLOGFILE) $(CUPLOGFILE)
+	\rm -f *.class *~ Yylex.java Scanner.lex.java sym.java Parser.java ExprParser.java $(LEXLOGFILE) $(CUPLOGFILE)
 
 
-localdoc:	parser.java	sym.java
+localdoc: Parser.java ExprParser.java sym.java
 	javadoc  -version -author -d $(LOCALDOCDIR) *.java
 
 www:
@@ -41,6 +47,9 @@ www:
 
 # ------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 1.3  2002/06/07 15:04:17  swprakt
+#	added parser for SAP programs, added function printSAP() to PP
+#	
 # -------------------------------------------------------------------	
 
 
