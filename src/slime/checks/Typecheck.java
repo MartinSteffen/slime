@@ -8,7 +8,7 @@ import slime.absynt.*;
 /** Type checker for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms"  Target =main> Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.35 2002-07-11 09:18:11 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.36 2002-07-11 10:00:51 swprakt Exp $
  *
  * <p>
  * It consists of the various typecheck errors together with the
@@ -104,7 +104,7 @@ public class Typecheck {
 
 
   public  class NonuniqueDeclaration extends TypecheckException {
-    String explanation = "No variable may occur twice int the declaration list";  
+    String explanation = "No variable may occur twice in the declaration list.";  
     String message  = "Variable bound twice.";
     public NonuniqueDeclaration(String varname) {
       message  = "Variable " + varname + " bound twice.";
@@ -114,25 +114,40 @@ public class Typecheck {
   
   public class UnbooleanGuard extends TypecheckException {
     String explanation = "The guard of a transition must be an expression\n of boolean type. This error indicates the occurrence of a\n well-typed guard-expression, but with a type other than a boolean." ;
+    String message = "non-boolean guard.";
     public String getMessage(){return message;  }
   }
     
   public class UndeclaredVariable extends TypecheckException{
     String explanation = "Each variable occuring int a program must be\n covered by a type declaration for this variable where the declaration\n is unique";
+    UndeclaredVariable (String varname) {
+      message = "undeclared variable " + varname + ".";
+    }
     public String getMessage(){return message;  }
     }
 
 
   public  class IncompleteDeclaration extends TypecheckException{
     String explanation = "A variable declaration consists of three parts: \n 1) variable name, 2) a type, and 3), a constant value.\n If one of them is the missing (i.e., nil), this error is raised.";
+    String message = "incomplete declaration.";
     public String getMessage(){return message;  }
   }
 
   public class NoUsertype extends TypecheckException{
     String message = "Not a user type";
     String explanation = "The type is not allowed for source programs, it's for\n type checker internal use, only."; 
+    public NoUsertype (String typename) {
+      message  = typename + " is not a user type";
+    }
     public String getMessage(){return message;  }
   }
+
+  public class MissingType extends TypecheckException{
+    String message = "missing type in declaration";
+    String explanation = "Since we require, that a declaration contains a type,\n i.e., the type checker doesn't infer any missing types, it is not allowed that the ``undefined'' type\n occurs in an declaration.";
+    public String getMessage(){return message; } 
+  }
+
 
   public class TypeMismatch extends TypecheckException{
     String message = "Type mismatch";
@@ -344,7 +359,7 @@ public class Typecheck {
     public Object forVariable(String s, Type t) throws CheckException {
       Type t_dec = env.lookup(s);
       if (t_dec == null)
-	throw new UndeclaredVariable();
+	throw new UndeclaredVariable(s);
       return t_dec;
     }
         
@@ -415,7 +430,14 @@ public class Typecheck {
 	  throw new IncompleteDeclaration();
 	Type t_dec = (Type)(type.accept(new TypeV())); // declared type
 	if (t_dec instanceof UnitType)
-	  throw new NoUsertype();
+	  throw new NoUsertype(" ``unit''");
+	if (t_dec instanceof UndefType)
+	  throw new MissingType();
+	// Undef-Type is omitted, it might be that, when relaxing the 
+	// requirements, a declaration might omit the type when 
+	// it can be inferred. The parser would then insert
+	// first undef as type. Currently, this error should never
+	// be raised.
 	Type t_act = (Type)(val.accept(new ExprV()));  // actual type
 	if (!(t_dec.equals(t_act)))
 	  {
@@ -464,6 +486,16 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.35  2002/07/11 09:18:11  swprakt
+//    The exceptions get more expressive. message + explanation are
+//    polished, also message is made dependent on the argument (ie.
+//    dynamic). The change is not yet finished.
+//
+//    Also the exception DuplicatedDeclaration is removed, it
+//    means the same as NonuniqueDeclaration.
+//
+//    [Steffen]
+//
 //    Revision 1.34  2002/07/11 05:52:36  swprakt
 //    test for watches.
 //
@@ -614,6 +646,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.35 2002-07-11 09:18:11 swprakt Exp $
+//    $Id: Typecheck.java,v 1.36 2002-07-11 10:00:51 swprakt Exp $
 //
 //---------------------------------------------------------------------
