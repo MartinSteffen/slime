@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.105 2002-07-06 10:27:37 swprakt Exp $
+## $Id: Errors.txt,v 1.106 2002-07-06 11:16:46 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,7 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
 
 
 
@@ -136,7 +137,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.105 2002-07-06 10:27:37 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.106 2002-07-06 11:16:46 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
