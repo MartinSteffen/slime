@@ -14,6 +14,8 @@
                assign ::=  var        : variable
                            val        : expr
              variable ::=  name       : string
+	                   isinput    : boolean
+			   isoutput   : boolean
                            type       : type
      action_qualifier ::=  Nqual                            (* may be extended *)
 
