@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.28 2002-06-27 16:39:14 swprakt Exp $
+## $Id: Errors.txt,v 1.29 2002-06-28 10:22:45 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -32,6 +32,27 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+
+Error 21: Lex Archives
+ package: general
+ status:  email-discussion, reported by Steffe, 27.6.02
+ class:   harmless (for compilation), questionable otherwise
+ description: The archive files src/JLex/Archive/1.1.1...
+          are not good for anything (and questionalble
+	  from various other points, see discussion).
+          
+
+Error 20: Makefile
+ package:  general (or gui), src/Makefile (>= Version 1.17).
+ status:   emailed, 27.6.02, Steffen
+ class:    fatal (but not for compilation)
+ description:  PACKAGEDIRS   = ....
+		Jlex\
+		java_cup\
+		java_cup.runtime
+	   does not work for make doc.
+
 
 Error 17:      structure
  package:      all
