@@ -6,8 +6,8 @@ import java.io.Serializable;
  * Type for integers (the name ``Int'' is already used by Java,
  * of course).
  * 
- * @author Initially provided by Martin Steffen.
- * @version $Id: IntType.java,v 1.4 2002-06-24 20:08:10 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+ * @version $Id: IntType.java,v 1.5 2002-07-10 16:53:57 swprakt Exp $
  */
 
 
@@ -18,7 +18,12 @@ public class IntType  extends Type implements Serializable {
   public Object accept (Visitors.IType ask) throws Exception {
     return ask.forIntType();
   }
+
+  public boolean equals (Type t) {
+    return  (t instanceof  IntType);
+  }
 }
+
 
 
 
@@ -27,9 +32,15 @@ public class IntType  extends Type implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: IntType.java,v 1.4 2002-06-24 20:08:10 swprakt Exp $
+//	$Id: IntType.java,v 1.5 2002-07-10 16:53:57 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2002/06/24 20:08:10  swprakt
+//	Types extended with visitor methods,
+//	also extended is the type ckecker, which is a visitor to the absynt.
+//	
+//	[Steffen]
+//	
 //	Revision 1.3  2002/06/12 18:51:55  swprakt
 //	reorganization of the package-structure
 //	
