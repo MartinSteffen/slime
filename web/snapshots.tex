@@ -1,48 +1,56 @@
-\section*{Baselines}
-\label{sec:Baselines}
+\section*{Snapshots}
+\label{sec:snapshots}
 
 
-Die \emph{Baselines} oder \emph{Snapshots} sind hier zur schnelleren
-Referenz als \emph{Javaarchiv} \texttt{slime\_v[x].jar} festgehalten, wobei
-\texttt{[x]} die Nummber des Schnappschusses ist. Als Entwickler mit
-Zugriff auf das Quellcoderepositorium kann man die Entwicklungsschritte sie
-natürlich mittels \cvs{} wieder zurückholen. Zum Ausführen der Archivs
-speichere man die Datei \texttt{slime\_v[x].jar} an einen geeigneten Platz,
-und rufe
+The \emph{baselines} or \emph{snapshots} are archived here for quick
+reference as \texttt{slime\_v[x].jar}, where \texttt{[x]} is the number or
+the tag of the snapshot. Developers with access to the source repository
+can retrieve those snapshots of course with cvs.\footnote{The command is
+  \texttt{cvs update -r [tag]}. Be careful with this command, don't
+  generate development branches without knowing.}
+
+
+To \emph{execute} one of the archived snapshots, save it at some convenient
+place, set the classpath to point to the jar-archve, and invoke the
+interpreter, i.e., Java's virtual machine as indicated in the table below
+snapshot.
+
+For instance, after downloading, you can do
 
 \begin{verbatim}
-  java -classpath [geeigneter_platz]/slime_v[x].jar gui.Gui
-\end{verbatim}
-auf; alternativ kann man auch fest
-\begin{verbatim}
- export CLASSPATH=[geeigneter_platz]/slime_v[x].jar
-\end{verbatim}
-setzen, dann kann man sich die option \texttt{-classpath} schenken.
+  java -classpath ./slime_v[x].jar <command>} 
 
+\end{verbatim}
+to start the tool. Alternatively, you can set the
+\texttt{CLASSPATH}-variable appropriatly, in which case the
+\texttt{-classpath}-option is not needed.
 
 \medskip
 
-\iffalse
+
 \begin{tabular}{llll}
-  3. & \url{baselines/slime\_v3.0.jar}{Baseline 3}
+  \\\hline
   &
-  Parser an Bord
+  archive/date
   &
-  1. Juli 2001
+  explanation
+  &
+  command
+  \\\hline
+  2. & \url{baselines/snot\_vsecond.compilation-sep.jar}{9. July 2002}
+  &
+  second compilation (separately)
+  &
+  \texttt{java slime.editor.EditorInFrame}
   \\
-  2. & \url{baselines/snot\_v2.0.jar}{Baseline 2}
-  &
-  Simulator an Bord
-  &
-  13. Juni 2001
-  \\
-  1. & \url{baselines/snot\_v1.0.jar}{Baseline 1}
-  &
-  erste Gesamtkompilation
-  &
-  5. Juni 2001
+%  1. & 
+%  &
+%  first compilation of all packages
+%  &
+%  3. July 2002
 \end{tabular}
-\fi
+
+
 
 
 %%% Local Variables: 
