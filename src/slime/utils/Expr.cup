@@ -4,7 +4,7 @@
  * Offers the methods parseExpr 
  *
  * @author Karsten Stahl, Martin Steffen
- * @version $Id: Expr.cup,v 1.4 2002-07-04 15:18:23 swprakt Exp $
+ * @version $Id: Expr.cup,v 1.5 2002-07-04 15:32:32 swprakt Exp $
  *
  * The grammar definition contains 4 parts:
  *    -  initialization declarations and how to generate the parser
@@ -169,20 +169,6 @@ expr ::=
 | constval:v   {: RESULT = v; :}
   ;
 
-op              ::= PLUS     {: RESULT= new Integer(slime.absynt.Expr.PLUS); :}
-                 |  MINUS    {: RESULT= new Integer(slime.absynt.Expr.MINUS); :}
-                 |  TIMES    {: RESULT= new Integer(slime.absynt.Expr.TIMES); :}
-                 |  DIV      {: RESULT= new Integer(slime.absynt.Expr.DIV); :}
-                 |  AND      {: RESULT= new Integer(slime.absynt.Expr.AND); :}
-                 |  OR       {: RESULT= new Integer(slime.absynt.Expr.OR); :}
-                 |  NEG      {: RESULT= new Integer(slime.absynt.Expr.NEG); :}
-                 |  LESS     {: RESULT= new Integer(slime.absynt.Expr.LESS); :}
-                 |  GREATER  {: RESULT= new Integer(slime.absynt.Expr.GREATER); :}
-                 |  LEQ      {: RESULT= new Integer(slime.absynt.Expr.LEQ); :}
-                 |  GEQ      {: RESULT= new Integer(slime.absynt.Expr.GEQ); :}
-                 |  EQ       {: RESULT= new Integer(slime.absynt.Expr.EQ); :}
-                 |  NEQ      {: RESULT= new Integer(slime.absynt.Expr.NEQ); :}
-  ;
 
 var             ::= IDENT:v
                      {: RESULT = new slime.absynt.Variable(v); :}
