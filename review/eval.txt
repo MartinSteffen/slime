@@ -19,6 +19,22 @@ raw list.
 
 - discipline/professionalism/priorities
 
+- if there is an ``deadly'' simple error, the reaction should be:
+
+     > let's fix it  fast, now and make a good solution later, 
+       without further extending the damage or forcing others
+       and a local fix is good for some time
+   
+  and not:
+
+     > let's see who is guilty (it does not matter, everyone makes errors,	
+                                it becomes a matter if it's done on purpose)
+     > let's discuss it at the time being _what the personally preferred fix is,
+       or what the ultimate best fix is, but keep it on the list, and
+       fix it together.
+
+  
+
 - communication, no discussions, no feedback, only flame wars
 
 - checking in stuff revant for all without prior communication (and more than once)
@@ -42,5 +58,5 @@ o make a time line, make a statistics
 
 
 ####################################################################################
-## $Id: eval.txt,v 1.7 2002-06-30 07:57:45 swprakt Exp $
+## $Id: eval.txt,v 1.8 2002-06-30 08:02:38 swprakt Exp $
 ####################################################################################
