@@ -12,7 +12,7 @@ import slime.utils.*;
 
 /** a console test tool
  * @author <a href="mailto:richter@thomas-richter.de">Thomas Richter</a>
- * @version $Id: CheckTestConsole.java,v 1.3 2002-06-19 20:14:16 swprakt Exp $
+ * @version $Id: CheckTestConsole.java,v 1.4 2002-06-19 23:00:10 swprakt Exp $
  */
 public class CheckTestConsole {
     
@@ -43,13 +43,20 @@ public class CheckTestConsole {
             System.err.println("scf != null");
         slime.checks.SFCVisitorChecks sFCVisitorChecks = new slime.checks.SFCVisitorChecks();
         try {
-            sFCVisitorChecks.isWellformed(sfc);
+            // sFCVisitorChecks.isWellformed(sfc);
         }
         catch (Exception e) {
             System.out.println(e.toString());
         }
         try {
-            sFCVisitorChecks.isWellTyped(sfc);
+            // sFCVisitorChecks.isWellTyped(sfc);
+        }
+        catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        try {
+            // sFCVisitorChecks.isEmpty(sfc);
+            sfc.accept(new SFCVisitorChecks());
         }
         catch (Exception e) {
             System.out.println(e.toString());
@@ -74,6 +81,10 @@ public class CheckTestConsole {
 ////////////////////////////////////////////////////////////////
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.3  2002/06/19 20:14:16  swprakt
+//    Checks -> SFCVisitorChecks [Thomas Richter]
+//    isEmpty [Thomas Richter]
+//
 //    Revision 1.2  2002/06/19 12:18:26  swprakt
 //    *** empty log message ***
 //
