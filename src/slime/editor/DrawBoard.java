@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.2 2002-05-30 13:03:52 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.3 2002-06-03 18:07:00 swprakt Exp $
  */
 
 final class DrawBoard extends Canvas
@@ -171,6 +171,7 @@ final class DrawBoard extends Canvas
     }
 
     public void paint(Graphics g) {
+	super.paint(g);
 	this.updateSize();
 	SFCPainter sfcPainter = new SFCPainter(this.eSFC);
 	sfcPainter.paintSFC(g);

@@ -14,10 +14,10 @@ import javax.swing.event.*;
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.2 2002-05-30 13:03:53 swprakt Exp $
+ * @version $Id: Editor.java,v 1.3 2002-06-03 18:07:00 swprakt Exp $
  */
 
-public final class Editor extends JFrame implements ChangeListener{
+public final class Editor extends JComponent implements ChangeListener{
 
     private static final int WIDTH = 100, HEIGHT = 300;
 
@@ -55,8 +55,8 @@ public final class Editor extends JFrame implements ChangeListener{
 	this.drawBoardTabbedPane.addChangeListener(this);
 	this.eSFCList = new ESFCList();
 	this.add(sfc);
-	this.initWindow("SFC-Editor v.0.2");
-	this.pack();
+	this.initWindow("SFC-Editor");
+	//this.pack();
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -94,16 +94,16 @@ public final class Editor extends JFrame implements ChangeListener{
     private void initWindow(String title) {
 	this.setSize(WIDTH, HEIGHT);
 	this.setBackground(Color.gray);
-	this.setTitle(title);
-	this.getContentPane().setLayout( new BorderLayout() );
-	this.getContentPane().add(this.getCenterPanel(), BorderLayout.CENTER);
-	this.getContentPane().add(this.getSouthPanel(), BorderLayout.SOUTH);
+	//this.setTitle(title);
+	this.setLayout( new BorderLayout() );
+	this.add(this.getCenterPanel(), BorderLayout.CENTER);
+	this.add(this.getSouthPanel(), BorderLayout.SOUTH);
 	this.setVisible(true);
-	this.addWindowListener( new WindowAdapter() {
-		public void windowClosing(WindowEvent e) {
-		    System.exit( 0 );
-		}
-	    });
+//  	this.addWindowListener( new WindowAdapter() {
+//  		public void windowClosing(WindowEvent e) {
+//  		    System.exit( 0 );
+//  		}
+//  	    });
     }
 
     private Panel getCenterPanel() {
@@ -258,7 +258,7 @@ public final class Editor extends JFrame implements ChangeListener{
 	    if (result == 0)
 		this.eSFC.addStep(((JTextField)message[1]).getText(), x, y);
 	}
-	this.pack();
+	//this.pack();
     }
     
     protected void evaluateMouseDragged(int x0, int y0, int x1, int y1) {
@@ -281,7 +281,7 @@ public final class Editor extends JFrame implements ChangeListener{
 		    position.x = (float)newX;
 		    position.y = (float)newY;
 		}
-		this.pack();
+		//this.pack();
 	    }
   	}    
     }
@@ -351,23 +351,23 @@ public final class Editor extends JFrame implements ChangeListener{
 				    this.eSFC.getTargetSteps());
 	    this.toggleMode(SOURCE_MODE);
 	}
-	this.pack();
+	//this.pack();
     }
 
-    public static void main(String[] argv) {
-	SFC sfc1 = Example.getExample1();
-	SFC sfc2 = Example.getExample1();
-	for (int i=0; i < sfc1.steps.size(); i++) {
-	    Step step = (Step)(sfc1.steps).get(i);
-	    step.pos = new Position((float)(i*40),40.0f);
-	}
-	for (int i=0; i < sfc2.steps.size(); i++) {
-	    Step step = (Step)(sfc2.steps).get(i);
-	    step.pos = new Position((float)(i*40),40.0f);
-	}
-	Editor editor = new Editor(sfc1);
-	editor.add(sfc2);
-    }
+//      public static void main(String[] argv) {
+//  	SFC sfc1 = Example.getExample1();
+//  	SFC sfc2 = Example.getExample1();
+//  	for (int i=0; i < sfc1.steps.size(); i++) {
+//  	    Step step = (Step)(sfc1.steps).get(i);
+//  	    step.pos = new Position((float)(i*40),40.0f);
+//  	}
+//  	for (int i=0; i < sfc2.steps.size(); i++) {
+//  	    Step step = (Step)(sfc2.steps).get(i);
+//  	    step.pos = new Position((float)(i*40),40.0f);
+//  	}
+//  	Editor editor = new Editor(sfc1);
+//  	editor.add(sfc2);
+//      }
 }
 
 
