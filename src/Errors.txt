@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.115 2002-07-06 12:52:37 swprakt Exp $
+## $Id: Errors.txt,v 1.116 2002-07-06 12:56:43 swprakt Exp $
 ###########################################################
 
 
@@ -40,6 +40,15 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+Error 57:     method interface
+ class:       programming style, could be made better
+ status:      reported 6.7.02, Steffen
+ package:     checks
+ description: the method checks for expression has an implicit
+              contextual parameter. Either make the 
+	      method unpublic, or add the parameter.
+ 
 
 
 Error 56:     typechecking
@@ -139,7 +148,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.115 2002-07-06 12:52:37 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.116 2002-07-06 12:56:43 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:

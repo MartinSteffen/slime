@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.27 2002-07-05 19:39:40 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.28 2002-07-06 12:53:48 swprakt Exp $
  */
 
 public class Typecheck {
@@ -50,9 +50,12 @@ public class Typecheck {
     // Hashmap is more efficient that Hashtable (but not thread safe)
     private HashMap e = new HashMap();  
     public void add (Variable x, Type t) throws DuplicatedBinding { 
+      System.out.println("TEnv.add " + x.name);
       if (e.containsKey(x))
 	throw new DuplicatedBinding();
-      e.put(x,t);}
+      e.put(x,t);
+      System.out.println("put into hashtable: " + x.name);
+    }
 
     public Type lookup (Variable x)  {
       return (Type)(e.get(x));}
@@ -123,6 +126,14 @@ public class Typecheck {
 			 LinkedList transs,
 			 LinkedList actions, 
 			 LinkedList declist) throws Exception {
+      // first come the declations
+      slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();
+      for (Iterator i = declist.iterator(); i.hasNext(); ) {
+	System.out.print (">> declaration to add: ");
+ 	Declaration d  = (Declaration)i.next();
+	pp.print(d);
+	d.accept(new DeclarationV());  // enlarges the environment
+      }
       istep.accept(new StepV());
       // each step int the list of steps must be well-typed
       // if one of the single steps fails, it will raise an error. 
@@ -136,16 +147,6 @@ public class Typecheck {
       for (Iterator i = transs.iterator(); i.hasNext(); ) {
  	Action a = (Action)i.next();
 	a.accept(new ActionV()); 
-      }
-      for (Iterator i = transs.iterator(); i.hasNext(); ) {
- 	Declaration d  = (Declaration)i.next();
-	d.accept(new DeclarationV()); 
-	try {
-	  env.add(d.var, d.type); // 1: key, 2: value
-	}
-	catch (DuplicatedBinding e) {
-	  throw new DuplicatedDeclaration(); 
-	}
       }
       return new UnitType();
     }
@@ -219,9 +220,32 @@ public class Typecheck {
    * called ``check''.
    */
 
+
+  /**
+   *  Type check routine sfcs, internally implemented as wrapper
+   *  around the visitor.
+   *  @return The type of the sfc. There is only one type
+   *  possible, which is the unit type. The unit type is not
+   *  among the user-available types; it's used for the type checker
+   *  only and means the sfc does not give back a value.
+   *  Besides that, calling <tt>check</tt>  has the side effect
+   *  of building up the environment of variable-type bindings,
+   *  when treating the list of declarations.
+   */
+
+  public slime.absynt.Type check (SFC s)  throws CheckException {
+    try {
+      slime.absynt.Type t = (Type)(s.accept(new SFCV()));
+      return t;
+    }
+    catch (Exception ex) {
+      throw (CheckException)(ex);}
+  }
+
   /**
    *  Type check routine for expressions, implemented as wrapper
    *  around the corresponding visitor.
+   *  @return 
    */
   public slime.absynt.Type check (Expr e)  throws CheckException {
     try {
@@ -232,14 +256,6 @@ public class Typecheck {
       throw (CheckException)(ex);}
   }
 
-  public slime.absynt.Type check (SFC s)  throws CheckException {
-    try {
-      slime.absynt.Type t = (Type)(s.accept(new SFCV()));
-      return t;
-    }
-    catch (Exception ex) {
-      throw (CheckException)(ex);}
-  }
 
   /** type checking visitor for expressions.
    */
@@ -265,7 +281,6 @@ public class Typecheck {
                     else throw new TypeMismatch();
                 }
                 else if ((o == Expr.AND) || (o == Expr.OR)) {
-		  System.out.println ("andor");
 		  if ((t_l instanceof BoolType) && (t_r instanceof BoolType))
 		    return new BoolType();
 		  else throw new TypeMismatch();
@@ -280,8 +295,8 @@ public class Typecheck {
                     throw new TypeMismatch();
             }
             catch (Exception e) {
-	      System.out.println("here we go");
-	      System.out.println(e.getMessage());
+	      //System.out.println("here we go");
+	      // System.out.println(e.getMessage());
 	      //	      throw (TypeMismatch)(e);  // probably wrong
 	      throw (TypecheckException)(e);  // probably wrong
             }
@@ -311,6 +326,7 @@ public class Typecheck {
         
     public Object forVariable(String s, Type t) throws CheckException {
       Type t_dec = env.lookup(new Variable(s));
+      // System.out.print ("tc: for variable " + s);
       if (t_dec == null)
 	throw new UndeclaredVariable();
       return t_dec;
@@ -372,8 +388,17 @@ public class Typecheck {
    *  of the value must coincide with the declared type.
    */
   class DeclarationV implements Visitors.IDeclaration{
-    public Object forDeclaration(Variable var, Type type, Constval val)
+    /** @return: a declaration has no return value. As side effect
+     *  the environment gets a new binding
+     */
+    public Object  forDeclaration(Variable var, Type type, Constval val)
       throws CheckException {
+      slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint();
+
+      System.out.println ("Typcheck.for declartion");
+      System.out.print (var.name + " ");
+      pp.print(type);
+      System.out.print (" " + val.val + "\n");
       try{
 	if ((var == null) || (type == null) || val == null)
 	  throw new IncompleteDeclaration();
@@ -381,11 +406,25 @@ public class Typecheck {
 	if (t_dec instanceof UnitType)
 	  throw new NoUsertype();
 	Type t_act = (Type)(val.accept(new ExprV()));  // actual type
+	// System.out.print ("actual/declared type");
+	//  pp.print (t_act);
+//  	pp.print (t_dec);
+//  	System.out.println ("?? " + t_act.equals(t_dec));
+//  	System.out.println ("instance = " + (t_act instanceof BoolType));
+//  	System.out.println ("instance = " + (t_dec instanceof BoolType));
+//  	System.out.println ("?? " + t_act.equals(t_act));
+//  	System.out.println ("?? " + t_dec.equals(t_act));
+//  	System.out.println ("?? " + t_dec.equals(t_act));
+//  	System.out.println ("?? " + t_act.equals(t_dec));
 	if (!(t_dec.equals(t_act)))
-	  throw  new TypeMismatch();
+	  {
+	    //	    System.out.print ("equal" + (new BoolType()).equals(new BoolType()));
+	    //	    System.out.print (">>not equal");
+	    throw  new TypeMismatch();
+	  }
 	// --- add the binding x:T to the enviroment.
-	env.add(var, t_dec);
-	return new Object();
+	env.add(var, t_dec);  // 1: key, 2: value
+	return new UnitType(); 
       }
       catch (Exception e){
 	throw ((CheckException)e);
@@ -420,6 +459,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.27  2002/07/05 19:39:40  swprakt
+//    call it a day [Steffen]
+//
 //    Revision 1.26  2002/07/05 19:10:22  swprakt
 //    *** empty log message ***
 //
@@ -529,6 +571,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.27 2002-07-05 19:39:40 swprakt Exp $
+//    $Id: Typecheck.java,v 1.28 2002-07-06 12:53:48 swprakt Exp $
 //
 //---------------------------------------------------------------------
