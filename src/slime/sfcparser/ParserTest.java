@@ -6,9 +6,14 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.1 2002-06-25 06:01:31 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.2 2002-06-26 06:33:04 swprakt Exp $
  * ---------------------------------------------------------------
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2002/06/25 06:01:31  swprakt
+ * added Absfc2SFCConverter Object and
+ * theConverter.getSFC(); missing return of SFC,
+ * possible not compilable...
+ *
  * Revision 1.1  2002/05/01 11:42:50  mwe
  * The commandline tool for testing the parsing
  * awfully neither a useful parser to test exists
@@ -48,7 +53,7 @@ public class ParserTest {
 		slime.sfcparser.SFCParser mySFCParser = new slime.sfcparser.SFCParser();
 		// mSFCParser.debug=1;
 		slime.absynt.absfc.SFCabtree absfctree = mySFCParser.parseFile( sfcfile );
-		Absfc2SFCConverter theConverter = new Absfc2SFCConverter( absfctree );
+		slime.sfcparser.Absfc2SFCConverter theConverter = new slime.sfcparser.Absfc2SFCConverter( absfctree );
 		slime.absynt.SFC theSFC = theConverter.getSFC();
 		// ***MORE*** 
 	    } // end of if-args-else

@@ -1,9 +1,12 @@
 ##########################
-# $Id: Makefile,v 1.1 2002-06-25 15:02:50 swprakt Exp $                       
+# $Id: Makefile,v 1.2 2002-06-26 06:33:04 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.1  2002/06/25 15:02:50  swprakt
+# missing files added
+#
 # Revision 1.2  2002/05/01 11:37:48  mwe
 # The Makefile now has an identity string and
 # a changelog
@@ -17,9 +20,12 @@ PACKAGE=slime.sfcparser
 DOCDIR=apidoc
 JLEXLOGFILE=JLex.log
 JCUPLOGFILE=JCup.log
-CLASSPATH=./java_cup.jar:./JLex.jar:./absynt.jar:./
-ECLASSPATH=./java_cup.jar:./JLex.jar:./absynt.jar:./sfclexer.jar:./absfc.jar:./
-XCLASSPATH=./sfcparser.jar:./absynt.jar:./
+CLASSPATH=../..
+#:../JLex.jar:./absynt.jar:./
+ECLASSPATH=../..
+#./java_cup.jar:./JLex.jar:./absynt.jar:./sfclexer.jar:./absfc.jar:./
+XCLASSPATH=../..
+#./sfcparser.jar:./absynt.jar:./
 
 ############# Compile Package SFCParser #############
 

@@ -3,15 +3,22 @@
  * Absfc2SFCConverter.java
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: Absfc2SFCConverter.java,v 1.1 2002-06-25 05:44:08 swprakt Exp $
+ * @version $Id: Absfc2SFCConverter.java,v 1.2 2002-06-26 06:33:03 swprakt Exp $
  *
  * Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.1  2002/06/25 05:44:08  swprakt
+ * Phase 2 des Parsers:
+ * Soll eine Konvertierung von slime.absynt.absfc.SFCabtree
+ * nach slime.absynt.SFC durchfuehren koennen. Weitere
+ * Details werden falls moeglich dann am 26.06.2002
+ * besprochen. (mwe@informatik.uni-kiel.de)
+ *
  *
  **/
 // --------------------------------------------------------------------
 
-package slime.absynt.absfc;
+package slime.sfcparser; // absynt.absfc;
 import java.util.LinkedList;
 import java.util.Iterator;
 // import java.util.Stack;
