@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Visitors for Slime abstract syntax (just for the fun of it)
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version  $Id: Visitors.java,v 1.9 2002-06-25 07:52:10 swprakt Exp $
+ * @version  $Id: Visitors.java,v 1.10 2002-06-25 08:01:17 swprakt Exp $
  */
 
 
@@ -26,6 +26,12 @@ public class Visitors {
   public interface IAction{
     public Object forAction(String a_name, LinkedList sap) throws Exception;
   }
+
+  public interface IStmt {
+    public Object forSkip() throws Exception;
+    public Object forAssign(Variable x, Expr e) throws Exception;
+  }
+    
 
   public interface IStepAction{
     public Object forStepAction(ActionQualifier qualifier,
@@ -72,8 +78,11 @@ public class Visitors {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Visitors.java,v 1.9 2002-06-25 07:52:10 swprakt Exp $
+//	$Id: Visitors.java,v 1.10 2002-06-25 08:01:17 swprakt Exp $
 // //	$Log: not supported by cvs2svn $
+// //	Revision 1.9  2002/06/25 07:52:10  swprakt
+// //	New visitors added (for actions). [Steffen]
+// //	
 // //	Revision 1.8  2002/06/25 06:09:04  swprakt
 // //	Visitor added for action qualifiers [Steffen]
 // //	
