@@ -1,0 +1,13 @@
+This directory contains the additional information for the CD-Rom.
+
+
+  
+  - cover.tex:    sources for the cover, needs cd.cls,
+                  which can be taken from 
+                  http://gongolo.usr.dsi.unimi.it/~vigna/cd/
+
+  - slime.ps:   a picture
+  - Readme.cd:  the top-level Readme for the CD (where it
+	        will be called just Readme)
+
+
