@@ -1,6 +1,6 @@
 
 ########################################################
-## $Id: Snapshots,v 1.10 2002-07-09 09:26:25 swprakt Exp $
+## $Id: Snapshots,v 1.11 2002-07-10 15:12:22 swprakt Exp $
 ########################################################
 
 This file contains, for quick reference, a list of the major development
@@ -12,6 +12,10 @@ the form snapshot<nr> as those are reserved for the global snapshots.
 ----------------------------------------
 
 
+
+
+ snapshot3: 10.07.02
+	    everything compiles.
 
 
 
