@@ -10,7 +10,7 @@ import  slime.absynt.SFC;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: 2
  */
 
 

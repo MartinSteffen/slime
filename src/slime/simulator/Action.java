@@ -8,7 +8,7 @@ import  slime.absynt.BoolType;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Action.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
  */
 
 
@@ -61,7 +61,7 @@ class Action{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Action.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
  */
 
 
@@ -75,7 +75,7 @@ abstract class Statement{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Action.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
  */
 
 
@@ -107,7 +107,7 @@ class Assign extends Statement{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Action.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
  */
 
 
@@ -125,7 +125,7 @@ class Skip extends Statement{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Action.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
  */
 
 
@@ -170,7 +170,7 @@ class Program{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Action.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
  */
 
 
@@ -239,15 +239,4 @@ class Components{
 
 
 
-
-
-//----------------------------------------------------------------------
-//	Abstract syntax for Slime programs
-//	------------------------------------
-//
-//	$Id: <dollar>
-//
-//	$Log: <dollar>
-//
-//---------------------------------------------------------------------
 
