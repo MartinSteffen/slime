@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.183 2002-07-12 05:52:32 swprakt Exp $
+## $Id: Errors.txt,v 1.184 2002-07-12 06:23:11 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -43,7 +43,7 @@ Error 92:     saved data
  status:      reported, 12.7.02, Steffen
  description: execting the command ``file'' on a saved sfc gives:
           file.sfc: gzip compressed data, deflated, last modified: Thu Jan  1 01:00:00 1970, os: MS-DOS
-            What the hell does this mean?
+            What the hell does this mean? Why does Java stamp it with MS-DOS?
  
 Error 91:     jarfile 3 
  package:     parser + integration
@@ -398,7 +398,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.183 2002-07-12 05:52:32 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.184 2002-07-12 06:23:11 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
