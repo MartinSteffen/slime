@@ -1,10 +1,16 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.17 2002-06-27 16:50:47 swprakt Exp $
+# $Id: Makefile,v 1.18 2002-06-27 16:52:33 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.17  2002/06/27 16:50:47  swprakt
+# snot ? the last version of the global
+# makefile was not for this package.
+# This Makefile should work until no
+# new packages are added. (mwe)
+#
 #
 # The targets installing gobal web-infos can be executed only
 # by the maintainers
@@ -50,6 +56,8 @@ debug:	; make JAVACOPTS="-g" all
 
 jar:
 	jar cvf slime.jar ./slime/absynt/*.class \
+	    ./java_cup/*.class \
+	    ./java_cup/runtime/*.class \
 	    ./slime/absynt/absfc/*.class \
 	    ./slime/utils/*.class \
 	    ./slime/editor/*.class\
