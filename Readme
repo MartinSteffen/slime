@@ -1,5 +1,5 @@
 ############################################################
-## $Id: Readme,v 1.9 2002-07-19 12:02:32 swprakt Exp $
+## $Id: Readme,v 1.10 2002-07-19 12:06:09 swprakt Exp $
 ############################################################
 
 
@@ -24,5 +24,7 @@ package contains the following files and subdirectories:
     o cd/                info's for the cd-rom
     o src/               the Java-sources
     o tex/               common LaTeX-macros 
-    o doc/               generated javadoc stuff
+
+    o lib/               external libraries (here the lex/yacc archives,
+	                 included for better coordination.
 
