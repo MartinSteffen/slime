@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.26 2002-07-09 06:56:55 swprakt Exp $
+# $Id: Makefile,v 1.27 2002-07-09 07:17:40 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -62,20 +62,6 @@ packets:
 
 
 
-### the following is a temporary target to jar the stuff.
-#   it is not yet the final delivery jar. [Steffen]
-
-jar:
-	jar cvf slime.jar ./absynt/*.class \
-	    ./absynt/absfc/*.class
-	    ./utils/*.class \
-            ./editor/*.class\
-	    ./editor/resources/images/*\
-            ./gui/*.class\
-	    ./simulator/*.class\
-	    ./checks/*.class\
-	    ./checks/tests/*.class\
-	    ./sfcparser/*.class
 
 
 clean:
