@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.26 2002-06-27 13:32:36 swprakt Exp $
+## $Id: Errors.txt,v 1.27 2002-06-27 13:35:49 swprakt Exp $
 ###########################################################
 
 
@@ -52,7 +52,7 @@ Error 18:      compilation broken
   package:     all
   Class:      fatal and deadly!!!
   status:     reported, 26.6.02, Boeck/Steffen
-  description: probably confussion with the new stuff added by 
+  description: probably confusion with the new stuff added by 
                sfc parser. (Well, not clear) Breaks everything!!! Probably name confusion
 	       with the sfcparser-Parser with the utils-Parser.
 
@@ -65,8 +65,8 @@ Error 17:      structure
  package:      all
  status:       reported, 26.6.02
  class:        potentially fatal, cause of confusion
- description:   new subdir's added, but not announces, nor
-                added to the readme, nor added to the Makefile
+ description:  new subdir's added, but not announced, nor
+               added to the readme, nor added to the Makefile
 
 Error 16:      LEX/YACC
  package:      (sfcpasrser)
