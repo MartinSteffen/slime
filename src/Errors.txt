@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.152 2002-07-08 16:45:37 swprakt Exp $
+n## $Id: Errors.txt,v 1.153 2002-07-09 05:19:53 swprakt Exp $
 ###########################################################
 
 
@@ -53,21 +53,7 @@ Rules of the game:
 
 
 
-
-Errors 68:    another complation error
- package:     absynt/absfc
- class:       fatal, show-stop
- package:     sfc-parser
- status:      reported, Steffen 8.7.02
- description: does not compile, it seems that the following files
-     are missing:
-     currentStatement instanceof slime.absynt.absfc.StmtPostInc)
-     currentStatement instanceof slime.absynt.absfc.StmtPostDec)
-     currentStatement instanceof slime.absynt.absfc.StmtPreInc) 
-     currentStatement instanceof slime.absynt.absfc.StmtPreDec)                                                                               
-     probably forgotten to check in those files
-
-
+                                                          ^
 
 
 Errors 66:    interface
@@ -234,7 +220,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.152 2002-07-08 16:45:37 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.153 2002-07-09 05:19:53 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -416,6 +402,35 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 69:     compilation error
+ package:     sfcparser
+ class:       fatal, show-stop
+ status:      reported, Steffen 9.7.02, repaired Steffen 9.7.02
+ description: /home/ms/Swprakt/Slime/src/slime/sfcparser/Absfc2SFCConverter.java:791: cannot resolve symbol
+symbol  : variable whileuard  
+location: class slime.sfcparser.Absfc2SFCConverter
+	    newTransition( sourceStep, (slime.absynt.Expr)whileuard, targetStep );
+	    whileuard -> whileguard
+
+
+
+Errors 68:    another complation error
+ package:     absynt/absfc
+ class:       fatal, show-stop
+ package:     sfc-parser
+ status:      reported, Steffen 8.7.02
+ description: does not compile, it seems that the following files
+     are missing:
+     currentStatement instanceof slime.absynt.absfc.StmtPostInc)
+     currentStatement instanceof slime.absynt.absfc.StmtPostDec)
+     currentStatement instanceof slime.absynt.absfc.StmtPreInc) 
+     currentStatement instanceof slime.absynt.absfc.StmtPreDec)                                                                               
+     probably forgotten to check in those files
+
+
+
 
 
 Errors 67(2):    compilation error
