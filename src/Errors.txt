@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.5 2002-06-12 15:06:05 swprakt Exp $
+## $Id: Errors.txt,v 1.6 2002-06-12 19:42:00 swprakt Exp $
 ###########################################################
 
 
@@ -37,6 +37,14 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+Error 4:       Manifest file, toplevel file
+  package:     Gui
+  status:      reported 12.6.02, M. Steffen
+  class:       promised feature missing
+  description: Gui should provide a top-level file + Manifest to
+               offer jar-rability
 
 Error 3:      doc warnings
   package:    layout/paers
