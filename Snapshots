@@ -1,12 +1,13 @@
 
 ########################################################
-## $Id: Snapshots,v 1.7 2002-07-07 07:15:39 swprakt Exp $
+## $Id: Snapshots,v 1.8 2002-07-07 07:16:23 swprakt Exp $
 ########################################################
 
-This file contains a list of the major development steps, called snapshots
-or baselines, as kept in cvs's symbolic tags for reference. If any of the
-developers snapshots his part, he should _not_ use tags of the form
-snapshot<nr> as those are reserved for the global snapshots.
+This file contains, for quick reference, a list of the major development
+steps, called snapshots or baselines, as kept in cvs's symbolic tags.
+
+If any of the developers snapshots his part, he should _not_ use tags of
+the form snapshot<nr> as those are reserved for the global snapshots.
 
 ----------------------------------------
 
