@@ -1,5 +1,5 @@
 #######################################################
-# $Id: Readme.devel,v 1.2 2002-04-16 19:02:52 swprakt Exp $
+# $Id: Readme.devel,v 1.3 2002-04-17 08:10:26 swprakt Exp $
 #######################################################
 
 
@@ -10,22 +10,22 @@ Project-internal ``Readme; for the developers of the Slime project
 o Voraussetzungen:
 
 
-	Platform: java-1.4
-	
-	CLASSPATH = <WORKINGDIRECTORY>/Mist/src
+    Platform: java-1.4
+    
+    CLASSPATH = <WORKINGDIRECTORY>/Mist/src
 
 o Files and directories
 
   - Java packages/subdirectories
 
-	simulator/
-	editor/
-	utils/
-	absynt/
-	smv/
-	checks/
-	gui/
-	
+    simulator/
+    editor/
+    utils/
+    absynt/
+    smv/
+    checks/
+    gui/
+    
    - other files
 
       > Readme.devel:   this file
@@ -35,16 +35,16 @@ o Files and directories
       > Status:         current status to survey the progress
 
       > Errors.txt      list of more detailed errors, can 
-	                be used by all developers. Status 
-	                just distills an overall view, Todo	
-	                lists general things that needs to
-	                be done, and Errors.txt keeps a
-	                detailed record of particular things
-	                to be fixed  and bugs  that have shown
-	                up.
+                        be used by all developers. Status 
+                        just distills an overall view, Todo 
+                        lists general things that needs to
+                        be done, and Errors.txt keeps a
+                        detailed record of particular things
+                        to be fixed  and bugs  that have shown
+                        up.
 
-         templates/    How to mark the package and to
-	               use cvs-logs in java-doc comments.
+         templates/     How to mark the package and to
+                        use cvs-logs in java-doc comments.
 
 
 
@@ -54,9 +54,9 @@ o Files and directories
            
 
 
-	   
+       
 
-	               
-	                
+                   
+                    
         
 
