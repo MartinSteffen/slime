@@ -1,5 +1,5 @@
 ########################################################
-## $Id: Makefile,v 1.5 2002-07-10 05:53:53 swprakt Exp $
+## $Id: Makefile,v 1.6 2002-07-19 12:33:59 swprakt Exp $
 ########################################################
 
 
@@ -10,7 +10,7 @@ HACHA       = hacha
 DOC         = main
 CODEDIR     = 
 ############# Achtung: die Versionen ändern sich!
-WWWDIR      = /home/info/www/inf/deRoever/SS02/Java/Slime/requirements4
+WWWDIR      = /home/info/www/inf/deRoever/SS02/Java/Slime/requirementsxxxx
 
 main.dvi: main.tex
 	latex main

@@ -1,14 +1,10 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.36 2002-07-19 10:01:53 swprakt Exp $
+# $Id: Makefile,v 1.37 2002-07-19 12:34:00 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
 # by the maintainers
-# 
-# "cvs log Makefile" for version log
-# "cvs annotate Makefile" for changed lines in each version
-#
 ######################################
 
 TOOLNAME      = Slime
