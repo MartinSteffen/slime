@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.6 2002-07-09 12:58:25 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.7 2002-07-09 13:00:24 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors as exceptions together with the
  * checker proper, which recurs over the abstract syntax.
@@ -24,6 +24,8 @@ import slime.absynt.*;
  * <ul>
  *  <li> sfc non-nil
  *  <li> initial step contained in the set of steps.
+ *  <li> no step occurs twice (by name)
+ *  <li> no transition has a non-existing step as source or target (by name)
  * </ul>
  *
  */
@@ -168,6 +170,9 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.6  2002/07/09 12:58:25  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.5  2002/07/08 10:25:27  swprakt
 //    Stub code for consistency checking added.
 //    [Steffen]
