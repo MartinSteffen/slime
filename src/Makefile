@@ -1,33 +1,9 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.20 2002-07-04 06:47:48 swprakt Exp $
+# $Id: Makefile,v 1.21 2002-07-05 18:48:27 swprakt Exp $
 #----------------------------------------------------------------------
 #
-# $Log: not supported by cvs2svn $
-# Revision 1.19  2002/07/03 17:18:12  swprakt
-# Something has to happen with those
-# Input/OutputActions, either they are
-# going to be supported by Visitors
-# and Simulator, or I will have to remove
-# them from the parser. (mwe)
-#
-# Revision 1.18  2002/06/27 16:52:33  swprakt
-# added java_cup/*.class and
-# added java_cup/runtime/*.class to jar-file
-# (mwe)
-#
-# Revision 1.17  2002/06/27 16:50:47  swprakt
-# snot ? the last version of the global
-# makefile was not for this package.
-# This Makefile should work until no
-# new packages are added. (mwe)
-#
-#
-# The targets installing gobal web-infos can be executed only
-# by the maintainers
-
-######################################
 
 TOOLNAME      = Slime
 
@@ -43,6 +19,7 @@ PACKAGEDIRS   = slime.absynt\
 	        slime.layout\
 	        slime.editor\
 	        slime.checks\
+	        slime.checks.tests\
 	        slime.sfcparser\
 		slime.gui\
 		slime.gui.listener\
@@ -62,7 +39,6 @@ classes:
 	cd checks; make clean; make
 	cd gui; make clean; make
 	cd simulator; make clean; make
-	
 
 
 all:	packets $(patsubst %.java,%.class,$(wildcard *.java))
@@ -86,13 +62,43 @@ jar:
 	    ./slime/layout/*.class \
 	    ./slime/simulator/*.class \
 	    ./slime/checks/*.class \
+	    ./slime/checks/tests/*.class \
 	    ./slime/sfcparser/*.class
-	
 
 jarinstall: 
 	cp slime_v*.jar $(BASELINESDIR)
 
 
 clean:
+
+
+########################################################################
+# $Log: not supported by cvs2svn $
+# Revision 1.20  2002/07/04 06:47:48  swprakt
+# I removed Lex and yacc stuff from the makefile, they are gone
+# [Steffen]
+#
+# Revision 1.19  2002/07/03 17:18:12  swprakt
+# Something has to happen with those
+# Input/OutputActions, either they are
+# going to be supported by Visitors
+# and Simulator, or I will have to remove
+# them from the parser. (mwe)
+#
+# Revision 1.18  2002/06/27 16:52:33  swprakt
+# added java_cup/*.class and
+# added java_cup/runtime/*.class to jar-file
+# (mwe)
+#
+# Revision 1.17  2002/06/27 16:50:47  swprakt
+# snot ? the last version of the global
+# makefile was not for this package.
+# This Makefile should work until no
+# new packages are added. (mwe)
+#
+#
+# The targets installing gobal web-infos can be executed only
+# by the maintainers
+######################################
 
 
