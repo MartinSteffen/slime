@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.8 2002-06-25 06:17:58 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.9 2002-06-25 07:39:19 swprakt Exp $
  */
 
 public class Typecheck {
@@ -65,9 +65,35 @@ public class Typecheck {
     String message = "Type mismatch int declaration";
     String explanation = "Int a declaration, the type of the initial value\n must coincide with the intende, declared type.";
   }
-    
-    /** Visitor for expressions
-     */
+
+  /** Type check cisitor for SFC's, the entry point of the recursion.
+   *
+   */
+  public class SFCV implements Visitors.ISFC{
+    public Object forSFC(Step istep, 
+			 LinkedList steps,
+			 LinkedList transs,
+			 LinkedList actions, 
+			 LinkedList declist) throws Exception {
+      istep.accept(new StepV());
+      return new UnitType();
+    }
+  }
+
+  /** Type checking visitor for a step.
+   *  A step has no value, only side-effects, i.e., type checking a step
+   *  either returns UnitType or raises an error.
+   */
+
+  public class StepV implements Visitors.IStep{
+    public Object forStep(String name, LinkedList actions) throws Exception {
+      // XXX we have to iterate through the action list.
+      return new UnitType();
+    }
+  }
+
+  /** Visitor for expressions
+   */
     public class ExprV implements Visitors.IExpr{
         
         public Object forB_Expr(Expr l, int o, Expr r) throws CheckException {
@@ -203,17 +229,7 @@ public class Typecheck {
   }
 
        
-  /** Type checking visitor for a step.
-   *  A step has no value, only side-effects, i.e., type checking a step
-   *  either returns UnitType or raises an error.
-   */
 
-  public class StepV implements Visitors.IStep{
-    public Object forStep(String name, LinkedList actions) throws Exception {
-      // XXX we have to iterated through the action list.
-      return new UnitType();
-    }
-  }
 
   /** Type checking visitor for a step action.
    *  A step action is always well-typed (as also the action
@@ -263,6 +279,10 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.8  2002/06/25 06:17:58  swprakt
+//    type checking for action qualifiers and step actions done
+//    [Steffen]
+//
 //    Revision 1.7  2002/06/25 05:22:57  swprakt
 //    Type checking (as visitor) for declarations done.
 //
@@ -296,6 +316,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.8 2002-06-25 06:17:58 swprakt Exp $
+//    $Id: Typecheck.java,v 1.9 2002-06-25 07:39:19 swprakt Exp $
 //
 //---------------------------------------------------------------------
