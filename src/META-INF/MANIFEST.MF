@@ -1,4 +1,5 @@
 Manifest-Version: 1.0
 Created-By: 1.3.0 (Sun Microsystems Inc.)
-Main-Class: slime.editor.EditorInFrame
+Main-Class: slime.Main
+Class-Path: ../lib/java_cup.jar ../lib/JLex.jar
 
