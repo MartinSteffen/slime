@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.54 2002-07-03 08:19:10 swprakt Exp $
+## $Id: Errors.txt,v 1.55 2002-07-03 08:32:22 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,12 +35,46 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 36:     re-generation difference
+ package:     sfcparser/SFCParser.java 1.11
+ status:      reported, 3.7.02, Steffen
+ class:       dubiousity, point to discuss
+ description: in the package sfcparser/
+                  make clean; make
+	      and a simple
+	          make
+	      behave different (cf. also Error 35, 24
+	      + the discussion on the email-list what to
+	      check in and what not, which version of
+	      JLEX and YACC to use etc). 
+
+	      I tried to ``diff'' v1.11 with the one generated, but since
+	      they are generated files with parser tables etc in it, I
+	      can't analyse it.
+
+	      I use 
+
+              env |grep CLA
+                 CLASSPATH=/home/ms/Swprakt/Slime/src:/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:
+	
+	      also /home/ms/Swprakt/Slime/src/java_cup|JLEX is checked out
+	      and there are 
+
+                 java_cup.jar and JLEX.jar 
+	
+
+              within the src/slime/sfcparser.
+
+	      I have no idea, which of the versions is taken (and
+	      I won't even think about it).(Steffen).
+
+
 
 Error 35:     incompat. types, re-build curiosity
  package:     sfcparser/SFCParser.java 1.11 (but regenerated,
                 i.e., it is not really 1.11!!!)
  class:       fatal + deadly
- status:      reported, 3.7.02, 10, Steffen
+ status:      reported, 3.7.02, Steffen
  description: 
               SFCParser.java:1348: inconvertible types
               found   : slime.absynt.absfc.Comment
