@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.12 2002-07-11 06:05:48 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.13 2002-07-11 06:24:40 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors (combined into one exception) together with the
  * checker proper, which recurs over the abstract syntax.
@@ -56,7 +56,7 @@ public class Wellformed {
   }
 
   public boolean check (SFC s) throws WException { 
-    if (s == null)
+    if (s == null) 
       throw (new WException("sfc is empty")); 
     (new Initcheck()).check(s);
     (new Consistency()).check(s);
@@ -152,10 +152,14 @@ public class Wellformed {
      * listed in the previously collected set of steps.
      */
     class TransitionV implements Visitors.ITransition{
-	public Object forTransition(LinkedList source,
+      public Object forTransition(LinkedList source,
 				  Expr guard,
-				    LinkedList target) throws WException {
-	    try {
+				  LinkedList target) throws WException {
+	if ((source == null) || (target == null))
+	  throw new WException("null source or target in transition.");
+	if (source.isEmpty() || target.isEmpty())
+	  throw new WException ("no source or no target step in transition.");
+	try {
 	  for (Iterator i = source.iterator(); i.hasNext(); ) {
 	    Step s  = (Step)i.next();
 	    s.accept(new StepV()); 
@@ -199,6 +203,9 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.12  2002/07/11 06:05:48  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.11  2002/07/09 16:06:45  swprakt
 //    OK
 //
