@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.24 2002-06-27 07:00:14 swprakt Exp $
+## $Id: Errors.txt,v 1.25 2002-06-27 07:01:56 swprakt Exp $
 ###########################################################
 
 
@@ -119,11 +119,6 @@ Error 12:      no doc generated
                serious sounding warnings! way over 100!
 
 
-Error 11:      Grammar missing
- package:      parser
- status:       reported (here), 25.06.02, Steffen
- class:        fatal, a parser without grammar does not work
- description:  There is no LEX/yacc files in the parser directory.
 
 Error 10:      Makefile missing
  package:      parser
@@ -147,12 +142,6 @@ Error 8:       Manifest
  
 
 
-Error 7:       no code
- package:      simulator
- status:       emailed to Immo 24.6.02, M. Steffen
- class:        fatal
- description:  contrary to announcement, the checked in code is
-               not in repos
   
 Error 6:       Makefile
   package:     top-level
@@ -209,6 +198,20 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+Error 11:      Grammar missing
+ package:      parser
+ status:       reported (here), 25.06.02, Steffen, done 27.6.02
+ class:        fatal, a parser without grammar does not work
+ description:  There is no LEX/yacc files in the parser directory.
+
+
+Error 7:       no code
+ package:      simulator
+ status:       emailed to Immo 24.6.02, M. Steffen, done
+ class:        fatal
+ description:  contrary to announcement, the checked in code is
+               not in repos
 
 
 
