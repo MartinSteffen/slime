@@ -1,0 +1,72 @@
+ 
+\usepackage{graphicx, color, fancybox}
+
+% Einstellungen:
+\parindent0em
+
+
+% color: Standardfarben
+%\newcommand{\Black}[1]{\textcolor{black}{#1}}
+\newcommand{\White}[1]{\textcolor{white}{#1}}
+\newcommand{\Red}[1]{\textcolor{red}{#1}}
+\newcommand{\Green}[1]{\textcolor{green}{#1}}
+\newcommand{\Blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\Yellow}[1]{\textcolor{yellow}{#1}}
+\newcommand{\Cyan}[1]{\textcolor{cyan}{#1}}
+\newcommand{\Magenta}[1]{\textcolor{magenta}{#1}}
+
+% eigene
+\definecolor{fuchsia}{named}{Fuchsia}
+\definecolor{navyblue}{named}{NavyBlue}
+\definecolor{cadetblue}{named}{CadetBlue}
+\definecolor{orange}{named}{Orange}
+\definecolor{pinegreen}{named}{PineGreen}
+\definecolor{olivegreen}{named}{OliveGreen}
+
+\newcommand{\Fuchsia}[1]{\textcolor{fuchsia}{#1}}
+\newcommand{\NavyBlue}[1]{\textcolor{navyblue}{#1}}     % light
+\newcommand{\CadetBlue}[1]{\textcolor{cadetblue}{#1}}   % dark
+\newcommand{\Orange}[1]{\textcolor{orange}{#1}}
+\newcommand{\PineGreen}[1]{\textcolor{pinegreen}{#1}}   % dark
+\newcommand{\OliveGreen}[1]{\textcolor{olivegreen}{#1}}
+
+% weiteres mit color
+\newcommand{\TEXT}[1]{\Black{#1}}
+
+
+% Umgebungen und Befehle
+\newcommand{\Lfoilhead}[1]{\rotatefoilhead{\Fuchsia{#1}}\vspace{-2ex}}
+\newcommand{\Pfoilhead}[1]{\foilhead{\Fuchsia{#1}}\vspace{-2ex}}
+
+\newcommand{\PAR}{\mathrel{\|}}
+\newcommand{\CHOICE}{\mathrel{\mbox{$[\!\!\!\;\,]$}}}
+\newcommand{\IMPL}{\mathbin{\;\Rightarrow\;}}
+
+% Programme sind um 2em eingerückt
+\newenvironment{PROGRAM}%
+{\begin{list}{}{%
+\setlength{\rightmargin}{\leftmargin}
+\addtolength{\leftmargin}{2em}}
+\item[]}%
+{\end{list}}
+
+
+
+%%%% TO PASTE IN DOCUMENTS %%%
+
+
+
+% \White
+% \Red
+% \Green
+% \Blue
+% \Yellow
+% \Cyan
+% \Magenta
+% \Fuchsia
+% \NavyBlue
+% \CadetBlue
+% \Orange
+% \PineGreen
+% \OliveGreen
+% \TEXT

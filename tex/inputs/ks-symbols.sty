@@ -1,0 +1,86 @@
+\usepackage{amssymb, latexsym}
+
+% habe einiges rausgeworfen was spezifisch fuer spezielle Paper war
+% (hauptsaechlich Funktionen), diese findet man in ks-symbols-old.sty
+
+
+% mit AMSTeX: Pfeile, die sich hoch-/tiefgestelltem Text anpassen
+% nur im mathematischen Modus erlaubt
+%
+% mit Paket amstex geht es so:
+%\newcommand{\edge}[2]{\begin{CD} @>#1>#2> \end{CD}}
+%\let \ol \overline
+
+
+% Bemerkungen in einer Box (vorübergehend)
+\newcommand{\TODO}[1]{\par\fbox{\parbox{14cm}{#1}}\par}
+% untere Spalte hochsetzen (auf Mitte von zwei Spalten)
+\newcommand{\rb}[1]{\raisebox{1.5ex}[-1.5ex]{#1}}
+
+
+%
+% Zeichen
+%
+
+\newcommand{\defeq}{\stackrel{\mbox{\rm \tiny def}}{\,=\,}}
+\newcommand{\defiff}{\stackrel{\mbox{\rm \tiny def}}{\,\Leftrightarrow\,}}
+
+\newcommand{\proofend}{\rule{1ex}{1ex}}
+
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\cB}{\mathcal{B}}
+\newcommand{\cC}{\mathcal{C}}
+\newcommand{\cD}{\mathcal{D}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cF}{\mathcal{F}}
+\newcommand{\cG}{\mathcal{G}}
+\newcommand{\cH}{\mathcal{H}}
+\newcommand{\cI}{\mathcal{I}}
+\newcommand{\cJ}{\mathcal{J}}
+\newcommand{\cK}{\mathcal{K}}
+\newcommand{\cL}{\mathcal{L}}
+\newcommand{\cM}{\mathcal{M}}
+\newcommand{\cN}{\mathcal{N}}
+\newcommand{\cO}{\mathcal{O}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cQ}{\mathcal{Q}}
+\newcommand{\cR}{\mathcal{R}}
+\newcommand{\cS}{\mathcal{S}}
+\newcommand{\cT}{\mathcal{T}}
+\newcommand{\cU}{\mathcal{U}}
+\newcommand{\cV}{\mathcal{V}}
+\newcommand{\cW}{\mathcal{W}}
+\newcommand{\cX}{\mathcal{X}}
+\newcommand{\cY}{\mathcal{Y}}
+\newcommand{\cZ}{\mathcal{Z}}
+
+\newcommand{\follows}{\Rightarrow}
+\newcommand{\IMPLIES}{\Rightarrow}
+\newcommand{\IFF}{\Leftrightarrow}
+
+\newcommand{\B}{\mathbb B}
+\newcommand{\N}{\mathbb N}
+\newcommand{\Q}{\mathbb Q}
+%% already defined
+%\newcommand{\R}{\mathbb R}
+% R größer gleich 0
+\newcommand{\Rge}{\mathbb R_{\geq 0}}
+% R echt größer 0
+\newcommand{\Rg}{\mathbb R_{>0}}
+\newcommand{\Z}{\mathbb Z}
+
+%
+% Konstanten: true, false
+%
+
+\newcommand{\T}{\mathit{tt}}
+\newcommand{\F}{\mathit{ff}}
+\newcommand{\TT}{\mathit{tt}}
+\newcommand{\FF}{\mathit{ff}}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
