@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.51 2002-07-03 06:36:01 swprakt Exp $
+## $Id: Errors.txt,v 1.52 2002-07-03 06:58:40 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -67,6 +67,8 @@ Error 34:     expression parsing
 
                precedence left ADD, SUB;				   // +, -
                precedence left MUL, DIV;				   // *,/; MOD=%
+
+	       Since I (Steffen) cannot compile the parser, I cannot confirm the error.
  
 
 Error 33:     grammar: stmt
