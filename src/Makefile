@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.22 2002-07-05 18:49:55 swprakt Exp $
+# $Id: Makefile,v 1.23 2002-07-09 07:16:31 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -51,22 +51,37 @@ debug:	; make JAVACOPTS="-g" all
 doc:	;
 	javadoc  -version -author -d $(WEBDOCDIR) $(PACKAGEDIRS)
 
+
+### the following is a temporary target to jar the stuff.
+#   it is not yet the final delivery jar. [Steffen]
 jar:
 	jar cvf slime.jar ./slime/absynt/*.class \
-	    ./java_cup/*.class \
-	    ./java_cup/runtime/*.class \
-	    ./slime/absynt/absfc/*.class \
+	    ./slime/absynt/absfc/*.class\
 	    ./slime/utils/*.class \
-	    ./slime/editor/*.class\
-	    ./slime/editor/resources/images/*.* \
-	    ./slime/gui/listener/*.class \
-	    ./slime/gui/model/*.class \
-	    ./slime/gui/*.class \
-	    ./slime/layout/*.class \
-	    ./slime/simulator/*.class \
-	    ./slime/checks/*.class \
-	    ./slime/checks/tests/*.class \
+            ./slime/editor/*.class\
+	    ./slime/editor/resources/images/*\
+            ./slime/gui/*.class\
+	    ./slime/simulator/*.class\
+	    ./slime/checks/*.class\
+	    ./slime/checks/tests/*.class\
 	    ./slime/sfcparser/*.class
+
+#jar:
+#	jar cvf slime.jar ./slime/absynt/*.class \
+#	    ./java_cup/*.class \
+#	    ./java_cup/runtime/*.class \
+#	    ./slime/absynt/absfc/*.class \
+#	    ./slime/utils/*.class \
+# 	    ./slime/editor/*.class\
+# 	    ./slime/editor/resources/images/*.* \
+# 	    ./slime/gui/listener/*.class \
+# 	    ./slime/gui/model/*.class \
+# 	    ./slime/gui/*.class \
+# 	    ./slime/layout/*.class \
+# 	    ./slime/simulator/*.class \
+# 	    ./slime/checks/*.class \
+# 	    ./slime/checks/tests/*.class \
+# 	    ./slime/sfcparser/*.class
 
 jarinstall: 
 	cp slime_v*.jar $(BASELINESDIR)
@@ -77,6 +92,9 @@ clean:
 
 ########################################################################
 # $Log: not supported by cvs2svn $
+# Revision 1.22  2002/07/05 18:49:55  swprakt
+# *** empty log message ***
+#
 # Revision 1.21  2002/07/05 18:48:27  swprakt
 # Added checks.test to the doc target. [Steffen]
 #
