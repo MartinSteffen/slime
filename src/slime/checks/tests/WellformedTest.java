@@ -9,7 +9,7 @@ import slime.absynt.*;
  * A little testing of the wellformedness checker, using the parser
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl. 
- * @version $Id: WellformedTest.java,v 1.2 2002-07-08 10:25:28 swprakt Exp $
+ * @version $Id: WellformedTest.java,v 1.3 2002-07-10 17:11:43 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
@@ -27,7 +27,6 @@ public class WellformedTest {
     SFC sfc1 = Example.getExample1();
     //     slime.checks.Wellformed.Initcheck wci  =  new slime.checks.Wellformed.Initcheck();
     try {
-      wc.check(null);
       wc.check(sfc1);    
     }
     catch (Exception ex) {
