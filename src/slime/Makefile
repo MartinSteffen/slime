@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.28 2002-07-09 11:59:46 swprakt Exp $
+# $Id: Makefile,v 1.29 2002-07-09 12:00:57 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -65,7 +65,8 @@ packets:
 #### the following it to be used _with care_! it's a temporary
 # hack to keep on working. Of course one could also just branch
 # off, but since we are at the end of the course, we better should
-# not. [Steffen]
+# not, and so this is just a target for convenience that I know for 
+# which files there will be conflicts/need for coordination. [Steffen]
 
 backintime1:
 	cvs update -r secondcompilation-sep absynt/DoubleType.java absynt/Visitors.java 
