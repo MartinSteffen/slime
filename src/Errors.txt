@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.18 2002-06-25 15:43:04 swprakt Exp $
+## $Id: Errors.txt,v 1.19 2002-06-26 06:27:09 swprakt Exp $
 ###########################################################
 
 
@@ -40,6 +40,15 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+Error 15:      typed variables?
+ package:      sfcparser
+ status:       question
+ status:       reported, 26.6.02, Steffen
+ description:  need the variable a type-field? 
+               Perhaps one could remove it, would be cleaner for
+	       the Hashtable implementation of the type
+	       checker. Or even better overwrite equals?
 
 Error 14:      checked in class files
  package:      sfcparser
