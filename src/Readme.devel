@@ -1,18 +1,20 @@
-#######################################################
-# $Id: Readme.devel,v 1.4 2002-04-17 08:14:01 swprakt Exp $
-#######################################################
+############################################################
+# $Id: Readme.devel,v 1.5 2002-04-26 12:08:45 swprakt Exp $
+############################################################
 
 
-Project-internal ``Readme; for the developers of the Slime project
+Project-internal ``Readme'' for the developers of the Slime project
 -------------------------------------------
 
 
-o Voraussetzungen:
+o Requirements:
 
 
     Platform: java-1.4
     
-    CLASSPATH = <WORKINGDIRECTORY>/Mist/src
+    other packages: JLex + Cup
+    
+    CLASSPATH = <WORKINGDIRECTORY>/src
 
 o Files and directories
 
@@ -22,8 +24,8 @@ o Files and directories
     editor/
     utils/
     absynt/
-    smv/
     checks/
+    layout/
     gui/
     
    - other files
