@@ -1,13 +1,17 @@
 ################################################################
-## $Id: Todo,v 1.6 2002-06-24 20:08:12 swprakt Exp $
+## $Id: Todo,v 1.7 2002-06-25 05:22:57 swprakt Exp $
 ################################################################
 
 
 
 
-  - currnently, eveerything is public for testing,
+  - currerenttly, eveerything is public for testing,
     make parts of it private.
 
+   - perhaps one should distinguish between _legal_ Typecheck exceptions
+     and those that are not expected to be seen in a real program, but
+     introduced here just because we don't know how the programs
+     are constructed.
 
   - make a clean structure/name conventions etc.
 

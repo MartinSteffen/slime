@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.6 2002-06-24 20:08:12 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.7 2002-06-25 05:22:57 swprakt Exp $
  */
 
 public class Typecheck {
@@ -56,6 +56,15 @@ public class Typecheck {
     String explanation = "A variable declation consists of three parts: \n 1) variable name, 2) a type, and 3), a constant value.\n If one of them is the missing (i.e., nil), this error is raised.";
   }
 
+  public class NoUsertype extends TypecheckException{
+    String message = "Not a user type";
+    String explanation = "The type is not allowed for source programs, it's for\n type checker internal use, only."; 
+  }
+
+  public class TypeMismatch extends TypecheckException{
+    String message = "Type mismatch int declaration";
+    String explanation = "Int a declaration, the type of the initial value\n must coincide with the intende, declared type.";
+  }
     
     /** Visitor for expressions
      */
@@ -177,8 +186,12 @@ public class Typecheck {
       try{
 	if ((var == null) || (type == null) || val == null)
 	  throw new IncompleteDeclaration();
-	Type t_dec = (Type)(type.accept(new TypeV()));
-	Type t_act = (Type)(new Object());
+	Type t_dec = (Type)(type.accept(new TypeV())); // declared type
+	if (t_dec instanceof UnitType)
+	  throw new NoUsertype();
+	Type t_act = (Type)(val.accept(new ExprV()));  // actual type
+	if (!(t_dec.equals(t_act)))
+	  throw  new TypeMismatch();
 	return new Object();
       }
       catch (Exception e){
@@ -186,7 +199,6 @@ public class Typecheck {
       }
     }
   }
-
   /** Type checking visitor for a type itself.
    *  This is the end of the recursion and the visitor returns
    *  the object itself. The only thing that can goto wrong is that
@@ -207,8 +219,8 @@ public class Typecheck {
     public Object forUndefType() {
       return new UndefType();}
   }
-  
-}
+ 
+    }
 
 
 //----------------------------------------------------------------------
@@ -216,6 +228,12 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.6  2002/06/24 20:08:12  swprakt
+//    Types extended with visitor methods,
+//    also extended is the type ckecker, which is a visitor to the absynt.
+//
+//    [Steffen]
+//
 //    Revision 1.5  2002/06/24 19:14:08  swprakt
 //    I removed the class Typeerrors. It's inner classes (the
 //    exceptions for typechecking) I put into the class Typcheck.
@@ -238,6 +256,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.6 2002-06-24 20:08:12 swprakt Exp $
+//    $Id: Typecheck.java,v 1.7 2002-06-25 05:22:57 swprakt Exp $
 //
 //---------------------------------------------------------------------
