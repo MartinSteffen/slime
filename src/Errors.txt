@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.116 2002-07-06 12:56:43 swprakt Exp $
+## $Id: Errors.txt,v 1.117 2002-07-06 13:12:32 swprakt Exp $
 ###########################################################
 
 
@@ -39,6 +39,16 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+
+Error 56:     prettyprinter-typechecker?
+ class:       unclear, potentially fatal
+ status:      reported 6.7.02, Steffen
+ package:     prettyprinter-typechecker?
+ description: the type checker gives back a UnitType, the
+              pretty-Printer prints [Type]
+
+ 
 
 
 Error 57:     method interface
@@ -148,7 +158,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.116 2002-07-06 12:56:43 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.117 2002-07-06 13:12:32 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
