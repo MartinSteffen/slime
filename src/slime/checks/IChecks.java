@@ -1,6 +1,6 @@
-package checks;
+package slime.checks;
 import java.lang.*;
-import absynt.*;
+import slime.absynt.*;
 
 
 /**
@@ -14,7 +14,7 @@ import absynt.*;
  * an exception. Int other woirds: false is never returned.
 
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: IChecks.java,v 1.6 2002-06-12 15:06:08 swprakt Exp $
+ * @version  $Id: IChecks.java,v 1.7 2002-06-12 18:52:00 swprakt Exp $
  */
 
 
@@ -30,6 +30,9 @@ public  interface IChecks{
 //	----------------------------------------
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.6  2002/06/12 15:06:08  swprakt
+//	OK
+//	
 //	Revision 1.5  2002/06/12 10:07:57  swprakt
 //	*** empty log message ***
 //	

@@ -1,6 +1,6 @@
-package layout;
+package slime.layout;
 
-import absynt.*;
+import slime.absynt.*;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.awt.*;
@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: Layouter.java,v 1.7 2002-06-08 20:20:56 swprakt Exp $
+ * @version $Id: Layouter.java,v 1.8 2002-06-12 18:52:05 swprakt Exp $
  */
 
 public final class Layouter {

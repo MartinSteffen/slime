@@ -1,15 +1,15 @@
 
-package utils;
+package slime.utils;
 
-import utils.*;
-import absynt.*;
+import slime.utils.*;
+import slime.absynt.*;
 import java.util.*;
 
 
 /**
    Beispiel fuer die Verwendung des Pretty Printers.
  * @author Initially provided by Martin Steffen.
- * @version  $Id: PpExample.java,v 1.2 2002-06-07 15:04:17 swprakt Exp $    
+ * @version  $Id: PpExample.java,v 1.3 2002-06-12 18:52:07 swprakt Exp $    
  */
 
 
@@ -33,9 +33,12 @@ public class PpExample {
 //	Example for the pretty printer
 //	------------------------------
 //
-//	$Id: PpExample.java,v 1.2 2002-06-07 15:04:17 swprakt Exp $
+//	$Id: PpExample.java,v 1.3 2002-06-12 18:52:07 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2002/06/07 15:04:17  swprakt
+//	added parser for SAP programs, added function printSAP() to PP
+//	
 //	Revision 1.1  2002/04/16 13:57:54  swprakt
 //	Slime initial version
 //	

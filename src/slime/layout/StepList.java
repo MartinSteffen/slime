@@ -1,12 +1,12 @@
-package layout;
+package slime.layout;
 
-import absynt.*;
+import slime.absynt.*;
 import java.util.LinkedList;
 
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: StepList.java,v 1.2 2002-05-30 13:04:37 swprakt Exp $
+ * @version $Id: StepList.java,v 1.3 2002-06-12 18:52:06 swprakt Exp $
  */
 
 class StepList {

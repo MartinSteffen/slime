@@ -1,7 +1,7 @@
-package editor;
+package slime.editor;
 
-import absynt.*;
-import layout.*;
+import slime.absynt.*;
+import slime.layout.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -11,7 +11,7 @@ import javax.swing.border.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.1 2002-06-12 08:39:35 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.2 2002-06-12 18:52:04 swprakt Exp $
  */
 
 final class MenuAndStatePanel extends JPanel {

@@ -1,4 +1,4 @@
-package absynt;
+package slime.absynt;
 import java.io.Serializable;
 
 

@@ -2,13 +2,13 @@
 /**
  * Pretty printer for SFC's
  * @author Initially provided by Karsten Stahl.
- * @version $Id: PrettyPrint.java,v 1.2 2002-06-07 15:04:18 swprakt Exp $
+ * @version $Id: PrettyPrint.java,v 1.3 2002-06-12 18:52:08 swprakt Exp $
  */
 
 
-package utils;
+package slime.utils;
 
-import absynt.*;
+import slime.absynt.*;
 import java.io.PrintStream;
 import java.util.*;
 
@@ -334,9 +334,12 @@ public class PrettyPrint {
 //	Pretty-Printer
 //	--------------
 //
-//	$Id: PrettyPrint.java,v 1.2 2002-06-07 15:04:18 swprakt Exp $
+//	$Id: PrettyPrint.java,v 1.3 2002-06-12 18:52:08 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2002/06/07 15:04:18  swprakt
+//	added parser for SAP programs, added function printSAP() to PP
+//	
 //	Revision 1.1  2002/04/16 13:57:54  swprakt
 //	Slime initial version
 //	

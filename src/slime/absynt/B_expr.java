@@ -1,4 +1,4 @@
-package absynt;
+package slime.absynt;
 import java.io.Serializable;
 
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * binary expressions
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: B_expr.java,v 1.3 2002-06-12 15:06:06 swprakt Exp $
+ * @version $Id: B_expr.java,v 1.4 2002-06-12 18:51:53 swprakt Exp $
  */
 
 
@@ -18,7 +18,7 @@ public class B_expr   extends Expr implements Serializable{
  * The operands are ``constant'' fields of the expression superclass.
  * 
  * @author Initially provided by Martin Steffen, Karsten Stahl.
- * @version $Id: B_expr.java,v 1.3 2002-06-12 15:06:06 swprakt Exp $
+ * @version $Id: B_expr.java,v 1.4 2002-06-12 18:51:53 swprakt Exp $
  */
   //---------------------------------------------------
   /**
@@ -33,9 +33,9 @@ public class B_expr   extends Expr implements Serializable{
   /**
      visitor acceptor
   */
-  Object accept (IExprVisitor ask) {
-    return ask.forB_Expr(left_expr,op,right_expr);
-   }
+  //  Object accept (IExprVisitor ask) {
+  //  return ask.forB_Expr(left_expr,op,right_expr);
+  // }
 }
 
 
@@ -45,9 +45,12 @@ public class B_expr   extends Expr implements Serializable{
 //	Abstract Syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: B_expr.java,v 1.3 2002-06-12 15:06:06 swprakt Exp $
+//	$Id: B_expr.java,v 1.4 2002-06-12 18:51:53 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2002/06/12 15:06:06  swprakt
+//	OK
+//	
 //	Revision 1.2  2002/04/16 19:02:53  swprakt
 //	OK
 //	

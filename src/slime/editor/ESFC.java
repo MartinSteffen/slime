@@ -1,6 +1,6 @@
-package editor;
+package slime.editor;
 
-import absynt.*;
+import slime.absynt.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.7 2002-06-12 08:39:35 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.8 2002-06-12 18:52:02 swprakt Exp $
  */
 
 final class ESFC{
@@ -257,8 +257,8 @@ final class ESFC{
 
     public String print(Absynt absynt) {
 	if(absynt != null) {
-	    if(absynt instanceof absynt.Action)
-		return output((absynt.Action)absynt);
+	    if(absynt instanceof slime.absynt.Action)
+		return output((slime.absynt.Action)absynt);
 	    if(absynt instanceof StepAction)
 		return output((StepAction)absynt);
 	    if(absynt instanceof Step)
@@ -291,7 +291,7 @@ final class ESFC{
 	return "*";
     }
 		       
-    public String output(absynt.Action action){
+    public String output(slime.absynt.Action action){
 	String s = action.a_name + ": ";
 	for (Iterator i = action.sap.iterator(); i.hasNext();) {
 	    s += print((Stmt)i.next());

@@ -1,8 +1,8 @@
-package editor;
+package slime.editor;
 
-import absynt.*;
-import layout.*;
-import utils.*;
+import slime.absynt.*;
+import slime.layout.*;
+import slime.utils.*;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.awt.*;
@@ -16,7 +16,7 @@ import javax.swing.border.*;
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.10 2002-06-12 08:39:35 swprakt Exp $
+ * @version $Id: Editor.java,v 1.11 2002-06-12 18:52:03 swprakt Exp $
  */
 
 public final class Editor extends JComponent 
@@ -195,7 +195,7 @@ public final class Editor extends JComponent
 	    LinkedList aList = sfc.actions;
 	    o = new Object[aList.size()];
 	    for (int i=0; i< aList.size(); i++) {
-		String s = this.eSFC.output((absynt.Action)aList.get(i));
+		String s = this.eSFC.output((slime.absynt.Action)aList.get(i));
 		o[i] = s;
 	    }
 	}
@@ -217,7 +217,7 @@ public final class Editor extends JComponent
 	    LinkedList dList = sfc.declist;
 	    o = new Object[dList.size()];
 	    for (int i=0; i< dList.size(); i++) {
-		String s = this.eSFC.output((absynt.Declaration)dList.get(i));
+		String s = this.eSFC.output((slime.absynt.Declaration)dList.get(i));
 		o[i] = s;
 	    }
 	}
@@ -302,7 +302,7 @@ public final class Editor extends JComponent
 	    LinkedList aList = sfc.actions;
 	    o = new Object[aList.size()];
 	    for (int i=0; i< aList.size(); i++) {
-		String s = this.eSFC.output((absynt.Action)aList.get(i));
+		String s = this.eSFC.output((slime.absynt.Action)aList.get(i));
 		o[i] = s;
 	    }
 	}
@@ -366,7 +366,7 @@ public final class Editor extends JComponent
 	    }
 	    step.actions = this.getStepActions(actionJList);
 	    if (sap.size() != 0) {
-		absynt.Action action = new absynt.Action(((JTextField)message[1]).getText(), sap);
+		slime.absynt.Action action = new slime.absynt.Action(((JTextField)message[1]).getText(), sap);
 		step.actions.add(new StepAction(new Nqual(), ((JTextField)message[1]).getText()));
 		this.eSFC.getSFC().actions.add(action);
 		this.updateWindow();
@@ -389,7 +389,7 @@ public final class Editor extends JComponent
 	for (int i=0; i<stepActionList.size(); i++) {
 	    StepAction stepAction = (StepAction)stepActionList.get(i);
 	    for (int j=0; j<actionList.size(); j++) {
-		absynt.Action action = (absynt.Action)actionList.get(j);
+		slime.absynt.Action action = (slime.absynt.Action)actionList.get(j);
 		if (action.a_name.equals(stepAction.a_name)) 
 		    actionIndizies[i] = j;
 	    }
@@ -402,7 +402,7 @@ public final class Editor extends JComponent
 	int[] selectedIndices = actionJList.getSelectedIndices();
 	LinkedList actionList = this.eSFC.getSFC().actions;
 	for (int i=0; i<selectedIndices.length; i++) {
-	    absynt.Action action = (absynt.Action)actionList.get(selectedIndices[i]);
+	    slime.absynt.Action action = (slime.absynt.Action)actionList.get(selectedIndices[i]);
 	    stepAction.add(new StepAction(new Nqual(), action.a_name));
 	}
 	return stepAction;
@@ -595,7 +595,7 @@ public final class Editor extends JComponent
 	    String exprString = ((JTextField)message[1]).getText();
 	    Expr expr = null;
 
-	    utils.ExprParser parser = new utils.ExprParser();
+	    slime.utils.ExprParser parser = new slime.utils.ExprParser();
 	    try {
 		expr = parser.parseExpr(exprString);
 	    } catch (ParseException e) {

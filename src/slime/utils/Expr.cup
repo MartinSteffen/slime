@@ -4,7 +4,7 @@
  * Offers the methods parseExpr 
  *
  * @author Karsten Stahl, Martin Steffen
- * @version $Id: Expr.cup,v 1.1 2002-06-10 14:41:57 swprakt Exp $
+ * @version $Id: Expr.cup,v 1.2 2002-06-12 18:52:07 swprakt Exp $
  *
  * The grammar definition contains 4 parts:
  *    -  initialization declarations and how to generate the parser
@@ -18,12 +18,12 @@
 /*  ---- Preliminaries to set up and use the scanner.  ---- */
 
 
-package utils;
+package slime.utils;
 
 import java_cup.runtime.*;
 import java.lang.String;
-import absynt.*;
-import utils.*;
+import slime.absynt.*;
+import slime.utils.*;
 import java.util.*;
 import java.io.*;
 
@@ -75,15 +75,15 @@ parser code {:
     * @optional
     * _decl, _sfc - declaration list or sfc to use already given variables
     * @return 
-    * abstract syntax tree with absynt.sfc as root
+    * abstract syntax tree with slime.absynt.sfc as root
     * @throws 
     * java.Exception when broken.
     */
 
-  public absynt.Expr parseExpr(java.lang.String _e) throws Exception {
+  public slime.absynt.Expr parseExpr(java.lang.String _e) throws Exception {
     lexer   = new Yylex(new StringReader(_e));
     setScanner(lexer);
-    absynt.Expr e = (absynt.Expr)parse().value;
+    slime.absynt.Expr e = (slime.absynt.Expr)parse().value;
     return e;
   };
 
@@ -105,12 +105,12 @@ terminal         TRUE, FALSE;
 terminal String  IDENT;
 terminal Integer INTEGER;
 
-non terminal    absynt.Constval   constval;
+non terminal    slime.absynt.Constval   constval;
 non terminal    LinkedList        sap;
-non terminal    absynt.Stmt       stmt;
-non terminal    absynt.Assign     assign;
-non terminal    absynt.Expr       expr;
-non terminal    absynt.Variable   var;
+non terminal    slime.absynt.Stmt       stmt;
+non terminal    slime.absynt.Assign     assign;
+non terminal    slime.absynt.Expr       expr;
+non terminal    slime.absynt.Variable   var;
 non terminal    Integer           op;    // int does not work! RESULT must be an object
 
 
@@ -137,9 +137,9 @@ start with expr;
 
 
 expr            ::= op:o expr:e
-                    {: RESULT = new absynt.U_expr(o.intValue(),e); :}
+                    {: RESULT = new slime.absynt.U_expr(o.intValue(),e); :}
                  |  expr:e1 op:o expr:e2
-                    {: RESULT = new absynt.B_expr(e1,o.intValue(),e2); :}
+                    {: RESULT = new slime.absynt.B_expr(e1,o.intValue(),e2); :}
                  |  LPAREN expr:e RPAREN
                     {: RESULT = e; :}
                  |  var:v
@@ -148,30 +148,30 @@ expr            ::= op:o expr:e
                     {: RESULT = v; :}
   ;
 
-op              ::= PLUS     {: RESULT= new Integer(absynt.Expr.PLUS); :}
-                 |  MINUS    {: RESULT= new Integer(absynt.Expr.MINUS); :}
-                 |  TIMES    {: RESULT= new Integer(absynt.Expr.TIMES); :}
-                 |  DIV      {: RESULT= new Integer(absynt.Expr.DIV); :}
-                 |  AND      {: RESULT= new Integer(absynt.Expr.AND); :}
-                 |  OR       {: RESULT= new Integer(absynt.Expr.OR); :}
-                 |  NEG      {: RESULT= new Integer(absynt.Expr.NEG); :}
-                 |  LESS     {: RESULT= new Integer(absynt.Expr.LESS); :}
-                 |  GREATER  {: RESULT= new Integer(absynt.Expr.GREATER); :}
-                 |  LEQ      {: RESULT= new Integer(absynt.Expr.LEQ); :}
-                 |  GEQ      {: RESULT= new Integer(absynt.Expr.GEQ); :}
-                 |  EQ       {: RESULT= new Integer(absynt.Expr.EQ); :}
-                 |  NEQ      {: RESULT= new Integer(absynt.Expr.NEQ); :}
+op              ::= PLUS     {: RESULT= new Integer(slime.absynt.Expr.PLUS); :}
+                 |  MINUS    {: RESULT= new Integer(slime.absynt.Expr.MINUS); :}
+                 |  TIMES    {: RESULT= new Integer(slime.absynt.Expr.TIMES); :}
+                 |  DIV      {: RESULT= new Integer(slime.absynt.Expr.DIV); :}
+                 |  AND      {: RESULT= new Integer(slime.absynt.Expr.AND); :}
+                 |  OR       {: RESULT= new Integer(slime.absynt.Expr.OR); :}
+                 |  NEG      {: RESULT= new Integer(slime.absynt.Expr.NEG); :}
+                 |  LESS     {: RESULT= new Integer(slime.absynt.Expr.LESS); :}
+                 |  GREATER  {: RESULT= new Integer(slime.absynt.Expr.GREATER); :}
+                 |  LEQ      {: RESULT= new Integer(slime.absynt.Expr.LEQ); :}
+                 |  GEQ      {: RESULT= new Integer(slime.absynt.Expr.GEQ); :}
+                 |  EQ       {: RESULT= new Integer(slime.absynt.Expr.EQ); :}
+                 |  NEQ      {: RESULT= new Integer(slime.absynt.Expr.NEQ); :}
   ;
 
 var             ::= IDENT:v
-                     {: RESULT = new absynt.Variable(v); :}
+                     {: RESULT = new slime.absynt.Variable(v); :}
   ;
 
 constval        ::= TRUE 
-                    {:  RESULT = new absynt.Constval(true);  :}
+                    {:  RESULT = new slime.absynt.Constval(true);  :}
                  |  FALSE
-                    {:  RESULT = new absynt.Constval(false);  :}
+                    {:  RESULT = new slime.absynt.Constval(false);  :}
                  |  INTEGER:i 
-                    {:  RESULT = new absynt.Constval(i.intValue());  :}
+                    {:  RESULT = new slime.absynt.Constval(i.intValue());  :}
   ;
 

@@ -1,12 +1,12 @@
-package editor;
+package slime.editor;
 
-import absynt.*;
+import slime.absynt.*;
 import java.util.LinkedList;
 
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFCList.java,v 1.1 2002-05-30 13:03:53 swprakt Exp $
+ * @version $Id: ESFCList.java,v 1.2 2002-06-12 18:52:03 swprakt Exp $
  */
 
 class ESFCList {

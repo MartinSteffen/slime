@@ -1,7 +1,7 @@
-package editor;
+package slime.editor;
 
-import absynt.*;
-import layout.*;
+import slime.absynt.*;
+import slime.layout.*;
 import java.util.LinkedList;
 import java.util.Hashtable;
 import java.awt.*;
@@ -17,7 +17,7 @@ import javax.swing.event.*;
  * unchecked SFC's. Please report all other crashes and bugs !!!
  * 
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.6 2002-06-12 08:39:35 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.7 2002-06-12 18:52:04 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {

@@ -1,6 +1,6 @@
-package editor;
+package slime.editor;
 
-import absynt.*;
+import slime.absynt.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.8 2002-06-12 08:39:34 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.9 2002-06-12 18:52:02 swprakt Exp $
  */
 
 final class DrawBoard extends Canvas

@@ -1,10 +1,10 @@
-package utils;
+package slime.utils;
 
 /**
  * Exception-Class for to report back parse-errors.
  *
  * @author Martin Steffen, Karsten Stahl
- * @version $Id: ParseException.java,v 1.1 2002-06-07 15:06:24 swprakt Exp $
+ * @version $Id: ParseException.java,v 1.2 2002-06-12 18:52:07 swprakt Exp $
  *
  */
 

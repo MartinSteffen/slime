@@ -1,4 +1,4 @@
-package absynt;
+package slime.absynt;
 import java.io.Serializable;
 import java.util.LinkedList;
 
@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * Class for sfc-programs, the top level syntactic construct,
  * i.e., the entry point.
  * @author Initially provided by Martin Steffen.
- * @version $Id: SFC.java,v 1.2 2002-04-16 19:02:55 swprakt Exp $
+ * @version $Id: SFC.java,v 1.3 2002-06-12 18:51:56 swprakt Exp $
  */
 
 
@@ -53,9 +53,12 @@ public class SFC extends Absynt implements Serializable{
 //	Abstract Syntax for Slime Programs
 //	------------------------------------
 //
-//	$Id: SFC.java,v 1.2 2002-04-16 19:02:55 swprakt Exp $
+//	$Id: SFC.java,v 1.3 2002-06-12 18:51:56 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2002/04/16 19:02:55  swprakt
+//	OK
+//	
 //	Revision 1.1  2002/04/16 13:53:52  swprakt
 //	Slime initial version
 //	

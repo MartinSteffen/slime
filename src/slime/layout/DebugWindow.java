@@ -1,6 +1,6 @@
-package layout;
+package slime.layout;
 
-import absynt.*;
+import slime.absynt.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DebugWindow.java,v 1.4 2002-05-30 13:04:37 swprakt Exp $
+ * @version $Id: DebugWindow.java,v 1.5 2002-06-12 18:52:05 swprakt Exp $
  */
 
 class DebugWindow extends JFrame {

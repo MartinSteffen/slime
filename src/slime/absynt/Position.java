@@ -1,4 +1,4 @@
-package absynt;
+package slime.absynt;
 import java.io.Serializable;
 
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * A class to store 2-dimensional positioning information.
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Position.java,v 1.2 2002-04-16 19:02:55 swprakt Exp $
+ * @version $Id: Position.java,v 1.3 2002-06-12 18:51:55 swprakt Exp $
  */
 
 
@@ -35,9 +35,12 @@ public class Position implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Position.java,v 1.2 2002-04-16 19:02:55 swprakt Exp $
+//	$Id: Position.java,v 1.3 2002-06-12 18:51:55 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2002/04/16 19:02:55  swprakt
+//	OK
+//	
 //	Revision 1.1  2002/04/16 13:53:51  swprakt
 //	Slime initial version
 //	

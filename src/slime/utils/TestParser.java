@@ -1,14 +1,14 @@
-package utils;
+package slime.utils;
 
 import java.io.IOException;
 import java.io.*;
 import java.util.*;
-import absynt.*;
+import slime.absynt.*;
 
 
 /** Standalone file to test the parser on input files
  * @author Martin Steffen, Karsten Stahl
- * @version $Id: TestParser.java,v 1.3 2002-06-10 14:41:57 swprakt Exp $
+ * @version $Id: TestParser.java,v 1.4 2002-06-12 18:52:09 swprakt Exp $
  *
  * ============== //-->
  */
@@ -19,7 +19,7 @@ public class TestParser {
      */
     public static void main(String args []) {
         try{
-            utils.Parser parser = new utils.Parser();
+            slime.utils.Parser parser = new slime.utils.Parser();
             PrettyPrint pp = new PrettyPrint();
             System.out.println("Input SAP program:");
             String _s = new String();
@@ -30,11 +30,11 @@ public class TestParser {
             System.out.println("*** Test: pretty print the result of parsing ***");
             pp.printSAP(sap);
 
-            utils.ExprParser eparser = new utils.ExprParser();
+            slime.utils.ExprParser eparser = new slime.utils.ExprParser();
             System.out.println("Input expression:");
             _s = in.readLine();
             System.out.println("parse: " + _s);
-            absynt.Expr e = eparser.parseExpr(_s);
+            slime.absynt.Expr e = eparser.parseExpr(_s);
             System.out.println("*** Test: pretty print the result of parsing ***");
             pp.print(e);
 

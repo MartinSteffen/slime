@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.9 2002-06-12 07:42:32 swprakt Exp $
+# $Id: Makefile,v 1.10 2002-06-12 18:51:51 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -22,7 +22,6 @@ PACKAGEDIRS   = absynt\
 	        editor\
 	        checks
 #	        gui\
-#	        smv\
 #	        simulator\
 #                io
 
@@ -47,7 +46,6 @@ packets:
 	(cd ./editor; make)
 	(cd ./gui; make)
 	(cd ./checks; make)
-	(cd ./smv; make)
 	(cd ./simulator; make)
 	(cd ./io; make)
 
@@ -56,7 +54,6 @@ jar:
 	    ./utils/*.class \
             ./editor/*.class\
             ./gui/*.class\
-            ./smv/*.class\
 	    ./simulator/*.class\
 	    ./checks/*.class\
 	    ./io/*.class
@@ -73,7 +70,6 @@ clean:
 	(cd ./editor; make clean)
 	(cd ./gui; make clean)
 	(cd ./checks; make clean)
-	(cd ./smv; make clean)
 	(cd ./simulator; make clean)
 
 

@@ -1,4 +1,4 @@
-package checks;
+package slime.checks;
 import java.lang.*;
 
 
@@ -7,7 +7,7 @@ import java.lang.*;
  * More specific exceptions are subclasses from this one
 
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: CheckException.java,v 1.1 2002-06-12 07:04:47 swprakt Exp $
+ * @version  $Id: CheckException.java,v 1.2 2002-06-12 18:51:59 swprakt Exp $
  */
 
 
@@ -23,5 +23,8 @@ public abstract class CheckException extends Exception{
 //	----------------------------------------
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.1  2002/06/12 07:04:47  swprakt
+//	*** empty log message ***
+//	
 //	
 //---------------------------------------------------------------------

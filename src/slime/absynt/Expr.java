@@ -1,4 +1,4 @@
-package absynt;
+package slime.absynt;
 import java.io.Serializable;
 
 
@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Abstract class for simple expressions
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: Expr.java,v 1.3 2002-06-12 15:06:06 swprakt Exp $
+ * @version $Id: Expr.java,v 1.4 2002-06-12 18:51:55 swprakt Exp $
  */
 
 
@@ -34,7 +34,7 @@ public abstract class Expr extends Absynt implements Serializable{
 
   //--------------------------------------------------
 
-  abstract Object accept(IExprVisitor ask);
+  // abstract Object accept(IExprVisitor ask);
 }
 
 
@@ -44,9 +44,12 @@ public abstract class Expr extends Absynt implements Serializable{
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Expr.java,v 1.3 2002-06-12 15:06:06 swprakt Exp $
+//	$Id: Expr.java,v 1.4 2002-06-12 18:51:55 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2002/06/12 15:06:06  swprakt
+//	OK
+//	
 //	Revision 1.2  2002/04/16 19:02:54  swprakt
 //	OK
 //	

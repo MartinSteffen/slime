@@ -1,4 +1,4 @@
-package absynt;
+package slime.absynt;
 
 import utils.PrettyPrint;
 import java.util.LinkedList;
@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * 
  * The class offers an example for a program int abstract syntax.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Example.java,v 1.3 2002-06-07 15:05:06 swprakt Exp $	
+ * @version $Id: Example.java,v 1.4 2002-06-12 18:51:54 swprakt Exp $	
  */
 
 
@@ -241,9 +241,12 @@ public class Example{
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Example.java,v 1.3 2002-06-07 15:05:06 swprakt Exp $
+//	$Id: Example.java,v 1.4 2002-06-12 18:51:54 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2002/06/07 15:05:06  swprakt
+//	modified example for prettyprinter tests
+//	
 //	Revision 1.2  2002/04/16 19:02:54  swprakt
 //	OK
 //	

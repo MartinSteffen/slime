@@ -1,4 +1,4 @@
-package utils;
+package slime.utils;
 import java_cup.runtime.Symbol;
 
 %%

@@ -1,6 +1,6 @@
-package editor;
+package slime.editor;
 
-import absynt.*;
+import slime.absynt.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -10,7 +10,7 @@ import java.util.Hashtable;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.7 2002-06-12 08:39:35 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.8 2002-06-12 18:52:04 swprakt Exp $
  */
 
 final class SFCPainter{
