@@ -1,4 +1,5 @@
 raw list.
+========
 
 
 + good spec
@@ -16,11 +17,12 @@ raw list.
 
 - late checking in of stuff.
 
-- discipline/professionalism
+- discipline/professionalism/priorities
 
-- flame wars
+- communication, no discussions, no feedback, only flame wars
 
-- communication, no discussions, no feedback
+- checking in stuff revant for all without prior communication (and more than once)
+
 
 - too late communication of errors (for instance 
     change wishes for absynt.)
@@ -36,3 +38,9 @@ raw list.
 
 
 o make a time line, make a statistics
+
+
+
+####################################################################################
+## $Id: eval.txt,v 1.7 2002-06-30 07:57:45 swprakt Exp $
+####################################################################################
