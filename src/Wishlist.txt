@@ -1,5 +1,5 @@
 ###########################################################
-# $Id: Wishlist.txt,v 1.7 2002-07-11 09:46:36 swprakt Exp $
+# $Id: Wishlist.txt,v 1.8 2002-07-12 07:02:48 swprakt Exp $
 ###########################################################
 
 
@@ -31,3 +31,6 @@ o specific packages:
   > utils: 
        - make the Pp a visitor?
        - make the Pp give back a string.
+
+  > editor:
+       - print facility
