@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.12 2002-06-25 05:51:27 swprakt Exp $
+## $Id: Errors.txt,v 1.13 2002-06-25 06:56:07 swprakt Exp $
 ###########################################################
 
 
@@ -37,6 +37,19 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+Error 11:      Grammar missing
+ package:      parser
+ status:       reported (here), 25.06.02, Steffen
+ class:        fatal, a parser without grammar does not work
+ description:  There is no LEX/yacc files in the parser directory.
+
+Error 10:      Makefile missing
+ package:      parser
+ status:       reported 25.6.02, Steffen
+ class:        fatal, breach of our requirements
+ description:  theres not makefile in the parser directory
+
 Error 9:       structure
  package:      parser/absynt
  status:       reported 25.6.02. Steffen (also asked Marco via email, no reply)
@@ -58,7 +71,7 @@ Error 7:       no code
  status:       emailed to Immo 24.6.02, M. Steffen
  class:        fatal
  description:  contrary to announcement, the checked in code is
-               not in repors
+               not in repos
   
 Error 6:       Makefile
   package:     top-level
