@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.74 2002-07-05 10:18:19 swprakt Exp $
+## $Id: Errors.txt,v 1.75 2002-07-05 10:20:14 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -38,7 +38,7 @@ Rules of the game:
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.74 2002-07-05 10:18:19 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.75 2002-07-05 10:20:14 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -69,57 +69,6 @@ Error 42:     Nullpointer
                 |   [Constval] false
                 Input declaration of form type [in|out|inout] var := val		
 		seems ok.
-
-Error 41:     super/sub confusion
- package:     checks (but partially branched out)
- class:       dubious
- status:      reported, 5.7.02, Steffen
- description: I don't understand the super/sub etc 
-              structure of the exceptions. Perhaps
-	      this is the cause of #40.
-
-	      Explanation: the structure of Exception und TypecheckException does not
-	      work: it does not return the right message: Doing
-
-		      System.out.println((new slime.checks.CheckException()).message);
-		      System.out.println((new slime.checks.CheckException()).getMessage());
-		      System.out.println((new slime.checks.TException()).message);
-		      System.out.println((new slime.checks.TException()).getMessage());
-
-	      (where TException is the same as TypecheckException, but not nested
-	      inside, because I want to throw it outside) gives:
-               General exception of the checks-package
-               General exception of the checks-package
-               General typecheck exception
-               General exception of the checks-package
-
-
-	       only line 3 is wanted. If I overwrite also
-	       the get_message, then it is ok:
-
-                  General exception of the checks-package
-                  General exception of the checks-package
-                  General typecheck exception
-                  General typecheck exception.
-
-               The error can be explained here:     
-                     --------------------------------------
-
-                     class A {int x = 5; int get_x () { return x;} }
-
-                     class B extends A { int x = 6;}
-
-                     public class Test {
-                       public static void main (String args []) {
-                         A a = new A();
-                         System.out.println(a.x);
-                         System.out.println(a.get_x());
-                         B b = new B();
-                         System.out.println(b.x);         // prints 6
-                         System.out.println(b.get_x());   // prints 5!
-                      }
-                    }
-		    --------------------------------------------
 
 
 Error 40:     typecheck expressions
@@ -271,6 +220,60 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 41:     super/sub confusion
+ package:     checks (but partially branched out)
+ class:       dubious
+ status:      reported, 5.7.02, Steffen, I understood the problem:
+              the methods need to be overwritten.
+ description: I don't understand the super/sub etc 
+              structure of the exceptions. Perhaps
+	      this is the cause of #40.
+
+	      Explanation: the structure of Exception und TypecheckException does not
+	      work: it does not return the right message: Doing
+
+		      System.out.println((new slime.checks.CheckException()).message);
+		      System.out.println((new slime.checks.CheckException()).getMessage());
+		      System.out.println((new slime.checks.TException()).message);
+		      System.out.println((new slime.checks.TException()).getMessage());
+
+	      (where TException is the same as TypecheckException, but not nested
+	      inside, because I want to throw it outside) gives:
+               General exception of the checks-package
+               General exception of the checks-package
+               General typecheck exception
+               General exception of the checks-package
+
+
+	       only line 3 is wanted. If I overwrite also
+	       the get_message, then it is ok:
+
+                  General exception of the checks-package
+                  General exception of the checks-package
+                  General typecheck exception
+                  General typecheck exception.
+
+               The error can be explained here:     
+                     --------------------------------------
+
+                     class A {int x = 5; int get_x () { return x;} }
+
+                     class B extends A { int x = 6;}
+
+                     public class Test {
+                       public static void main (String args []) {
+                         A a = new A();
+                         System.out.println(a.x);
+                         System.out.println(a.get_x());
+                         B b = new B();
+                         System.out.println(b.x);         // prints 6
+                         System.out.println(b.get_x());   // prints 5!
+                      }
+                    }
+		    --------------------------------------------
+
 
 
 Error 34:     expression parsing
