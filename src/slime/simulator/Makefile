@@ -4,7 +4,13 @@
 #----------------------------------------------------------------------
 
 
-all:	$(patsubst %.java,%.class,$(wildcard *.java))
+all:	
+	javac *.java
+
+
+run:
+	java slime.simulator.Main
+
 debug:	; make JAVACOPTS="-g" all
 
 %.class:	%.java
