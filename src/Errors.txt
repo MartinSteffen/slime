@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.83 2002-07-05 15:07:28 swprakt Exp $
+## $Id: Errors.txt,v 1.84 2002-07-05 15:15:00 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,19 +34,6 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-Errors47:   parser error
- class:     fatal 
- package:   utils/parser
- status:    reported: 5.7.02, Steffen
- description:  description: I thought the error was repaired:
-
-              1*2+3 =>[B_expr] 
-                  |   [Constval] 1
-                  |   <TIMES> 
-                  |   [B_expr] 
-                  |   |   [Constval] 2
-                  |   |   <PLUS> 
-                  |   |   [Constval] 3
 
 Error 46:   typecheck error
  class:     fatal
@@ -105,7 +92,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.83 2002-07-05 15:07:28 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.84 2002-07-05 15:15:00 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -287,6 +274,22 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+Errors47:   parser error
+ class:     fatal 
+ package:   utils/parser
+ status:    reported: 5.7.02, Steffen: repaired: in the new
+            checked out version, it's ok
+ description:  description: I thought the error was repaired:
+
+              1*2+3 =>[B_expr] 
+                  |   [Constval] 1
+                  |   <TIMES> 
+                  |   [B_expr] 
+                  |   |   [Constval] 2
+                  |   |   <PLUS> 
+                  |   |   [Constval] 3
+
 
 
 Error 41:     super/sub confusion
