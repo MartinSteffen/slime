@@ -15,5 +15,7 @@
 
  firstcompilaton-sep:   3.7.2002
              Now, everything compiles, including parser.
+	     But the compilation is still separate one by one per
+	     subdirectory.
 	  
 	
