@@ -5,7 +5,7 @@
   \vec{x} = \Varin
   \andalso 
   A = \{ a \suchthat
-  \exists s \in S. s \in \sigma \land a \in \act(s)\}
+  \exists s \in S.\ s \in \sigma \land a \in \act(s)\}
   \}
   \
   }{
@@ -26,7 +26,13 @@
   }
 
 \infrule{No-Act}{
-  T =
+  \andalso
+  T = \{
+  t \in T
+  \suchthat
+  \src(t) \subseteq \sigma
+  \land
+  \sem{\eta}{\guard(t)} = \ltrue \}
   }{
   (\sigma,\eta,\doneinput{\emptyset})
   \trans{}
@@ -38,13 +44,13 @@
 \infrule{Next-Step}{%
   t \in T
   \andalso
-  \src{t}  \in\sigma
+  \src(t)  \in\sigma
   \andalso
-  \sigma' = (\sigma \union \target{t}) \without \src{t}
+  \sigma' = (\sigma \union \target(t)) \without \src(t)
   }{
   (\sigma,\eta,\finished{T})
   \trans{}
-  (\sigma',\eta,\finished{\src{T}})
+  (\sigma',\eta,\finished{\src(t)})
   }
 
 \infrule{Output}{%
