@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.62 2002-07-04 13:00:03 swprakt Exp $
+## $Id: Errors.txt,v 1.63 2002-07-04 13:57:48 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -56,6 +56,19 @@ Error 34(2):  expression parser
               precedence left MUL, DIV;				   // *,/; MOD=%
               precedence left ADD, SUB;				   // +, -
 	      in the parser!
+
+
+              java slime.sfcparser.ParserTest -e "1 * 1 + 1"
+              [B_expr] 
+              |   [B_expr] 
+              |   |   [Constval] 1
+              |   |   <TIMES> 
+              |   |   [Constval] 1
+              |   <PLUS> 
+              |   [Constval] 1
+
+
+
 
 	      
 
