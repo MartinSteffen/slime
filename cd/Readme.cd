@@ -1,0 +1,53 @@
+
+This is the top-level Readme for the Slime-project, summer term
+2002. The project's homepage is
+
+	http://www.informatik.uni-kiel.de/inf/deRoever/SS02/Java/Slime/
+
+
+
+
+
+  o content of the CD:
+
+     -  Readme:	     this file, the toplevel info
+     -  slime.jar:     the java archive
+     -  cvsroot:       developer's source repository
+     -  Slime:         a work directory
+     -  web:           the web pages 
+     -  Slime.tar:     all of the above as tape archive
+
+
+
+  o Usage of the tool:
+	  required software: jdk1.4. To run it, do 
+
+	         java -jar slime.jar
+
+
+
+
+       
+
+	 
+
+	
+
+	
+
+	
+	
+
+
+
+      
+
+  o Participants:
+
+     - Norbert Boeck
+     - Immo Grabe
+     - Andreas Niemann
+     - Thomas Richter
+     - Karsten Stahl
+     - Martin Steffen
+     - Marco Wendel
