@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.28 2002-07-06 12:53:48 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.29 2002-07-06 13:52:34 swprakt Exp $
  */
 
 public class Typecheck {
@@ -134,17 +134,29 @@ public class Typecheck {
 	pp.print(d);
 	d.accept(new DeclarationV());  // enlarges the environment
       }
+      System.out.println("initial step check: ");
+      pp.print(istep);
       istep.accept(new StepV());
       // each step int the list of steps must be well-typed
       // if one of the single steps fails, it will raise an error. 
+      System.out.println ("next: check the steps");
       for (Iterator i = steps.iterator(); i.hasNext(); ) {
  	Step s = (Step)i.next();
-	s.accept(new StepV());}
+	System.out.print ("check of step: ");
+	pp.print(s);
+	s.accept(new StepV());
+	UnitType t = (UnitType)s.accept(new StepV());
+	System.out.print ("result type:");
+	pp.print(t);
+      }
+      System.out.println ("next: check the transitions");
       for (Iterator i = transs.iterator(); i.hasNext(); ) {
  	Transition t = (Transition)i.next();
+	System.out.print ("in transs-loop: ");
+	pp.print(t);
 	t.accept(new TransitionV()); 
       }
-      for (Iterator i = transs.iterator(); i.hasNext(); ) {
+      for (Iterator i = actions.iterator(); i.hasNext(); ) {
  	Action a = (Action)i.next();
 	a.accept(new ActionV()); 
       }
@@ -158,9 +170,13 @@ public class Typecheck {
    */
 
   class StepV implements Visitors.IStep{
+    slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();
     public Object forStep(String name, LinkedList actions) throws Exception {
+      System.out.println ("for step");
       for (Iterator i = actions.iterator(); i.hasNext(); ) {
  	StepAction sa  = (StepAction)i.next();
+	System.out.print ("step action: ");
+	pp.print(sa);
 	sa.accept(new StepActionV()); 
       }
       return new UnitType();
@@ -173,9 +189,12 @@ public class Typecheck {
    *  implement it as visitor for uniformity and extensibility.
    */
   class StepActionV implements Visitors.IStepAction{
+    slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();
     public Object forStepAction(ActionQualifier qualifier,
 				String a_name) throws Exception {
+      System.out.println ("for stepaction");
       qualifier.accept(new ActionQualifierV());
+      pp.print(new UnitType());
       return new UnitType();
     }
   }
@@ -459,6 +478,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.28  2002/07/06 12:53:48  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.27  2002/07/05 19:39:40  swprakt
 //    call it a day [Steffen]
 //
@@ -571,6 +593,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.28 2002-07-06 12:53:48 swprakt Exp $
+//    $Id: Typecheck.java,v 1.29 2002-07-06 13:52:34 swprakt Exp $
 //
 //---------------------------------------------------------------------
