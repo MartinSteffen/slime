@@ -7,9 +7,13 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.3 2002-06-26 07:28:38 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.4 2002-06-26 10:39:48 swprakt Exp $
  * ---------------------------------------------------------------
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2002/06/26 07:28:38  swprakt
+ * ParserTest.java gehoert nun zum Package slime.sfcparser
+ * CVS
+ *
  * Revision 1.2  2002/06/26 06:33:04  swprakt
  * Makefile geaendert nun mit fuer Slime gueltigem CLASSPATH "../..".
  * Absfc2SFCConverter.java nun in slime.sfcparser-package.
@@ -31,7 +35,7 @@ public class ParserTest {
     public static void main (String args []) {
 	String      version = "1.0";
 	slime.absynt.Expr sfcexpr = null;
-	if ( (args.length == 0)  || (args.length > 4) )
+	if ( (args.length == 0)  || (args.length > 100) )
 	{
 	    System.out.println("SFCParserTest " + version + " - Part of the Slime Project");
 	    System.out.println("Usage: java SFCParserTest <SFCProgramFile>");
@@ -45,7 +49,12 @@ public class ParserTest {
 	       ) 
 	    {
 		slime.sfcparser.SFCParser mySFCParser = new slime.sfcparser.SFCParser();
-		sfcexpr = mySFCParser.parseExpression( args[1] );
+		StringBuffer sbuf = new StringBuffer("");
+		for (int i=1; i<args.length; i++) {
+		    sbuf.append(args[i]);
+		}
+		String theExpression = sbuf.toString();
+		sfcexpr = mySFCParser.parseExpression( theExpression );
 		if (sfcexpr == null) 
 		{
 		    System.out.println("SFCParser: " + args[1] + " is no allowed sfc expression.");

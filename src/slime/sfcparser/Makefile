@@ -1,9 +1,16 @@
 ##########################
-# $Id: Makefile,v 1.4 2002-06-26 08:27:04 swprakt Exp $                       
+# $Id: Makefile,v 1.5 2002-06-26 10:39:47 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.4  2002/06/26 08:27:04  swprakt
+# neues Makefile, JLex jetzt in Slime/src/JLex,
+# von wo aus es beim kompilieren auch aufgerufen
+# wird.
+#
+# CVS ----------------------------------------------------------------------
+#
 # Revision 1.3  2002/06/26 07:28:38  swprakt
 # ParserTest.java gehoert nun zum Package slime.sfcparser
 # CVS
@@ -42,13 +49,12 @@ Absfc2SFCConverter:
 	javac -classpath $(ICLASSPATH) Absfc2SFCConverter.java
 
 ParserTest:
-#	jar cf sfcparser.jar ../../slime/sfcparser/*.class
 	javac -classpath $(ICLASSPATH) ParserTest.java
 
 SFCParser.class:  SFCParseException.class SFCParser.java SFCLex.class
 	javac -classpath $(ICLASSPATH) SFCParser.java SFCSymbols.java 
 
-SFCLex.java: #
+SFCLex.java: 
 	#  SFC.lex
 	java -classpath $(ICLASSPATH) JLex.Main SFC.lex >$(JLEXLOGFILE)
 	mv SFC.lex.java SFCLex.java
@@ -59,8 +65,7 @@ SFCLex.class: SFCLex.java
 SFCParser.java:
 	# SFC.cup
         #java java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 3 -dump-grammar -dump-states -dump-tables -dump -debug SFCParser.cup 2>&1 $(JCUPLOGFILE)
-	# above all options that make sense
-	java -classpath $(ICLASSPATH) java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 3 < SFC.cup 
+	java -classpath $(ICLASSPATH) java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 9 < SFC.cup 
 
 SFCParseException.class:
 	javac -classpath $(ICLASSPATH)  SFCParseException.java
@@ -74,9 +79,6 @@ SFCSymbols.java:
 ############## Cleaning the mess up ##################
 
 clean:
-	rm -f *.class
-
-mrproper: clean
 	rm -f SFCLex.java SFCSymbols.java SFCParser.java $(JLEXLOGFILE) $(JCUPLOGFILE) *.bak *~ *.tmp
 
 

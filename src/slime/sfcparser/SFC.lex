@@ -2,9 +2,13 @@ package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.4 2002-06-26 09:19:34 swprakt Exp $
+    * $Id: SFC.lex,v 1.5 2002-06-26 10:39:48 swprakt Exp $
     * -----
     * $Log: not supported by cvs2svn $
+    * Revision 1.4  2002/06/26 09:19:34  swprakt
+    * Debug die 1.: von einer Expression 1+1 parst er nur
+    * 1+ korrekt, danach Abbruch
+    *
     * Revision 1.2  2002/06/26 06:50:57  swprakt
     * removed unused entries in SFC.lex
     * and removed wrong entry in SFC.cup "stmtblock" in "stmtlist"
@@ -38,11 +42,6 @@ import java_cup.runtime.Symbol;
     * %notunix	-	does not care about ^M :) (skips \r)
     * %init{
     * %init}
-
-"++"       {return new Symbol(SFCSymbols.INC); }
-"--"	   {return new Symbol(SFCSymbols.DEC); }
-
-
     **/
 %%
 %char
@@ -73,8 +72,8 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 
 %%  
 
-{space}	   {}
-{comment}  {return new Symbol(SFCSymbols.COMMENT);}
+{space}    { }
+{comment}  { /* return new Symbol(SFCSymbols.COMMENT); */ }
 ";"        {return new Symbol(SFCSymbols.SEMICOLON);	/* */}
 "{"        {return new Symbol(SFCSymbols.LPSET); 	/* */}
 "}"        {return new Symbol(SFCSymbols.RPSET); 	/* */}
@@ -100,8 +99,7 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "+"        {return new Symbol(SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
 "-"        {return new Symbol(SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
 "*"        {return new Symbol(SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
-"/"        {return new Symbol(SFCSymbols.DIV); 	/* Expr.DIV     =  3 */}
-"%"        {return new Symbol(SFCSymbols.MOD); 	/* Expr.MOD     =  undef */}
+"/"        {return new Symbol(SFCSymbols.DIV); 	/* Expr.DIV     =  3 "%"        {return new Symbol(SFCSymbols.MOD); 	 Expr.MOD     =  undef */}
 "&&"       {return new Symbol(SFCSymbols.AND); 	/* Expr.AND     =  4 */}
 "||"       {return new Symbol(SFCSymbols.OR);  	/* Expr.OR      =  5 */}
 "!"        {return new Symbol(SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
