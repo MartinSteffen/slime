@@ -7,9 +7,9 @@ import java.util.*;
 
 
 /**
-   Example for the usage of the pretty printer
- * @author Initially provided by Martin Steffen.
- * @version  $Id: PpExample.java,v 1.4 2002-06-12 19:37:04 swprakt Exp $    
+   Example showing the use of the pretty printer
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+ * @version  $Id: PpExample.java,v 1.5 2002-07-11 09:44:39 swprakt Exp $    
  */
 
 
@@ -29,13 +29,17 @@ public class PpExample {
 }
 
 
+
 //----------------------------------------------------------------------
 //	Example for the pretty printer
 //	------------------------------
 //
-//	$Id: PpExample.java,v 1.4 2002-06-12 19:37:04 swprakt Exp $
+//	$Id: PpExample.java,v 1.5 2002-07-11 09:44:39 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2002/06/12 19:37:04  swprakt
+//	Commentary in English
+//	
 //	Revision 1.3  2002/06/12 18:52:07  swprakt
 //	reorganization of the package-structure
 //	

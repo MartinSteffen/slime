@@ -1,5 +1,5 @@
 ###########################################################
-# $Id: Wishlist.txt,v 1.6 2002-07-11 08:52:23 swprakt Exp $
+# $Id: Wishlist.txt,v 1.7 2002-07-11 09:46:36 swprakt Exp $
 ###########################################################
 
 
@@ -28,4 +28,6 @@ o specific packages:
 	 to _enforce_ that exceptions can only
 	 be thrown with an argument.
 
-  > utils: make the Pp a visitor?
+  > utils: 
+       - make the Pp a visitor?
+       - make the Pp give back a string.
