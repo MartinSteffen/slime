@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.149 2002-07-08 15:23:49 swprakt Exp $
+n## $Id: Errors.txt,v 1.150 2002-07-08 15:58:17 swprakt Exp $
 ## $Author: swprakt $
 ###########################################################
 
@@ -52,18 +52,24 @@ Rules of the game:
 
 
 
+
+
+
 Errors 68:    another complation error
- package:     utils
+ package:     absynt/absfc
  class:       fatal, show-stop
  package:     sfc-parser
  status:      reported, Steffen 8.7.02
- description: does not compile
+ description: does not compile, it seems that the following files
+     are missing:
+     currentStatement instanceof slime.absynt.absfc.StmtPostInc)
+     currentStatement instanceof slime.absynt.absfc.StmtPostDec)
+     currentStatement instanceof slime.absynt.absfc.StmtPreInc) 
+     currentStatement instanceof slime.absynt.absfc.StmtPreDec)                                                                               
+     probably forgotten to check in those files
 
-Errors 67:    compilation error
- package:     utils
- class:       fatal, show-stop
- status:      Steffen, 8.7.02
- description: does not compile
+
+
 
 Errors 66:    interface
  package:     checks
@@ -229,7 +235,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.149 2002-07-08 15:23:49 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.150 2002-07-08 15:58:17 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -411,6 +417,24 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Errors 67:    compilation error
+ package:     utils
+ class:       fatal, show-stop
+ status:      reported Steffen, 8.7.02
+ description: does not compile
+
+
+Errors 67: another compilation error
+ package:     absynt
+ class:       fatal, show-stop
+ status:      reported Steffen, 8.7.02, explained away
+ description: does not compile.
+              probably forgotten .equals-method
+	      Answer: no, it was a spurious artefact that Steffen
+	      currently don't use the official sources
+               
 
 
 
