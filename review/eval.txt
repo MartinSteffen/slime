@@ -4,10 +4,22 @@ raw list.
 
 + good spec
 
++ nice overall result
 
-- email-responsivity
 
-- late integration
+
+- this semester: 
+  > less coaching supervision because of not so many people
+  > more coaching, because of slow start and hectic in the end
+     and more programming by us 
+
+
+- email-responsivity (during semester)
+
+
+-  
+
+- late!!!! integration
 
 - smoothness
 
@@ -34,9 +46,6 @@ raw list.
        fix it together.
 
      
-    
-  
-
 - communication, no discussions, no feedback, only flame wars
 
 - checking in stuff revant for all without prior communication (and more than once)
@@ -60,5 +69,5 @@ o make a time line, make a statistics
 
 
 ####################################################################################
-## $Id: eval.txt,v 1.9 2002-07-02 15:04:17 swprakt Exp $
+## $Id: eval.txt,v 1.10 2002-07-03 06:41:36 swprakt Exp $
 ####################################################################################
