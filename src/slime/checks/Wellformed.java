@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.15 2002-07-18 11:19:56 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.16 2002-07-18 11:40:58 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors (combined into one exception) together with the
  * checker proper, which recurs over the abstract syntax.
@@ -92,7 +92,7 @@ public class Wellformed {
 	  if (s.equals(istep))
 	    return (new Boolean(true)); // exit loop
 	}
-	throw new Wellformed.WException();
+	throw new Wellformed.WException("initial step missing");
       }
     }
   }
@@ -203,6 +203,11 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.15  2002/07/18 11:19:56  swprakt
+//    I remove the debug-print lines.
+//
+//    [Steffen]
+//
 //    Revision 1.14  2002/07/11 06:30:08  swprakt
 //    well-formed condition added: a transition must not have more that
 //    one source and more than one target at the same time.
