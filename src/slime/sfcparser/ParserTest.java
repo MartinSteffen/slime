@@ -6,10 +6,24 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.9 2002-07-02 12:29:47 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.10 2002-07-02 13:32:20 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.9  2002/07/02 12:29:47  swprakt
+/* Phase 1 completed, correct parsing of complex
+/* SFC programs into slime.absynt.absfc.SFCabtree.
+/*
+/* Phase 2 still in progress: today fixed some bug
+/* with PrettyPrint4Absfc - partially the print(SFCabtree)
+/* by simply outcommenting the lists for vars and decls.
+/*
+/* Left to do in phase 2:
+/* verifying the correct(and complete!) creation of
+/* the varlist, decllist for the slime.absynt.SFC.
+/*
+/* 02.07.2002 mwe@informatik.uni-kiel.de
+/*
 /* Revision 1.8  2002/06/28 20:01:07  swprakt
 /* Modified PrettyPrint for use with slime.absfc.SFCabtree,
 /* may now use it to debug Absfc2SFCConverter. I will try
@@ -64,7 +78,8 @@ public class ParserTest {
 	slime.absynt.absfc.SFCabtree        absfctree = null;
 	slime.sfcparser.SFCParser           mySFCParser = null;
 	slime.sfcparser.Absfc2SFCConverter  theConverter = null;
-	slime.utils.PrettyPrint             prettyPrinter = new slime.utils.PrettyPrint();
+	// slime.utils.PrettyPrint             prettyPrinter = new slime.utils.PrettyPrint();
+	slime.sfcparser.PPActions prettyPrinter =  new slime.sfcparser.PPActions();
 	slime.sfcparser.PrettyPrint4Absfc   prettyAbsfc = new slime.sfcparser.PrettyPrint4Absfc();
 
 	if ( (args.length == 0)  || (args.length > 100) )
