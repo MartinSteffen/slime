@@ -9,7 +9,7 @@ import slime.absynt.*;
  * A little testing of the typechecker, using the parser
  * code ``recycled'' from sfcparser.ParserTest.java
  * @author Martin Steffen
- * @version $Id: TypecheckTest.java,v 1.5 2002-07-05 19:39:40 swprakt Exp $
+ * @version $Id: TypecheckTest.java,v 1.6 2002-07-06 16:51:54 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
@@ -53,6 +53,7 @@ public class TypecheckTest {
       }; // end loop
       System.out.println ("checking programs now");
       SFC sfc1 = Example.getExample1();
+      pp.print(sfc1);
       slime.absynt.Type t = tc.check(sfc1);
       
     } catch (FileNotFoundException fnfe) {
