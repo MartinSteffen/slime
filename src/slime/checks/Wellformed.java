@@ -12,9 +12,9 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.9 2002-07-09 14:28:40 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.10 2002-07-09 14:49:08 swprakt Exp $
  * <p>
- * The checker consists of various well-formed errors as exceptions together with the
+ * The checker consists of various well-formed errors (combinded into one exception) together with the
  * checker proper, which recurs over the abstract syntax.
  * 
  * Using internally the visitor pattern, the design is 
@@ -22,14 +22,14 @@ import slime.absynt.*;
  * <p>
  * Given an sfc, the following things are checked:
  * <ul>
- *  <li> sfc non-nil
+ *  <li> sfc non-null
  *  <li> initial step contained in the set of steps.
  *  <li> all steps and transitions are non-null.
  *  <li> no step occurs twice (by name)
  *  <li> no transition has a non-existing step as source or target (by name)
  * </ul>
  * Note that test of non-nullness is not done for parts other than mentioned (for instance
- * sap's etc.
+ * sap's etc.)
  *
  */
 public class Wellformed {
@@ -197,6 +197,15 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.9  2002/07/09 14:28:40  swprakt
+//    Well-formed checked finished. (but untested).  The functionality is as
+//    documented in java-doc. It might be that the implementation requires
+//    to re-add the equals-methods into the abstract syntax (which has
+//    been removed due to the current interface inconsistencies.) This will
+//    be tested.
+//
+//    [Steffen]
+//
 //    Revision 1.8  2002/07/09 13:51:56  swprakt
 //    I check for uniqueness of steps now, where the steps
 //    are put into a Set (implemented by a hashtable).
