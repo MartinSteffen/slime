@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.53 2002-07-03 07:55:31 swprakt Exp $
+## $Id: Errors.txt,v 1.54 2002-07-03 08:19:10 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -36,10 +36,11 @@ Rules of the game:
 
 
 
-Error 35:     comp.errorsfcparser
- package:     sfcparser/SFCParser.java 1.11
- class:       fatal
- status:      reported, 3.7.02, Steffen
+Error 35:     incompat. types, re-build curiosity
+ package:     sfcparser/SFCParser.java 1.11 (but regenerated,
+                i.e., it is not really 1.11!!!)
+ class:       fatal + deadly
+ status:      reported, 3.7.02, 10, Steffen
  description: 
               SFCParser.java:1348: inconvertible types
               found   : slime.absynt.absfc.Comment
@@ -49,6 +50,27 @@ Error 35:     comp.errorsfcparser
              (NB: I still can't compile because of the controversy
 	      concerning CLASSPATH, etc), but trying to compile	
 	      gives this additional error.
+	      The error is produced by 
+	       cd sfcparser
+	       make clean
+	       make 
+
+
+              (If I do:
+	         cd sfcparser
+	         cvs update
+		 make
+		 
+               (i.e., no make clean) then it compiles over this error and
+	       it get's as the next errors those in ParserTest (I     
+	       report here only the first in ParserTest.java 1.11)
+
+               ParserTest.java:151: cannot resolve symbol
+               symbol  : method print  (slime.absynt.absfc.SFCabtree)
+               location: class slime.sfcparser.PrettyPrint4Absfc
+		  prettyAbsfc.print( absfctree );
+
+	       
 
 
 Errors35:
