@@ -73,7 +73,9 @@ guarantees, that
 \item the (unique) initial step is contained in the set of steps,
 \item all steps and transitions are non-null, 
 \item no step occurs twice (by name), and
-\item no transition has a non-existing step as source or target (by name)
+\item no transition has a non-existing step as source or target (by name).
+\item no transition has at the same time more that one source and more
+than one target.
 \end{itemize}
 Note that test of non-nullness is not done for parts other than mentioned
 (for instance sap's etc.)  
