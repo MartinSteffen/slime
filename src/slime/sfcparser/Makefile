@@ -1,9 +1,13 @@
 ##########################
-# $Id: Makefile,v 1.9 2002-07-08 13:10:06 swprakt Exp $                       
+# $Id: Makefile,v 1.10 2002-07-12 06:26:15 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.9  2002/07/08 13:10:06  swprakt
+# Small changes due to adding assignment-declarations-values
+# as remarked by Andreas Niemann. (mwe)
+#
 # Revision 1.8  2002/06/28 20:01:07  swprakt
 # Modified PrettyPrint for use with slime.absfc.SFCabtree,
 # may now use it to debug Absfc2SFCConverter. I will try
@@ -90,7 +94,7 @@ SFCLex.class: SFCLex.java
 SFCParser.java:
 	# SFC.cup
         #java java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 3 -dump-grammar -dump-states -dump-tables -dump -debug SFCParser.cup 2>&1 $(JCUPLOGFILE)
-	java java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 9 < SFC.cup 
+	java java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms < SFC.cup 
 
 SFCParseException.class:
 	javac SFCParseException.java
