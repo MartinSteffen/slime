@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.5 2002-06-06 16:10:14 swprakt Exp $
+ * @version $Id: Editor.java,v 1.6 2002-06-07 14:36:26 swprakt Exp $
  */
 
 public final class Editor extends JComponent implements ChangeListener{
@@ -34,6 +34,9 @@ public final class Editor extends JComponent implements ChangeListener{
     private ESFC         eSFC;
     private JTextField   statusMessage;
     private JTabbedPane  drawBoardTabbedPane = new JTabbedPane();
+    private JScrollPane  guardList;
+    private JScrollPane  actionList;
+    private JScrollPane  declaringList;
 
     // Toggel to transition mode by pressing t
     // Toggel to step mode by pressing s
@@ -98,6 +101,7 @@ public final class Editor extends JComponent implements ChangeListener{
 	this.setLayout( new BorderLayout() );
 	this.add(this.getCenterPanel(), BorderLayout.CENTER);
 	this.add(this.getSouthPanel(), BorderLayout.SOUTH);
+	this.add(this.getWestPanel(), BorderLayout.WEST);
 	this.setVisible(true);
 //  	this.addWindowListener( new WindowAdapter() {
 //  		public void windowClosing(WindowEvent e) {
@@ -105,6 +109,57 @@ public final class Editor extends JComponent implements ChangeListener{
 //  		}
 //  	    });
     }
+
+
+    private Panel getWestPanel() {
+	Panel panel = new Panel();
+	panel.setLayout( new BorderLayout() );
+	panel.add(this.getGuardList(), BorderLayout.NORTH);
+	panel.add(this.getActionList(), BorderLayout.CENTER);
+	panel.add(this.getDeclaringList(), BorderLayout.SOUTH);
+	return panel;
+    }
+
+    private JScrollPane getGuardList() {
+	Object[] o = {"Hier","stehen","spaeter","die","Guards"};
+	Panel panel = new Panel();
+	guardList = new JScrollPane(new JList(o));
+	return guardList;
+    }
+
+    private JScrollPane getActionList() {
+	Object[] o;
+	SFC sfc = this.eSFC.getSFC();
+	if (sfc == null)
+	    o = new Object[0];
+	else {
+	    LinkedList aList = sfc.actions;
+	    o = new Object[aList.size()];
+	    for (int i=0; i< aList.size(); i++) {
+		String s = this.eSFC.output((absynt.Action)aList.get(i));
+		o[i] = s;
+	    }
+	}
+	actionList = new JScrollPane(new JList(o));
+	return actionList;
+    }
+
+    private JScrollPane getDeclaringList() {
+	Object[] o;
+	SFC sfc = this.eSFC.getSFC();
+	if (sfc == null)
+	    o = new Object[0];
+	else {
+	    LinkedList dList = sfc.declist;
+	    o = new Object[dList.size()];
+	    for (int i=0; i< dList.size(); i++) {
+		String s = this.eSFC.output((absynt.Declaration)dList.get(i));
+		o[i] = s;
+	    }
+	}
+	declaringList = new JScrollPane(new JList(o));
+	return declaringList;
+    }    
 
     private Panel getCenterPanel() {
 	Panel panel = new Panel();
@@ -126,6 +181,7 @@ public final class Editor extends JComponent implements ChangeListener{
 	panel.add( statusMessage );
 	panel.add(this.getCheckButton());
 	panel.add(this.getLayoutButton());
+	panel.add(this.getSimulateButton());
 	panel.add(this.getHelpButton());
 	panel.add(this.getCloseButton());
 	return panel;
@@ -146,20 +202,22 @@ public final class Editor extends JComponent implements ChangeListener{
 	help.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Showing some help.");
-		    Object[] message = new Object[7];
+		    Object[] message = new Object[8];
 		    message[0] = "- Add a new step ...\n"
 			+"   Leftclick on a free place on the drawboard.\n";
 		    message[1] = "- Delete a step ...\n"
 			+"   Switch with 'r' to REMOVE-mode and leftclick on the step.\n";
 		    message[2] = "- Move a step ...\n"
 			+"   Switch with 'e' to EDIT-mode and drag the step with the left mousebutton hold down.\n";
-		    message[3] = "- Change the name of a step ...\n"
+		    message[3] = "- Move a group of steps ...\n"
+			+"   Mark the set of steps you wish to move as a set of source or target steps and move them like one step.\n";
+		    message[4] = "- Change the name of a step ...\n"
 			+"   Double click on the step.\n";
-		    message[4] = "- Mark a step as source ...\n"
+		    message[5] = "- Mark a step as source ...\n"
 			+"   Switch with 's' to SOURCE-mode and leftclick on the step.\n";
-		    message[5] = "- Mark a step as target ...\n"
+		    message[6] = "- Mark a step as target ...\n"
 			+"   Switch with 't' to TARGET-mode and leftclick on the step.\n";
-		    message[6] = "- Add transition(s) between marked source and target steps ...\n"
+		    message[7] = "- Add transition(s) between marked source and target steps ...\n"
 			+"   Press 'g'. Actually there is no possibility to choose a guard. Wait for later versions :-).\n";
 
 		    String[] options = {"Ok"};
@@ -175,6 +233,16 @@ public final class Editor extends JComponent implements ChangeListener{
 		}
 	    });
 	return help;
+    }
+
+    private Button getSimulateButton() {
+	Button simulate = new Button("Simulate");
+	simulate.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    statusMessage.setText("Simulator not yet implemented.");
+		}
+	    });
+	return simulate;
     }
 
     private Button getLayoutButton() {
@@ -284,6 +352,13 @@ public final class Editor extends JComponent implements ChangeListener{
 		//this.pack();
 	    }
   	}    
+    }
+
+    protected boolean evaluateMouseMoved(int x, int y) {
+	Step step = this.determineSelectedStep(this.eSFC.getSFC().steps, x, y);
+	Object o = this.eSFC.getSelectedObject();
+	this.eSFC.setSelectedObject(step);
+	return (step != o);
     }
 
     private Step determineSelectedStep(LinkedList stepList, int x, int y) {

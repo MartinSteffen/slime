@@ -10,7 +10,7 @@ import java.util.Hashtable;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.4 2002-06-06 16:10:14 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.5 2002-06-07 14:36:26 swprakt Exp $
  */
 
 final class SFCPainter{
@@ -48,10 +48,15 @@ final class SFCPainter{
 	int    x0   = (int)(step.pos.x);
 	int    y0   = (int)(step.pos.y);
 	int    stepWidth = this.eSFC.getWidth(step);
+	Object selectedObject = this.eSFC.getSelectedObject();
 	g.drawString(text, x0+4, y0+6+STEP_HEIGHT/2);
 	g.drawRect(x0, y0, stepWidth-1, STEP_HEIGHT-1);
 	if (step == this.sfc.istep)
 	    g.drawRect(x0+2, y0+2, stepWidth-5, STEP_HEIGHT-5);
+	if (step == selectedObject) {
+	    g.setColor(Color.yellow);
+	    g.drawRect(x0-1, y0-1, stepWidth+1, STEP_HEIGHT+1);
+	}
 	LinkedList actions = step.actions;
 	if (actions.size() != 0) {
 	    g.setColor(Color.gray);

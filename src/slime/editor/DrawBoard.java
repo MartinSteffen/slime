@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.5 2002-06-06 16:10:14 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.6 2002-06-07 14:36:25 swprakt Exp $
  */
 
 final class DrawBoard extends Canvas
@@ -156,6 +156,9 @@ final class DrawBoard extends Canvas
 	this.editor.setStatusMessage("Mouse moved to ("
 				     +e.getX()+","
 				     +e.getY()+")");
+	if (this.editor.evaluateMouseMoved(e.getX(), 
+					   e.getY()))	
+	    this.repaint();
     }
 
     public void keyTyped(KeyEvent e) {

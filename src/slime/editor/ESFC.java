@@ -9,13 +9,13 @@ import java.util.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.3 2002-06-06 16:10:14 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.4 2002-06-07 14:36:26 swprakt Exp $
  */
 
 final class ESFC{
 
     private static final Color INITIAL = Color.darkGray;
-    private static final Color SOURCE  = Color.green;
+    private static final Color SOURCE  = Color.blue;
     private static final Color TARGET  = Color.red;
     private static final Color NORMAL  = Color.black;
 
@@ -24,6 +24,7 @@ final class ESFC{
     private LinkedList targetSteps;
     private Hashtable  colors;
     private DrawBoard  drawBoard;
+    private Object     selectedObject;
     
     protected ESFC(SFC sfc) {
 	this.sfc    = sfc;
@@ -34,6 +35,14 @@ final class ESFC{
 
     protected SFC getSFC() {
 	return this.sfc;
+    }
+
+    protected Object getSelectedObject() {
+	return this.selectedObject;
+    }
+
+    protected void setSelectedObject(Object o) {
+	this.selectedObject = o;
     }
 
     protected void setDrawBoard(DrawBoard drawBoard) {
@@ -233,8 +242,7 @@ final class ESFC{
     }
 		       
     public String output(absynt.Action action){
-	String s = "[Action] " + action.a_name + " ";
-	s += "[StmtList] ";
+	String s = action.a_name + ": ";
 	for (Iterator i = action.sap.iterator(); i.hasNext();)
 	    s += print((Stmt)i.next());
 	return s;
@@ -263,9 +271,9 @@ final class ESFC{
     }
 
     public String output(Declaration dec) {
-	String s = "[Declaration] ";
-	s += print(dec.var);
-	s += print(dec.type);
+	String s = "";
+	s += print(dec.type) + " ";
+	s += print(dec.var) + ":=";
         s += print(dec.val);
 	return s;
     }
@@ -275,24 +283,27 @@ final class ESFC{
     }
     
     public String output(Stmt stmt){
-	return "[Stmt] ";
+	String s = "";
+	if (stmt instanceof Assign) 
+	    s = output((Assign)stmt);
+	return s;
     }
 
     public String output(Variable variable){
-	String s = "[Variable] " + variable.name;
-	s += print(variable.type);
+	String s = variable.name;
+	//s += print(variable.type);
 	return s;
     }
 
     public String output(Assign assign){
-	String s = "[Assign] ";
-	s += print(assign.var);
-	s += print(assign.val);
+	String s = "";
+	s += print(assign.var)+":=";
+	s += print(assign.val)+"; ";
 	return s;
     }
 
     public String output(B_expr bexpr){
-	String s = "[B_expr] ";
+	String s = "";
 	s += print(bexpr.left_expr);
 	s += print(bexpr.op);
 	s += print(bexpr.right_expr);
@@ -300,11 +311,14 @@ final class ESFC{
     }
 
     public String output(Expr expr){
-	return "[Expr] ";
+	String s = "";
+	//if (expr instanceof Constval)
+	    
+	return s;
     }    
     
     public String output(U_expr uexpr){
-	String s = "[U_Expr] ";
+	String s = "";
 	s += print(uexpr.op);
 	s += print(uexpr.sub_expr);
 	//prettyprint.print(uexpr.type);
@@ -366,7 +380,7 @@ final class ESFC{
     public String output(Constval constval){
 	String s = "";
         if(constval != null){
-            s = "[Constval] " +  constval.val;
+            s = constval.val.toString();
 	    //prettyprint.print(constval.type);
 	}
 	return s;

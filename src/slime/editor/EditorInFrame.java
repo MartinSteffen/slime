@@ -12,7 +12,7 @@ import javax.swing.event.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.2 2002-06-06 16:10:14 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.3 2002-06-07 14:36:26 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
@@ -32,7 +32,7 @@ public final class EditorInFrame extends JFrame {
      */
     private EditorInFrame(Editor editor) {
 	this.editor = editor;
-	this.initWindow("SFC-Editor v.0.2");
+	this.initWindow("SFC-Editor v.0.3");
     }
 
     private void initWindow(String title) {
