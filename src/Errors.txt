@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.46 2002-07-02 08:36:06 swprakt Exp $
+## $Id: Errors.txt,v 1.47 2002-07-02 11:23:42 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,7 +34,20 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+Error 33:     grammar: stmt
+ package:     sfcparser.SFC.cup v.10
+ class:       error
+ status:      reported/discussed, 2.7.02, Steffen + Wendel
+ description: the clause for stmt does not give back a result,
+              may be the cause also for other errors that
+	      Wendel talks about/
 
+
+Error 32:     grammar-precedences
+ package:     sfcparser.SFC.cup v.10
+ class:       doubtful (by code inspection)
+ status:      reported/discussed, 2.7.02, Steffen + Wendel
+ description: the prec'/associativity are not as they should
 
 
 Error 31:     grammar for stmtblock
@@ -47,27 +60,17 @@ Error 31:     grammar for stmtblock
 	       stmtlist can containt 1 stmt
 	       and stmtblock = {stmt} | {stmtlist}
 
-
-
-       
-               
-
-Error 29:     grammar for stmt
- package:     sfcparser (cup)
- class:       question  (by code inspection)
- status:      reported, 2.7.02, Steffen
- description: what does LinkedList.addAll() do? Is the order ok?
 	      (Line 904 of SFC.cup v1.10)
 
 Error 28:     grammar for stmt
  package:     sfcparser (cup)
  class:       dubious (found by code inspection, not tested)
- status:      reported, 2.7.02, Steffen
+ status:      reported, 2.7.02, Steffen, confirmerd (Marco)
  description: seems like the grammar enforces 2 `;' in a row,
               cf second alternative of sfcprogram + the fact that
 	      all stmt's end in a semicolon. (Version 1.10 of SFC.cup)
 
-Error 27:   doc wargings
+Error 27:   doc warnings
  package:   sfcparser
  class:     non-fatal
  status:    reported, 2.7.02. Steffen
@@ -213,6 +216,16 @@ Error 1:  parser warnings
 	        (cf. lex/yacc output: 10 terminals declared but not used)
 
 -------------------- Repaired errors -------------------------
+
+
+
+Error 29:     grammar for stmt
+ package:     sfcparser (cup)	q
+ class:       question  (by code inspection)
+ status:      reported, 2.7.02, Steffen, answered by MArco
+ description: what does LinkedList.addAll() do? Is the order ok?
+              answer: it puts it at the end
+
 
 
 Error 30:     grammar
