@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.165 2002-07-09 13:39:34 swprakt Exp $
+## $Id: Errors.txt,v 1.166 2002-07-09 14:55:45 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,13 +35,13 @@ Rules of the game:
 
 
 
-Error 76:     design/hack
- package:     checker
- class:       non-fatal
- status:      reported, Steffen, 9.7.02
- description: in the consistency checker:
-               the use of a hashtable for steps is not really
-              justified. Is there a better data-structre for that?
+Error 76:    docu/German
+ package:    gui
+ class:      non-fatal
+ status:     reported, 9.7.02
+ description: the java-doc comments (if present) are in German. 
+              It's tolerable, as the doc's are for internal use.
+ 
 
 Error 75:    semantic error 
  package:    checker/absynt
@@ -259,7 +259,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.165 2002-07-09 13:39:34 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.166 2002-07-09 14:55:45 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -441,6 +441,16 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 76:     design/hack
+ package:     checker
+ class:       non-fatal
+ status:      reported, Steffen, 9.7.02, repaired, Steffen, 9./7.02
+ description: in the consistency checker:
+               the use of a hashtable for steps is not really
+              justified. Is there a better data-structre for that?
+	      I use HashSet, Steffen
 
 
 Error 71:    jar Error
