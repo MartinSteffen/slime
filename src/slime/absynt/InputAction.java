@@ -8,11 +8,11 @@ import java.util.LinkedList;
  * and a program to be executed.
  *
  * @author initially provided by Marco Wendel.
- * @version $Id: InputAction.java,v 1.1 2002-06-25 05:23:33 swprakt Exp $
+ * @version $Id: InputAction.java,v 1.2 2002-07-03 17:18:13 swprakt Exp $
  */
 
 
-public class InputAction extends Absynt implements Serializable { 
+public class InputAction extends Stmt implements Serializable { 
     public String   a_name;
     public Variable a_var;
     public Expr     a_expr;
@@ -22,6 +22,13 @@ public class InputAction extends Absynt implements Serializable {
     a_var  = _a_var;
     a_expr = _a_expr;
   }
+
+  /** visitor acceptor
+     */
+   public Object accept (Visitors.IStmt ask) throws Exception {
+       return ask.forAssign( a_var , a_expr);
+  }
+	     
   
 }
 

@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 
 
-public class Comment extends Absfc implements Serializable { 
+public class Comment extends Statement implements Serializable { 
     private static final long serialVersionUID = Version.getSUID();
     public String content;
     

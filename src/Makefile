@@ -1,10 +1,15 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.18 2002-06-27 16:52:33 swprakt Exp $
+# $Id: Makefile,v 1.19 2002-07-03 17:18:12 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.18  2002/06/27 16:52:33  swprakt
+# added java_cup/*.class and
+# added java_cup/runtime/*.class to jar-file
+# (mwe)
+#
 # Revision 1.17  2002/06/27 16:50:47  swprakt
 # snot ? the last version of the global
 # makefile was not for this package.
@@ -44,15 +49,25 @@ PACKAGEDIRS   = slime.absynt\
 
 ################################################
 
-
-doc:	;
-	javadoc  -version -author -d $(WEBDOCDIR) $(PACKAGEDIRS)
+classes:
+	cd slime;
+	cd absynt; make clean; make
+	cd absfc; make clean; make
+	cd ../..
+	cd layout; make clean; make
+	cd editor; make clean; make
+	cd checks; make clean; make
+	cd gui; make clean; make
+	cd simulator; make clean; make
+	
 
 
 all:	packets $(patsubst %.java,%.class,$(wildcard *.java))
 
 debug:	; make JAVACOPTS="-g" all
 
+doc:	;
+	javadoc  -version -author -d $(WEBDOCDIR) $(PACKAGEDIRS)
 
 jar:
 	jar cvf slime.jar ./slime/absynt/*.class \
