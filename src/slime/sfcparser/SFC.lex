@@ -4,10 +4,15 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.6 2002-06-27 14:30:57 swprakt Exp $
+    * $Id: SFC.lex,v 1.7 2002-06-27 19:39:37 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.6  2002/06/27 14:30:57  swprakt
+   /* tried to remove Error 19: "_public ugliness",
+   /* now header comments consist of two parts, one
+   /* for javadoc and one containing CVS Versio log.
+   /*
     * Revision 1.5  2002/06/26 10:39:48  swprakt
     * yy_eof muss nun noch irgendwie behandelt werden...
     *
@@ -48,6 +53,7 @@ import java_cup.runtime.Symbol;
     * %notunix	-	does not care about ^M :) (skips \r)
     * %init{
     * %init}
+    * %yy_eof
     **/
 %%
 %char

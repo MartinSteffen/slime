@@ -15,11 +15,16 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.6 2002-06-27 14:30:57 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.7 2002-06-27 19:39:36 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2002/06/27 14:30:57  swprakt
+ * tried to remove Error 19: "_public ugliness",
+ * now header comments consist of two parts, one
+ * for javadoc and one containing CVS Versio log.
+ *
  * Revision 1.5  2002/06/26 10:39:48  swprakt
  * yy_eof muss nun noch irgendwie behandelt werden...
  *
@@ -174,24 +179,22 @@ parser code {:
 
 
 
-/*
+/**
  * <b>CUP: report_fatal_error</b><br>
  * This method should be called whenever a non-recoverable error<br>
  * occurs. It responds by calling report_error(), then aborts<br>
  * parsing by calling the parser method done_parsing(), and<br>
  * finally throws an exception. (In general done_parsing() should<br>
  * be called at any point that parsing needs to be terminated early).<br>
- * @param message <b>contains the error message</b>
- * @throws SFCParseException <b>exception for the GUI and therefore UI output</b>
+ * @param message <b>contains the error message</b><br>
+ * @param object <b>the error object</b><br>
  **/
-/*
-  protected void report_fatal_error(String message, Object info) throws SFCParseException {
-  System.err.println( message );
-  throw new SFCParseException( message );
+  public void report_fatal_error(String message, Object info) {
+      report_error( message, info );
   } // end of report_fatal_error
-*/
 
-/*
+
+/**
  * <b>CUP: report_error</b><br>
  * This method should be called whenever an error message is to be<br>
  * issued. In the default implementation of this method, the first<br>
@@ -199,46 +202,52 @@ parser code {:
  * System.err and the second parameter is simply ignored. It is<br>
  * very typical to override this method in order to provide a more<br>
  * sophisticated error reporting mechanism.<br>
- * @param message <b>contains the error message</b>
- * @throws SFCParseException <b>exception for the GUI and therefore UI output</b>
+ * @param message <b>contains the error message</b><br>
+ * @param object <b>the error object</b><br>
+ * @throws slime.sfcparser.SFCParseException <b>exception for the GUI and therefore UI output</b>
  **/
-/*
-  protected void report_error(String message, Object info) {
-  System.err.println( "SFC Parser: " + message );
+  public void report_error(String message, Object info) { // not possible in override: throws slime.sfcparser.SFCParseException {
+      StringBuffer sbuf = new StringBuffer("SFC Error:");
+      if (info instanceof java_cup.runtime.Symbol) {
+	  java_cup.runtime.Symbol cupsymbol = ((java_cup.runtime.Symbol) info);
+	  if (cupsymbol.left >= 0) {                
+                sbuf.append(" in line " + ( cupsymbol.left + 1 ) );   
+                if ( cupsymbol.right >= 0 )                    
+                    sbuf.append(", at column " + ( cupsymbol.right + 1 ) );
+	  } // end if-cupsymbol.left
+      } // end if-info
+      sbuf.append(" : " + message );
+      System.out.println( sbuf.toString() );
+      // currently not possible in overridden method: throw new slime.sfcparser.SFCParseException( sbuf.toString() );
   } // end of report_error 
-*/  
-
-/*
+  
+/**
  * <b>CUP: syntax_error</b><br>
  * This method is called by the parser as soon as a syntax error<br>
  * is detected (but before error recovery is attempted). In the<br>
  * default implementation it calls: report_error("Syntax error", null);<br>
- * @param message <b>contains the error message</b>
- * @throws SFCParseException <b>exception for the GUI and therefore UI output</b>
+ * @param Symbol <b>contains the errortoken</b>
  **/
-/*
-  protected void syntax_error(Symbol cur_token) {
-  report_error("SFC Parser : SYNTAX ERROR - current symbol: " + cur_token, null );
+  public void syntax_error(Symbol cur_token) {
+      report_error("SYNTAX ERROR", cur_token );
   } // end of syntax_error
-*/
+
   
-/*
+/**
  * <b>CUP: syntax_error</b><br>
  * This method is called by the parser if it is unable to recover
  * from a syntax error. In the default implementation it calls:
  * report_fatal_error("Couldn't repair and continue parse", null);
- * @param message <b>contains the error message</b>
- * @throws SFCParseException <b>exception for the GUI and therefore UI output</b>
+ * @param Symbol <b>contains the error token</b>
  **/
-/*
-  protected void unrecovered_syntax_error(Symbol cur_token) throws SFCParseException {
-  done_parsing();       
-  report_fatal_error("SFC Parser : FATAL PARSING ERROR", null);
+  public void unrecovered_syntax_error(Symbol cur_token) {
+      done_parsing();       
+      report_fatal_error("FATAL PARSING ERROR", cur_token);
   } // end of unrecovered_syntax_error
-*/
+
 
 /*
- * <b>CUP: syntax_error</b><br>
+ * <b>CUP: error_sync_size</b><br>
  * This method is called by the parser to determine how many<br>
  * tokens it must successfully parse in order to consider an error<br>
  * recovery successful. The default implementation returns 3.<br>
@@ -247,8 +256,8 @@ parser code {:
  * @return 3 <b>the standard size</b>
  **/ 
 /*
-//  protected int error_sync_size() {
-//  return 9;
+//  public int error_sync_size() {
+//  return 4;
 //  } // end of error_sync_size
 */
 

@@ -1,9 +1,12 @@
 ##########################
-# $Id: Makefile,v 1.5 2002-06-26 10:39:47 swprakt Exp $                       
+# $Id: Makefile,v 1.6 2002-06-27 19:39:36 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.5  2002/06/26 10:39:47  swprakt
+# yy_eof muss nun noch irgendwie behandelt werden...
+#
 # Revision 1.4  2002/06/26 08:27:04  swprakt
 # neues Makefile, JLex jetzt in Slime/src/JLex,
 # von wo aus es beim kompilieren auch aufgerufen
@@ -79,7 +82,7 @@ SFCSymbols.java:
 ############## Cleaning the mess up ##################
 
 clean:
-	rm -f SFCLex.java SFCSymbols.java SFCParser.java $(JLEXLOGFILE) $(JCUPLOGFILE) *.bak *~ *.tmp
+	rm -f SFCLex.java SFCSymbols.java SFCParser.java $(JLEXLOGFILE) $(JCUPLOGFILE) *.bak *~ *.tmp *.class
 
 
 ############## Creating Documentation ################

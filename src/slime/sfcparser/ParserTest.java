@@ -7,10 +7,15 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.5 2002-06-27 14:30:56 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.6 2002-06-27 19:39:36 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.5  2002/06/27 14:30:56  swprakt
+/* tried to remove Error 19: "_public ugliness",
+/* now header comments consist of two parts, one
+/* for javadoc and one containing CVS Versio log.
+/*
  * Revision 1.4  2002/06/26 10:39:48  swprakt
  * yy_eof muss nun noch irgendwie behandelt werden...
  *
@@ -78,16 +83,19 @@ public class ParserTest {
 		// ***MORE*** 
 	    } // end of if-args-else
 	} catch (FileNotFoundException fnfe) {
-	    System.err.println("SFCParser-Error: The file \"" + args[0] + "\" was not found !");
+	    System.err.println("ParserTest: " + "The file \"" + args[0] + "\" was not found !");
 	    System.exit(1);
 	} catch (IOException ioe) {
-	    System.err.println( ioe.toString() );
+	    System.err.println( "ParserTest: " + ioe.toString() );
 	    System.exit(1);
-//	} catch (SFCParseException sfce) {
-//	    System.err.println( "SFCParseException: " + sfce.toString() );
-//	    System.exit(1);
+	} catch (slime.sfcparser.SFCParseException sfce) {
+	    System.err.println( "ParserTest->" + "SFCParseException: " + sfce.toString() );
+	    System.exit(1);
+	} catch (NullPointerException npe) {
+	    System.err.println( "ParserTest: "+ npe.toString() );
+	    System.exit(1);
 	} catch (Exception e) {
-	    System.err.println( e.toString() );
+	    System.err.println( "ParserTest: " + e.toString() );
 	    System.exit(1);
 	} // end of try-catch
     } // end of main
