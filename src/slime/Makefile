@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.23 2002-07-05 13:27:01 swprakt Exp $
+# $Id: Makefile,v 1.24 2002-07-05 13:41:38 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -50,9 +50,9 @@ packets:
 	(cd ./sfcparser; make)
 	(cd ./layout; make)
 	(cd ./gui; make)
-	(cd ./checks; make)
 	(cd ./simulator; make)
 	(cd ./editor; make)
+#	(cd ./checks; make)
 #	(cd ./io; make)
 
 # the sfc-parser is temporarily commented out from
