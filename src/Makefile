@@ -1,6 +1,5 @@
 #
-#
-# Makefile for documantation and shipping.
+# Makefile for documentation and shipping.
 #
 # The targets installing gobal web-infos can be executed only
 # by the maintainers and only at the university pool,
@@ -11,12 +10,31 @@
 
 TOOLNAME      = Slime
 
+PACKAGEDIRS   = slime\
+	        slime.absynt\
+	        slime.absynt.absfc\
+	        slime.utils\
+	        slime.layout\
+	        slime.editor\
+	        slime.checks\
+	        slime.checks.tests\
+	        slime.sfcparser\
+		slime.gui\
+		slime.gui.listener\
+		slime.gui.model\
+		slime.simulator\
+
+
+
 WEBDIR        = /home/info/www/inf/deRoever/SS02/Java/$(TOOLNAME)
 WEBDOCDIR     = $(WEBDIR)/doc
 
 SNAPSHOTSDIR  = $(WEBDIR)/snapshots
 
 ################################################
+
+doc:	;
+	javadoc  -version -author -d $(WEBDOCDIR) $(PACKAGEDIRS)
 
 ## first option: c = create
 
@@ -68,6 +86,6 @@ jarinstall:
 
 
 #----------------------------------------------------------------------
-# $Id: Makefile,v 1.28 2002-07-19 12:34:00 swprakt Exp $
+# $Id: Makefile,v 1.29 2002-07-19 13:18:01 swprakt Exp $
 #----------------------------------------------------------------------
 
