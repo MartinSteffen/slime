@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.55 2002-07-03 08:32:22 swprakt Exp $
+## $Id: Errors.txt,v 1.56 2002-07-03 09:26:11 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,106 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+Error 36.2:   re-generation difference (cf. Error 36)
+ package:     sfcparser/SFCParser.java 1.11
+ status:      reported, 3.7.02, Steffen
+ class:       dubiousity, point to discuss
+ description: here a bit more info.
+              I did the same experiment (especially same classpath)
+              as in #36    but without
+
+                 /home/ms/Swprakt/Slime/src/slime/sfcparser/JLex.jar
+                 /home/ms/Swprakt/Slime/src/slime/sfcparser/java_cup.jar
+
+	      and then (additionally) without 
+
+
+
+                 /home/ms/Swprakt/Slime/src/JLex
+                 /home/ms/Swprakt/Slime/src/java_cup.jar
+
+              make invokes
+
+                 java java_cup.Main -package slime.sfcparser -parser SFCParser -symbols SFCSymbols -nonterms -expect 9 < SFC.cup 
+
+	       All _generated Versions are identical, but different 
+	       form 1.11.
+
+             ---
+              with  export CLASSPATH=/home/ms/Swprakt/Slime:/home/ms/Swprakt/Slime/src/java_cup:/home/ms/Swprakt/Slime/src/JLex:
+
+	      it does not compile at all (it doesn't file cup)
+	     
+             ----
+
+               with  CLASSPATH=/home/ms/Swprakt/Slime:/home/ms/Swprakt/Slime/src/java_cup/docs/java_cup.jar:/home/ms/Swprakt/Slime/src/JLex/JLex.jar:
+
+
+	       This time (unlike in #36) the generate SFC.cup 
+
+	                    is identical with the checked in 
+			    version 1.11!
+
+
+
+	      This probably means, that Wendel generates
+	      SFCParser.java not with these 2 checked-in version
+	      (I can't be sure, since I can't test what happens at other places
+ 	       and what CLASSPATH others use privately, 
+	       and it's irrelevant at any rate).
+		 
+
+             -----
+	         with the sfcparser/Makefile v1.5, i.e., with
+		 classpath set as ../..: 
+
+                  javac -classpath ../.. SFCLex.java
+
+		 same as the above.
+
+             ---- 
+
+	        with sfcparser/Makefile v.1.5 
+		+ wihout the local jarfiles
+		+ with CLASSPATH=/home/ms/Swprakt/Slime:/home/ms/Swprakt/Slime/src/java_cup/docs/java_cup.jar:/home/ms/Swprakt/Slime/src/JLex/JLex.jar:
+                   (which should not play a role)
+
+		 => Sfcparser.java 1.11 IS REPRODUCED.
+
+
+[sfcparser @ gollum] > cvs update
+? TMP
+cvs server: Updating .
+U JLex.jar
+U SFCLex.java
+U SFCParser.java
+U SFCSymbols.java
+U java_cup.jar
+[sfcparser @ gollum] > rm *.jar
+rm: remove `JLex.jar'? y
+rm: remove `java_cup.jar'? y
+[sfcparser @ gollum] > make
+javac -classpath ../.. SFCLex.java
+javac -classpath ../.. SFCParser.java SFCSymbols.java 
+javac -classpath ../.. Absfc2SFCConverter.java
+javac -classpath ../.. ParserTest.java
+ParserTest.java:151: cannot resolve symbol
+symbol  : method print  (slime.absynt.absfc.SFCabtree)
+ ........
+
+                       
+33 errors
+make: *** [ParserTest] Error 1
+[sfcparser @ gollum] > cvs diff ParserTest.java 
+[sfcparser @ gollum] > 
+	       ------
+
+
+
+
+
+ 
 
 Error 36:     re-generation difference
  package:     sfcparser/SFCParser.java 1.11
