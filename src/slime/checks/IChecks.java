@@ -14,11 +14,11 @@ import absynt.*;
  * an exception. Int other woirds: false is never returned.
 
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: IChecks.java,v 1.5 2002-06-12 10:07:57 swprakt Exp $
+ * @version  $Id: IChecks.java,v 1.6 2002-06-12 15:06:08 swprakt Exp $
  */
 
 
-public interface IChecks{
+public  interface IChecks{
   public boolean isWellTyped (SFC p)  throws CheckException;
   public boolean isWellformed (SFC p) throws CheckException;
 }
@@ -30,6 +30,9 @@ public interface IChecks{
 //	----------------------------------------
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2002/06/12 10:07:57  swprakt
+//	*** empty log message ***
+//	
 //	Revision 1.4  2002/06/12 07:41:10  swprakt
 //	Top-level/general Exceptions added to the interface.
 //	
