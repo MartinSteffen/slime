@@ -8,7 +8,7 @@ import slime.absynt.*;
 /** Type checker for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms"  Target =main> Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.36 2002-07-11 10:00:51 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.37 2002-07-18 08:35:14 swprakt Exp $
  *
  * <p>
  * It consists of the various typecheck errors together with the
@@ -296,9 +296,6 @@ public class Typecheck {
   /** type checking visitor for expressions.
    */
 
-
-
-
   class ExprV implements Visitors.IExpr{
     public Object forB_Expr(Expr l, int o, Expr r) throws CheckException {
             // binary expressions
@@ -461,8 +458,8 @@ public class Typecheck {
 
   /** Type checking visitor for a type itself.
    *  This is the end of the recursion and the visitor returns
-   *  the object itself. The only thing that can goto wrong is that
-   *  the
+   *  the object itself. 
+   *  
    */
 
   class TypeV implements Visitors.IType{
@@ -486,6 +483,13 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.36  2002/07/11 10:00:51  swprakt
+//    - One new exception added (missing type)
+//
+//    - added more info' to the messages.
+//
+//    [Steffen]
+//
 //    Revision 1.35  2002/07/11 09:18:11  swprakt
 //    The exceptions get more expressive. message + explanation are
 //    polished, also message is made dependent on the argument (ie.
@@ -646,6 +650,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.36 2002-07-11 10:00:51 swprakt Exp $
+//    $Id: Typecheck.java,v 1.37 2002-07-18 08:35:14 swprakt Exp $
 //
 //---------------------------------------------------------------------

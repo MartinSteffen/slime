@@ -11,11 +11,10 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 /**
- * For the Slime project of the Fortgeschrittenen-Praktikum.
+ * Top-level file for the Slime project of the Fortgeschrittenen-Praktikum.
  * <br><br>
- * Status: always complete, since it is for testing only<br>
  * @author Andreas Niemann
- * @version $Id: Main.java,v 1.1 2002-07-18 07:12:57 swprakt Exp $
+ * @version $Id: Main.java,v 1.2 2002-07-18 08:35:13 swprakt Exp $
  */
 
 

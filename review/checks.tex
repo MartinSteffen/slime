@@ -1,0 +1,77 @@
+
+\begin{myslide}{Offered functionality}
+  \begin{itemize}
+  \item \important{well-formed} checking
+    \begin{itemize}
+    \item sfc non-null 
+    \item initial step contained in the set of steps. 
+    \item  all steps and transitions are non-null. 
+    \item no step occurs twice (by name) 
+    \item no transition has a non-existing step as source or target (by
+      name)
+    \item no transition has at the same time more that one source and more
+      than one target.
+    \end{itemize}
+  \item \important{type} checking
+  \end{itemize}
+\end{myslide}
+
+
+\begin{myslide}{Design}
+  \begin{itemize}
+  \item Implemented as \important{Visitor}-pattern to the abstract syntax
+  \item consists of
+    \begin{itemize}
+    \item \texttt{absynt.Visitor} contains the \important{visitor
+        interfaces} for each clause of the abstract syntax as
+      \important{inner classes}
+    \item each class honors an \texttt{accept}-method\footnote{Slight
+        oo-hack (overriding) done to cater for additional absynt-classes
+        currently not in the visitor interface.}
+    \end{itemize}
+  \item visitors hidden from the check-clients
+  \item pros/cons:
+    \begin{itemize}
+    \item extensible
+    \item separation of concerns, clean
+    \item higher static safety
+    \item slower
+    \end{itemize}
+  \end{itemize}
+\end{myslide}
+
+
+\begin{myslide}{Visitor interfaces, types clause}
+  \lstset{language=java}
+  \lstset{basicstyle=\scriptsize\ttfamily}
+  as inner class of \texttt{absynt.Visitors}:
+  \lstinputlisting[first=66,last=73]{../../src/slime/absynt/Visitors.java}
+\end{myslide}
+\begin{myslide}{Visitor: abstract syntax}
+  \lstset{language=java}
+  \lstset{basicstyle=\tiny\ttfamily}
+  \lstinputlisting[first=12,last=17]{../../src/slime/absynt/Type.java}
+\end{myslide}
+
+\begin{myslide}{Visitors: abstract syntax (2)}
+  \lstset{language=java}
+  \lstset{basicstyle=\tiny\ttfamily}
+  \lstinputlisting[first=12,last=24]{../../src/slime/absynt/BoolType.java}
+\end{myslide}
+
+\begin{myslide}{Visitor: client}
+
+  \lstset{language=java}
+  \lstset{basicstyle=\tiny\ttfamily}
+  \hspace{-2.3cm}
+  \begin{minipage}{10cm}
+    \lstinputlisting[first=298,last=308]{../../src/slime/checks/Typecheck.java}
+  \end{minipage}
+
+  
+\end{myslide}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
