@@ -4,7 +4,7 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFCLex.java,v 1.8 2002-06-29 21:23:07 swprakt Exp $
+    * $Id: SFCLex.java,v 1.9 2002-06-30 06:49:28 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
