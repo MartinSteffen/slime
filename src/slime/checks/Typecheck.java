@@ -1,4 +1,5 @@
 
+
 package slime.checks;
 
 import java.lang.*;
@@ -11,7 +12,7 @@ import slime.absynt.*;
 /** Type checker for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms"  Target =main> Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.33 2002-07-07 14:57:45 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.34 2002-07-11 05:52:36 swprakt Exp $
  *
  * <p>
  * It consists of the various typecheck errors together with the
@@ -451,6 +452,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.33  2002/07/07 14:57:45  swprakt
+//    ok for today [Steffen]
+//
 //    Revision 1.32  2002/07/07 08:27:49  swprakt
 //    OK
 //
@@ -595,6 +599,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.33 2002-07-07 14:57:45 swprakt Exp $
+//    $Id: Typecheck.java,v 1.34 2002-07-11 05:52:36 swprakt Exp $
 //
 //---------------------------------------------------------------------
