@@ -2,7 +2,9 @@
 
 \label{sec:checks}
 
-\team{Thomas Richter, Karsten Stahl, Martin Steffen, all others too}
+\team{Thomas Richter, Karsten Stahl,
+  \url{http://www.informatik.uni-kiel.de/\home{ms}}{Martin Steffen}, all others
+  too}
 
 Only syntactically correct systems can be meaningfully processed, in our
 case \emph{simulated}. The task of this package is to check syntactical
@@ -23,16 +25,18 @@ handed over only checked syntax. What needs not to be checked are
 or similar things. 
 
 
+\subsubsection*{Contract}
 
-Proposals for things checked:
-\begin{itemize}
-\item well-formedness (to be discussed)
-\item well-typedness of expressions. We assume that the language is
-  well-typed. The types of the operators is shown in Table~\ref{tab:types}.
-\item there's exactly one initial step.
-%\item Die Verwendung von ausschließlich \emph{booleschen} Variablen (dies
-%  ist für die SMV-Gruppe wichtig.)
-\end{itemize}
+
+
+The checker assures well-typedness of expressions. The languages is rather
+simple and the abstract syntax of Section~\ref{sec:abstractsyntax} only
+features integers and booleans and no scopes. We assume that the language
+is well-typed.  The types of the operators is shown in
+Table~\ref{tab:types}.
+
+
+
 
 \begin{table}[htbp]
   \centering
@@ -59,6 +63,21 @@ Proposals for things checked:
   \caption{Types}
   \label{tab:types}
 \end{table}
+
+
+Besides (and prior to) type-checking, the checker detects also various
+situations, when the programs is considered to be ill-formed. The checker
+guarantees, that
+\begin{itemize}
+\item the sfc is non-null, 
+\item the (unique) initial step is contained in the set of steps,
+\item all steps and transitions are non-null, 
+\item no step occurs twice (by name), and
+\item no transition has a non-existing step as source or target (by name)
+\end{itemize}
+Note that test of non-nullness is not done for parts other than mentioned
+(for instance sap's etc.)  
+
 
 
 
