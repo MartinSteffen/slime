@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.19 2002-06-26 06:27:09 swprakt Exp $
+## $Id: Errors.txt,v 1.20 2002-06-26 12:34:22 swprakt Exp $
 ###########################################################
 
 
@@ -41,14 +41,37 @@ Rules of the game:
 
 
 
+Error 17:      structure
+ package:      all
+ status:       reported
+ class:        potentially fatal, cause of confusion
+ description:   new subdir's added, but not announces, nor
+                added to the readme, nor added to the Makefile
+
+Error 16:      LEX/YACC
+ package:      (sfcpasrser)
+ status:       reported, 26.6.02
+ class:        question, potetntial cause of trouble
+ description:  is it necessary, to check in the in
+               LEX/YACC, especially only in class files,
+	       (and no MAKEFILE!) to rebuild it???????
+               What influence does it have to the
+	       global structure?
+
+
+ 
 Error 15:      typed variables?
  package:      sfcparser
- status:       question
- status:       reported, 26.6.02, Steffen
+ class:       question
+ status:       reported/posed/fatal, 26.6.02, Steffen
  description:  need the variable a type-field? 
                Perhaps one could remove it, would be cleaner for
 	       the Hashtable implementation of the type
-	       checker. Or even better overwrite equals?
+	       checker. Or even better overwrite equals, because
+	       there are also the pos-field.
+	       Without any change, the Hashtable implementation
+	       will not work.
+	       
 
 Error 14:      checked in class files
  package:      sfcparser
