@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.86 2002-07-05 15:53:13 swprakt Exp $
+## $Id: Errors.txt,v 1.87 2002-07-05 15:56:20 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,14 +34,32 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-Error 48:   parse error 
+Error 49:   type check error
  class:     fatal
- package:   utils.parser (but the firstcompilaton-sep-version, which is unrepaired)
-            Nope: also in the current version!
- status:    reported
- description: "(1 <= 2) or  (-1 = (-2 * 4)" gives
+ package:   checks
+ status:    reported, Steffen, 5.7.2002
+ description: (1 <= 2) or  (-1 = (-2 * 4)) =>[B_expr] 
+|   [B_expr] 
+|   |   [Constval] 1
+|   |   <LEQ> 
+|   |   [Constval] 2
+|   <OR> 
+|   [U_Expr] 
+|   |   <MINUS> 
+|   |   [B_expr] 
+|   |   |   [Constval] 1
+|   |   |   <EQ> 
+|   |   |   [U_Expr] 
+|   |   |   |   <MINUS> 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Constval] 2
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 4
+here we go
+General exception of the checks-package
+ParserTest: java.lang.ClassCastException: java.lang.ClassCastException
+make: *** [test] Error 1
 
-              ParserTest: slime.utils.ParseException: [module parser2] fatal parsing error
 
 
 Error 46:   typecheck error
@@ -101,7 +119,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.86 2002-07-05 15:53:13 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.87 2002-07-05 15:56:20 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -296,6 +314,17 @@ Errors47:   parser error
                   |   |   [Constval] 3
 
 -------------------- Repaired errors -------------------------
+
+Error 48:   parse error 
+ class:     fatal
+ package:   utils.parser (but the firstcompilaton-sep-version, which is unrepaired)
+            Nope: also in the current version!
+ status:    reported, repaired, steffen, 5.7.02. Ist not a real error, ")" is missing
+ description: "(1 <= 2) or  (-1 = (-2 * 4)" gives
+
+              ParserTest: slime.utils.ParseException: [module parser2] fatal parsing error
+
+
 
 Errors47:   parser error
  class:     fatal 
