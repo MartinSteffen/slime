@@ -16,7 +16,7 @@ import javax.swing.border.*;
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.11 2002-06-12 18:52:03 swprakt Exp $
+ * @version $Id: Editor.java,v 1.12 2002-06-12 19:52:58 swprakt Exp $
  */
 
 public final class Editor extends JComponent 
@@ -355,7 +355,7 @@ public final class Editor extends JComponent
 	    // FIX ME: Neue Variablen muessen eingefuegt werden
 	    // FIX ME: Testen, ob Varaiblen schon vorhanden sind und ob Typ gleich ist.
 	    if (!sapString.equals("")) {
-		utils.Parser parser = new utils.Parser();
+		slime.utils.Parser parser = new slime.utils.Parser();
 		try {
 		    sap = parser.parseSAP(sapString);
 		} catch (ParseException e) {

@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.10 2002-06-12 18:51:51 swprakt Exp $
+# $Id: Makefile,v 1.11 2002-06-12 19:52:56 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -77,9 +77,6 @@ clean:
 %.class:	%.java
 		javac $(JAVACOPTS) $<
 
-
-doc:	;
-	javadoc  -version -author -d $(WEBDOCDIR) $(PACKAGEDIRS)
 
 localdoc:	;
 	javadoc  -version -author -d $(LOCALDOCDIR) $(PACKAGEDIRS)
