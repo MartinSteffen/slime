@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.30 2002-06-28 10:24:51 swprakt Exp $
+## $Id: Errors.txt,v 1.31 2002-06-28 10:25:15 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -36,6 +36,7 @@ Rules of the game:
 
 Error 22: German 
  package: simulator
+ class:   user-visible non-nicety
  status:  reported (=told Immo), Steffen, 26.6.02
  description: we should make the interface uniformely English
           or German. Since the requirement etc are English,
