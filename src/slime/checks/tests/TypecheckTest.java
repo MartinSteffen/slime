@@ -9,7 +9,7 @@ import slime.absynt.*;
  * A little testing of the typechecker, using the parser
  * code ``recycled'' from sfcparser.ParserTest.java
  * @author Martin Steffen
- * @version $Id: TypecheckTest.java,v 1.6 2002-07-06 16:51:54 swprakt Exp $
+ * @version $Id: TypecheckTest.java,v 1.7 2002-07-07 07:06:25 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
@@ -55,6 +55,8 @@ public class TypecheckTest {
       SFC sfc1 = Example.getExample1();
       pp.print(sfc1);
       slime.absynt.Type t = tc.check(sfc1);
+      System.out.print ("Result type = ");
+      pp.print (t);
       
     } catch (FileNotFoundException fnfe) {
       System.err.println("TypecheckTest: " + "The file \"" + args[0] + "\" was not found !");

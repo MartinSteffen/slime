@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.30 2002-07-06 16:51:04 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.31 2002-07-07 07:06:24 swprakt Exp $
  */
 
 public class Typecheck {
@@ -159,11 +159,12 @@ public class Typecheck {
       System.out.println ("contains 1" + env.containsKey(v1.name));
       System.out.println ("contains 2" + env.containsKey(v2.name));
 
+      System.out.println("next we print the stored keys = strings of variables");
       for (Enumeration e = env.keys(); e.hasMoreElements();){
 	String v = (String)e.nextElement();
 	pp.print(new Variable (v));
 	//	pp.print((new Variable ("x")));
-	System.out.print("lookup v:");
+	System.out.print("lookup " + v + ": ");
 	pp.print(env.lookup(v));
 	//	System.out.print("lookup x ");
 	//	pp.print(env.lookup(new Variable ("x")));
@@ -173,14 +174,16 @@ public class Typecheck {
 	//	System.out.println("");
       };
 
+      System.out.println("next we print the stored elements = types");
       for (Enumeration e = env.elements(); e.hasMoreElements();){
 	Type t = (Type)e.nextElement();
 	pp.print(t);
       };
-      System.exit(0);
       System.out.println("initial step check: ");
-      pp.print(istep);
       istep.accept(new StepV());
+      pp.print(istep);
+      System.out.println ("type of istep: ");
+      pp.print((Type)istep.accept(new StepV()));
       // each step int the list of steps must be well-typed
       // if one of the single steps fails, it will raise an error. 
       System.out.println ("next: check the steps");
@@ -200,6 +203,7 @@ public class Typecheck {
 	pp.print(t);
 	t.accept(new TransitionV()); 
       }
+      System.out.println("next the actions");
       for (Iterator i = actions.iterator(); i.hasNext(); ) {
  	Action a = (Action)i.next();
 	System.out.print ("in actions-loop: ");
@@ -551,6 +555,15 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.30  2002/07/06 16:51:04  swprakt
+//    the class variables was not usable as keys in
+//    the hashtable. it's based on identities, therefore
+//    it did not work.
+//
+//    I use now strings.
+//
+//    [Steffen]
+//
 //    Revision 1.29  2002/07/06 13:52:34  swprakt
 //    Everything's now pretty much sprinkled with prints,
 //    to see what;s going on.
@@ -674,6 +687,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.30 2002-07-06 16:51:04 swprakt Exp $
+//    $Id: Typecheck.java,v 1.31 2002-07-07 07:06:24 swprakt Exp $
 //
 //---------------------------------------------------------------------
