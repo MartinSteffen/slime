@@ -10,7 +10,7 @@ import  slime.absynt.SFC;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: 2
+ * @version $Id: SimSFC.java,v 1.3 2002-07-19 09:04:58 swprakt Exp $
  */
 
 
