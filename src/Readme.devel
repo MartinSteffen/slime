@@ -1,5 +1,5 @@
 ############################################################
-# $Id: Readme.devel,v 1.10 2002-07-03 16:11:45 swprakt Exp $
+# $Id: Readme.devel,v 1.11 2002-07-19 12:57:35 swprakt Exp $
 ############################################################
 
 
@@ -25,6 +25,8 @@ o Requirements:
 o Files and directories
 
   - Java packages/subdirectories
+ 
+    slime/Main.java      : top-level Main class
 
     slime/simulator/
     slime/editor/
@@ -36,9 +38,8 @@ o Files and directories
     
    - other files
 
+
       > Readme.devel:   this file
-      > Readme:         general information, for outside users
-      > Todo:           list of things to do
 
       > Status:         current status to survey the progress
 
@@ -55,7 +56,4 @@ o Files and directories
 	                It refers to the actual implementation,
 	                critique and evaluation of the development
 	                process are kept in the evaluation directory.
-
-         templates/     How to mark the package and to
-                        use cvs-logs in java-doc comments.
 
