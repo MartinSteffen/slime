@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.73 2002-07-05 10:13:55 swprakt Exp $
+## $Id: Errors.txt,v 1.74 2002-07-05 10:18:19 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -38,7 +38,7 @@ Rules of the game:
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.73 2002-07-05 10:13:55 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.74 2002-07-05 10:18:19 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -48,6 +48,27 @@ Error 42:     Nullpointer
                SFC Error: : FATAL PARSING ERROR
                Error parsing expression: java.lang.NullPointerException
                ParserTest->SFCParseException: slime.sfcparser.SFCParseException: Error parsing expression
+
+	       For crosschecking, I tested the utils parser:
+
+                [tests @ gollum] > java slime.utils.TestParser
+                Input SAP program:
+                skip
+                parse: skip
+                *** Test: pretty print the result of parsing ***
+                [StmtList] 
+                |   [Skip] 
+                |   [Stmt] 
+                Input expression:
+                true and false
+                parse: true and false
+                *** Test: pretty print the result of parsing ***
+                [B_expr] 
+                |   [Constval] true
+                |   <AND> 
+                |   [Constval] false
+                Input declaration of form type [in|out|inout] var := val		
+		seems ok.
 
 Error 41:     super/sub confusion
  package:     checks (but partially branched out)
