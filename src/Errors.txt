@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.33 2002-06-28 10:33:29 swprakt Exp $
+## $Id: Errors.txt,v 1.34 2002-06-29 15:18:28 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,12 +34,37 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 25:    Shift/reduce
+ package:    sfcparser
+ class:      potentially fatal, need to be investigated
+ status:     reporter 29.6.02, Steffen
+ description: shift/reduce conflicts should at least be
+             a matter of concern.
+
+Error 24:    compilation broken
+ package:    all
+  class:     fatal and deadly
+  status:    reported, 29.6.02, Steffen
+  description: another compilation error (different from 18, 18 had
+             been repaired in the meantime, as it seemed, there	
+	     was a point in time where compilation was possible).
+	     This time it's slime.sfcparser.ParserTest.java
+	     and there are more errors. The error occurs
+	     with  (at the University)
+
+                CLASSPATH=/home/ms/Swprakt/Slime/src:/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:
+	     
+             and in a workdir without the checked-in javacup and JLEX.
+	     different combinations of this choice are untested for
+	     compilability.
+
 Error 18(2):   compilation broken (re-entered from repaired section)
   package:     all
   Class:      fatal and deadly!!!
   status:     reported, 26.6.02, Boeck/Steffen
 	      27.06.02 (mwe) see mailling-list for solution
               no common solution yet, will be decided 3.7.02 (Steffen, 28.6)
+
   description: CLASSPATH-confusion (see emails
 
 
