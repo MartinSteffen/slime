@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.76 2002-07-05 11:14:44 swprakt Exp $
+## $Id: Errors.txt,v 1.77 2002-07-05 11:15:24 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -48,7 +48,8 @@ Error 43:     non-portanble code
                    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
 
 
-               Better is:
+               Better is something like:
+
                   expr:l AND expr:r {: // AND && 4
 
                   int opCodeValue = slime.absynt.Expr.AND
@@ -61,7 +62,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.76 2002-07-05 11:14:44 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.77 2002-07-05 11:15:24 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
