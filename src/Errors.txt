@@ -1,26 +1,10 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.161 2002-07-09 13:09:28 swprakt Exp $
+## $Id: Errors.txt,v 1.162 2002-07-09 13:10:45 swprakt Exp $
 ###########################################################
-
-
-
-
-
-
-
-
 
 This file contains errors, bugs, features etc encountered in the
 development process. The format of an error report should roughly adheres
 to the following format:
-
-
-
-
-
-
-
-
 
   --------------------------------------------------------
   Error <nr>:    <short description>
@@ -87,8 +71,6 @@ Error 70:    compilation error
  	slime.sfcparser.PrettyPrint prettyPrinter =  new slime.sfcparser.PrettyPrint(); // will be used until problems with slime.utils are solved
 	This file does not exist
 
-                                                          ^
-
 
 Errors 66:    interface
  package:     checks
@@ -103,7 +85,7 @@ Error 65:     interface
 
 Error 64:     naming
  package:     checker
- class:       non-fata;
+ class:       non-fatal
  status:      reported, steffen, 7.7.02
  description:  perhaps it's better to use Typecheck.Exception
               than Typecheck.TypecheckException, duplicated 
@@ -254,7 +236,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.161 2002-07-09 13:09:28 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.162 2002-07-09 13:10:45 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
