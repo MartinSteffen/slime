@@ -1,5 +1,5 @@
 ###########################################################
-# $Id: Wishlist.txt,v 1.5 2002-07-08 16:46:42 swprakt Exp $
+# $Id: Wishlist.txt,v 1.6 2002-07-11 08:52:23 swprakt Exp $
 ###########################################################
 
 
@@ -19,6 +19,13 @@ o specific packages:
 
        - types: the equality check as overriding method equal
          is a bit of a hack
-         
+   
+  > checks:
+       - the exception structure is not nice, it would
+         be better to have an abstract superclass 
+	 that requires message and explanation,
+	 or an interface. Also it would be better 
+	 to _enforce_ that exceptions can only
+	 be thrown with an argument.
 
   > utils: make the Pp a visitor?
