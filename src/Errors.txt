@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.16 2002-06-25 09:39:14 swprakt Exp $
+## $Id: Errors.txt,v 1.17 2002-06-25 09:40:22 swprakt Exp $
 ###########################################################
 
 
@@ -41,7 +41,7 @@ Rules of the game:
 
 
 
-Error 13:      package struture 
+Error 13:      package structure 
  package:      sfcparser
  status:       fatal (in the end)
  reported:     25.6.02, Steffen
@@ -52,11 +52,11 @@ Error 13:      package struture
 	       should remove it.
 
          
-Error 12:      tons  of doc warnings
+Error 12:      no doc generated
  package:      sfcparser
  status:       reported, 25.06.02, Steffen
  class:        fatal, (because no doc is generated)
- description:  the parser generates a huge amout and also 
+ description:  the parser generates tons of warnings and also 
                serious sounding warnings! way over 100!
 
 

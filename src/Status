@@ -1,5 +1,5 @@
 #########################################################################
-## $Id: Status,v 1.7 2002-06-14 16:50:51 swprakt Exp $
+## $Id: Status,v 1.8 2002-06-25 09:42:26 swprakt Exp $
 #########################################################################
 
 
@@ -8,6 +8,15 @@
 Project-internal status file, currently informally formatted.
 --------------------------------------------------------------
 
+
+For the meeting at 25.6.02
+
+	absynt: compilable and used, not fully visitorized
+	checks: compilable, not fully functional
+	simulator: no code (claimed to be there, but is not)
+	parser: 
+	editor:   functional
+	gui:     no code.
 
 
 
