@@ -2,7 +2,7 @@
 /**
  * Pretty printer for SFC's
  * @author Initially provided by Karsten Stahl.
- * @version $Id: PrettyPrint.java,v 1.7 2002-07-08 13:19:34 swprakt Exp $
+ * @version $Id: PrettyPrint.java,v 1.8 2002-07-11 06:51:12 swprakt Exp $
  */
 
 
@@ -314,15 +314,12 @@ public class PrettyPrint {
 		string="[BoolType] ";
 	    if(type instanceof IntType)
 		string="[IntType] ";
-// <<<<<<< PrettyPrint.java
 	    if(type instanceof DoubleType)
 		string="[DoubleType] ";
-// =======
 	    if(type instanceof UnitType) // not a user type
 		string="[UnitType] ";
 	    if(type instanceof UndefType) // not a user type
 		string="[UndefType] ";
-// >>>>>>> 1.6
 	    System.out.println(whiteSpace(column) + string);
 	}	    
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
@@ -349,9 +346,14 @@ public class PrettyPrint {
 //	Pretty-Printer
 //	--------------
 //
-//	$Id: PrettyPrint.java,v 1.7 2002-07-08 13:19:34 swprakt Exp $
+//	$Id: PrettyPrint.java,v 1.8 2002-07-11 06:51:12 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.7  2002/07/08 13:19:34  swprakt
+//	uncommented some syntax errors. (mwe)
+//	<<<<<<<<<<<<<<
+//	=============
+//	
 //	Revision 1.6  2002/07/07 06:49:56  swprakt
 //	I added clauses for the 2 non-user types
 //	
