@@ -1,5 +1,5 @@
 ################################################################
-## $Id: Todo,v 1.5 2002-06-24 19:14:08 swprakt Exp $
+## $Id: Todo,v 1.6 2002-06-24 20:08:12 swprakt Exp $
 ################################################################
 
 
@@ -11,6 +11,9 @@
 
   - make a clean structure/name conventions etc.
 
+
+  - Do something useful with the explanation
+    add also messages.
 
   - Typecheck must go deeper
 
