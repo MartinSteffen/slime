@@ -1,12 +1,10 @@
 ###########################################################
-## $Id: Errors.txt,v 1.27 2002-06-27 13:35:49 swprakt Exp $
+## $Id: Errors.txt,v 1.28 2002-06-27 16:39:14 swprakt Exp $
 ###########################################################
-
 
 This file contains errors, bugs, features etc encountered in the
 development process. The format of an error report should roughly adheres
 to the following format:
-
 
   --------------------------------------------------------
   Error <nr>:    <short description>
@@ -22,9 +20,6 @@ to the following format:
     description: <longer description, hints for repair>
    -----------------------------------------------------
 
-
-
-
 Rules of the game:
 
 	- In general, if someone reports an error in another package,
@@ -36,30 +31,7 @@ Rules of the game:
 	  entry should be copied to the bottom of the file
 	  to the repaired errors section
 
-
 ------------------- Open errors ---------------------------------------
-
-
-Error 19:     doc problem
- package:     sfcparser.SFCLex
- class:       _public_ ugliness
- status:      reported, 27.6.02, Steffen
- description: the web-page contain stuff that does not belong there:
-              http://www.informatik.uni-kiel.de/inf/deRoever/SS02/Java/Slime/doc/slime/sfcparser/SFCLex.html
-
-
-Error 18:      compilation broken
-  package:     all
-  Class:      fatal and deadly!!!
-  status:     reported, 26.6.02, Boeck/Steffen
-  description: probably confusion with the new stuff added by 
-               sfc parser. (Well, not clear) Breaks everything!!! Probably name confusion
-	       with the sfcparser-Parser with the utils-Parser.
-
-	        The error in more than one sub-directory is a cup-error:
-
-                java java_cup.Main -symbols sym -parser Parser -nonterms -package utils SAP.cup  
-               Unrecognized option "SAP.cup"
 
 Error 17:      structure
  package:      all
@@ -68,88 +40,18 @@ Error 17:      structure
  description:  new subdir's added, but not announced, nor
                added to the readme, nor added to the Makefile
 
-Error 16:      LEX/YACC
- package:      (sfcpasrser)
- status:       reported, 26.6.02
- class:        question, potetntial cause of trouble
- description:  is it necessary, to check in the in
-               LEX/YACC, especially only in class files,
-	       (and no MAKEFILE!) to rebuild it???????
-               What influence does it have to the
-	       global structure?
-
-
- 
-Error 15:      typed variables?
- package:      sfcparser
- class:       question
- status:       reported/posed/fatal, 26.6.02, Steffen
- description:  need the variable a type-field? 
-               Perhaps one could remove it, would be cleaner for
-	       the Hashtable implementation of the type
-	       checker. Or even better overwrite equals, because
-	       there are also the pos-field.
-	       Without any change, the Hashtable implementation
-	       will not work.
-	       
-
-Error 14:      checked in class files
- package:      sfcparser
- status:       non-fatal (but potential source of curious errors
- status:       reported (via email to Marco), 25.6.02, Steffen
- description:  non source files (especially class files) should
-               not be checked in.
-
-Error 13:      package structure 
- package:      sfcparser
- status:       fatal (in the end)
- reported:     25.6.02, Steffen
- description:  there's no package declaration in the javafiles.
-               perhaps this also leads to the non-generation of doc-documents.
-	       Why is the an import io.* needed? 
-	       What is the use of packacke io anyway? If not needed, we 
-	       should remove it.
-
-         
-Error 12:      no doc generated
- package:      sfcparser
- status:       reported, 25.06.02, Steffen
- class:        fatal, (because no doc is generated)
- description:  the parser generates tons of warnings and also 
-               serious sounding warnings! way over 100!
-
-
-
-Error 10:      Makefile missing
- package:      parser
- status:       reported 25.6.02, Steffen
- class:        fatal, breach of our requirements
- description:  theres not makefile in the parser directory
-
-Error 9:       structure
- package:      parser/absynt
- status:       reported 25.6.02. Steffen (also asked Marco via email, no reply, I guess)
- class:        non-fatal, but doesn't look nice
- description:  Is the deep structure under absynt needed?
-               if not we shoud remove it (also from the repos)
-
 Error 8:       Manifest
  package:      Gui/all
  status:       emailed to Norbert, 24.06.02, M. Steffen
  class:        unclear, perhaps dubious/fatal depending on how it works
  description:  Is the Manifest-file at the right place (src/META-INF/Manifest)
                cf. also Error 4.
- 
-
-
-  
+   
 Error 6:       Makefile
   package:     top-level
   status:      reported 23.6.02 M.Steffen
   class:       fatal 
   description: top-level make does not work, make a better concept
-
-
 
 Error 5:       structure
   package:     absynt/check
@@ -157,8 +59,6 @@ Error 5:       structure
   class:       bad style
   description: the public/protected etc structure is not nice,
                use inner classes instead
-       
-
 
 Error 4:       Manifest file, toplevel file
   package:     Gui
@@ -179,25 +79,115 @@ Error 3:      doc warnings
                     @parameter/ @optional.
              For the parser, we cannot repair it, since it
 	     is generated by CUP/LEX		
-              
-
-
-
-
 
 Error 1:  parser warnings
-
    package:  utils.
    status: reported 12.6.2002 (M. Steffen)
    class:  warning, non-fatal
    description: Parser grammar contains superfluous stuff
 	        (cf. lex/yacc output: 10 terminals declared but not used)
 
-
-
-
-
 -------------------- Repaired errors -------------------------
+
+Error 19:     doc problem
+ package:     sfcparser.SFCLex
+ class:       _public_ ugliness
+ status:      reported, 27.6.02, Steffen
+              27.06.02 (mwe)
+ description: the web-page contain stuff that does not belong there:
+              http://www.informatik.uni-kiel.de/inf/deRoever/SS02/Java/Slime/doc/slime/sfcparser/SFCLex.html
+
+Error 18:      compilation broken
+  package:     all
+  Class:      fatal and deadly!!!
+  status:     reported, 26.6.02, Boeck/Steffen
+	      27.06.02 (mwe) see mailling-list for solution
+	      all packages within slime are subpackages of slime,
+	      all other packages JLex/java_cup are packages
+	      that should be distributed together with Slime.jar.
+	      Our Classpath-Root is /home/swprakt/cvsroot/Slime/src.
+	      All compiler-command have to state a path relativ to
+	      this root, e.g. javac -classpath ../.. *.java
+  description: probably confusion with the new stuff added by 
+               sfc parser. (Well, not clear) Breaks everything!!! Probably name confusion
+	       with the sfcparser-Parser with the utils-Parser.
+
+	        The error in more than one sub-directory is a cup-error:
+
+                java java_cup.Main -symbols sym -parser Parser -nonterms -package utils SAP.cup  
+               Unrecognized option "SAP.cup"
+
+
+Error 16:      LEX/YACC
+ package:      (sfcpasrser)
+ status:       reported, 26.6.02
+	       27.06.02 (mwe) 
+ class:        question, potetntial cause of trouble
+ description:  is it necessary, to check in the in
+               LEX/YACC, especially only in class files,
+	       (and no MAKEFILE!) to rebuild it???????
+               What influence does it have to the
+	       global structure?
+
+Error 15:      typed variables?
+ package:      sfcparser
+ class:       question
+ status:       reported/posed/fatal, 26.6.02, Steffen
+	       27.06.02 (mwe) boolean/int, opt. double
+ description:  need the variable a type-field? 
+               Perhaps one could remove it, would be cleaner for
+	       the Hashtable implementation of the type
+	       checker. Or even better overwrite equals, because
+	       there are also the pos-field.
+	       Without any change, the Hashtable implementation
+	       will not work.
+
+Error 14:      checked in class files
+ package:      sfcparser
+ status:       non-fatal (but potential source of curious errors
+ status:       reported (via email to Marco), 25.6.02, Steffen
+               27.06.02 (mwe) "cvs -d <CVSREPPATH> add -ko <filename>
+ description:  non source files (especially class files) should
+               not be checked in.
+
+
+Error 13:      package structure 
+ package:      sfcparser
+ status:       fatal (in the end)
+	       27.06.02 (mwe) see. maillinglist-discussion error 18	     
+ reported:     25.6.02, Steffen
+ description:  there's no package declaration in the javafiles.
+               perhaps this also leads to the non-generation of doc-documents.
+	       Why is the an import io.* needed? 
+	       What is the use of packacke io anyway? If not needed, we 
+	       should remove it.
+
+Error 12:      no doc generated
+ package:      sfcparser
+ status:       reported, 25.06.02, Steffen
+	       27.06.02 (mwe) see. maillinglist-discussion error 18
+ class:        fatal, (because no doc is generated)
+ description:  the parser generates tons of warnings and also 
+               serious sounding warnings! way over 100!
+
+
+Error 10:      Makefile missing
+ package:      parser
+ status:       reported 25.6.02, Steffen
+               27.06.02 (mwe)
+ class:        fatal, breach of our requirements
+ description:  theres not makefile in the parser directory
+
+Error 9:       structure
+ package:      parser/absynt
+ status:       reported 25.6.02. Steffen (also asked Marco via email, no reply, I guess)
+	       27.06.02 (mwe) it was an example for nested sub-packages,
+		additionally it does not make sense to have an Absfc2SFCConverter
+		and an absynt, but no absfc
+ class:        non-fatal, but doesn't look nice
+ description:  Is the deep structure under absynt needed?
+               if not we shoud remove it (also from the repos)
+
 
 Error 11:      Grammar missing
  package:      parser
