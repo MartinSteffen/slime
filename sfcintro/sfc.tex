@@ -1,0 +1,91 @@
+\documentclass[a4paper,dvips]{article}
+
+%\def\printlandscape{\special{landscape}}
+
+\usepackage{amsmath}
+\usepackage{ks-foils, ks-symbols}
+\usepackage[latin1]{inputenc}
+
+\input{sfc-macros}
+
+\begin{document}
+\unitlength1.8mm%
+
+
+\newcommand{\INSTEP}[1]{\parbox{3cm}{\texttt{~~~~%
+        \begin{tabular}{|c|l|} \hline
+          N & #1 \\ \hline
+        \end{tabular}
+}}}
+\newcommand{\INGUARD}[1]{{\texttt{~~#1}}}
+
+
+\begin{picture}(44.5,56)(-27,1.5)
+  \put(  0, 55){\put(  0,-2.5){\LINE(0,-1){6}}
+    \put(  0,-5.5){\GUARD{\INGUARD{true}}}
+    \put(-12,-8.5){\LINE(1,0){24}}
+    \put(-12,-9.5){\LINE(1,0){24}}
+    \put(-12,-8.5){\LINE(0,-1){4}}
+    \put( 12,-8.5){\LINE(0,-1){4}}
+    \put( 2,0){\LINE(1,0){2}}
+    \STEPinitial[$s_1$]{\INSTEP{x\,:=\,false}}
+    }
+  \put(-12, 40){\put(  0,-2.5){\LINE(0,-1){25}}
+    \put(  0,-14.5){\GUARD{\INGUARD{x and y}}}
+    \put( 2,0){\LINE(1,0){2}}
+    \STEP[$s_2$]{\INSTEP{y\,:=\,x}}
+    }
+  % oberster im rechten zweig
+  \put( 12, 40){\put(  0,-2.5){\LINE(0,-1){4}}
+    \put( -5,-6.5){\LINE(1,0){10}}
+    \put( -5,-6.5){\LINE(0,-1){6}}
+    \put( -5,-9.5){\GUARD{\INGUARD{y}}}
+    \put(  5,-6.5){\LINE(0,-1){6}}
+    \put(  5,-9.5){\GUARD{\INGUARD{not y}}}
+    \put( 2,0){\LINE(1,0){2}}
+    \STEP[$s_3$]{\INSTEP{x\,:=\,not x}}
+    }
+  % splitten im rechten zweig
+  \put( 7, 25){\put(  0,-2.5){\LINE(0,-1){6}}
+    \put(  0,-5.5){\GUARD{\INGUARD{true}}}
+    \STEP[$s_5$]{}
+    }
+  \put( 17, 25){\put(  0,-2.5){\LINE(0,-1){6}}
+    \put(  0,-5.5){\GUARD{\INGUARD{true}}}
+    \STEP[$s_6$]{}
+    }
+  % zusammenfuehrung rechts nach splitten
+  \put( 7, 19){\put(  0,-2.5){\LINE(1,0){10}}
+    \put(  5,-2.5){\LINE(0,-1){4}}
+    }
+  \put(  12, 10){
+    \STEP[$s_7$]{}
+    \put(  0,-2.5){\LINE(0,-1){4}}
+    }
+
+  % unterer step im linken zweig + parallel-konstrukt schliessen
+  \put(-12, 10){\put(  0,-2.5){\LINE(0,-1){4}}
+    \put(  0,-5.5){\LINE(1,0){24}}
+    \put(  0,-6.5){\LINE(1,0){24}}
+    \put( 12,-6.5){\LINE(0,-1){6}}
+    \put( 12,-9.5){\GUARD{\INGUARD{true}}}
+    \STEP[$s_4$]{}
+    }
+  % unterster step + nach oben
+  \put(  0, -5){\put(  0,-2.5){\LINE(0,-1){6}}
+    \put(  0,-5.5){\GUARD{\INGUARD{true}}}
+    \put(  0,-8.5){\LINE(-1,0){20}}
+    \put(-20,-8.5){\LINE(0,1){68.5}}
+    \put(-20,60  ){\VECTOR(1,0){17.5}}
+    \STEP[$s_8$]{}
+    }
+\end{picture}
+
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
