@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * and a program to be executed.
  *
  * @author initially provided by Marco Wendel.
- * @version $Id: OutputAction.java,v 1.4 2002-07-10 13:56:14 swprakt Exp $
+ * @version $Id: OutputAction.java,v 1.5 2002-07-10 14:03:22 swprakt Exp $
  */
 
 
@@ -24,11 +24,11 @@ public class OutputAction extends Stmt implements Serializable {
   }
 
   /** visitor acceptor - just for compiling, this IS NOT the real thing
-
+*/
     public Object accept (Visitors.IStmt ask) throws Exception {
-	return ask.forOutput(a_var,a_expr);
+	return null; // ask.forOutput(a_var,a_expr);
     }
-*/	     
+	     
   
 }
 
