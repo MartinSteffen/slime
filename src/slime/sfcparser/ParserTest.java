@@ -6,10 +6,30 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.10 2002-07-02 13:32:20 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.11 2002-07-02 19:26:48 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.10  2002/07/02 13:32:20  swprakt
+/* In my last checkin I promised to modify
+/* the PrettyPrint.java. The functioning
+/* version now resides in slime/sfcparser/PPActions.java
+/* There where some ClassCast-mistakes.
+/* Tomorrow (wednesday) we need to discuss the structure
+/* of an action and the consequences for the checks and the
+/* simulator.
+/* Karsten assumed I used StepAction. But where does
+/* then the information of the Action reside ?
+/* I hope that tomorrow we can create a small chart,
+/* which information should be used and which not.
+/*
+/* The file output.with.PPActions.txt now contains
+/* the output of the run
+/* java slime.sfcparser.ParserTest example.sfc > out...
+/*
+/* The next thing I will try to do are processes,
+/* no nested, but with some statements. (mwe)
+/*
 /* Revision 1.9  2002/07/02 12:29:47  swprakt
 /* Phase 1 completed, correct parsing of complex
 /* SFC programs into slime.absynt.absfc.SFCabtree.
@@ -78,8 +98,8 @@ public class ParserTest {
 	slime.absynt.absfc.SFCabtree        absfctree = null;
 	slime.sfcparser.SFCParser           mySFCParser = null;
 	slime.sfcparser.Absfc2SFCConverter  theConverter = null;
-	// slime.utils.PrettyPrint             prettyPrinter = new slime.utils.PrettyPrint();
-	slime.sfcparser.PPActions prettyPrinter =  new slime.sfcparser.PPActions();
+	slime.utils.PrettyPrint             prettyPrinter = new slime.utils.PrettyPrint();
+	// slime.sfcparser.PPActions prettyPrinter =  new slime.sfcparser.PPActions(); for the version without that StepAction...
 	slime.sfcparser.PrettyPrint4Absfc   prettyAbsfc = new slime.sfcparser.PrettyPrint4Absfc();
 
 	if ( (args.length == 0)  || (args.length > 100) )
