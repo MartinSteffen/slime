@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.177 2002-07-10 06:51:11 swprakt Exp $
+## $Id: Errors.txt,v 1.178 2002-07-10 07:02:58 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,6 +35,27 @@ Rules of the game:
 
 
 
+Error 85:    ``speichern.nichtaenderns.sfc''
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: I don't succeed in changing this text.
+
+
+Error 84:    ``speichern''
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the ``speichern'' button seems not to react (not even
+              with an exception), since there is no cancel button, one
+	      has to shoot the window down.
+
+
+Error 83:     German
+ package:     gui
+ class:       user interface
+ status:      reported, 10.7.02, Steffen
+ description: the dialogs are all in German
 Error 82:     cancel button
  package:     gui
  class:       user unfriendlyness
@@ -313,7 +334,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.177 2002-07-10 06:51:11 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.178 2002-07-10 07:02:58 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
