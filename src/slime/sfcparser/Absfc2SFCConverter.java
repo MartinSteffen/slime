@@ -4,11 +4,15 @@
  * converts a given {@link slime.absfc.SFCabtree} to<br>
  * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.12 2002-07-08 13:10:06 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.13 2002-07-08 18:25:22 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2002/07/08 13:10:06  swprakt
+ * Small changes due to adding assignment-declarations-values
+ * as remarked by Andreas Niemann. (mwe)
+ *
  * Revision 1.11  2002/07/04 16:27:18  swprakt
  * New Versions without the expressions-operations-precedence-error
  * and with added support for doubles and for-loops.
@@ -748,25 +752,39 @@ public class Absfc2SFCConverter {
 	    slime.absynt.Step       whileEnd       = null;
 	    slime.absynt.Step       loopStart      = null;
 	    slime.absynt.Step       loopEnd        = null;
+
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    targetStep = newStep();
 	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
+
 	    whileStart = (slime.absynt.Step)targetStep; /*** START OF WHILE-STATEMENT ***/
+
 	    sourceStep = (slime.absynt.Step)whileStart;
 	    targetStep = newStep();
 	    newTransition( sourceStep, 
 			   (slime.absynt.Expr)(new slime.absynt.U_expr( slime.absynt.Expr.NEG, whileguard )), 
 			   targetStep );
+
 	    whileEnd = (slime.absynt.Step)targetStep; /*** END OF WHILE-STATEMENT ***/
+
 	    sourceStep = (slime.absynt.Step)whileStart;
 	    targetStep = newStep();
 	    newTransition( sourceStep, whileguard, targetStep );
+
 	    loopStart = (slime.absynt.Step)targetStep; /*** START OF LOOP ***/
 	    loopEnd   = processStatementList( wstmtlist, loopStart ); /*** END OF LOOP ***/
 	    dbgOut( 2 , "StmtWhile - finished processing stmtlist" );
+
 	    sourceStep = (slime.absynt.Step)loopEnd;
-	    targetStep = newStep();
-	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
+	    targetStep = loopStart;
+	    newTransition( sourceStep, (slime.absynt.Expr)whileGuard, targetStep );
+
+	    sourceStep = (slime.absynt.Step)loopEnd;
+	    targetStep = whileEnd;
+	    newTransition( sourceStep, 
+			    (slime.absynt.Expr)(new slime.absynt.U_expr( slime.absynt.Expr.NEG, whileguard ))	    
+			    , targetStep );
+
 	    dbgOut( 2 , "StmtWhile - finished processing while" );
 	    return whileEnd;
 	} else {
