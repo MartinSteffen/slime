@@ -20,21 +20,27 @@ import java.io.File;
  * Status: nearly complete <br>
  * known bugs: - (But some expected) <br>
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.4 2002-06-20 11:25:06 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.5 2002-06-24 13:37:58 swprakt Exp $
  */
 
 public final class MenuAndStatePanel extends JPanel {
 
     private Editor     editor;
-    private JLabel     mode;
     private JButton    checkButton;    
     private JButton    layoutButton;
     private JButton    simulateButton;
+    private JButton    modeButton;
+    private JButton    newButton;
     private JButton    loadButton; 
     private JButton    saveButton;
     private JButton    closeButton;
     private JButton    exitButton;
+    private JButton    editorButton;
     private JTextField statusMessage;
+    private ImageIcon  iconE;
+    private ImageIcon  iconS;
+    private ImageIcon  iconT;
+    private ImageIcon  iconR;
 
     /**
      * Constructs a JPanel for an editor with several 
@@ -51,6 +57,7 @@ public final class MenuAndStatePanel extends JPanel {
 
 	JPanel south = new JPanel();
 	JPanel file = new JPanel();
+	this.addNewButton(file);
 	this.addLoadButton(file);
 	this.addSaveButton(file);
 	this.addCloseButton(file);
@@ -64,15 +71,16 @@ public final class MenuAndStatePanel extends JPanel {
 	operation.setBackground(Editor.BACKGROUND_COLOR);
 	operation.setBorder(editor.getTitledBorder("Operations"));
 	south.add(operation);
-	this.mode = new JLabel(); 
-	this.mode.setFont(new Font( "Courier", Font.PLAIN, 30 ));
-	this.mode.setBorder(editor.getTitledBorder("Mode"));
+	JPanel mode = new JPanel();
+	this.addModeButton(mode); 
+	mode.setBackground(Editor.BACKGROUND_COLOR);
+	mode.setBorder(editor.getTitledBorder("Mode"));
 	south.add(mode);
-	JLabel label = new JLabel("-= SFC-Editor =-");
-	label.setFont(new Font( "Courier", Font.PLAIN, 30 ));
-	label.setBorder(editor.getTitledBorder("What am i"));
-	label.setForeground(new Color(150, 0, 150));
-	south.add(label);
+	JPanel whatAmI = new JPanel();
+	this.addEditorButton(whatAmI);
+	whatAmI.setBackground(Editor.BACKGROUND_COLOR);
+	whatAmI.setBorder(editor.getTitledBorder("Mode"));
+	south.add(whatAmI);
 	JPanel exit = new JPanel();
 	this.addExitButton(exit);
 	exit.setBackground(Editor.BACKGROUND_COLOR);
@@ -116,17 +124,73 @@ public final class MenuAndStatePanel extends JPanel {
     }
 
     protected void setMode(String mode) {
-	this.mode.setText(" "+mode+" ");
+	if (mode.equals("E"))
+	    this.modeButton.setIcon(this.iconE);
+	else if (mode.equals("S"))
+	    this.modeButton.setIcon(this.iconS);
+	else if (mode.equals("T"))
+	    this.modeButton.setIcon(this.iconT);
+	else if (mode.equals("R"))
+	    this.modeButton.setIcon(this.iconR);
     }
 
-    private JButton getSmallGapButton(String name) {
-	JButton button = new JButton(name);
-	button.setMargin(new Insets(2, 2, 1, 1));
+    private JButton getSmallGapButton(String name, String filename) {
+	String path = "/slime/editor/resources/images/"+filename+".gif";
+	ImageIcon icon = new ImageIcon(getClass().getResource(path), "hh");
+	JButton button = new JButton(icon);
+	button.setMargin(new Insets(1, 1, 1, 1));
+	button.setToolTipText(name);
 	return button;
     }
 
+    private void addEditorButton(JPanel panel) {
+	this.editorButton = this.getSmallGapButton("Information", "editor");
+	this.editorButton.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    statusMessage.setText("Some information  ...");
+		    Object[] message = new Object[1];
+		    JTextArea textArea = new JTextArea();
+		    message[0] = "...";
+		    String[] options = {"That's great, let me continue"};
+		    JOptionPane.showOptionDialog(
+			null,
+			message,
+			"Something about this editor ...",
+			JOptionPane.DEFAULT_OPTION,
+			JOptionPane.INFORMATION_MESSAGE,
+			null,
+			options,
+			options[0]);
+		}
+	    });
+	panel.add(this.editorButton);
+    }
+
+    private void addModeButton(JPanel panel) {
+	String path = "/slime/editor/resources/images/";
+	this.iconE = new ImageIcon(getClass().getResource(path+"e.gif"), "hh");
+	this.iconR = new ImageIcon(getClass().getResource(path+"r.gif"), "hh");
+	this.iconS = new ImageIcon(getClass().getResource(path+"s.gif"), "hh");
+	this.iconT = new ImageIcon(getClass().getResource(path+"t.gif"), "hh");
+	this.modeButton = this.getSmallGapButton("Change mode", "e");
+	this.modeButton.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    int mode = editor.toggleMode();
+		    if (mode == 0)
+			setMode("E");
+		    if (mode == 1)
+			setMode("S");
+		    if (mode == 2)
+			setMode("T");
+		    if (mode == 3)
+			setMode("R");
+		}
+	    });
+	panel.add(this.modeButton);
+    }
+
     private void addExitButton(JPanel panel) {
-	this.exitButton = this.getSmallGapButton("Exit");
+	this.exitButton = this.getSmallGapButton("Exit", "exit");
 	this.exitButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Leaving SFC-Editor ...");
@@ -150,7 +214,7 @@ public final class MenuAndStatePanel extends JPanel {
     }
 
     private void addSimulateButton(JPanel panel) {
-	this.simulateButton = this.getSmallGapButton("Simulate");
+	this.simulateButton = this.getSmallGapButton("Simulate", "simulate");
 	this.simulateButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Simulator not yet implemented.");
@@ -160,10 +224,10 @@ public final class MenuAndStatePanel extends JPanel {
     }
 
     private void addLayoutButton(JPanel panel) {
-	this.layoutButton = this.getSmallGapButton("Layout");
+	this.layoutButton = this.getSmallGapButton("Layout", "layout");
 	this.layoutButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
-		    statusMessage.setText("Layouter trys his best at his actual implementation ...");
+		    statusMessage.setText("Layouter tries his best at his actual implementation ...");
 		    ESFC eSFC = editor.getExtendedSelectedSFC();
 		    Layouter.position_sfc(eSFC.getSFC());
 		    eSFC.getDrawBoard().repaint();
@@ -175,7 +239,7 @@ public final class MenuAndStatePanel extends JPanel {
     }
 
     private void addCheckButton(JPanel panel) {
-	this.checkButton = this.getSmallGapButton("Check");
+	this.checkButton = this.getSmallGapButton("Check", "check");
 	this.checkButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Checker not yet implemented.");
@@ -191,8 +255,35 @@ public final class MenuAndStatePanel extends JPanel {
  	panel.add(this.checkButton);
     }
 
+    private void addNewButton(JPanel panel) {
+	this.newButton = this.getSmallGapButton("New", "new");
+	this.newButton.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    statusMessage.setText("New SFC ...");
+		    Object[] message = new Object[2];
+		    message[0] = "Enter name for SFC";
+		    message[1] = new JTextField();
+		    String[] options = {"Ok", "Cancel"};
+		    int result = JOptionPane.showOptionDialog(
+			null,
+			message,
+			"Create a new SFC",
+			JOptionPane.DEFAULT_OPTION,
+			JOptionPane.QUESTION_MESSAGE,
+			null,
+			options,
+			options[0]);
+		    if (result == 0) {
+			editor.add(((JTextField)message[1]).getText());
+			statusMessage.setText("New SFC created.");
+		    }
+		}
+	    });
+	panel.add(this.newButton);
+    }
+
     private void addCloseButton(JPanel panel) {
-	this.closeButton = this.getSmallGapButton("Close");
+	this.closeButton = this.getSmallGapButton("Close", "close");
 	this.closeButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Closing SFC ...");
@@ -218,7 +309,7 @@ public final class MenuAndStatePanel extends JPanel {
     }
 
     private void addLoadButton(JPanel panel) {
-	this.loadButton = this.getSmallGapButton("Load");
+	this.loadButton = this.getSmallGapButton("Load", "load");
 	this.loadButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Loading SFC ...");
@@ -245,7 +336,7 @@ public final class MenuAndStatePanel extends JPanel {
     }
 
     private void addSaveButton(JPanel panel) {
-	this.saveButton = this.getSmallGapButton("Save");
+	this.saveButton = this.getSmallGapButton("Save", "save");
 	this.saveButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Saving SFC ...");

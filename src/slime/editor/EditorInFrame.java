@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * <br><br>
  * Status: always complete, since it is for testing only<br>
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.9 2002-06-20 11:25:06 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.10 2002-06-24 13:37:58 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
@@ -31,13 +31,13 @@ public final class EditorInFrame extends JFrame {
 	this.setBackground(Color.lightGray);
 	this.setTitle(title);
 	this.getContentPane().add(this.getCenterPanel());
-	this.setVisible(true);
 	this.addWindowListener( new WindowAdapter() {
 		public void windowClosing(WindowEvent e) {
 		    System.exit( 0 );
 		}
 	    });
 	this.pack();
+	this.setVisible(true);
     }
 
     private JPanel getCenterPanel() {

@@ -1,4 +1,3 @@
 Manifest-Version: 1.0
-Created-By: NetBeans IDE
-Specified-By: slime/null.jarContent
+Created-By: 1.3.0 (Sun Microsystems Inc.)
 

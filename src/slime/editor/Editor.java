@@ -16,29 +16,23 @@ import javax.swing.border.*;
  * <BR> <BR>
  * Feel free to play around with this non-trivial version of an SFC-editor.  
  * <br><br>
- * Status: about 80% should be implemented. <br>
- * Known bugs: Some semantic problems. But who cares if there are no checks.<br>
+ * Status: about 90% should be implemented. <br>
+ * Known bugs: Some semantic problems. 
+ * But who cares when there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.15 2002-06-20 13:10:25 swprakt Exp $
+ * @version $Id: Editor.java,v 1.16 2002-06-24 13:37:57 swprakt Exp $
  */
 
-public final class Editor extends JComponent 
-    implements ChangeListener, MouseListener {
+public final class Editor extends JComponent implements ChangeListener {
 
     protected static final Color BACKGROUND_COLOR = Color.lightGray;
+    protected static final Color HIGHLIGHT_COLOR  = Color.yellow;
 
-    private static final int WIDTH = 100, HEIGHT = 300;
+    private static final int EDIT_MODE   = 0; 
+    private static final int SOURCE_MODE = 1; 
+    private static final int TARGET_MODE = 2; 
+    private static final int REMOVE_MODE = 3; 
 
-    private static final int EDIT_MODE   = 0; // e
-    private static final int SOURCE_MODE = 1; // s
-    private static final int TARGET_MODE = 2; // t
-    private static final int REMOVE_MODE = 3; // r
-
-    // ScrollPane Action
-    // entf -> remove selected items in list and SFC!!!
-    // double click -> change (but not name!!!)
-    
-    
     private int               mode                  = EDIT_MODE;
     
     private ESFCList          eSFCList              = new ESFCList();
@@ -61,11 +55,38 @@ public final class Editor extends JComponent
      * Creates an editor with the given SFC.
      */
     public Editor(SFC sfc) {
+	this.setBackground(BACKGROUND_COLOR);
+
+	this.setupMenueAndStatePanel();
+	this.setupScrollLists();
+
+	this.drawBoardTabbedPane.addChangeListener(this);
+	this.addHelpPane();
+	this.add(sfc);
+	this.initWindow("SFC-Editor");
+
+    }
+
+    private void setupMenueAndStatePanel() {
 	this.menuAndStatePanel = new MenuAndStatePanel(this);
 	this.menuAndStatePanel.setMode("E");
 	this.menuAndStatePanel.setBorder(
 	    this.getTitledBorder("Menu & Status"));
+    }
 
+    /*
+     * Sets up the scroll lists for several sfc components.
+     */
+    private void setupScrollLists() {
+	this.setupDeclarationScrollList();
+	this.setupActionScrollList();
+	this.setupGuardScrollList();
+    }
+    
+    /*
+     * Sets up a scroll list for the declarations of a sfc.
+     */
+    private void setupDeclarationScrollList() {
 	this.declarationScrollList = new ScrollList(BACKGROUND_COLOR, 
 						    "Add new declaration");
 	this.declarationScrollList.setBorder(
@@ -74,14 +95,17 @@ public final class Editor extends JComponent
 	    new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    menuAndStatePanel.setStatusMessage(
-			"Adding new declaration ... .Not implemented yet, waiting for next parser version :-)");
+			"Adding new declaration ... ."
+			+" Not implemented yet, waiting for next"
+			+" parser version :-)");
 		}
 	    });
+    }
 
-	this.guardScrollList = new ScrollList(BACKGROUND_COLOR);
-	this.guardScrollList.setBorder(
-	    this.getTitledBorder("Guards"));
-
+    /*
+     * Sets up a scroll list for the actions of a sfc.
+     */
+    private void setupActionScrollList() {
 	this.actionScrollList = new ScrollList(BACKGROUND_COLOR, 
 					       "Add new action");
 	this.actionScrollList.setBorder(this.getTitledBorder("Actions"));
@@ -95,11 +119,15 @@ public final class Editor extends JComponent
 		    addAction();
 		}
 	    });
-
-	this.drawBoardTabbedPane.addChangeListener(this);
-	this.addHelpPane();
-	this.add(sfc);
-	this.initWindow("SFC-Editor");
+    }
+    
+    /*
+     * Sets up a scroll list for the guards of a sfc.
+     */
+    private void setupGuardScrollList() {
+	this.guardScrollList = new ScrollList(BACKGROUND_COLOR);
+	this.guardScrollList.setBorder(
+	    this.getTitledBorder("Guards"));
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -117,23 +145,37 @@ public final class Editor extends JComponent
 	this.updateWindow();
     }
 
+    /**
+     * Closes the actual selected sfc.
+     */
     public void closeSelectedSFC() {
 	this.eSFCList.remove(this.eSFC);
 	int index = this.drawBoardTabbedPane.getSelectedIndex();
 	this.drawBoardTabbedPane.removeTabAt(index);
 	this.drawBoardTabbedPane.setSelectedIndex(index-1);
-	ChangeEvent e = new ChangeEvent(this.drawBoardTabbedPane);
-	this.stateChanged(e);
+	//ChangeEvent e = new ChangeEvent(this.drawBoardTabbedPane);
+	//this.stateChanged(e);
     } 
 
     /**
-     * Adds the given sfc to the editor in a seperate DrawBoard.
+     * Adds the given sfc to this editor in a seperate DrawBoard.
      */
     public void add(SFC sfc) {
 	this.eSFC = new ESFC(sfc);
 	this.eSFC.setDrawBoard(new DrawBoard(this));
 	this.eSFCList.add(this.eSFC);
 	this.addTabbedPane(this.eSFC);
+    }
+
+    /**
+     * Adds a new sfc under the given name to this editor 
+     * on a seperate DrawBoard.
+     */
+    public void add(String name) {
+	if (name.equals(""))
+	    this.add(new SFC());
+	else
+	    this.add(new SFC(), name+".sfc");
     }
 
     protected void add(SFC sfc, String name) {
@@ -161,7 +203,6 @@ public final class Editor extends JComponent
     }
 
     private void initWindow(String title) {
-	this.setSize(WIDTH, HEIGHT);
 	this.setBackground(BACKGROUND_COLOR);
 	this.setLayout(new BorderLayout());
 	this.add(menuAndStatePanel, BorderLayout.SOUTH);
@@ -471,6 +512,12 @@ public final class Editor extends JComponent
 	return oldMode;
     }
 
+    protected int toggleMode() {
+	int newMode = (this.mode + 1) % 4;
+	this.toggleMode(newMode);
+	return newMode;
+    }
+
     protected void evaluateKeyTyped(char c) {
 	if (c == (new String("e")).charAt(0)) {
 	    this.menuAndStatePanel.setMode("E");
@@ -687,7 +734,7 @@ public final class Editor extends JComponent
      * object may be a step or a transition.
      */
     public void highlight(Object object) {
-	this.eSFC.highlight(object, Color.yellow);
+	this.eSFC.highlight(object, HIGHLIGHT_COLOR);
     }
 
     /**
@@ -696,44 +743,6 @@ public final class Editor extends JComponent
     public void deHighlight(Object object) {
 	this.eSFC.deHighlight(object);
     }
-
-    public void mouseClicked(MouseEvent e) {
-	e.consume();
-	if (this.eSFC == null) return;
-	Object[]   selectedValues = this.guardScrollList.getSelectedValues();
-	LinkedList transitionList = this.eSFC.getSFC().transs;
-	
-	for (int i=0; i<transitionList.size(); i++) {
-	    Transition transition = (Transition)transitionList.get(i);
-	    Expr       guard      = transition.guard;
-	    String     name       = this.eSFC.output(guard);
-	    
-	    this.eSFC.deHighlight(transition);
-	    for (int j=0; j<selectedValues.length; j++)
-		if (((String)selectedValues[j]).equals(name))
-		    this.eSFC.highlight(transition, Color.green);
-	}
-	
-	this.eSFC.getDrawBoard().repaint();
-    }
-
-    public void mouseEntered(MouseEvent e) {
-	this.requestFocus();
-	e.consume();
-    }
-
-    public void mouseExited(MouseEvent e) {
-	e.consume();
-    }
-
-    public void mousePressed(MouseEvent e) {
-	e.consume();
-    }
-
-    public void mouseReleased(MouseEvent e) {
-	e.consume();
-    }
-
 }
 
 
