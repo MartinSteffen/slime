@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.13 2002-06-25 10:55:47 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.14 2002-06-25 16:52:26 swprakt Exp $
  */
 
 public class Typecheck {
@@ -80,8 +80,21 @@ public class Typecheck {
       // if one of the single steps fails, it will raise an error. 
       for (Iterator i = steps.iterator(); i.hasNext(); ) {
  	Step s = (Step)i.next();
-	s.accept(new StepV()); 
+	s.accept(new StepV());}
+      for (Iterator i = transs.iterator(); i.hasNext(); ) {
+ 	Transition t = (Transition)i.next();
+	t.accept(new TransitionV()); 
       }
+      for (Iterator i = transs.iterator(); i.hasNext(); ) {
+ 	Action a = (Action)i.next();
+	a.accept(new ActionV()); 
+      }
+      for (Iterator i = transs.iterator(); i.hasNext(); ) {
+	// XXX Make c context
+ 	Declaration d  = (Declaration)i.next();
+	d.accept(new DeclarationV()); 
+      }
+
       return new UnitType();
     }
   }
@@ -285,36 +298,6 @@ public class Typecheck {
     public Object forUndefType() {
       return new UndefType();}
   }
-
-
-  /** Type check visitor for a stmt list. It has to check,
-   *   whether each element of the list is well-typed. According
-   * to the grammar, each statement can only be of Unit-type.
-   */
-  
-
-
-  //  public class DeclistV implements Visitors.IDeclist{
-//      public Object forDeclist(LinkedList forDeclist) throws CheckException {
-//        try {
-//  	return new Object();
-//        }
-//        catch (Exception e) {
-//  	throw ((CheckException)e);
-//        }
-  //    }
-  //  }
-
-
-
-       
-
-
-
-
-
-
- 
 }
 
 
@@ -323,6 +306,10 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.13  2002/06/25 10:55:47  swprakt
+//    First iterator added for one linked list.
+//    [Steffen]
+//
 //    Revision 1.12  2002/06/25 08:23:38  swprakt
 //    Except the linked list and the context, the checker is through.
 //
@@ -374,6 +361,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.13 2002-06-25 10:55:47 swprakt Exp $
+//    $Id: Typecheck.java,v 1.14 2002-06-25 16:52:26 swprakt Exp $
 //
 //---------------------------------------------------------------------
