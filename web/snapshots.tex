@@ -11,20 +11,28 @@ can retrieve those snapshots of course with cvs.\footnote{The command is
 
 
 To \emph{execute} one of the archived snapshots, save it at some convenient
-place, set the classpath to point to the jar-archve, and invoke the
-interpreter, i.e., Java's virtual machine as indicated in the table below.
-The \emph{required} version is \texttt{jdk1.4,} earlier version may cause
-trouble, later ones are not tested.
+place, and do (from version 3 on)
 
-For instance, after downloading, you can do
+\begin{center}
+  \texttt{java -jar slime\_v[x].jar}
+\end{center}
+
+
+In the versions befor, set the the classpath to point to the jar-archve,
+and invoke the interpreter, i.e., Java's virtual machine as indicated in
+the table below. For instance, after downloading, you can do
 
 \begin{verbatim}
-  java -classpath ./slime_v[x].jar <command>} 
-
+  java -classpath ./slime_v[x].jar <command>
 \end{verbatim}
 to start the tool. Alternatively, you can set the
 \texttt{CLASSPATH}-variable appropriatly, in which case the
 \texttt{-classpath}-option is not needed.
+
+
+In any case, the \emph{required} version is \texttt{jdk1.4,} earlier
+version may cause trouble, later ones are not tested.
+
 
 \medskip
 
@@ -42,7 +50,7 @@ to start the tool. Alternatively, you can set the
   &
   snapshot 3: compiles, but not integrated
   &
-  \texttt{java slime.editor.EditorInFrame}
+  \texttt{java -jar slime\_v3.jar}
   \\
 
   2. & \url{snapshots/slime\_v.secondcompilation-sep.jar}{9.\ July 2002}
@@ -62,7 +70,7 @@ to start the tool. Alternatively, you can set the
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% $Id: snapshots.tex,v 1.6 2002-07-10 16:38:57 swprakt Exp $
+%% $Id: snapshots.tex,v 1.7 2002-07-10 16:43:42 swprakt Exp $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Local Variables: 
 %%% mode: latex

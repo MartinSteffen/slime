@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.23 2002-07-09 07:16:31 swprakt Exp $
+# $Id: Makefile,v 1.24 2002-07-10 16:43:40 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -54,8 +54,11 @@ doc:	;
 
 ### the following is a temporary target to jar the stuff.
 #   it is not yet the final delivery jar. [Steffen]
+
+
+## first option: c = create
 jar:
-	jar cvf slime.jar ./slime/absynt/*.class \
+	jar cvfm  slime.jar META-INF/MANIFEST.MF ./slime/absynt/*.class \
 	    ./slime/absynt/absfc/*.class\
 	    ./slime/utils/*.class \
             ./slime/editor/*.class\
@@ -92,6 +95,9 @@ clean:
 
 ########################################################################
 # $Log: not supported by cvs2svn $
+# Revision 1.23  2002/07/09 07:16:31  swprakt
+# *** empty log message ***
+#
 # Revision 1.22  2002/07/05 18:49:55  swprakt
 # *** empty log message ***
 #
