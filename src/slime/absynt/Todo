@@ -1,9 +1,12 @@
-################################################
-## $Id: Todo,v 1.1 2002-06-13 16:52:20 swprakt Exp $
-################################################
+#####################################################
+## $Id: Todo,v 1.2 2002-06-14 06:37:39 swprakt Exp $
+#####################################################
 
 
 
   - expressions etc are typed (i.e. the nodes have a
     type field. Perhaps the type checker should
     fill it it.
+
+  - perhaps it would be nicer to enclose all the stuff
+    into a 

@@ -5,3 +5,13 @@
   - make a clean structure/name conventions etc.
 
   - I want exceptions
+
+  - Typecheck must go deeper
+
+
+  - Exceptions:
+
+	 - unbolean guard
+	
+  - we need a new type
+	
