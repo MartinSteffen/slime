@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.123 2002-07-07 06:54:16 swprakt Exp $
+## $Id: Errors.txt,v 1.124 2002-07-07 09:13:43 swprakt Exp $
 ###########################################################
 
 
@@ -41,9 +41,15 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
-
+Error 63:     one-time checker
+ class:       non-fatal (``feature'')
+ status:      reported 7.7.02, Steffen
+ package:     checks
+ description: type checker can be invoked only
+              once. Then a new type checker needs to
+	      be created.
 Error 59(2):  prettyprinter
- class:       non-fatal, but  no clear programming
+ class:       non-fatal, design question
  status:      reported 6.7.02, Steffen
  package:     prettyprinter
  description: perhaps type perhaps should not be
@@ -198,7 +204,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.123 2002-07-07 06:54:16 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.124 2002-07-07 09:13:43 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
