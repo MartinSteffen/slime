@@ -14,11 +14,12 @@ import slime.absynt.*;
  * an exception. Int other woirds: false is never returned.</p>
  *
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: SFCVisitorInterface.java,v 1.1 2002-06-19 19:40:47 swprakt Exp $
+ * @version  $Id: SFCVisitorInterface.java,v 1.2 2002-06-19 20:20:25 swprakt Exp $
  */
 public  interface SFCVisitorInterface {
     public boolean isWellTyped(SFC p)  throws CheckException;
     public boolean isWellformed(SFC p) throws CheckException;
+    public boolean isEmpty(SFC p)      throws CheckException;
 }
 
 
@@ -28,6 +29,9 @@ public  interface SFCVisitorInterface {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.1  2002/06/19 19:40:47  swprakt
+//    IChecks -> SFCVisitorInterface [Thomas Richter]
+//
 //    Revision 1.7  2002/06/12 18:52:00  swprakt
 //    reorganization of the package-structure
 //

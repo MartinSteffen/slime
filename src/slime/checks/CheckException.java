@@ -1,4 +1,6 @@
+
 package slime.checks;
+
 import java.lang.*;
 import slime.absynt.*;
 
@@ -10,7 +12,7 @@ import slime.absynt.*;
  * the general visitor exception offered byte the abstract syntax.
  *
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: CheckException.java,v 1.5 2002-06-19 14:13:01 swprakt Exp $
+ * @version  $Id: CheckException.java,v 1.6 2002-06-19 20:20:25 swprakt Exp $
  */
 public class CheckException extends Exception {
     /** contains exception message
@@ -53,6 +55,9 @@ public class CheckException extends Exception {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.5  2002/06/19 14:13:01  swprakt
+//    added 2 constructors [Thomas Richter]
+//
 //    Revision 1.4  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
