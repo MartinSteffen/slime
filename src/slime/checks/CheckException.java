@@ -11,12 +11,12 @@ import slime.absynt.*;
  * the general visitor exception offered byte the abstract syntax.
 
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: CheckException.java,v 1.3 2002-06-13 09:28:51 swprakt Exp $
+ * @version  $Id: CheckException.java,v 1.4 2002-06-13 12:34:28 swprakt Exp $
  */
 
 
 
-public class CheckException extends IAbsyntV_Exception{
+public class CheckException extends Exception {
   protected String message;
   public    String getMessage(){return message;}
 }
@@ -27,6 +27,9 @@ public class CheckException extends IAbsyntV_Exception{
 //	----------------------------------------
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2002/06/13 09:28:51  swprakt
+//	OK
+//	
 //	Revision 1.2  2002/06/12 18:51:59  swprakt
 //	reorganization of the package-structure
 //	

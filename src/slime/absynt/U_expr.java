@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Unary expressions
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: U_expr.java,v 1.5 2002-06-13 09:34:52 swprakt Exp $
+ * @version $Id: U_expr.java,v 1.6 2002-06-13 12:34:27 swprakt Exp $
  */
 
 
@@ -22,9 +22,9 @@ public class U_expr extends Expr implements Serializable{
   /**
      visitor acceptor
   */
-  //Object accept (IExprVisitor ask) {
-  //  return ask.forU_Expr(sub_expr,op);
-  //}
+  public Object accept (Visitors.IExpr ask) throws Exception{
+    return ask.forU_Expr(sub_expr,op);
+  }
 }
 
 
@@ -34,9 +34,12 @@ public class U_expr extends Expr implements Serializable{
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: U_expr.java,v 1.5 2002-06-13 09:34:52 swprakt Exp $
+//	$Id: U_expr.java,v 1.6 2002-06-13 12:34:27 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2002/06/13 09:34:52  swprakt
+//	*** empty log message ***
+//	
 //	Revision 1.4  2002/06/13 09:28:50  swprakt
 //	OK
 //	

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * binary expressions
  * 
  * @author Initially provided by Martin Steffen.
- * @version $Id: B_expr.java,v 1.6 2002-06-13 09:34:00 swprakt Exp $
+ * @version $Id: B_expr.java,v 1.7 2002-06-13 12:34:26 swprakt Exp $
  */
 
 
@@ -18,7 +18,7 @@ public class B_expr   extends Expr implements Serializable{
  * The operands are ``constant'' fields of the expression superclass.
  * 
  * @author Initially provided by Martin Steffen, Karsten Stahl.
- * @version $Id: B_expr.java,v 1.6 2002-06-13 09:34:00 swprakt Exp $
+ * @version $Id: B_expr.java,v 1.7 2002-06-13 12:34:26 swprakt Exp $
  */
   //---------------------------------------------------
   /**
@@ -32,10 +32,11 @@ public class B_expr   extends Expr implements Serializable{
 
   /**
      visitor acceptor
+
   */
-  //  Object accept (IExprVisitor ask) {
-  //  return ask.forB_Expr(left_expr,op,right_expr);
-  //}
+  public Object accept (Visitors.IExpr ask) throws Exception {
+    return ask.forB_Expr(left_expr,op,right_expr);
+  }
 }
 
 
@@ -45,9 +46,12 @@ public class B_expr   extends Expr implements Serializable{
 //	Abstract Syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: B_expr.java,v 1.6 2002-06-13 09:34:00 swprakt Exp $
+//	$Id: B_expr.java,v 1.7 2002-06-13 12:34:26 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.6  2002/06/13 09:34:00  swprakt
+//	*** empty log message ***
+//	
 //	Revision 1.5  2002/06/13 09:28:50  swprakt
 //	OK
 //	
