@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.182 2002-07-11 10:30:42 swprakt Exp $
+## $Id: Errors.txt,v 1.183 2002-07-12 05:52:32 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,31 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+
+
+Error 92:     saved data
+ class:       publicly visible curiosity
+ package:     all
+ status:      reported, 12.7.02, Steffen
+ description: execting the command ``file'' on a saved sfc gives:
+          file.sfc: gzip compressed data, deflated, last modified: Thu Jan  1 01:00:00 1970, os: MS-DOS
+            What the hell does this mean?
+ 
+Error 91:     jarfile 3 
+ package:     parser + integration
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: starting the tool, clicking on parser,
+              and entering a  file name gives:
+
+               java.lang.NoClassDefFoundError: java_cup/runtime/lr_parser
+
+	       it seems we need to link in cup, or what?
+
+               also things like:  export CLASSPATH=/home/ms/Swprakt/Slime/lib/java_cup.jar:/home/ms/Swprakt/Slime/lib/JLex.jar 	       
+	       do not help
 
 
 
@@ -373,7 +398,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.182 2002-07-11 10:30:42 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.183 2002-07-12 05:52:32 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
