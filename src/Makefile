@@ -19,9 +19,6 @@ PACKAGEDIRS   = slime\
 	        slime.checks\
 	        slime.checks.tests\
 	        slime.sfcparser\
-		slime.gui\
-		slime.gui.listener\
-		slime.gui.model\
 		slime.simulator\
 
 
@@ -49,7 +46,6 @@ jar:
 	    ./slime/utils/*.class\
             ./slime/editor/*.class\
 	    ./slime/editor/resources/images/*\
-            ./slime/gui/*.class\
 	    ./slime/simulator/*.class\
 	    ./slime/checks/*.class\
 	    ./slime/checks/tests/*.class\
@@ -70,7 +66,6 @@ cdjar:
 	    ./slime/utils/*.class \
             ./slime/editor/*.class\
 	    ./slime/editor/resources/images/*\
-            ./slime/gui/*.class\
 	    ./slime/simulator/*.class\
 	    ./slime/checks/*.class\
 	    ./slime/checks/tests/*.class\
@@ -86,6 +81,6 @@ jarinstall:
 
 
 #----------------------------------------------------------------------
-# $Id: Makefile,v 1.29 2002-07-19 13:18:01 swprakt Exp $
+# $Id: Makefile,v 1.30 2002-07-19 13:53:28 swprakt Exp $
 #----------------------------------------------------------------------
 

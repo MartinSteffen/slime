@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.189 2002-07-19 10:01:29 swprakt Exp $
+## $Id: Errors.txt,v 1.190 2002-07-19 13:53:28 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -41,123 +41,6 @@ Error 92:     CD
  status:      reported, 15.7.02, Steffen
  description: we need a shipping concept for the CD
 
-
-
-
-Error 90:     doc
- package:     gui
- class:       non-fatal
- status:      reported, 10.7.02, Steffen
- description: the classes of gui.model are uncommented in java doc (no author, for
-              instance, comment what it is good for. etc)
-
-Error 89:     no reaction, user interface
- package:     gui
- class:       fatal
- status:      reported, 10.7.02, Steffen
- description: the button options.close shows no reaction (probably not integrated)
-               what's the intendended difference between options.close and file.exit?
-
-Error 88:     no reaction
- package:     gui
- class:       fatal
- status:      reported, 10.7.02, Steffen
- description: the button options.help shows no reaction (probably not integrated)
-
-Error 87:     no reaction
- package:     gui
- class:       fatal
- status:      reported, 10.7.02, Steffen
- description: the button options.layout shows no reaction (probably not integrated)
-
-Error 86:     no reaction
- package:     gui
- class:       fatal
- status:      reported, 10.7.02, Steffen
- description: the button options.check shows no reaction (probably not integrated)
-
-
-Error 85(2):    ``speichern.nichtaenderns.sfc''
- package:     gui
- class:       performance
- status:      reported, 10.7.02, Steffen
- description: I don't succeed in changing this text.
-              correction: it's possible, but the textfield has a reaction
-	      time of over 2 minutes. (on gollum) Perhaps I clicked the 
-	      ``Speichern'' button a couple of times an this was buffered,
-	       such that it was not ready to accept new inputs?
-          
-
-
-Error 84:    ``speichern''
- package:     gui
- class:       fatal
- status:      reported, 10.7.02, Steffen
- description: the ``speichern'' button seems not to react (not even
-              with an exception), since there is no cancel button, one
-	      has to shoot the window down.
-
-
-Error 83:     German
- package:     gui
- class:       user interface
- status:      reported, 10.7.02, Steffen
- description: the dialogs are all in German
-Error 82:     cancel button
- package:     gui
- class:       user unfriendlyness
- status:      reported, 10.7.02, Steffen
- description: the user has no way to escape from the load-window
-               (`cancel' or ``close'')
-              (and it throws one null-exception after the other, cf. #80).
-	      The only way is to shoot down the window.
-
-Error 81:     main-class
- package:     gui/all
- class:       design + public user interface
- status:      reported, 10.7.02, Steffen
- description: if gui/StartSlime really is the toplevel class, I
-              prefer that it is called Main and resides in    
-	      the directory slime. This allows the user to call 
-	      java slime.Main, which is nicer.
-	      
-
-
-Error 80:     null-pointer:
- package:     gui
- class:       fatal
- status:      reported, 10.7.02, Steffen
- description: starting the gui and clicking ``open'' then giving a non existing
-              file name gives java.lang.NullPointerException
-	      A NullPointerException is nothing a user can make sense of.
-	      
-	      Actually, this also happens, if the file exists!
-
-
-Error 79:     German
- package:     gui
- class:       non-fatal, user interface inconsistency
- status:      reported, 10.7.02, Steffen
- description: user visible output in German: ``Es gibt eine IOException''
- 
-
-Error 78:    window dimension
- package:    gui (or editor?)
- class:      public ugliness.
- status:     reported 10.7.02, Steffen
- description: starting gui, then clicking new gives an editor
-             window quite larger than my window screen (under Xwindows, fvwm2)
-	     Could depend also on the screen resolution or the window system.
-
-
-
-Error 76:    docu/German/English
- package:    gui
- class:      non-fatal
- status:     reported, 9.7.02 Steffen
- description: the java-doc comments (if present) are in German and
-              in English. It's tolerable, as the doc's are for internal use.
- 
 
 
 
@@ -329,7 +212,7 @@ Error 43:     non-portable code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.189 2002-07-19 10:01:29 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.190 2002-07-19 13:53:28 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -487,6 +370,126 @@ Error 3:      doc warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 90:     doc
+ package:     gui
+ class:       non-fatal
+ status:      reported, 10.7.02, Steffen
+ description: the classes of gui.model are uncommented in java doc (no author, for
+              instance, comment what it is good for. etc)
+
+Error 89:     no reaction, user interface
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.close shows no reaction (probably not integrated)
+               what's the intendended difference between options.close and file.exit?
+
+Error 88:     no reaction
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.help shows no reaction (probably not integrated)
+
+Error 87:     no reaction
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.layout shows no reaction (probably not integrated)
+
+Error 86:     no reaction
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.check shows no reaction (probably not integrated)
+
+
+Error 85(2):    ``speichern.nichtaenderns.sfc''
+ package:     gui
+ class:       performance
+ status:      reported, 10.7.02, Steffen
+ description: I don't succeed in changing this text.
+              correction: it's possible, but the textfield has a reaction
+	      time of over 2 minutes. (on gollum) Perhaps I clicked the 
+	      ``Speichern'' button a couple of times an this was buffered,
+	       such that it was not ready to accept new inputs?
+          
+
+
+Error 84:    ``speichern''
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the ``speichern'' button seems not to react (not even
+              with an exception), since there is no cancel button, one
+	      has to shoot the window down.
+
+
+Error 83:     German
+ package:     gui
+ class:       user interface
+ status:      reported, 10.7.02, Steffen
+ description: the dialogs are all in German
+Error 82:     cancel button
+ package:     gui
+ class:       user unfriendlyness
+ status:      reported, 10.7.02, Steffen
+ description: the user has no way to escape from the load-window
+               (`cancel' or ``close'')
+              (and it throws one null-exception after the other, cf. #80).
+	      The only way is to shoot down the window.
+
+Error 81:     main-class
+ package:     gui/all
+ class:       design + public user interface
+ status:      reported, 10.7.02, Steffen
+ description: if gui/StartSlime really is the toplevel class, I
+              prefer that it is called Main and resides in    
+	      the directory slime. This allows the user to call 
+	      java slime.Main, which is nicer.
+	      
+
+
+Error 80:     null-pointer:
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: starting the gui and clicking ``open'' then giving a non existing
+              file name gives java.lang.NullPointerException
+	      A NullPointerException is nothing a user can make sense of.
+	      
+	      Actually, this also happens, if the file exists!
+
+
+Error 79:     German
+ package:     gui
+ class:       non-fatal, user interface inconsistency
+ status:      reported, 10.7.02, Steffen
+ description: user visible output in German: ``Es gibt eine IOException''
+ 
+
+Error 78:    window dimension
+ package:    gui (or editor?)
+ class:      public ugliness.
+ status:     reported 10.7.02, Steffen
+ description: starting gui, then clicking new gives an editor
+             window quite larger than my window screen (under Xwindows, fvwm2)
+	     Could depend also on the screen resolution or the window system.
+
+
+
+Error 76:    docu/German/English
+ package:    gui
+ class:      non-fatal
+ status:     reported, 9.7.02 Steffen
+ description: the java-doc comments (if present) are in German and
+              in English. It's tolerable, as the doc's are for internal use.
+ 
+
+
+
+
 
 
 Error 93:     compilation

@@ -1,5 +1,5 @@
 #----------------------------------------------------------------------
-# $Id: Makefile,v 1.38 2002-07-19 13:27:56 swprakt Exp $
+# $Id: Makefile,v 1.39 2002-07-19 13:53:29 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # developers' top-level Makefile for the Slime project
@@ -39,8 +39,6 @@ packets:
 	(cd ./simulator; make)
 	(cd ./editor; make)
 	(cd ./checks; make)
-	(cd ./gui; make)
-
 
 
 
@@ -49,7 +47,6 @@ clean:
 	(cd ./layout; make clean)	
 	(cd ./utils; make clean)
 	(cd ./editor; make clean)
-	(cd ./gui; make clean)
 	(cd ./checks; make clean)
 	(cd ./simulator; make clean)
 	(cd ./sfcparser; make clean)
