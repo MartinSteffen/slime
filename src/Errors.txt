@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.59 2002-07-03 17:52:00 swprakt Exp $
+## $Id: Errors.txt,v 1.60 2002-07-03 17:58:14 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,8 +34,6 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-<<<<<<< Errors.txt
-=======
 
 Error 23: deprecation
  package:  gui
@@ -56,14 +54,6 @@ Error 22: German
 	  I would prefer that.
 	  
 
-Error 21: Lex Archives
- package: general
- status:  email-discussion, reported by Steffe, 27.6.02
- class:   harmless (for compilation), questionable otherwise
- description: The archive files src/JLex/Archive/1.1.1...
-          are not good for anything (and questionalble
-	  from various other points, see discussion).
-          
 
 Error 20: Makefile
  package:  general (or gui), src/Makefile (>= Version 1.17).
@@ -76,12 +66,6 @@ Error 20: Makefile
 	   does not work for make doc.
 
 
-Error 17:      structure
- package:      all
- status:       reported, 26.6.02
- class:        potentially fatal, cause of confusion
- description:  new subdir's added, but not announced, nor
-               added to the readme, nor added to the Makefile
 
 Error 8:       Manifest
  package:      Gui/all
@@ -166,7 +150,50 @@ Comment:       Since you won't set up your classpath according to the required o
 
 -------------------- Repaired errors -------------------------
 
-<<<<<<< Errors.txt
+
+Error 26:    clean up
+ package:    all
+ class:      non-fatal
+ status:     reported, 1.7.02, repaired (after group decision), 3. Jul 2002, Steffen
+ description: remove the unused directoroes from
+             the repos in the end, when the semester's
+	     over.
+ status:     commented, 03.07.02 mwe
+	     Someone with the login-information might help us by
+	     deleting src/JLex, src/java_cup, Slime/src/absynt,
+	     Slime/src/utils, Slime/src/io, Slime/src/Editor, ...
+	     BUT NOT Slime/src/slime
+
+	     If this was done you might have a good chance for
+	     getting the parser compiled with the wrong classpath:
+                CLASSPATH=/home/ms/Swprakt/Slime/src:/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:
+	     
+	    Otherwise the classpath has to be set the right way, for instance
+
+                CLASSPATH=/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:/home/ms/Swprakt/Slime/src
+
+	    This is caused by the way java searches for classes.
+	    -----
+	    Steffen: According to group decision, the stuff was removed, the class path
+	    set uniformely and that's it.
+
+
+ Error 17:      structure
+ package:      all
+ status:       reported, 26.6.02
+ class:        potentially fatal, cause of confusion
+ description:  new subdir's added, but not announced, nor
+               added to the readme, nor added to the Makefile
+
+Error 21: Lex Archives
+ package: general
+ status:  email-discussion, reported by Steffe, 27.6.02
+ class:   harmless (for compilation), questionable otherwise
+ description: The archive files src/JLex/Archive/1.1.1...
+          are not good for anything (and questionalble
+	  from various other points, see discussion).
+          
+
 
 Error 25:    Shift/reduce
  package:    sfcparser
@@ -245,7 +272,6 @@ Error 30:     grammar
 
 	       
 
->>>>>>> 1.46
 Error 19:     doc problem
  package:     sfcparser.SFCLex
  class:       _public_ ugliness
@@ -637,33 +663,8 @@ Error 24:    compilation broken
              and in a workdir without the checked-in javacup and JLEX.
 	     different combinations of this choice are untested for
 	     compilability. Cause of error unknown
->>>>>>> 1.46
+
   status:   3.7.02 mwe
 	    	     
                 CLASSPATH=/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:/home/ms/Swprakt/Slime/src
 
-
-Error 26:    clean up
- package:    all
- class:      non-fatal
- status:     reported, 1.7.02
- description: removed the unused directoroes from
-             the repos in the end, when the semester's
-	     over.
- status:     commented, 03.07.02 mwe
-	     Someone with the login-information might help us by
-	     deleting src/JLex, src/java_cup, Slime/src/absynt,
-	     Slime/src/utils, Slime/src/io, Slime/src/Editor, ...
-	     BUT NOT Slime/src/slime
-
-	     If this was done you might have a good chance for
-	     getting the parser compiled with the wrong classpath:
-                CLASSPATH=/home/ms/Swprakt/Slime/src:/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:
-	     
-	    Otherwise the classpath has to be set the right way, for instance
-
-                CLASSPATH=/home/java/JLex/JLex.jar:/home/java/cup/java_cup.jar:/home/ms/Swprakt/Slime/src
-
-	    This is caused by the way java searches for classes.
-  status:   3.7.02 mwe
-	    Some seconds ago it was done: All src/JLex and src/java_cup were pruned.
