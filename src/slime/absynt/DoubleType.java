@@ -6,10 +6,13 @@ import java.io.Serializable;
  * Type for doubles
  * 
  * @author initially provided by Marco Wendel
- * @version $Id: DoubleType.java,v 1.6 2002-07-10 14:31:56 swprakt Exp $
+ * @version $Id: DoubleType.java,v 1.7 2002-07-10 15:38:22 swprakt Exp $
  */
  /*
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2002/07/10 14:31:56  swprakt
+ * *** empty log message ***
+ *
  * Revision 1.5  2002/07/10 14:03:22  swprakt
  * Those classes MUST be declared abstract if accept(Visi...) is
  * missing, so I decided to simply return null. (Now) it is task
@@ -37,7 +40,7 @@ import java.io.Serializable;
 
 public class DoubleType  extends Type implements Serializable { 
   // we inherit the acceptor method from the abstract class Type,
-  // which throws an eception.
+  // which throws an exception.
 
 }
 
