@@ -1,11 +1,11 @@
 ################################################################
-## $Id: Todo,v 1.9 2002-06-25 08:16:34 swprakt Exp $
+## $Id: Todo,v 1.10 2002-06-26 15:48:42 swprakt Exp $
 ################################################################
 
 
+  - overwrite the equals-method
 
-
-  - currerenttly, eveerything is public for testing,
+  - currently, eveerything is public for testing,
     make parts of it private.
 
    - perhaps one should distinguish between _legal_ Typecheck exceptions
@@ -21,13 +21,10 @@
 
   - make a clean structure/name conventions etc.
 
-
   - Do something useful with the explanation
     add also messages.
 
-  - Typecheck must go deeper
 
-  - Finish the DecList-Visitor
 
 
   - Exceptions:
