@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.171 2002-07-10 06:25:49 swprakt Exp $
+## $Id: Errors.txt,v 1.172 2002-07-10 06:35:06 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,7 +34,25 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
-Error 88:    window dimension
+
+
+Error 80:     null-pointer:
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: starting the gui and clicking ``open'' then giving a non existing
+              file name gives java.lang.NullPointerException
+	      A NullPointerException is nothing a user can make sense of.
+
+
+Error 79:     German
+ package:     gui
+ class:       non-fatal, user interface inconsistency
+ status:      reported, 10.7.02, Steffen
+ description: user visible output in German: ``Es gibt eine IOException''
+ 
+
+Error 78:    window dimension
  package:    gui (or editor?)
  class:      public ugliness.
  status:     reported 10.7.02, Steffen
@@ -43,7 +61,7 @@ Error 88:    window dimension
 	     Could depend also on the screen resolution or the window system.
 
 
-Error 87:    type mismatch
+Error 77:    type mismatch
  package:    checker.
  class:      fatal, but out-of-sync
  status:     reported, 10.7.02, Steffen
@@ -274,7 +292,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.171 2002-07-10 06:25:49 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.172 2002-07-10 06:35:06 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
