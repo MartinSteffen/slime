@@ -13,7 +13,7 @@ debug:	; make JAVACOPTS="-g" all
 
 
 clean:
-	\rm -f *.class *~
+	\rm -f *.class *~ gui.dfPackage gui.dfPackage.wmf
 
 
 
