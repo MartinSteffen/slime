@@ -14,7 +14,7 @@ raw list.
 
 - discipline/professionalism
 
-- communication, no discussions, no immediate feedback
+- communication, no discussions, no feedback
 
 - too late communication of errors (for instance 
     change wishes for absynt.)

@@ -1,5 +1,5 @@
 #########################################################################
-## $Id: Status,v 1.9 2002-06-25 09:43:32 swprakt Exp $
+## $Id: Status,v 1.10 2002-06-25 17:30:55 swprakt Exp $
 #########################################################################
 
 
@@ -9,76 +9,7 @@ Project-internal status file, currently informally formatted.
 --------------------------------------------------------------
 
 
-Status for the meeting at 25.6.02
-
-
-	absynt:    compilable and used, not fully visitorized
-	checks:    compilable, not fully functional
-	simulator: no code (claimed to be there, but is not)
-	parser:    compilable, serious lackings (see error file)
-	editor:    functional
-	gui:       no code.
-	utils:     complable and used
-	
-overall:           no integration
-
-
-
-
-
-
-
-
-
-For the meeting at 8.5.02: Presentation of the groups 
-
-   
-    o general questions/problems:
-
-	- everyone content with the semantics?
-	- what to do with missing check-group?
-	- presentation of the workgroups?
-	- How did everyone used the additional time?
-	- when should we start integration?
-
-
-     o specific questions:
-
-	- what about the conventions proposed by Marco Wendel (and
-	  discussed on the mailing list?
-  
-              package-namen, bzw. restruckturierung des Verzeichnisses.
-
-          > till when should it be done (if at all)?	
-	  > Gui should make the Manifest + jarrable package
-
-     o single groups:
-
-        - requirements: fomal semantics provided, no comments 
-	     from the groups yet.
-
-	- Gui: 
-
-	     > ssh/cvs access works now?
-
-	     > how to store programs?
-
-	     > conventions for storing?
-	           conflicts with parser?
-
-	     > Interface with editor?
-
-	- layout: 
-	     > stand-alone compilable!
-	     > fast progress claimed
-
-	- absynt: nothing new, if the checks are gone + if we
-	          are supposed to do something there, we propose
-	          to cancel the iterator stuff.
-              > compiles standalone
-
-	    proposed: 
-	        > ``input x'': not done
+Status for the meeting at 26'': not done
    	        >  privat field + accessors: not done
 	        >  iterators: not done, proposal to cancel this
 
