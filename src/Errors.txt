@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.154 2002-07-09 05:27:51 swprakt Exp $
+n## $Id: Errors.txt,v 1.155 2002-07-09 05:37:33 swprakt Exp $
 ###########################################################
 
 
@@ -52,6 +52,14 @@ Rules of the game:
 
 
 
+
+Error 70:    compilation error
+ package:    sfc-parser
+ class:      fatal, show-stop
+ status:     repored Steffen 9.7.02
+ description: does not compile:
+ 	slime.sfcparser.PrettyPrint prettyPrinter =  new slime.sfcparser.PrettyPrint(); // will be used until problems with slime.utils are solved
+	This file does not exist
 
                                                           ^
 
@@ -220,7 +228,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.154 2002-07-09 05:27:51 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.155 2002-07-09 05:37:33 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
