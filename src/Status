@@ -1,5 +1,5 @@
 #########################################################################
-## $Id: Status,v 1.4 2002-05-08 11:59:40 swprakt Exp $
+## $Id: Status,v 1.5 2002-05-08 12:24:51 swprakt Exp $
 #########################################################################
 
 
@@ -53,6 +53,7 @@ For the meeting at 8.5.02: Presentation of the groups
 	- absynt: nothing new, if the checks are gone + if we
 	          are supposed to do something there, we propose
 	          to cancel the iterator stuff.
+              > compiles standalone
 
 	    proposed: 
 	        > ``input x'': not done
