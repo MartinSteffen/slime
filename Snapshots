@@ -1,10 +1,30 @@
 
+########################################################
+## $Id: Snapshots,v 1.7 2002-07-07 07:15:39 swprakt Exp $
+########################################################
+
+This file contains a list of the major development steps, called snapshots
+or baselines, as kept in cvs's symbolic tags for reference. If any of the
+developers snapshots his part, he should _not_ use tags of the form
+snapshot<nr> as those are reserved for the global snapshots.
+
+----------------------------------------
 
 
- snapshot1:  12.6.2002
-	     After the restructuring, adding the slime prefix.
-	     Intended date for integration, but not all have delivered code yet.
-	     
+
+
+
+
+ firstcompilaton-sep:   3.7.2002
+             Now, everything compiles, including parser.
+	     But the compilation is still separate one by one per
+	     subdirectory.
+	  
+	
+
+
+
+
 
  snapshot2:  3.7.2002
 	     After CLASSPATH/Lex/Cup discussion. The old
@@ -13,9 +33,12 @@
 	
 	     sfcparser is not yet compilable (but was not before, as well)
 
- firstcompilaton-sep:   3.7.2002
-             Now, everything compiles, including parser.
-	     But the compilation is still separate one by one per
-	     subdirectory.
-	  
-	
+
+
+ snapshot1:  12.6.2002
+	     After the restructuring, adding the slime prefix.
+	     Intended date for integration, but not
+             all have delivered code yet.
+     
+
+

@@ -54,6 +54,24 @@
 \end{myslide}
 
 
+\begin{myslide}{Error reporting}
+\begin{verbatim}
+ --------------------------------------------------------
+  Error <nr>:    <short description>
+    package:     <in which package/class does it occur
+    status:      reported|confirmed|non-confirmed|repaired
+                 repaired-confirmed
+
+               + <date> + <author>
+   
+    class:       fatal|non-fatal|
+                 feature-request|coding convention violation ....
+
+    description: <longer description, hints for repair>
+   -----------------------------------------------------
+
+\end{verbatim}
+\end{myslide}
 \begin{myslide}{Tagesordnung}
   \begin{itemize}
   \item Soll die Absynt-Schnittstelle erweitert werden oder nicht?
@@ -85,7 +103,7 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% $Id: content.tex,v 1.9 2002-07-05 19:39:37 swprakt Exp $
+%% $Id: content.tex,v 1.10 2002-07-07 07:14:21 swprakt Exp $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Local Variables: 
 %%% mode: latex
