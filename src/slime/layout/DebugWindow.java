@@ -9,7 +9,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DebugWindow.java,v 1.1 2002-04-26 12:09:13 swprakt Exp $
+ * @version $Id: DebugWindow.java,v 1.2 2002-05-07 12:50:15 swprakt Exp $
  */
 
 class DebugWindow extends JFrame {
@@ -19,16 +19,18 @@ class DebugWindow extends JFrame {
     private JTextArea textArea;
     private Layouter  layouter;
 
-    protected DebugWindow(Layouter layouter) {
-	this.layouter = layouter;
-	this.initWindow("SFC-Layouter");
+    protected DebugWindow(Layouter layouter, boolean debug) {
+	if (debug) {
+	    this.layouter = layouter;
+	    this.initWindow("SFC-Layouter");
+	}
     }
 
     private void initWindow(String title) {
-	this.setSize(WIDTH,HEIGHT);
+	this.setSize(WIDTH, HEIGHT);
 	this.setBackground(Color.gray);
 	this.setTitle(title);
-	this.getContentPane().add(this.getPanel(),"South");
+	this.getContentPane().add(this.getPanel(), "South");
 	this.setVisible(true);
     }
 
@@ -55,7 +57,8 @@ class DebugWindow extends JFrame {
     }
 
     protected void write(String text) {
-	this.textArea.append(text);
+	if (textArea != null)
+	    this.textArea.append(text);
     }
 
     protected void write(int number) {
@@ -63,20 +66,33 @@ class DebugWindow extends JFrame {
     }
 
     protected void writeln(String text) {
-	this.textArea.append(text+"\n");
+	this.write(text+"\n");
     }
 
     protected void writeln(int number) {
 	this.write(number+"\n");
     }
 
+    protected void writeln() {
+	this.write("\n");
+    }
+
+    protected int getWindowWidth() {
+	return this.WIDTH;
+    }
+
+    protected int getWindowHeight() {
+	return this.HEIGHT;
+    }
+
     public void paint(Graphics g) {
-	layouter.paint(g);
+	if (layouter != null)
+	    layouter.paint(g);
     }
 
     public static void main(String[] argv) {
 	SFC sfc1 = Example.getExample1();
-	Layouter.position_sfc(sfc1);
+	Layouter.debug_position_sfc(sfc1);
     }
 }
 
