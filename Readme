@@ -1,12 +1,10 @@
 ############################################################
-## $Id: Readme,v 1.8 2002-07-16 08:40:24 swprakt Exp $
+## $Id: Readme,v 1.9 2002-07-19 12:02:32 swprakt Exp $
 ############################################################
 
 
-
-
-This is the root of the Slime-project from summer term 2002.
-The package contains the following files and subdirectories:
+This is the root of the Slime-project from the summer term 2002.  The
+package contains the following files and subdirectories:
 
 
     o Readme:            this file
@@ -17,12 +15,12 @@ The package contains the following files and subdirectories:
                          development steps
   
 
-    o requirements        description of the task
+    o requirements/      description of the task
     o evaluation/        end-of-semester evaluation, summary (including talk)
     o web/               web-site material for coordination,
                          tracking the progress etc.
     o org/               internal information about members etc
-    o build/             
+
     o cd/                info's for the cd-rom
     o src/               the Java-sources
     o tex/               common LaTeX-macros 
