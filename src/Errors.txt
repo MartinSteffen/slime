@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.15 2002-06-25 09:18:19 swprakt Exp $
+## $Id: Errors.txt,v 1.16 2002-06-25 09:39:14 swprakt Exp $
 ###########################################################
 
 
@@ -47,6 +47,9 @@ Error 13:      package struture
  reported:     25.6.02, Steffen
  description:  there's no package declaration in the javafiles.
                perhaps this also leads to the non-generation of doc-documents.
+	       Why is the an import io.* needed? 
+	       What is the use of packacke io anyway? If not needed, we 
+	       should remove it.
 
          
 Error 12:      tons  of doc warnings
