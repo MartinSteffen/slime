@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Visitors for Slime abstract syntax (just for the fun of it)
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version  $Id: Visitors.java,v 1.7 2002-06-25 05:48:26 swprakt Exp $
+ * @version  $Id: Visitors.java,v 1.8 2002-06-25 06:09:04 swprakt Exp $
  */
 
 
@@ -26,6 +26,10 @@ public class Visitors {
   public interface IStepAction{
     public Object forStepAction(ActionQualifier qualifier,
 				String a_name) throws Exception;
+  }
+  
+  public interface IActionQualifier{
+    public Object forNqual() throws Exception;
   }
 
   public interface IExpr{
@@ -64,8 +68,11 @@ public class Visitors {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Visitors.java,v 1.7 2002-06-25 05:48:26 swprakt Exp $
+//	$Id: Visitors.java,v 1.8 2002-06-25 06:09:04 swprakt Exp $
 // //	$Log: not supported by cvs2svn $
+// //	Revision 1.7  2002/06/25 05:48:26  swprakt
+// //	Further visitor added. [Steffen]
+// //	
 // //	Revision 1.6  2002/06/24 20:08:11  swprakt
 // //	Types extended with visitor methods,
 // //	also extended is the type ckecker, which is a visitor to the absynt.
