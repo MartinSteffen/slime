@@ -26,13 +26,6 @@ This is the top-level Readme for the Slime-project, summer term
 	   in the jar-file.)
 
 
-     - As the simulator is not really integrated,
-       one has to start the simulator separately
-       by 
-	   - setting the class path ot slime.jar and
-	     to appropriate java_cup and JLex libraries,
-	   - java slime.editor.Main
-
 
   o Participants:
 
