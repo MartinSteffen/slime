@@ -9,7 +9,7 @@ import slime.absynt.*;
  * A little testing of the typechecker, using the parser
  * code ``recycled'' from sfcparser.ParserTest.java
  * @author Martin Steffen
- * @version $Id: TypecheckTest.java,v 1.3 2002-07-05 17:38:33 swprakt Exp $
+ * @version $Id: TypecheckTest.java,v 1.4 2002-07-05 19:24:56 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
@@ -22,7 +22,7 @@ public class TypecheckTest {
     slime.sfcparser.SFCParser           mySFCParser = null;
     slime.sfcparser.Absfc2SFCConverter  theConverter = null;
     slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint();
-    slime.checks.Typecheck              tt =  new slime.checks.Typecheck();
+    slime.checks.Typecheck              tc =  new slime.checks.Typecheck();
     // slime.sfcparser.PPActions prettyPrinter =  new slime.sfcparser.PPActions(); for the version without that StepAction...
     slime.sfcparser.PrettyPrint4Absfc   prettyAbsfc = new slime.sfcparser.PrettyPrint4Absfc();
     try {
@@ -40,7 +40,7 @@ public class TypecheckTest {
 	  } else {
 	    pp.print( ea );
 	    try {
-	      slime.absynt.Type t = tt.checkexprxxx(ea);
+	      slime.absynt.Type t = tc.check(ea);
 	      System.out.print("of type ");
 	      pp.print (t);
 	    } 
@@ -50,25 +50,29 @@ public class TypecheckTest {
 		System.out.println (ex.getMessage());  // we must be dynamic (=method) here
 	      };
 	  }
-      } 
+      }; // end loop
+      System.out.println ("checking programs now");
+      SFC sfc1 = Example.getExample1();
+      slime.absynt.Type t = tc.check(sfc1);
+      
     } catch (FileNotFoundException fnfe) {
-      System.err.println("ParserTest: " + "The file \"" + args[0] + "\" was not found !");
+      System.err.println("TypecheckTest: " + "The file \"" + args[0] + "\" was not found !");
       System.exit(1);
     } catch (IOException ioe) {
-      System.err.println( "ParserTest: " + ioe.toString() );
+      System.err.println( "TypecheckTest: " + ioe.toString() );
       System.exit(1);
     } catch (slime.sfcparser.SFCParseException sfce) {
-      System.err.println( "ParserTest->" + "SFCParseException: " + sfce.toString() );
+      System.err.println( "TypecheckTest->" + "SFCParseException: " + sfce.toString() );
       System.exit(1);
     } catch (NullPointerException npe) {
-      System.err.println( "ParserTest: "+ npe.toString() );
+      System.err.println( "TypecheckTest: "+ npe.toString() );
       System.exit(1);
     } catch (Exception e) {
-      System.err.println( "ParserTest: " + e.toString() );
+      System.err.println( "TypecheckTest: " + e.toString() );
       // System.out.println( treestring );
       System.exit(1);
     } // end of try-catch
   } // end of main
-} // end of public class ParserTest
+} 
 
 

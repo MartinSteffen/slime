@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.91 2002-07-05 19:17:49 swprakt Exp $
+## $Id: Errors.txt,v 1.92 2002-07-05 19:20:02 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,6 +35,15 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Errors 52:    cast
+ package:     checks or Parser?
+ class:       fatal
+ status:      reported, 5.7.02, Steffen
+ description:        SFC sfc1 = Example.getExample1();
+                     slime.absynt.Type t = tc.check(sfc1);
+              gives
+
+               ParserTest: slime.checks.Typecheck$UndeclaredVariable: general typecheck exception
 
 Error 50:     precedence
  package:     sfc-parser
@@ -104,7 +113,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.91 2002-07-05 19:17:49 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.92 2002-07-05 19:20:02 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
