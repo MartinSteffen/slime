@@ -5,7 +5,15 @@ import java.lang.*;
 import java.util.LinkedList;
 import slime.absynt.*;
 
+
+
+
 /** Type checker for Slime programs
+ *
+ * <p>
+ * It consists of the various typecheck errors together with the
+ * type checker proper, which recurs over the abstract syntax.
+ *
  * <P>The type checker is rather simple, in the first stage it does not
  * attempt to infer types.  As a consequence, the type checking is
  * context-free, because vor variables we need not look up the type from
@@ -17,10 +25,40 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.4 2002-06-19 23:00:10 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.5 2002-06-24 19:14:08 swprakt Exp $
  */
 
 public class Typecheck {
+  
+  /* I would have been nicer, perhaps, to put all the exceptions
+   * as pulic classes of an external class. Java does not allow this;
+   * the declaration of the exceptions must ``enclose''
+   * the place where the can be thrown, here the  check-routines below.
+   */
+  public class TypecheckException extends CheckException {
+  }
+
+  public  class NonuniqueDeclaration extends TypecheckException {
+    String explanation = "No variable may occur twice int the declaration list";  
+  }
+  
+    
+    
+  public class UnbooleanGuard extends TypecheckException {
+    String explanation = "The guard of a transition must be an expression\n of boolean type. This error indicates the occurrence of a\n well-typed guard-expression, but with a type other than a boolean." ;
+  }
+    
+  public class UndeclaredVariable extends TypecheckException{
+    String explanation = "Each variable occuring int a program must be\n covered by a type declaration for this variable where the declaration\n is unique";
+    }
+
+  public  class IncompleteDeclaration extends TypecheckException{
+    String explanation = "A variable declation consists of three parts: \n 1) variable name, 2) a type, and 3), a constant value.\n If one of them is the missing (i.e., nil), this error is raised.";
+  }
+
+  //  public class IIncompleteDeclaration extends Typeerrors.TypecheckException{
+  //    String explanation = "A variable declation consists of three parts: \n 1) variable name, 2) a type, and 3), a constant value.\n If one of them is the missing (i.e., nil), this error is raised.";
+  //}
     
     /** Visitor for expressions
      */
@@ -97,20 +135,58 @@ public class Typecheck {
      */
     
     public class TransitionV implements Visitors.ITransition{
-        public Object forTransition(LinkedList source,
-        Expr guard,
-        LinkedList target) throws CheckException {
-            try {
-                Type t = (Type)guard.accept(new ExprV());
-                if (t instanceof BoolType) // guards must be boolean
-                    return new UnitType();   // transitions don't give back a value
-                else throw new CheckException();
-            }
-            catch (Exception e) {
-                throw ((CheckException)e);
-            }
-        }
+      public Object forTransition(LinkedList source,
+				  Expr guard,
+				  LinkedList target) throws CheckException {
+	try {
+	  Type t = (Type)guard.accept(new ExprV());
+	  if (t instanceof BoolType) // guards must be boolean
+	    return new UnitType();   // transitions don't give back a value
+	  else throw new CheckException();
+	}
+	catch (Exception e) {
+	  throw ((CheckException)e);
+	}
+      }
     }
+
+  /** Type check for declaration list. It has to check
+   *  for each element of the list, whether it is a variable
+   *  declaration and whether no variable occurs twice.
+   *
+   * Additionally we have to tackle the inconvience, that 
+   * declaration lists are just linked list in Java.
+   */
+
+  public class DeclistV implements Visitors.IDeclist{
+    public Object forDeclist(LinkedList forDeclist) throws CheckException {
+      try {
+	return new Object();
+      }
+      catch (Exception e) {
+	throw ((CheckException)e);
+      }
+    }
+  }
+
+  /** Type checking visitor for a declaration.
+   *  A declaration must have all three fields filled in, i.e.,
+   *  non is allowed to be a nil-reference. Furthermore the type
+   *  of the value must coincide with the declared type.
+   */
+  public class DeclarationV implements Visitors.IDeclaration{
+    public Object forDeclaration(Variable var, Type type, Constval val)
+      throws CheckException {
+      try{
+	if ((var == null) || (type == null) || val == null)
+	  throw new IncompleteDeclaration();
+	return new Object();
+      }
+      catch (Exception e){
+	throw ((CheckException)e);
+      }
+    }
+  }
 }
 
 
@@ -119,6 +195,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.4  2002/06/19 23:00:10  swprakt
+//    no message
+//
 //    Revision 1.3  2002/06/14 16:50:33  swprakt
 //    ok, 1 week pause
 //
@@ -131,6 +210,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.4 2002-06-19 23:00:10 swprakt Exp $
+//    $Id: Typecheck.java,v 1.5 2002-06-24 19:14:08 swprakt Exp $
 //
 //---------------------------------------------------------------------
