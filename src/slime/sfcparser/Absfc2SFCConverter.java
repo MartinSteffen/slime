@@ -4,11 +4,17 @@
  * converts a given {@link slime.absfc.SFCabtree} to<br>
  * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.10 2002-07-03 19:41:25 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.11 2002-07-04 16:27:18 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
+ * Revision 1.10  2002/07/03 19:41:25  swprakt
+ * Erste voll funktionsfaehige Absfc2SFCConverter-Version.
+ * Liefert korrekte Step-Benennung und kompletten Baum.
+ * Leider noch fehlend: InputAction und OutputAction-
+ * Behandlung im PrettyPrint. (mwe)
+ *
  * Revision 1.9  2002/07/03 16:50:08  swprakt
  * SFC generates and does not conflic with PrettyPrint.
  * Previous conflicts with PrettyPrint occured because
@@ -368,6 +374,8 @@ public class Absfc2SFCConverter {
                         returnedStep = processIfElse( (Object)currentStatement , nextStmtStartStep );
 		    } else if ( currentStatement instanceof slime.absynt.absfc.StmtWhile) {
                         returnedStep = processWhile( (Object)currentStatement , nextStmtStartStep );
+		    } else if ( currentStatement instanceof slime.absynt.absfc.StmtFor) {
+                        returnedStep = processFor( (Object)currentStatement , nextStmtStartStep );
 		    } else if ( currentStatement instanceof slime.absynt.absfc.StmtRepeat) {
                         returnedStep = processRepeat( (Object)currentStatement , nextStmtStartStep );
 		    } else if ( currentStatement instanceof slime.absynt.absfc.StmtAssign) {
@@ -1112,7 +1120,7 @@ public class Absfc2SFCConverter {
     // --------------------------------------------------------------------
     /**
      * <b>processWhile</b>
-     * processes a {@link slime.absynt.absfc.StmtWhile <br>
+     * processes a @see slime.absynt.absfc.StmtFor <br>
      * and creates the needed steps and transitions and <br>
      * adds them to myStepList and myTransitionList. <br>
      * The latest step wihtin the flow is assumed to be myStep <br>
@@ -1168,6 +1176,96 @@ public class Absfc2SFCConverter {
 	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
 	    dbgOut( 2 , "StmtWhile - finished processing while" );
 	    return whileEnd;
+	} else { /** currently collecting processes, 
+		     but this statement is not within a process,
+		     so we will simply skip its processing **/
+	    return lastStartStep;
+	} // end if
+    } // end processWhile
+    // --------------------------------------------------------------------
+
+
+
+    // --------------------------------------------------------------------
+    /**
+     * <b>processFor</b>
+     * processes a @see slime.absynt.absfc.StmtFor <br>
+     * and creates the needed steps and transitions and <br>
+     * adds them to myStepList and myTransitionList. <br>
+     * The latest step wihtin the flow is assumed to be myStep <br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     * @param Object curStmt the current statement to be converted to SFC<br>
+     * @param slime.absynt.Step lastStartStep is the step to begin this stmt with<br>
+     * @return slime.absynt.Step the step after "executing" the current statement.<br>
+     **/
+    private slime.absynt.Step processFor( Object curStmt, slime.absynt.Step lastStartStep ) {
+	/** this makes it impossible to spawn new processes within a while-statement! */
+	if ( (curInProc && collectProcs) || (!collectProcs) ) {
+	    dbgOut( 2 , "StmtFor" );
+	    slime.absynt.absfc.StmtFor tmpNode = (slime.absynt.absfc.StmtFor) curStmt;
+
+	    LinkedList              fstmtlist      = tmpNode.stmtlist;
+	    slime.absynt.Type       loopvartype    = tmpNode.vartype;
+	    slime.absynt.Variable   loopvar        = tmpNode.var;
+	    slime.absynt.Expr       forinitexpr    = tmpNode.expr1;
+	    slime.absynt.Expr       forwhileguard  = tmpNode.expr2;
+	    slime.absynt.absfc.Statement modifierstmt = tmpNode.stmt;
+	    slime.absynt.Assign     lass             = new slime.absynt.Assign( loopvar, forinitexpr );
+	    slime.absynt.Action     lact             = null;
+	    slime.absynt.StepAction stepaction       = null;
+	    LinkedList              actionlist       = new LinkedList();
+	    LinkedList              outeractionlist  = new LinkedList();
+	    slime.absynt.Step       sourceStep     = null;            
+	    slime.absynt.Step       targetStep     = null;            
+	    slime.absynt.Step       forStart       = null;
+	    slime.absynt.Step       forEnd         = null;
+	    slime.absynt.Step       forGuardStep   = null;
+	    slime.absynt.Step       loopStart      = null;
+	    slime.absynt.Step       loopEnd        = null;
+
+	    /*
+	      so aehnlich:                                         /----<------modifierstmt----<-----\             
+	      lastStartStep----trueTrans-----forStart--initVar---forwhileguard----loopStart--.....-loopEnd
+	                                                             \                                                  
+	                                                              \-----!forwhileguard-----forEnd 
+	      return forEnd
+	    */
+	    /** create forStartStep and corresponding transition */
+	    sourceStep = (slime.absynt.Step)lastStartStep;
+	    targetStep = newStep();
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
+	    forStart = (slime.absynt.Step)targetStep; /*** START OF FOR-STATEMENT ***/
+	    /** now do the INITIAL ASSIGNMENT */
+	    sourceStep = forStart;
+	    actionlist.add( lass ); 
+	    lact = newAction( actionlist );
+	    stepaction = newStepAction( lact );
+	    outeractionlist.add( stepaction );
+	    forGuardStep = newStep( outeractionlist );
+	    targetStep = forGuardStep;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep );
+	    /** now test if for-guard is satisfied */
+	    sourceStep = forGuardStep;
+	    loopStart = newStep();
+	    targetStep = loopStart; /** START OF LOOP */
+	    newTransition( sourceStep, (slime.absynt.Expr)forwhileguard, targetStep );
+	    loopEnd = processStatementList( fstmtlist, loopStart ); /*** END OF LOOP ***/
+	    /** go back from end of loop to a new test of the expression */
+	    /** but before doing so adjust variables by calling the modifier */
+	    java.util.LinkedList modifierstatementlist = new LinkedList();
+	    modifierstatementlist.add( modifierstmt );
+	    sourceStep = processStatementList( modifierstatementlist, loopEnd );
+	    targetStep = forGuardStep;
+	    newTransition( sourceStep, (slime.absynt.Expr)trueGuard, targetStep ); /** JUMP BACK */
+	    /** jump away from For-loop, if for-guard is not satisfied */
+	    sourceStep = forGuardStep;
+	    targetStep = newStep();
+	    newTransition( sourceStep, 
+			   (slime.absynt.Expr)(new slime.absynt.U_expr( slime.absynt.Expr.NEG, forwhileguard )), 
+			   targetStep );
+	    forEnd = (slime.absynt.Step)targetStep; /*** END OF FOR-STATEMENT ***/
+	    return forEnd;
 	} else { /** currently collecting processes, 
 		     but this statement is not within a process,
 		     so we will simply skip its processing **/

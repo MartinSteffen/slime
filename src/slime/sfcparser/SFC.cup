@@ -15,11 +15,16 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.14 2002-07-03 16:50:09 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.15 2002-07-04 16:27:18 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.14  2002/07/03 16:50:09  swprakt
+ * SFC generates and does not conflic with PrettyPrint.
+ * Previous conflicts with PrettyPrint occured because
+ * noone felt responsible for input & output. (mwe)
+ *
  * Revision 1.13  2002/07/02 15:23:49  swprakt
  * you may look at example.procs.sfc and the output
  * output.procs.txt for an idea what i am doing
@@ -441,16 +446,17 @@ parser code {:
 terminal DOT, HASH;
 terminal String IDENTIFIER;
 terminal Integer INTEGER;
-terminal ADD, SUB, MUL, DIV, AND, OR, NOT;           // +, -, *, /, MOD=%, &&, ||, !
-terminal LPAREN, RPAREN, LPSET, RPSET;                    // (,),{,}
-terminal LT, GT, LEQ, GEQ, EQ, NEQ;                       // <,>,<=,>=, =, ==,!=
+terminal Double DOUBLE;
+terminal ADD, SUB, MUL, DIV, MOD, POW, AND, OR, NOT;      // +, -, *, /, MOD=%, &&, ||, !
+terminal LPAREN, RPAREN, LPSET, RPSET, LPFIELD, RPFIELD;  // (,),{,}
+terminal LT, GT, LEQ, GEQ, EQ, NEQ, INC, DEC;             // <,>,<=,>=, =, ==,!=
 terminal COMMA, SEMICOLON;                                // ,,;
 terminal TRUE, FALSE;                                     // true, false
-terminal INTTYPE, BOOLTYPE;                               // int, bool
+terminal INTTYPE, BOOLTYPE, DOUBLETYPE;                   // int, bool
 terminal ASSIGN, SKIP;                                    // =,skip 
 terminal SPLIT, JOIN, PROCESS, COMMENT, SFCPRG;           // split, join, process, //, SFCPRG
 terminal IF, ELSE, WHILE, INPUT, OUTPUT;                  // if, else, while, input, output
-terminal REPEAT, UNTIL;					  // repeat, until
+terminal REPEAT, UNTIL, FOR;				  // repeat, until
 
 
 // --------------------------------------------------------------------------- 
@@ -464,7 +470,6 @@ non terminal    slime.absynt.Variable		var;
 non terminal    slime.absynt.Type		vartype;
 non terminal    slime.absynt.Constval		constval;
 
-non terminal    Integer				op;
 non terminal    LinkedList			stmtlist;
 non terminal    LinkedList                      stmtblock;
 
@@ -477,6 +482,7 @@ non terminal    slime.absynt.absfc.StmtOutput	stmtoutput;
 non terminal    slime.absynt.absfc.StmtIf	stmtif;
 non terminal    slime.absynt.absfc.StmtIfElse	stmtifelse;
 non terminal    slime.absynt.absfc.StmtWhile	stmtloopwhile;
+non terminal    slime.absynt.absfc.StmtFor	stmtloopfor;
 non terminal    slime.absynt.absfc.StmtRepeat	stmtlooprepeat;
 non terminal    slime.absynt.absfc.StmtSplit	stmtsplit;
 non terminal    slime.absynt.absfc.StmtJoin	stmtjoin;
@@ -490,8 +496,9 @@ non terminal    LinkedList                      procidlist;
 /// Precedences and Associativity
 precedence right SEMICOLON;				   // end-of-simple-statement
 precedence left ADD, SUB;				   // +, -
-precedence left MUL, DIV;				   // *,/; MOD=%
+precedence left MUL, DIV, MOD;				   // *,/; MOD=%
 precedence left AND, OR, NEQ, LT, LEQ, GT, GEQ, EQ;	   // &&; ||, !=, <,<=,>,>=,==
+precedence left POW;
 precedence left NOT;					   // !
 
 
@@ -584,6 +591,7 @@ stmt ::=
 |	stmtif:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
 |	stmtifelse:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
 |	stmtloopwhile:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
+|	stmtloopfor:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
 |	stmtlooprepeat:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
 |	stmtsplit:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
 |	stmtjoin:s {: RESULT = (slime.absynt.absfc.Statement) s ; :}
@@ -640,6 +648,34 @@ stmtloopwhile ::= WHILE
 		     RESULT = new slime.absynt.absfc.StmtWhile( 
 			         e, blockInWhile 
 		     ); 
+		   :}
+;
+
+/** STMTLOOPFOR ----------------------------------------------- **/
+stmtloopfor ::=   FOR LPAREN vartype:vt var:v EQ expr:e1
+                  SEMICOLON expr:e2 SEMICOLON stmt:s RPAREN  
+                  stmtblock:blockInFor 
+                  {: 
+		  RESULT = new slime.absynt.absfc.StmtFor( vt, v, e1, e2, s, blockInFor ); 
+		   :}
+|
+                  FOR LPAREN var:v EQ expr:e1
+                  SEMICOLON expr:e2 SEMICOLON stmt:s RPAREN  
+                  stmtblock:blockInFor 
+                  {: 
+		  RESULT = new slime.absynt.absfc.StmtFor( v, e1, e2, s, blockInFor ); 
+		   :}
+|
+                  FOR LPAREN var:v EQ expr:e1 SEMICOLON expr:e2 SEMICOLON RPAREN  
+                  stmtblock:blockInFor 
+                  {: 
+		  RESULT = new slime.absynt.absfc.StmtFor( v, e1, e2, blockInFor ); 
+		   :}
+|
+                  FOR LPAREN SEMICOLON SEMICOLON RPAREN  
+                  stmtblock:blockInFor 
+                  {: 
+		  RESULT = new slime.absynt.absfc.StmtFor( blockInFor ); 
 		   :}
 ;
 
@@ -708,6 +744,20 @@ stmtdummy ::=	COMMENT:c
                 {: 
 		   RESULT = new slime.absynt.absfc.Comment("#"); 
 		 :}
+/*
+            |
+	    expr:l INC {: // INC ++ 
+ java.lang.Integer opCode = new java.lang.Integer(1);
+ int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, new slime.absynt.Constval(1) ); 
+    :} 
+|
+expr:l DEC {: // DEC -- 
+    java.lang.Integer opCode = new java.lang.Integer(2);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, new slime.absynt.Constval(1) ); 
+    :} 
+*/
 
 ;
 
@@ -826,72 +876,9 @@ process ::= PROCESS
 /** VARTYPE ---------------------------------------------- **/
 vartype ::= INTTYPE    {: RESULT = new slime.absynt.IntType(); :} 
         |   BOOLTYPE   {: RESULT = new slime.absynt.BoolType(); :} 
+        |   DOUBLETYPE {: RESULT = new slime.absynt.DoubleType(); :} 
 ;
 
-/** OP --------------------------------------------------- **/
-op ::=
-  ADD {: pOut(3," + ") ;
-       java.lang.Integer opCode = new java.lang.Integer(0);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  0 PLUS
-| MUL {: pOut(3," * ") ;
-       java.lang.Integer opCode = new java.lang.Integer(2);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  2 TIMES
-| SUB {: pOut(3," - ") ;
-       java.lang.Integer opCode = new java.lang.Integer(1);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  1 MINUS
-| DIV {: pOut(3," / ") ;
-       java.lang.Integer opCode = new java.lang.Integer(3);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  3 DIV
-
-| AND {: pOut(3," && ");
-       java.lang.Integer opCode = new java.lang.Integer(4);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  4 AND
-
-|  OR {: pOut(3," || ");
-       java.lang.Integer opCode = new java.lang.Integer(5);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  5 OR
-
-| NOT {: pOut(3," ! ") ;
-       java.lang.Integer opCode = new java.lang.Integer(6);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  6 NEG
-
-|  EQ {: pOut(3," == ");
-       java.lang.Integer opCode = new java.lang.Integer(7);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  7 EQ
-
-|  LT {: pOut(3," < ") ;
-       java.lang.Integer opCode = new java.lang.Integer(8);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  8 LESS
-
-|  GT {: pOut(3," > ") ;
-       java.lang.Integer opCode = new java.lang.Integer(9);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  9 GREATER
-
-| LEQ {: pOut(3," <= ");
-       java.lang.Integer opCode = new java.lang.Integer(10);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  10 LEQ
-
-| GEQ {: pOut(3," >= ");
-       java.lang.Integer opCode = new java.lang.Integer(11);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  11 GEQ
-
-| NEQ {: pOut(3," != ");
-       java.lang.Integer opCode = new java.lang.Integer(12);
-       int opCodeValue = opCode.intValue();
-       RESULT=opCode; :}  ///  12 NEQ
-;
 
 /** VAR ---------------------------------------------- **/
 var ::= 
@@ -928,49 +915,122 @@ INTEGER:i
     //System.out.println("after constval-INTEGER-RESULT");
 :}
 
+|
+
+DOUBLE:d
+{:  
+    pOut( 3, d.toString() ); 
+    double doubleValue = d.doubleValue();
+    slime.absynt.Constval cdouble = new slime.absynt.Constval( doubleValue );
+    RESULT = cdouble;  
+:}
+
 ;
 
 
 /** EXPR -------------------------------------------------- **/
 expr ::= 
-LPAREN 
-expr:e 
-RPAREN        
-{: pOut( 3, " ( " ); 
-RESULT = e; 
-pOut( 3, " ) " ); :} // expression with outer parenthesis
-
+LPAREN expr:e RPAREN {: RESULT = e; :} // expression with outer parenthesis
 |
-
-expr:l 
-op:o 
-expr:r        
-{: 
-    java.lang.Integer opCode = o;
+var:v {: RESULT = v; :} // variable
+|
+constval:cv {: RESULT = cv; :} // constant value
+|
+expr:l ADD expr:r {:  // PLUS + 0
+ java.lang.Integer opCode = new java.lang.Integer(0);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l SUB expr:r {:  // MINUS - 1
+ java.lang.Integer opCode = new java.lang.Integer(1);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+SUB expr:r {:  // MINUS - 1
+ java.lang.Integer opCode = new java.lang.Integer(1);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
+    :} 
+|
+expr:l MUL expr:r {: // TIMES * 2
+ java.lang.Integer opCode = new java.lang.Integer(2);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l DIV expr:r {: // DIV / 3
+ java.lang.Integer opCode = new java.lang.Integer(3);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l AND expr:r {: // AND && 4
+    java.lang.Integer opCode = new java.lang.Integer(4);
     int opCodeValue = opCode.intValue();
     RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
-:} // binary expression
-
+    :} 
 |
-
-op:o 
-expr:e        
-{:  
-    java.lang.Integer opCode = o;
+expr:l OR expr:r {: // OR || 5
+ java.lang.Integer opCode = new java.lang.Integer(5);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+NOT expr:r {: // NEG (NOT) ! 6
+    java.lang.Integer opCode = new java.lang.Integer(6);
     int opCodeValue = opCode.intValue();
-    RESULT = new slime.absynt.U_expr( opCodeValue, e);
-:} // unary expression
-
+    RESULT = new slime.absynt.U_expr( opCodeValue, r ); 
+    :} 
 |
-
-var:v         
-{: RESULT = v; :} // variable
-
+expr:l EQ expr:r {: // EQ == 7
+    java.lang.Integer opCode = new java.lang.Integer(7);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
 |
-
-constval:cv	
-{: RESULT = cv; :} // constant value
-
+expr:l LT expr:r {: // LESS < 8
+ java.lang.Integer opCode = new java.lang.Integer(8);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l GT expr:r {: // GREATER > 9
+    java.lang.Integer opCode = new java.lang.Integer(9);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l LEQ expr:r {: // LEQ <= 10
+    java.lang.Integer opCode = new java.lang.Integer(10);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l GEQ expr:r {: // GEQ >= 11
+ java.lang.Integer opCode = new java.lang.Integer(11);
+ int opCodeValue = opCode.intValue();
+ RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l NEQ expr:r {: // NEQ != 12
+    java.lang.Integer opCode = new java.lang.Integer(12);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l MOD expr:r {: // MOD % 13
+    java.lang.Integer opCode = new java.lang.Integer(13);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
+|
+expr:l POW expr:r {: // POW ^ 14
+    java.lang.Integer opCode = new java.lang.Integer(14);
+    int opCodeValue = opCode.intValue();
+    RESULT = new slime.absynt.B_expr( l, opCodeValue, r ); 
+    :} 
 ;
 
 

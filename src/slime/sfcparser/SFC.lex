@@ -4,10 +4,16 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.14 2002-07-02 15:23:50 swprakt Exp $
+    * $Id: SFC.lex,v 1.15 2002-07-04 16:27:19 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.14  2002/07/02 15:23:50  swprakt
+   /* you may look at example.procs.sfc and the output
+   /* output.procs.txt for an idea what i am doing
+   /* currently. The naming scheme for steps and actions has to
+   /* be improved... (mwe)
+   /*
    /* Revision 1.13  2002/07/02 13:09:53  swprakt
    /* "example.sfc" contains some constructs possible in this
    /* sfc-language. output.txt is the output of
@@ -156,12 +162,16 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 ";"        {return new Symbol(slime.sfcparser.SFCSymbols.SEMICOLON);	/* */}
 "{"        {return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
 "}"        {return new Symbol(slime.sfcparser.SFCSymbols.RPSET); 	/* */}
+"["        {return new Symbol(slime.sfcparser.SFCSymbols.LPFIELD); 	/* */}
+"]"        {return new Symbol(slime.sfcparser.SFCSymbols.RPFIELD); 	/* */}
 "("        {return new Symbol(slime.sfcparser.SFCSymbols.LPAREN); 	/* */}
 ")"        {return new Symbol(slime.sfcparser.SFCSymbols.RPAREN); 	/* */}
+"++"       {return new Symbol(slime.sfcparser.SFCSymbols.INC); 	        /* */}
 "+"        {return new Symbol(slime.sfcparser.SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
+"--"       {return new Symbol(slime.sfcparser.SFCSymbols.DEC); 	        /* */}
 "-"        {return new Symbol(slime.sfcparser.SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
 "*"        {return new Symbol(slime.sfcparser.SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
-"/"        {return new Symbol(slime.sfcparser.SFCSymbols.DIV); 	/* Expr.DIV     =  3 "%"        {return new Symbol(slime.sfcparser.SFCSymbols.MOD); 	 Expr.MOD     =  undef */}
+"/"        {return new Symbol(slime.sfcparser.SFCSymbols.DIV); 	/* Expr.DIV     =  3 */}
 "&&"       {return new Symbol(slime.sfcparser.SFCSymbols.AND); 	/* Expr.AND     =  4 */}
 "||"       {return new Symbol(slime.sfcparser.SFCSymbols.OR);  	/* Expr.OR      =  5 */}
 "!"        {return new Symbol(slime.sfcparser.SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
@@ -171,6 +181,8 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "<="       {return new Symbol(slime.sfcparser.SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
 ">="       {return new Symbol(slime.sfcparser.SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
 "!="       {return new Symbol(slime.sfcparser.SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
+"%"        {return new Symbol(slime.sfcparser.SFCSymbols.MOD); 	/* Expr.MOD     = 13 */}
+"^"        {return new Symbol(slime.sfcparser.SFCSymbols.POW); 	        /* Expr.POW = 14 */}
 ","        {return new Symbol(slime.sfcparser.SFCSymbols.COMMA); 	/* */}
 "."        {return new Symbol(slime.sfcparser.SFCSymbols.DOT); 		/* */}
 "#"        {return new Symbol(slime.sfcparser.SFCSymbols.HASH); 	/* */}
@@ -185,15 +197,19 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "while"    {return new Symbol(slime.sfcparser.SFCSymbols.WHILE); 	/* */}
 "repeat"   {return new Symbol(slime.sfcparser.SFCSymbols.REPEAT); 	/* */}
 "until"    {return new Symbol(slime.sfcparser.SFCSymbols.UNTIL); 	/* */}
+"for"      {return new Symbol(slime.sfcparser.SFCSymbols.FOR); 	        /* */}
 "skip"     {return new Symbol(slime.sfcparser.SFCSymbols.SKIP); 	/* Class Skip */}
 "="        {return new Symbol(slime.sfcparser.SFCSymbols.ASSIGN); 	/* Class Assign */}
 "int"      {return new Symbol(slime.sfcparser.SFCSymbols.INTTYPE); 	/* Class IntType */}
 "bool"     {return new Symbol(slime.sfcparser.SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
+"double"   {return new Symbol(slime.sfcparser.SFCSymbols.DOUBLETYPE); 	/* Class DoubleType */}
 "true"     {return new Symbol(slime.sfcparser.SFCSymbols.TRUE);	        /* */}
 "false"    {return new Symbol(slime.sfcparser.SFCSymbols.FALSE); 	/* */}
 {identif}  {return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 {number}   {return new Symbol(slime.sfcparser.SFCSymbols.INTEGER, new Integer( yytext() ) );/* t INTEGER */}
+{enumber}  {return new Symbol(slime.sfcparser.SFCSymbols.DOUBLE, new Double( yytext() ) );/* t DOUBLE */}
 .          {System.out.println( "Error during lexical analysis"+
 	    "\nLine number = "  + yyline + 
 	    "\nChar number = "  + yychar +
 	    "\nText content = " + yytext() ); 		/* LexError */}
+
