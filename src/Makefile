@@ -1,10 +1,11 @@
-#----------------------------------------------------------------------
-# developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.26 2002-07-18 13:48:29 swprakt Exp $
-#----------------------------------------------------------------------
+#
+#
+# Makefile for documantation and shipping.
 #
 # The targets installing gobal web-infos can be executed only
-# by the maintainers
+# by the maintainers and only at the university pool,
+# Dor compiling, change into the slime-subdirectory.
+#
 ######################################################################
 
 
@@ -12,57 +13,19 @@ TOOLNAME      = Slime
 
 WEBDIR        = /home/info/www/inf/deRoever/SS02/Java/$(TOOLNAME)
 WEBDOCDIR     = $(WEBDIR)/doc
-BASELINESDIR  = $(WEBDIR)/baselines
 
 SNAPSHOTSDIR  = $(WEBDIR)/snapshots
-LOCALDOCDIR   = doc
-PACKAGEDIRS   = slime\
-	        slime.absynt\
-	        slime.absynt.absfc\
-	        slime.utils\
-	        slime.layout\
-	        slime.editor\
-	        slime.checks\
-	        slime.checks.tests\
-	        slime.sfcparser\
-		slime.gui\
-		slime.gui.listener\
-		slime.gui.model\
-		slime.simulator\
-
 
 ################################################
-
-classes:
-	cd slime;
-	cd absynt; make clean; make
-	cd absfc; make clean; make
-	cd ../..
-	cd layout; make clean; make
-	cd editor; make clean; make
-	cd checks; make clean; make
-	cd gui; make clean; make
-	cd simulator; make clean; make
-
-
-all:	packets $(patsubst %.java,%.class,$(wildcard *.java))
-
-debug:	; make JAVACOPTS="-g" all
-
-doc:	;
-	javadoc  -version -author -d $(WEBDOCDIR) $(PACKAGEDIRS)
-
-
-
 
 ## first option: c = create
 jar:
 	jar cvf  slime.jar \
 	    ./slime/*.class\
-	    ./slime/absynt/*.class \
+	    ./slime/absynt/*.class\
 	    ./slime/absynt/absfc/*.class\
-	    ./slime/layout/*.class
-	    ./slime/utils/*.class \
+	    ./slime/layout/*.class\
+	    ./slime/utils/*.class\
             ./slime/editor/*.class\
 	    ./slime/editor/resources/images/*\
             ./slime/gui/*.class\
@@ -70,8 +33,6 @@ jar:
 	    ./slime/checks/*.class\
 	    ./slime/checks/tests/*.class\
 	    ./slime/sfcparser/*.class
-
-
 
 
 ## for the cd-rom, I incorporate the cup and lex sources
@@ -96,77 +57,14 @@ cdjar:
 	    ../lib/java_cup.jar\
 	    ../lib/JLex.jar
 
-#jar:
-#	jar cvf slime.jar ./slime/absynt/*.class \
-#	    ./java_cup/*.class \
-#	    ./java_cup/runtime/*.class \
-#	    ./slime/absynt/absfc/*.class \
-#	    ./slime/utils/*.class \
-# 	    ./slime/editor/*.class\
-# 	    ./slime/editor/resources/images/*.* \
-# 	    ./slime/gui/listener/*.class \
-# 	    ./slime/gui/model/*.class \
-# 	    ./slime/gui/*.class \
-# 	    ./slime/layout/*.class \
-# 	    ./slime/simulator/*.class \
-# 	    ./slime/checks/*.class \
-# 	    ./slime/checks/tests/*.class \
-# 	    ./slime/sfcparser/*.class
+
 
 jarinstall: 
-	cp slime_v*.jar $(BASELINESDIR)
+	cp slime_v*.jar $(SNAPSHOTSDIR)
 
 
-clean:
 
-
-########################################################################
-# $Log: not supported by cvs2svn $
-# Revision 1.25  2002/07/18 08:34:59  swprakt
-# - added slides for the check group.
-#
-# [Steffen]
-#
-# Revision 1.24  2002/07/10 16:43:40  swprakt
-#
-#
-#  - adapted the Manifest file,
-#  - adapted the Makefile accordningly
-#  - changed the web-pages
-#
-# [Steffen]
-#
-# Revision 1.23  2002/07/09 07:16:31  swprakt
-# *** empty log message ***
-#
-# Revision 1.22  2002/07/05 18:49:55  swprakt
-# *** empty log message ***
-#
-# Revision 1.21  2002/07/05 18:48:27  swprakt
-# Added checks.test to the doc target. [Steffen]
-#
-# Revision 1.20  2002/07/04 06:47:48  swprakt
-# I removed Lex and yacc stuff from the makefile, they are gone
-# [Steffen]
-#
-# Revision 1.19  2002/07/03 17:18:12  swprakt
-# Something has to happen with those
-# Input/OutputActions, either they are
-# going to be supported by Visitors
-# and Simulator, or I will have to remove
-# them from the parser. (mwe)
-#
-# Revision 1.18  2002/06/27 16:52:33  swprakt
-# added java_cup/*.class and
-# added java_cup/runtime/*.class to jar-file
-# (mwe)
-#
-# Revision 1.17  2002/06/27 16:50:47  swprakt
-# snot ? the last version of the global
-# makefile was not for this package.
-# This Makefile should work until no
-# new packages are added. (mwe)
-#
-#
-
+#----------------------------------------------------------------------
+# $Id: Makefile,v 1.27 2002-07-19 11:58:30 swprakt Exp $
+#----------------------------------------------------------------------
 
