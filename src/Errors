@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Errors,v 1.2 2002-06-12 06:33:24 swprakt Exp $
+## $Id: Errors,v 1.3 2002-06-12 06:37:09 swprakt Exp $
 ######################################################
 
 
@@ -13,15 +13,26 @@ the following format:
     package:     <in which package/class does it occur
     description: <longer description, hints for repair>
     status:      reported|confirmed|non-confirmed|repaired
-	       + date + author
+	         repaired-confirmed
+
+	       + <date> + <author>
    
     class:       fatal|non-fatal|feature-request ....
 
 
 
 
+Rules of the game:
 
----------------------------------------------------------------
+	- In general, if someone reports an error in another package,
+          the author should at least confirm the error.
+  
+        - If the error has been removed or otherwise been dealt
+	  with, it should be copied to the bottom of the file
+	  to the repaired errors section
+
+
+------------------- Open errors ---------------------------------------
 
 
 Error 1:  parser warnings
@@ -33,7 +44,7 @@ Error 1:  parser warnings
    class:  warning, non-fatal
 
 
-Error 2:   structure of the tool
+Error 2:   structure of the tool, Manifest
    package:     gui/all
    description: the package structure of the tool is 
 	        perhaps not ideal (according to the
@@ -41,7 +52,7 @@ Error 2:   structure of the tool
 	        Manifest file missing
 
    status: reported 12.6.2002 (M. Steffen, M. Wendel)
-   class:  fatal, if packages use non-uniform assumptions
+   class:  fatal, in case packages use non-uniform assumptions
 
 
 

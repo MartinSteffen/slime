@@ -1,23 +1,24 @@
 ######################################################
-## $Id: Errors.txt,v 1.1 2002-06-12 06:38:26 swprakt Exp $
+## $Id: Errors.txt,v 1.2 2002-06-12 06:40:24 swprakt Exp $
 ######################################################
 
 
 This file contains errors, bugs, features etc encountered in the
-development process. The format of an error report should roughly adhere to
-the following format:
+development process. The format of an error report should roughly adheres
+to the following format:
 
 
-
+  --------------------------------------------------------
   Error <nr>:    <short description>
     package:     <in which package/class does it occur
-    description: <longer description, hints for repair>
     status:      reported|confirmed|non-confirmed|repaired
 	         repaired-confirmed
 
 	       + <date> + <author>
    
     class:       fatal|non-fatal|feature-request ....
+    description: <longer description, hints for repair>
+   -----------------------------------------------------
 
 
 
@@ -38,21 +39,21 @@ Rules of the game:
 Error 1:  parser warnings
 
    package:  utils.
-   description: Parser grammar contains superfluous stuff
-	        (cf. lex/yacc output: 10 terminals declared but not used)
    status: reported 12.6.2002 (M. Steffen)
    class:  warning, non-fatal
+   description: Parser grammar contains superfluous stuff
+	        (cf. lex/yacc output: 10 terminals declared but not used)
+
 
 
 Error 2:   structure of the tool, Manifest
    package:     gui/all
+   status: reported 12.6.2002 (M. Steffen, M. Wendel)
+   class:  fatal, in case packages use non-uniform assumptions
    description: the package structure of the tool is 
 	        perhaps not ideal (according to the
    	        discussions from 8.5.2002).
 	        Manifest file missing
-
-   status: reported 12.6.2002 (M. Steffen, M. Wendel)
-   class:  fatal, in case packages use non-uniform assumptions
 
 
 
