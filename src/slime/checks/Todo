@@ -1,5 +1,5 @@
-################################################################
-## $Id: Todo,v 1.12 2002-07-05 16:50:54 swprakt Exp $
+#################################################################
+# $Id: Todo,v 1.13 2002-07-06 16:44:37 swprakt Exp $
 ################################################################
 
 
@@ -30,3 +30,80 @@
 
 	
 	
+
+//
+
+	env.add(var, new IntType()); //WRONWRONGWRONG FOR TESTING!!XXX
+	// >>>>env.add(var, t_dec);  // 1: key, 2: value
+	System.out.println ("we have added it, let's check");
+	Variable var3 = new Variable("x");
+	System.out.print ("var/var3: ");
+	pp.print (var);
+	pp.print (var3);
+	env.add(var3, new IntType()); //WRONWRONGWRONG FOR TESTING!!XXX
+	System.out.print ("var = var3: " + (var.equals(var3)));
+	System.out.print ("\nvar3 = var: " + (var3.equals(var)));
+	Type t_dec2 = env.lookup(var);
+	t_dec2 = env.lookup(var);
+	t_dec2 = env.lookup(var);
+	t_dec2 = env.lookup(var);
+	System.out.println ("type2 (= orig) is: ");
+	pp.print(t_dec2);
+	Type t_dec3 = env.lookup(var3);
+	System.out.println ("type3 is: ");
+	pp.print(t_dec3);
+	System.out.println (var.hashCode());
+	System.out.println (var3.hashCode());
+	System.exit(0);
+	return new UnitType(); 
+
+
+-----------
+
+
+  class A {
+    int x = 0;
+    int y = 0;
+    public A(int _x, int _y) {
+      x = _x;
+      y = _y;}
+
+    public boolean equals(A a) {
+      return (a.x  == x);}
+    public int hashCode() {
+      return x;}
+    }
+
+
+      Hashtable e3 = new Hashtable();  
+      Integer x1 = new Integer(1);
+      Integer x2 = new Integer(1);
+      e3.put(x1,new IntType());      
+      System.out.println("and now integers");
+      System.out.println ("contains 1" + e3.containsKey(x1));
+      System.out.println ("contains 2" + e3.containsKey(x2));
+
+      e3.clear();
+      String s1 = "aaa";
+      String s2 = "aaa";
+      e3.put(s1,new IntType());      
+      System.out.println("and now Strings");
+      System.out.println ("contains 1" + e3.containsKey(s1));
+      System.out.println ("contains 2" + e3.containsKey(s2));
+      System.out.println ("contains 2" + e3.containsKey("aaa"));
+
+      e3.clear();
+      A  a1 = new A(1,2);
+      A  a2 = new A(1,2);
+      System.out.print ("a1 = a2? = " + a1.equals(a2));
+      System.out.print ("a2 = a1? = " + a2.equals(a1));
+      e3.put(a1,new IntType());      
+      System.out.println("and now A's");
+      System.out.println ("contains 1" + e3.containsKey(a1));
+      System.out.println ("contains 2" + e3.containsKey(a2));
+      System.out.println("hashcodes");
+      System.out.println("a1: " + a1.hashCode());
+      System.out.println("a1: " + a1.hashCode());
+      System.out.println("a1: " + a1.hashCode());
+      System.out.println("a2: " + a2.hashCode());
+      System.out.println("a2: " + a2.hashCode());
