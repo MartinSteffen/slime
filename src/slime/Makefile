@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.34 2002-07-19 09:21:17 swprakt Exp $
+# $Id: Makefile,v 1.35 2002-07-19 09:21:52 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -55,29 +55,7 @@ packets:
 #	(cd ./gui; make)
 #	(cd ./io; make)
 
-# the checks is temporarily commented out from
-# the compilation list, because of discrepancies with other packages
-# especially the extended interfaces in absynt wrt. to the visitor.
-# this will be resolved asap.  Steffen 2.07.02
 
-
-
-#### the following target is to be used _with care_!  It can be used to get
-# a copy that complies _all_ packets, including checks!  
-#
-# It's a temporary hack to keep on working. Of course one could also just
-# branch off, but since we are at the end of the course, we better should
-# not, and so this is just a target for convenience that I know for which
-# files there will be conflicts/need for coordination and that I can
-# continue with the checker until they are resolved. [Steffen]
-
-
-backintime1:
-	cvs update -r secondcompilation-sep \
-             absynt/DoubleType.java\
-	     absynt/Visitors.java\
-	     absynt/InputAction.java\
-	     absynt/OutputAction.java
 
 
 clean:
