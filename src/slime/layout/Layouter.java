@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: Layouter.java,v 1.5 2002-06-06 14:20:40 swprakt Exp $
+ * @version $Id: Layouter.java,v 1.6 2002-06-06 16:10:15 swprakt Exp $
  */
 
 public final class Layouter {
@@ -249,6 +249,18 @@ public final class Layouter {
 		    int stepWidth = target.name.length()*7+8;
 		    if (stepWidth < 30)
 			stepWidth = 30;
+		    LinkedList actions = target.actions;
+		    if (actions.size() != 0) {
+			stepWidth += 10;
+			int max = 0;
+			for (int o=0; o<actions.size(); o++) {
+			    StepAction stepAction = (StepAction)actions.get(o);
+			    int length = stepAction.a_name.length();
+			    if (length > max)
+				max = length;
+			}
+			stepWidth += max*7 + 8;
+		    }
 		    if ((preX+stepWidth) > x)
 			x = preX+stepWidth+10;
 		} 

@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.4 2002-06-06 14:20:39 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.5 2002-06-06 16:10:14 swprakt Exp $
  */
 
 final class DrawBoard extends Canvas
@@ -34,7 +34,7 @@ final class DrawBoard extends Canvas
 	this.addMouseMotionListener(this);
 	this.addKeyListener(this);
 	this.setSize(START_WIDTH, START_HEIGHT);
-	this.setBackground(Color.gray);
+	this.setBackground(Color.white);
 	this.setVisible(true);
     }
 
@@ -53,7 +53,8 @@ final class DrawBoard extends Canvas
 	    Position position = step.pos;
 	    int x = (int)position.x;
 	    int y = (int)position.y;
-	    int stepWidth = this.eSFC.getWidth(step);
+	    int stepWidth = this.eSFC.getWidth(step) 
+		+ this.eSFC.getWidthOfActionList(step.actions);
 	    if ((x + stepWidth) > maxX)
 		maxX = x + stepWidth;
 	    if (x < minX)

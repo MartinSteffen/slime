@@ -10,12 +10,13 @@ import java.util.Hashtable;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.3 2002-06-06 14:20:39 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.4 2002-06-06 16:10:14 swprakt Exp $
  */
 
 final class SFCPainter{
 
     private static final int STEP_HEIGHT = 30;
+    protected static final int ACTION_GAP = 10;
     private static final Font DATA_FONT =
 	new Font( "Courier", Font.PLAIN, 12 );
 
@@ -47,10 +48,21 @@ final class SFCPainter{
 	int    x0   = (int)(step.pos.x);
 	int    y0   = (int)(step.pos.y);
 	int    stepWidth = this.eSFC.getWidth(step);
-	g.drawString(text, x0+4, y0+5+STEP_HEIGHT/2);
+	g.drawString(text, x0+4, y0+6+STEP_HEIGHT/2);
 	g.drawRect(x0, y0, stepWidth-1, STEP_HEIGHT-1);
 	if (step == this.sfc.istep)
 	    g.drawRect(x0+2, y0+2, stepWidth-5, STEP_HEIGHT-5);
+	LinkedList actions = step.actions;
+	if (actions.size() != 0) {
+	    g.setColor(Color.gray);
+	    g.drawLine(x0+stepWidth, y0, x0+stepWidth+ACTION_GAP, y0);
+	    for (int i=0; i< actions.size(); i++) {
+		StepAction stepAction = (StepAction)actions.get(i);
+		String name = stepAction.a_name;
+		g.drawString(name, x0+4+ACTION_GAP+stepWidth, y0+10+i*15);
+		g.drawRect(x0+ACTION_GAP+stepWidth, y0, name.length()*7 + 8, 15);
+	    }
+	}
     }
 
     private void paintTransitions(Graphics g) {

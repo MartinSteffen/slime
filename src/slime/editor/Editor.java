@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.4 2002-06-06 14:20:39 swprakt Exp $
+ * @version $Id: Editor.java,v 1.5 2002-06-06 16:10:14 swprakt Exp $
  */
 
 public final class Editor extends JComponent implements ChangeListener{
@@ -35,7 +35,7 @@ public final class Editor extends JComponent implements ChangeListener{
     private JTextField   statusMessage;
     private JTabbedPane  drawBoardTabbedPane = new JTabbedPane();
 
-    // Toggel to transizion mode by pressing t
+    // Toggel to transition mode by pressing t
     // Toggel to step mode by pressing s
     // Toogel to remove mode by presseing r
     

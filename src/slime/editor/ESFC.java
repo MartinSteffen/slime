@@ -4,13 +4,12 @@ import absynt.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.util.LinkedList;
-import java.util.Hashtable;
+import java.util.*;
 
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.2 2002-06-06 14:20:39 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.3 2002-06-06 16:10:14 swprakt Exp $
  */
 
 final class ESFC{
@@ -175,7 +174,7 @@ final class ESFC{
 	this.highlight(key, NORMAL); //FIX ME: Inititial Step != NORMAL!!!!
     }
 
-    protected int getWidth(Step step) {
+    public static int getWidth(Step step) {
 	final int MIN_WIDTH = 30;
 	final int WIDTH_PER_CHARACTER = 7;
 	int lengthOfName = step.name.length();
@@ -183,6 +182,212 @@ final class ESFC{
 	return (MIN_WIDTH > width) ? MIN_WIDTH : width;
     }
 
+    public static int getWidthOfActionList(LinkedList actions) {
+	int size = actions.size();
+	if (size == 0)
+	    return 0;
+	int max = 0;
+	for (int i=0; i<size; i++) {
+	    StepAction stepAction = (StepAction)actions.get(i);
+	    int length = stepAction.a_name.length();
+	    if (length > max)
+		max = length;
+	}
+	return SFCPainter.ACTION_GAP+max*7+8;
+    }
+
+    public String print(Absynt absynt) {
+	if(absynt != null) {
+	    if(absynt instanceof absynt.Action)
+		return output((absynt.Action)absynt);
+	    if(absynt instanceof StepAction)
+		return output((StepAction)absynt);
+	    if(absynt instanceof Step)
+		return output((Step)absynt);
+	    if(absynt instanceof Declaration)
+		return output((Declaration)absynt);
+	    if(absynt instanceof Skip)
+		return output((Skip)absynt);
+	    if(absynt instanceof Stmt)
+		return output((Stmt)absynt);
+	    if(absynt instanceof Variable)
+		return output((Variable)absynt);
+	    if(absynt instanceof Assign)
+		return output((Assign)absynt);
+	    if(absynt instanceof B_expr)
+		return output((B_expr)absynt);
+	    if(absynt instanceof U_expr)
+		return output((U_expr)absynt);
+	    if(absynt instanceof Constval)
+		return output((Constval)absynt);
+	    //	if(absynt instanceof Type)
+	    //  output((Type)absynt);
+	    //if(absynt instanceof BoolType)
+	    //    output((BoolType)absynt);
+	    //if(absynt instanceof IntType)
+	    //    output((IntType)absynt);
+	    /*if(absynt instanceof M_Type)
+	      output((M_Type)absynt);*/
+	}
+	return "";
+    }
+		       
+    public String output(absynt.Action action){
+	String s = "[Action] " + action.a_name + " ";
+	s += "[StmtList] ";
+	for (Iterator i = action.sap.iterator(); i.hasNext();)
+	    s += print((Stmt)i.next());
+	return s;
+    }
+    
+    public String output(StepAction stepaction){
+	String s = "[StepAction] ";
+	s += print(stepaction.qualifier);
+	s += print(stepaction.a_name);
+	return s;
+    }
+
+    public String output(ActionQualifier aqf){
+	String s="[unknown] ";
+	if(aqf instanceof Nqual)
+	    s="[N] ";
+	s = "[Actionqualifier] " + s + " ";
+	return s;
+    }
+
+    public String output(Step step) {
+	String s = "[Step] " + step.name + " ";
+	for (Iterator i = step.actions.iterator(); i.hasNext();)
+	    s += print((StepAction)i.next());
+	return s;
+    }
+
+    public String output(Declaration dec) {
+	String s = "[Declaration] ";
+	s += print(dec.var);
+	s += print(dec.type);
+        s += print(dec.val);
+	return s;
+    }
+    
+    public String output(Skip skip){
+	return "[Skip] ";
+    }
+    
+    public String output(Stmt stmt){
+	return "[Stmt] ";
+    }
+
+    public String output(Variable variable){
+	String s = "[Variable] " + variable.name;
+	s += print(variable.type);
+	return s;
+    }
+
+    public String output(Assign assign){
+	String s = "[Assign] ";
+	s += print(assign.var);
+	s += print(assign.val);
+	return s;
+    }
+
+    public String output(B_expr bexpr){
+	String s = "[B_expr] ";
+	s += print(bexpr.left_expr);
+	s += print(bexpr.op);
+	s += print(bexpr.right_expr);
+	return s;
+    }
+
+    public String output(Expr expr){
+	return "[Expr] ";
+    }    
+    
+    public String output(U_expr uexpr){
+	String s = "[U_Expr] ";
+	s += print(uexpr.op);
+	s += print(uexpr.sub_expr);
+	//prettyprint.print(uexpr.type);
+	return s;
+    }
+
+
+    /* print wird hier ueberladen, da Op vom typ integer ist
+     */
+    private String print(int op){
+	String string;
+	switch(op){
+	case 0 :
+	    string ="+ ";
+	    break;
+	case 1:
+	    string ="- ";
+	    break;
+	case 2:
+	    string ="* ";
+	    break;
+	case 3:
+	    string ="/ ";
+	    break;
+	case 4:
+	    string ="& ";
+	    break;
+	case 5:
+	    string ="| ";
+	    break;
+	case 6:
+	    string ="! ";
+	    break;
+	case 7:
+	    string ="= ";
+	    break;
+	case 8:
+	    string ="< ";
+	    break;
+	case 9:
+	    string ="> ";
+	    break;
+	case 10:
+	    string ="<= ";
+	    break;
+	case 11:
+	    string ="=> ";
+	    break;
+	case 12:
+	    string ="<> ";
+	    break;
+	default:
+	    string ="NULL ";
+	    break;
+	}
+    	return string;
+    }
+
+    public String output(Constval constval){
+	String s = "";
+        if(constval != null){
+            s = "[Constval] " +  constval.val;
+	    //prettyprint.print(constval.type);
+	}
+	return s;
+    }
+
+
+    private String print(String string){
+	return string;
+    }
+
+    private String print(Type type){
+	String string;
+	string="[Type] ";
+	if(type !=null){
+	    if(type instanceof BoolType)
+		string="[BoolType] ";
+	    if(type instanceof IntType)
+		string="[IntType] ";
+	}	    
+	return string;
+    }    
 }
 
 

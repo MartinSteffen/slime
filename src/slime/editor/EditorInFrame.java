@@ -12,7 +12,7 @@ import javax.swing.event.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.1 2002-06-03 18:07:00 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.2 2002-06-06 16:10:14 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
@@ -37,7 +37,7 @@ public final class EditorInFrame extends JFrame {
 
     private void initWindow(String title) {
 	this.setSize(WIDTH, HEIGHT);
-	this.setBackground(Color.gray);
+	this.setBackground(Color.white);
 	this.setTitle(title);
 	this.getContentPane().setLayout( new BorderLayout() );
 	this.getContentPane().add(this.getCenterPanel(), BorderLayout.CENTER);
@@ -62,11 +62,11 @@ public final class EditorInFrame extends JFrame {
 	SFC sfc2 = Example.getExample1();
 	for (int i=0; i < sfc1.steps.size(); i++) {
 	    Step step = (Step)(sfc1.steps).get(i);
-	    step.pos = new Position((float)(i*40),40.0f);
+	    step.pos = new Position((float)(i*40), (float)(i*40));
 	}
 	for (int i=0; i < sfc2.steps.size(); i++) {
 	    Step step = (Step)(sfc2.steps).get(i);
-	    step.pos = new Position((float)(i*40),40.0f);
+	    step.pos = new Position((float)(i*40), (float)(i*40));
 	}
 	Editor editor = new Editor(sfc1);
 	editor.add(sfc2);
