@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.158 2002-07-09 08:37:49 swprakt Exp $
+n## $Id: Errors.txt,v 1.159 2002-07-09 09:39:29 swprakt Exp $
 ###########################################################
 
 
@@ -49,6 +49,17 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+Error 73:    parser warning
+ package:    parser
+ class:      unclear
+ status:     reported, Martin Steffen 9.7.02
+ description: what does the CUP-comment 
+
+                  0 conflicts detected (9 expected)
+
+              means? Is this something serious?
 
 
 
@@ -237,7 +248,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.158 2002-07-09 08:37:49 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.159 2002-07-09 09:39:29 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
