@@ -1,0 +1,60 @@
+######################################################
+## $Id: Errors.txt,v 1.1 2002-06-12 06:38:26 swprakt Exp $
+######################################################
+
+
+This file contains errors, bugs, features etc encountered in the
+development process. The format of an error report should roughly adhere to
+the following format:
+
+
+
+  Error <nr>:    <short description>
+    package:     <in which package/class does it occur
+    description: <longer description, hints for repair>
+    status:      reported|confirmed|non-confirmed|repaired
+	         repaired-confirmed
+
+	       + <date> + <author>
+   
+    class:       fatal|non-fatal|feature-request ....
+
+
+
+
+Rules of the game:
+
+	- In general, if someone reports an error in another package,
+          the author should at least confirm the error.
+  
+        - If the error has been removed or otherwise been dealt
+	  with, it should be copied to the bottom of the file
+	  to the repaired errors section
+
+
+------------------- Open errors ---------------------------------------
+
+
+Error 1:  parser warnings
+
+   package:  utils.
+   description: Parser grammar contains superfluous stuff
+	        (cf. lex/yacc output: 10 terminals declared but not used)
+   status: reported 12.6.2002 (M. Steffen)
+   class:  warning, non-fatal
+
+
+Error 2:   structure of the tool, Manifest
+   package:     gui/all
+   description: the package structure of the tool is 
+	        perhaps not ideal (according to the
+   	        discussions from 8.5.2002).
+	        Manifest file missing
+
+   status: reported 12.6.2002 (M. Steffen, M. Wendel)
+   class:  fatal, in case packages use non-uniform assumptions
+
+
+
+
+-------------------- Repaired errors -------------------------
