@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.122 2002-07-06 15:13:26 swprakt Exp $
+## $Id: Errors.txt,v 1.123 2002-07-07 06:54:16 swprakt Exp $
 ###########################################################
 
 
@@ -41,6 +41,16 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+Error 59(2):  prettyprinter
+ class:       non-fatal, but  no clear programming
+ status:      reported 6.7.02, Steffen
+ package:     prettyprinter
+ description: perhaps type perhaps should not be
+	      printable at all, since type is an abstract class.
+
+
+
 Error 62:     hiding
  class:       non-fatal
  status:      reported, 6.7.02, Steffen
@@ -70,13 +80,14 @@ Error 60:     undeclared var
    
  
 
-Error 59:     prettyprinter
+Error 59(2):  prettyprinter
  class:       unclear, non-fatal for users, no clear programming
- status:      reported 6.7.02, Steffen, 
+ status:      reported 6.7.02, Steffen, partially repaired,
+              but the design question remains , Steffen 7.7.02
  package:     prettyprinter
  description: pp cannot print Unit-Type for instance, 
               and defaults to Type. Type perhaps should not be
-	      printable at all, sice type is an abstract class.
+	      printable at all, since type is an abstract class.
 
 
 
@@ -187,7 +198,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.122 2002-07-06 15:13:26 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.123 2002-07-07 06:54:16 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -369,6 +380,17 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 59:    prettyprinter
+ class:       unclear, non-fatal for users, no clear programming
+ status:      reported 6.7.02, Steffen, partially repaired,
+              but the design question remains , Steffen 7.7.02
+ package:     prettyprinter
+ description: pp cannot print Unit-Type for instance, 
+              and defaults to Type. Type perhaps should not be
+	      printable at all, since type is an abstract class.
+
 
 
 Error 58:     prettyprinter-typechecker?
