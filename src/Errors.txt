@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.99 2002-07-06 07:24:57 swprakt Exp $
+## $Id: Errors.txt,v 1.100 2002-07-06 08:50:02 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,21 +35,14 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
-
-Error 54(2):    type check
- class:      to consider
+Error 54:    typecheck error
+ class:      fatal
+ status:     reported, 6.7.02
  package:    checks
- status:     reported, 6.7.02, Steffen
- description: see what the type checker does with example sfc1?
-             is that correct? (undeclared variable)
-
-	     It seems that the variable is never added.
-	     Ok, repaired.
-	     Now
-
-             x [BoolType] 
-              false
-             TypecheckTest: slime.checks.Typecheck$TypeMismatch: Type mismatch
+ description: sfc1 raises 
+               TypecheckTest: slime.checks.Typecheck$DuplicatedDeclaration: Variable bound twice.
+              TypecheckTest: Variable bound twice.
+	      But the program seems ok.
  
 
 Error 53:    hacks
@@ -128,7 +121,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.99 2002-07-06 07:24:57 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.100 2002-07-06 08:50:02 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -310,6 +303,23 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 54(2):    type check
+ class:      to consider
+ package:    checks
+ status:     reported, 6.7.02, Steffen, repaired, 6.7.02 Steffen
+ description: see what the type checker does with example sfc1?
+             is that correct? (undeclared variable)
+
+	     It seems that the variable is never added.
+	     Ok, repaired.
+	     Now
+
+             x [BoolType] 
+              false
+             TypecheckTest: slime.checks.Typecheck$TypeMismatch: Type mismatch
+
 
 
 Error 52:    
