@@ -16,6 +16,18 @@ public class StmtRepeat extends Statement implements Serializable {
   public LinkedList stmtlist;
   public int repeatdepth;
 
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("repeat { \n");
+	for (java.util.Iterator i=stmtlist.iterator(); i.hasNext(); ) {
+	    Object o = i.next();
+	    out.append( o.toString()+"\n" );
+	}
+	out.append("} until (expr); // end repeat-until \n");
+	return out.toString();
+    }
+
+
   public StmtRepeat (slime.absynt.Expr _expr, LinkedList _stmtlist, int _rdepth) {
     expr = _expr;
     stmtlist = _stmtlist;

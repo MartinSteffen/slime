@@ -4,10 +4,15 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.8 2002-06-27 20:20:18 swprakt Exp $
+    * $Id: SFC.lex,v 1.9 2002-06-28 08:03:12 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.8  2002/06/27 20:20:18  swprakt
+   /* The SFCSymbols.EOF symbol has is an int with value 0.
+   /* The YYlex.EOF is a symbol with int value -1.
+   /* SFCParser now correctly parses 1+1, 7*8.. (mwe)
+   /*
    /* Revision 1.7  2002/06/27 19:39:37  swprakt
    /* slightly improved exceptionhandling
    /*
@@ -62,6 +67,8 @@ import java_cup.runtime.Symbol;
 %char
 %line
 %class SFCLex
+%implements java_cup.runtime.Scanner
+%function next_token
 %notunix
 %ignorecase
 %full

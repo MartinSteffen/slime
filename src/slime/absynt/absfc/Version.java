@@ -5,7 +5,7 @@ package slime.absynt.absfc;
  * serialized objects of this package.
  *
  * @author initially provided by Marco Wendel.
- * @version  $Id: Version.java,v 1.5 2002-06-27 20:29:02 swprakt Exp $
+ * @version  $Id: Version.java,v 1.6 2002-06-28 08:03:11 swprakt Exp $
  */
 
 public class Version {
@@ -13,11 +13,15 @@ public class Version {
     private static long version;
     private static String thisVersionString = "slime";
 
-    Version() { 
+    public Version() { 
 	renderVersion();
     } 
+    
+    public String toString() {
+	return thisVersionString;
+    }
 
-    Version( String versionString ) {
+    public Version( String versionString ) {
 	thisVersionString = versionString;
 	renderVersion();
     } 

@@ -14,6 +14,17 @@ public class StmtJoin extends Statement implements Serializable {
     private static final long serialVersionUID = Version.getSUID();
     public LinkedList proclist;
     public int procdepth;
+
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("join (");
+	for (java.util.Iterator i=proclist.iterator(); i.hasNext(); ) {
+	    Object o = i.next();
+	    out.append( o.toString()+"\n" );
+	}
+	out.append("} // end join \n");
+	return out.toString();
+    }
     
     public StmtJoin( LinkedList _proclist, int _pdepth ) {
 	proclist = _proclist;

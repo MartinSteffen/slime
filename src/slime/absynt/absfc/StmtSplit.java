@@ -15,6 +15,17 @@ public class StmtSplit extends Statement implements Serializable {
     public LinkedList proclist;
     public int procdepth;
     
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	    out.append("split { \n");
+	for (java.util.Iterator i=proclist.iterator(); i.hasNext(); ) {
+	    Object o = i.next();
+	    out.append( o.toString()+"\n" );
+	}
+	out.append("} // end split \n");
+	return out.toString();
+    }
+
     public StmtSplit( LinkedList _proclist, int _pdepth ) {
 	proclist = _proclist;
 	procdepth = _pdepth;

@@ -15,6 +15,12 @@ public class StmtAssign extends Statement implements Serializable {
   public slime.absynt.Variable var;
   public slime.absynt.Expr     val;
 
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("var := expr;");
+	return out.toString();
+    }
+
   public StmtAssign ( slime.absynt.Variable x, slime.absynt.Expr e ) {
     var = x;
     val = e;

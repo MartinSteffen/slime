@@ -7,10 +7,13 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.6 2002-06-27 19:39:36 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.7 2002-06-28 08:03:12 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.6  2002/06/27 19:39:36  swprakt
+/* slightly improved exceptionhandling
+/*
 /* Revision 1.5  2002/06/27 14:30:56  swprakt
 /* tried to remove Error 19: "_public ugliness",
 /* now header comments consist of two parts, one
@@ -42,8 +45,16 @@ import java.io.*;
  */
 public class ParserTest {
     public static void main (String args []) {
-	String      version = "1.0";
-	slime.absynt.Expr sfcexpr = null;
+
+	String version = "1.8";
+	String treestring = "sorry - it is empty";
+	slime.absynt.SFC                    theSFC = null;
+	slime.absynt.Expr                   sfcexpr = null;
+	slime.absynt.absfc.SFCabtree        absfctree = null;
+	slime.sfcparser.SFCParser           mySFCParser = null;
+	slime.sfcparser.Absfc2SFCConverter  theConverter = null;
+
+
 	if ( (args.length == 0)  || (args.length > 100) )
 	{
 	    System.out.println("SFCParserTest " + version + " - Part of the Slime Project");
@@ -57,7 +68,7 @@ public class ParserTest {
 	      || (args[0].equals("--e")) || (args[0].equals("--E")) 
 	       ) 
 	    {
-		slime.sfcparser.SFCParser mySFCParser = new slime.sfcparser.SFCParser();
+		mySFCParser = new slime.sfcparser.SFCParser();
 		StringBuffer sbuf = new StringBuffer("");
 		for (int i=1; i<args.length; i++) {
 		    sbuf.append(args[i]);
@@ -75,11 +86,16 @@ public class ParserTest {
 		} // end of if-sfcexpr
 	    } else {
 	        File sfcfile = new File( args[0] );
-		slime.sfcparser.SFCParser mySFCParser = new slime.sfcparser.SFCParser();
+		mySFCParser = new slime.sfcparser.SFCParser();
 		// mSFCParser.debug=1;
-		slime.absynt.absfc.SFCabtree absfctree = mySFCParser.parseFile( sfcfile );
-		slime.sfcparser.Absfc2SFCConverter theConverter = new slime.sfcparser.Absfc2SFCConverter( absfctree );
-		slime.absynt.SFC theSFC = theConverter.getSFC();
+		absfctree = mySFCParser.parseFile( sfcfile );
+		// theConverter = new slime.sfcparser.Absfc2SFCConverter( absfctree );
+		// slime.absynt.SFC theSFC = theConverter.getSFC();
+		System.out.println("after parseFile");
+		treestring = absfctree.toString();
+		System.out.println("after absfctree.toString() ");
+		
+		System.out.println( treestring );
 		// ***MORE*** 
 	    } // end of if-args-else
 	} catch (FileNotFoundException fnfe) {
@@ -96,6 +112,7 @@ public class ParserTest {
 	    System.exit(1);
 	} catch (Exception e) {
 	    System.err.println( "ParserTest: " + e.toString() );
+	    System.out.println( treestring );
 	    System.exit(1);
 	} // end of try-catch
     } // end of main

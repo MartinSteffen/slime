@@ -1,9 +1,12 @@
 ##########################
-# $Id: Makefile,v 1.6 2002-06-27 19:39:36 swprakt Exp $                       
+# $Id: Makefile,v 1.7 2002-06-28 08:03:12 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.6  2002/06/27 19:39:36  swprakt
+# slightly improved exceptionhandling
+#
 # Revision 1.5  2002/06/26 10:39:47  swprakt
 # yy_eof muss nun noch irgendwie behandelt werden...
 #
@@ -39,39 +42,38 @@ PACKAGE=slime.sfcparser
 DOCDIR=apidoc
 JLEXLOGFILE=JLex.log
 JCUPLOGFILE=JCup.log
-ICLASSPATH=../..
 
 ############# Compile Package SFCParser #############
 
 all:	SFCParser.class Absfc2SFCConverter ParserTest
 
 test:
-	java -classpath $(ICLASSPATH) slime.sfcparser.ParserTest
+	java slime.sfcparser.ParserTest
 
 Absfc2SFCConverter:
-	javac -classpath $(ICLASSPATH) Absfc2SFCConverter.java
+	javac Absfc2SFCConverter.java
 
 ParserTest:
-	javac -classpath $(ICLASSPATH) ParserTest.java
+	javac ParserTest.java
 
 SFCParser.class:  SFCParseException.class SFCParser.java SFCLex.class
-	javac -classpath $(ICLASSPATH) SFCParser.java SFCSymbols.java 
+	javac SFCParser.java SFCSymbols.java 
 
 SFCLex.java: 
 	#  SFC.lex
-	java -classpath $(ICLASSPATH) JLex.Main SFC.lex >$(JLEXLOGFILE)
+	java JLex.Main SFC.lex >$(JLEXLOGFILE)
 	mv SFC.lex.java SFCLex.java
 
 SFCLex.class: SFCLex.java
-	javac -classpath $(ICLASSPATH) SFCLex.java
+	javac SFCLex.java
 
 SFCParser.java:
 	# SFC.cup
         #java java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 3 -dump-grammar -dump-states -dump-tables -dump -debug SFCParser.cup 2>&1 $(JCUPLOGFILE)
-	java -classpath $(ICLASSPATH) java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 9 < SFC.cup 
+	java java_cup.Main -package $(PACKAGE) -parser SFCParser -symbols SFCSymbols -nonterms -expect 9 < SFC.cup 
 
 SFCParseException.class:
-	javac -classpath $(ICLASSPATH)  SFCParseException.java
+	javac SFCParseException.java
 SFC.lex:
 	# vi SFC.lex
 SFC.cup:
@@ -106,8 +108,7 @@ help:
 	#echo all		-	Generates all needed for Parsertest
 	#echo SFCLexer.java	-	Created through JLex from SFC.lex
 	#echo SFCParser.java	-	Created through Cup from SFC.cup
-	#echo clean		-	Delete SFCParser.class
-	#echo mrproper		-	Clean all produced files
+	#echo clean		-	clean all produced files
 	#echo doc		-	Create Java/Documentation
 
 

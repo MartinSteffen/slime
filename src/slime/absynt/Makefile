@@ -4,10 +4,7 @@
 #----------------------------------------------------------------------
 
 
-# all:	$(patsubst %.java,%.class,$(wildcard *.java))
-
-all:
-	javac -classpath "../.." *.java
+all:	$(patsubst %.java,%.class,$(wildcard *.java))
 
 debug:	; make JAVACOPTS="-g" all
 

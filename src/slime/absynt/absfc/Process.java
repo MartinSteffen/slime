@@ -20,6 +20,18 @@ public class Process extends Statement implements Serializable {
     public LinkedList internalActionList;
     public LinkedList internalDeclarationList;
 
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("process ");
+	out.append( name );
+	out.append( " { \n");
+	for (java.util.Iterator i = stmtlist.iterator(); i.hasNext();){
+	    Object o = i.next();
+	    out.append( o.toString() );
+	}
+	out.append("\n } // end of process \n" );
+	return out.toString();
+    }
     
     public Process(String _name, LinkedList _stmtlist) {
 	name = _name;

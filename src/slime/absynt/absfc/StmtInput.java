@@ -15,6 +15,12 @@ public class StmtInput extends Statement implements Serializable {
   public slime.absynt.Variable var;
   public slime.absynt.Expr     val;
 
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("input (expr);");
+	return out.toString();
+    }
+
   public StmtInput ( slime.absynt.Variable x, slime.absynt.Expr e ) {
     var = x;
     val = e;

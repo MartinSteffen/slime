@@ -16,6 +16,17 @@ public class StmtWhile extends Statement implements Serializable {
   public LinkedList stmtlist;
   public int whiledepth;
 
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("while (expr) { \n");
+	for (java.util.Iterator i=stmtlist.iterator(); i.hasNext(); ) {
+	    Object o = i.next();
+	    out.append( o.toString()+"\n" );
+	}
+	out.append("} // end while \n");
+	return out.toString();
+    }
+
   public StmtWhile (slime.absynt.Expr _expr, LinkedList _stmtlist, int _wdepth) {
     expr = _expr;
     stmtlist = _stmtlist;

@@ -19,6 +19,22 @@ public class StmtIfElse extends Statement implements Serializable {
     public int ifelsedepth;  
     public boolean emptyelse;
 
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("if (expr) {");
+	for (java.util.Iterator i=ifstmtlist.iterator(); i.hasNext(); ) {
+	    Object o = i.next();
+	    out.append( o.toString()+"\n" );
+	}
+	out.append("} else { \n");
+	for (java.util.Iterator i=elsestmtlist.iterator(); i.hasNext(); ) {
+	    Object o = i.next();
+	    out.append( o.toString()+"\n" );
+	}
+	out.append("} // end if-else \n");
+	return out.toString();
+    }
+
   public StmtIfElse (slime.absynt.Expr _expr, LinkedList _ifstmtlist, LinkedList _elsestmtlist, int _idepth) {
     expr = _expr;
     ifstmtlist = _ifstmtlist;

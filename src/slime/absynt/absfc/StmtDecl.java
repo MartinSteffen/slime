@@ -18,6 +18,12 @@ public class StmtDecl extends Statement implements Serializable {
   public boolean hasvalue;
   public boolean isexpr;
 
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("type var := constval;");
+	return out.toString();
+    }
+
   public StmtDecl ( slime.absynt.Variable  _var, 
                     slime.absynt.Type      _type,
 		    slime.absynt.Constval  _val) {

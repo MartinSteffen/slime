@@ -15,11 +15,16 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.8 2002-06-27 20:20:18 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.9 2002-06-28 08:03:12 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.8  2002/06/27 20:20:18  swprakt
+ * The SFCSymbols.EOF symbol has is an int with value 0.
+ * The YYlex.EOF is a symbol with int value -1.
+ * SFCParser now correctly parses 1+1, 7*8.. (mwe)
+ *
  * Revision 1.7  2002/06/27 19:39:36  swprakt
  * slightly improved exceptionhandling
  *
@@ -378,18 +383,20 @@ non terminal    LinkedList                      processlist;
 non terminal    LinkedList                      procidlist;
 
 /// Precedences and Associativity
-precedence left BOOLTYPE, INTTYPE;                         // bool, int, string
-precedence left IDENTIFIER;				   // Strings
-precedence left INPUT, OUTPUT;                             // input, output 
+// precedence left BOOLTYPE, INTTYPE;                         // bool, int, string
+// precedence left IDENTIFIER;				   // Strings
+// precedence left INPUT, OUTPUT;                             // input, output 
 precedence left ADD, SUB;				   // +, -
 precedence left MUL, DIV;				   // *,/; MOD=%
 precedence left AND, OR, NEQ, LT, LEQ, GT, GEQ, EQ;	   // &&; ||, !=, <,<=,>,>=,==
 precedence left NOT;					   // !
-precedence left ELSE, WHILE, REPEAT;			   // else, while, repeat
-precedence left IF;					   // if
+// precedence left ELSE, WHILE, REPEAT;			   // else, while, repeat
+// precedence left IF;					   // if
 // precedence left LPFIELD, RPFIELD;			   // [,]
-precedence left LPSET, RPSET;			 	   // {,}
-precedence left LPAREN, RPAREN;				   // (,)
+// precedence left LPAREN;
+// precedence right RPAREN;				   // (,)
+// precedence left LPSET;
+// precedence right RPSET;			 	   // {,}
 
 
 // --------------------------------------------------------------------------- 
@@ -439,20 +446,20 @@ sfcprogram ::=	SFCPRG
 /** STMTLIST ------------------------------------------------- **/
 stmtlist ::=  stmt:s        
               {:  
-	        pOut( 1, " // processing a single stmt of a stmtlist " );
-	        alist.clear();
-	        alist.addLast( s );
-	        RESULT=alist;
+	       pOut( 1, " // processing a single stmt of a stmtlist " );
+	       LinkedList ll_stmtlist = new LinkedList();
+	       ll_stmtlist.addLast( s );
+	       RESULT=ll_stmtlist;
 	       :} 
 /* Dies hier hat zu Fehlern gefuehrt:  |  stmtblock:b   {:  RESULT=b;  :} */
            |  stmt:s  
               stmtlist:sl 
               {:  
-  	        pOut( 1, " // processing the head-stmt of a stmtlist " );
-		  alist.clear();
-		  alist.addLast(s);
-		  alist.addAll( (java.util.LinkedList)sl);
-		  RESULT=alist;  
+		  pOut( 1, " // processing the head-stmt of a stmtlist " );
+		  LinkedList ll_stmtlist2 = new LinkedList();
+		  ll_stmtlist2.addLast( s );
+		  ll_stmtlist2.addAll( (java.util.LinkedList) sl );
+		  RESULT=ll_stmtlist2;  
 	      :}
 ;
 
@@ -463,15 +470,26 @@ stmtblock ::=  LPSET
 	           pOut( 1, " { // now being within a block " );
 		   RESULT=l; 
 		   :} 
-            |  LPSET
+            |
+	       LPSET
+               stmt:l
+               RPSET {: 
+	           pOut( 1, " { // now being within a block " );
+		   LinkedList ll_stmtblock = new LinkedList();
+		   ll_stmtblock.add(l);
+		   RESULT=ll_stmtblock; 
+		   :} 
+            |
+	    
+	       LPSET
                RPSET 
                {:
 	          pOut( 1, " {} // now being within an empty block " );
-		  alist.clear();
-		  alist.addLast(
+		   LinkedList ll_stmtblock2 = new LinkedList();
+		   ll_stmtblock2.addLast(
 		      new slime.absynt.absfc.Comment( "// empty block" ) 
 		  );
-		  RESULT=alist;
+		  RESULT=ll_stmtblock2;
 	       :}
 ;
 
@@ -499,6 +517,7 @@ stmtif ::= IF
            expr:e
            RPAREN
            stmtblock:b 
+           SEMICOLON
            {: 
               pOut( 1, " if (expr) { " );
 	      RESULT = new slime.absynt.absfc.StmtIf( 
@@ -512,11 +531,10 @@ stmtifelse ::=	IF
                 LPAREN  
                 expr:e
                 RPAREN
-                LPSET
-                stmtlist:b1 
-                RPSET
+                stmtblock:b1 
                 ELSE
-                stmtblock:b2 
+                stmtblock:b2
+                SEMICOLON 
                 {: 
 	          pOut( 1, " if (expr) {b1} else {b2}  " );
 		   RESULT = new slime.absynt.absfc.StmtIfElse( 
@@ -533,8 +551,9 @@ stmtloopwhile ::= WHILE
                   expr:e 
                   RPAREN  
                   stmtblock:b 
+                  SEMICOLON
                   {: 
-		      pOut( 1, " while (expr) { " );
+		   // pOut( 1, " while (expr) {b} " );
 		     RESULT = new slime.absynt.absfc.StmtWhile( 
 			         e, (java.util.LinkedList) b 
 		     ); 
@@ -620,7 +639,7 @@ vardeclaration::= vartype:vtype
 	  	          pOut( 1, " declaration " );
 		   RESULT = new slime.absynt.absfc.StmtDecl( 
 		                new slime.absynt.Variable(vname), 
-				(slime.absynt.Type)vtype ); 
+				vtype ); 
 		   :} 
                |  vartype:vtype
 	          IDENTIFIER:vname
@@ -631,7 +650,7 @@ vardeclaration::= vartype:vtype
 		      pOut( 1, " declaration " );
 		      RESULT = new slime.absynt.absfc.StmtDecl( 
 			           new slime.absynt.Variable(vname), 
-				   (slime.absynt.Type)vtype, e );  
+				   vtype, e );  
                       // bei vartype evtl. non term aendern
 		      // falls fuer den checker der echte Type
 		      // verlorengeht. Ansonsten in der Absynt
@@ -668,34 +687,34 @@ stmtjoin ::=	JOIN
 /** PROCODLIST -------------------------------------------- **/
 procidlist ::=	IDENTIFIER:procname 
                 {: 
-		   alist.clear();
-		   alist.addLast( procname );
-		   RESULT=alist; 
+		   LinkedList ll_procidlist = new LinkedList();
+		   ll_procidlist.addLast( procname );
+		   RESULT=ll_procidlist; 
 		 :}
               |	IDENTIFIER:procname
 	        procidlist:proclist
                 {: 
-		  alist.clear();
-		  alist.addLast( procname );
-		  alist.addAll( (java.util.LinkedList) proclist );
-		  RESULT = alist;
+		   LinkedList ll_procidlist2 = new LinkedList();
+		   ll_procidlist2.addLast( procname );
+		   ll_procidlist2.addAll( (java.util.LinkedList) proclist );
+		   RESULT=ll_procidlist2; 
 		 :}
 ;
 
 /** PROCESSLIST ------------------------------------------ **/
 processlist ::=	process:p1 
                 {: 
-		   alist.clear();
-		   alist.addLast( p1 );
-		   RESULT = alist; 
+		   LinkedList ll_processlist = new LinkedList();
+		   ll_processlist.addLast( p1 );
+		   RESULT = ll_processlist; 
 		 :} 
               |	process:p 
 	        processlist:pl 
                 {: 
-		  alist.clear();
-		  alist.addLast( p );
-		  alist.addAll( (java.util.LinkedList) pl );
-		  RESULT = alist;
+		    LinkedList ll_processlist2 = new LinkedList();
+		    ll_processlist2.addLast( p );
+		    ll_processlist2.addAll( (java.util.LinkedList) pl );
+		    RESULT = ll_processlist2;
 		 :}
 ;
 		
@@ -808,7 +827,11 @@ INTEGER:i
     pOut( 3, i.toString() ); 
     java.lang.Integer opCode = i;
     int opCodeValue = opCode.intValue();
-    RESULT = new slime.absynt.Constval( opCodeValue );  
+    System.out.println("before constval-INTEGER-RESULT");
+    slime.absynt.Constval cint = new slime.absynt.Constval( opCodeValue );
+    System.out.println("after constval-INTEGER-Constval");
+    RESULT = cint;  
+    System.out.println("after constval-INTEGER-RESULT");
 :}
 
 ;

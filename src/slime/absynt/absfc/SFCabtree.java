@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * the top level syntactic construct,
  * i.e., the entry point.
  * @author initially provided by Marco Wendel.
- * @version $Id: SFCabtree.java,v 1.3 2002-06-26 06:29:24 swprakt Exp $
+ * @version $Id: SFCabtree.java,v 1.4 2002-06-28 08:03:10 swprakt Exp $
  */
 
 
@@ -24,6 +24,19 @@ public class SFCabtree extends Absfc implements Serializable{
     public int stmtCnt;
     public int varCnt;
     public int decCnt;
+
+    public String toString() {
+	StringBuffer out = new StringBuffer("");
+	out.append("SFC ");
+	out.append( sfcprogname );
+	out.append( " { \n");
+	for (java.util.Iterator i = stmtlist.iterator(); i.hasNext();){
+	    Object o = i.next();
+	    out.append( o.toString() );
+	}
+	out.append("\n } // end of sfcprogram \n" );
+	return out.toString();
+    }
 
   /** 
    * Constructor just stores the arguments into the fields
