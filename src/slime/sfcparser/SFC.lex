@@ -2,9 +2,12 @@ package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.1 2002-06-25 15:02:51 swprakt Exp $
+    * $Id: SFC.lex,v 1.2 2002-06-26 06:50:57 swprakt Exp $
     * -----
     * $Log: not supported by cvs2svn $
+    * Revision 1.1  2002/06/25 15:02:51  swprakt
+    * missing files added
+    *
     * Revision 1.3  2002/05/05 22:24:12  mwe
     * added something from the grammar
     * i think something like slime.absynt.process
@@ -86,22 +89,14 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "false"    {return new Symbol(SFCSymbols.FALSE); 	/* */}
 "int"      {return new Symbol(SFCSymbols.INTTYPE); 	/* Class IntType */}
 "bool"     {return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
-"double"   {return new Symbol(SFCSymbols.DOUBLETYPE);   /* undef DoubleType */}
-"string"   {return new Symbol(SFCSymbols.STRINGTYPE);   /* undef StringType */}
 "="        {return new Symbol(SFCSymbols.ASSIGN); 	/* Class Assign */}
 "skip"     {return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
 "("        {return new Symbol(SFCSymbols.LPAREN); 	/* */}
 ")"        {return new Symbol(SFCSymbols.RPAREN); 	/* */}
-"["        {return new Symbol(SFCSymbols.LPFIELD); 	/* */}
-"]"        {return new Symbol(SFCSymbols.RPFIELD); 	/* */}
 "{"        {return new Symbol(SFCSymbols.LPSET); 	/* */}
 "}"        {return new Symbol(SFCSymbols.RPSET); 	/* */}
 ","        {return new Symbol(SFCSymbols.COMMA); 	/* */}
 ";"        {return new Symbol(SFCSymbols.SEMICOLON);	/* */}
-":"        {return new Symbol(SFCSymbols.DDOT); 	/* */}
-"."        {return new Symbol(SFCSymbols.DOT);		/* */}
-"*"        {return new Symbol(SFCSymbols.ASTERIX); 	/* */}
-"#"        {return new Symbol(SFCSymbols.HASH); 	/* */}
 "SFC"      {return new Symbol(SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
 "input"    {return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
 "output"   {return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
