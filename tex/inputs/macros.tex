@@ -18,6 +18,13 @@
 \newcommand{\bnfdef}{::=}
 \newcommand{\bnfbar}{\ensuremath{\mid}}
 \newcommand{\of}    {\ensuremath{\mathrel{:}}}
+\newcommand{\without}{\backslash}
+\newcommand{\ltrue}   {\mathit{true}}
+\newcommand{\lfalse}  {\mathit{false}}
+
+\newcommand{\suchthat}{\mathrel{\mid}}
+\newcommand{\union}  {\cup}
+\newcommand{\sem}    [2]        {[\![#2]\!]_{#1}}      %semantics
 
 \newenvironment{diagram}{\begin{displaymath}}{\end{displaymath}}
 
@@ -48,10 +55,98 @@
   {\end{lstlisting}}}
 
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% macros for semantics of SFC's
+
+%%% RULES 
+
+
+\newenvironment{ruleset}{
+  \mbox{}\noindent\hrulefill\begin{displaymath}
+    \renewcommand{\arraystretch}{1.6}\begin{array}[b]{l}}{
+  \end{array}\end{displaymath}\hrulefill\mbox{}}
+
+
+
+
+\newcommand{\treefont}{\small}
+\newcommand{\leaf}[1]{{\begin{array}{c} #1 \end{array}}}
+\newenvironment{proofleaf}{\begin{array}{c}}{\end{array}}
+
+\newcommand{\namedruletree}[3]{{
+     \treefont
+     \prooftree 
+       {\leaf{#2}}
+     \justifies
+       #3
+     \using \rn{#1}
+     \endprooftree
+     }}                             
+
+\newcommand{\ruletree}[2]{\namedruletree{}{#1}{#2}}
+
+
+\newcommand{\rn}[1]{\mbox{\textsc{#1}}}   %% determines the font
+\newcommand{\andalso}{\quad\quad}
+\newcommand{\infrule}[3]{\namedruletree{#1}{#2}{#3}\andalso}
+\newcommand{\scinfrule}[4]{\namedruletree{\mbox{$#4$}\quad\quad #1}{#2}{#3}\andalso}
+\newcommand{\infax}[2]{
+  \treefont
+  #2\quad\quad \rn{#1}\andalso
+  \andalso
+  }
+\newcommand{\scinfax}[3]{
+  \treefont
+  #2\quad \mbox{$#3$\quad\quad#1}
+  \andalso
+}
+
+
+
+
+%%% SFCs
+\newcommand{\act}           {\mathit{act}}
+\newcommand{\Act}           {\mathit{Act}}
+\newcommand{\States}        {\mathit{States}}
+\newcommand{\Status}        {\mathit{Status}}
+\newcommand{\Steps}         {\mathit{Steps}}
+\newcommand{\Store}         {\mathit{Store}}
+\newcommand{\Var}           {\mathit{Var}}
+\newcommand{\Varin}         {\Var_{\mathit{in}}}
+\newcommand{\Varout}        {\Var_{\mathit{out}}}
+\newcommand{\Varloc}        {\Var_{\mathit{loc}}}
+
+\newcommand{\src}           {\mathit{src}}
+\newcommand{\target}        {\mathit{tar}}
+\newcommand{\guard}         {\mathit{guard}}
+\newcommand{\Expr}          {\mathit{Expr}}
+
+\newcommand{\setto}[2]             {{\scriptstyle [#1\mathop{\mapsto}#2]}}  %setto{x}{v} : [x|->v]  {}
+\newcommand{\substfor}[2]   {}
+
+\newcommand{\waitinput}     {\mathit{W}}%{\mathit{WAITINPUT}}
+\newcommand{\doneinput}[1]  {\mathit{D(#1)}}%{\mathit{DONEINPUT(#1)}}
+\newcommand{\finished}[1]   {\mathit{F(#1)}}%{\mathit{FINISHED(#1)}}
+
+
+
+
+
+
+
+
+
 %\newenvironment{diagram}{\begin{displaymath}}{\end{displaymath}}
 
 
+\newcommand{\edge}[1]            {\longrightarrow_{#1}} %
 
+%%% semantical steps
+\newcommand{\trans}[1]             {\rightarrow_{#1}}
+\newcommand{\transin}[1]           {\trans{?#1}}
+\newcommand{\transout}[1]          {\trans{!#1}}
 
 
 

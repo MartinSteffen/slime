@@ -3,14 +3,9 @@
   \eta' = \eta\setto{\vec{x}}{\vec{v}}
   \andalso
   \vec{x} = \Varin
-  \andalso 
-  A = \{ a \suchthat
-  \exists s \in S.\ s \in \sigma \land a \in \act(s)\}
-  \}
-  \
   }{
   (\sigma,\eta,\waitinput) \transin{v}
-  (\sigma,\eta',\doneinput{A})
+  (\sigma,\eta',\doneinput{\act(\sigma)})
   }
 
 \\
@@ -22,17 +17,17 @@
   }{
   (\sigma,\eta,\doneinput{A}) 
   \trans{}
-  (\sigma,\eta,\doneinput{A\without a})
+  (\sigma,\eta',\doneinput{A\without a})
   }
 
 \infrule{No-Act}{
   \andalso
   T = \{
-  t \in T
+  S_s \edge{g} S_t \in T
   \suchthat
-  \src(t) \subseteq \sigma
+  S_s \subseteq \sigma
   \land
-  \sem{\eta}{\guard(t)} = \ltrue \}
+  \sem{\eta}{g} = \ltrue \}
   }{
   (\sigma,\eta,\doneinput{\emptyset})
   \trans{}
@@ -41,17 +36,20 @@
 
 \\
 
-\infrule{Next-Step}{%
-  t \in T
+\infrule{Next-Steps}{%
+  t =  S_s \edge{g} S_t
+ \in T
   \andalso
-  \src(t)  \in\sigma
+  S_s  \subseteq \sigma
   \andalso
-  \sigma' = (\sigma \union \target(t)) \without \src(t)
+  \sigma' = (\sigma \union S_t) \without S_s
   }{
   (\sigma,\eta,\finished{T})
   \trans{}
-  (\sigma',\eta,\finished{\src(t)})
+  (\sigma',\eta,\finished{T \without t})
   }
+
+\\
 
 \infrule{Output}{%
   \vec{v} = \sem{\eta}{\vec{x}}
