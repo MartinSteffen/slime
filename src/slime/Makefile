@@ -1,7 +1,8 @@
 #----------------------------------------------------------------------
-# developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.37 2002-07-19 12:34:00 swprakt Exp $
+# $Id: Makefile,v 1.38 2002-07-19 13:27:56 swprakt Exp $
 #----------------------------------------------------------------------
+#
+# developers' top-level Makefile for the Slime project
 #
 # The targets installing gobal web-infos can be executed only
 # by the maintainers
@@ -9,12 +10,9 @@
 
 TOOLNAME      = Slime
 
-WEBDIR        = /home/info/www/inf/deRoever/SS02/Java/$(TOOLNAME)
-WEBDOCDIR     = $(WEBDIR)/doc
-BASELINESDIR  = $(WEBDIR)/baselines
 
 SNAPSHOTSDIR  = $(WEBDIR)/snapshots
-LOCALDOCDIR   = doc
+
 PACKAGEDIRS   = absynt\
 	        utils\
 	        layout\
@@ -22,9 +20,6 @@ PACKAGEDIRS   = absynt\
 	        checks\
 	        simulator\
 		sfcparser\
-	        gui
-#	        utils\
-#                io
 
 
 ################################################
@@ -32,10 +27,9 @@ PACKAGEDIRS   = absynt\
 
 all:	packets $(patsubst %.java,%.class,$(wildcard *.java))
 
-debug:	; make JAVACOPTS="-g" all
 
 run:	all
-	java slime.gui.SlimeStart
+	java slime.Main
 
 packets:
 	(cd ./absynt; make)
@@ -46,7 +40,6 @@ packets:
 	(cd ./editor; make)
 	(cd ./checks; make)
 	(cd ./gui; make)
-#	(cd ./io; make)
 
 
 
