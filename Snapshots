@@ -1,6 +1,6 @@
 
 ########################################################
-## $Id: Snapshots,v 1.12 2002-07-18 10:16:55 swprakt Exp $
+## $Id: Snapshots,v 1.13 2002-07-19 04:24:17 swprakt Exp $
 ########################################################
 
 This file contains, for quick reference, a list of the major development
@@ -13,9 +13,8 @@ the form snapshot<nr> as those are reserved for the global snapshots.
 
 
 
- endofsemester: 18.7.02
-	   The state when we did our review. It's integrated 
-	   in some loose sense. 
+ snapshot4: 18.7.02
+	    The state when we did our review. it does not compile.
 
 
  snapshot3: 10.07.02
