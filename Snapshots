@@ -12,3 +12,8 @@
 	     with the new classpath.
 	
 	     sfcparser is not yet compilable (but was not before, as well)
+
+ firstcompilaton-sep:   3.7.2002
+             Now, everything compiles, including parser.
+	  
+	
