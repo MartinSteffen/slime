@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.68 2002-07-05 08:43:15 swprakt Exp $
+## $Id: Errors.txt,v 1.69 2002-07-05 08:46:50 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -42,7 +42,22 @@ Error 41:     super/sub confusion
               structure of the exceptions. Perhaps
 	      this is the cause of #40.
 
-	      
+	      Explanation: the structure of Exception und TypecheckException does not
+	      work: it does not return the right message: Doing
+
+		      System.out.println((new slime.checks.CheckException()).message);
+		      System.out.println((new slime.checks.CheckException()).getMessage());
+		      System.out.println((new slime.checks.TException()).message);
+		      System.out.println((new slime.checks.TException()).getMessage());
+
+	      (where TException is the same as TypecheckException, but not nested
+	      inside, because I want to throw it outside) gives:
+               General exception of the checks-package
+               General exception of the checks-package
+               General typecheck exception
+               General exception of the checks-package
+
+	       only line 3 is wanted.
 
 Error 40:     typecheck expressions
  package:     checks (but partially branched out)
