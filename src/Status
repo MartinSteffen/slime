@@ -1,13 +1,25 @@
 #########################################################################
-## $Id: Status,v 1.10 2002-06-25 17:30:55 swprakt Exp $
+## $Id: Status,v 1.11 2002-07-01 07:46:35 swprakt Exp $
 #########################################################################
 
 
 
 
 Project-internal status file, currently informally formatted.
---------------------------------------------------------------
+-------------------------------------------------------------
 
+
+Status for the meeting at July 3.:
+
+	- gui:             unclear
+	- checkts/absynt:  no real progress. equals is implemented
+	- parser:          quite some progress
+	- editor:          stable
+	- simulator:       no progress
+
+
+
+  
 
 Status for the meeting at 26'': not done
    	        >  privat field + accessors: not done
