@@ -2,7 +2,7 @@
 /**
  * Pretty printer for SFC's
  * @author Initially provided by Karsten Stahl.
- * @version $Id: PrettyPrint.java,v 1.5 2002-07-05 10:05:48 swprakt Exp $
+ * @version $Id: PrettyPrint.java,v 1.6 2002-07-07 06:49:56 swprakt Exp $
  */
 
 
@@ -314,6 +314,10 @@ public class PrettyPrint {
 		string="[BoolType] ";
 	    if(type instanceof IntType)
 		string="[IntType] ";
+	    if(type instanceof UnitType) // not a user type
+		string="[UnitType] ";
+	    if(type instanceof UndefType) // not a user type
+		string="[UndefType] ";
 	    System.out.println(whiteSpace(column) + string);
 	}	    
 	PrettyPrint prettyprint = new PrettyPrint(column + tab, tab);
@@ -340,9 +344,14 @@ public class PrettyPrint {
 //	Pretty-Printer
 //	--------------
 //
-//	$Id: PrettyPrint.java,v 1.5 2002-07-05 10:05:48 swprakt Exp $
+//	$Id: PrettyPrint.java,v 1.6 2002-07-07 06:49:56 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2002/07/05 10:05:48  swprakt
+//	I converted the print for Type from private to public.
+//	
+//	[Steffen]
+//	
 //	Revision 1.4  2002/07/04 16:33:29  swprakt
 //	Added support for MOD(13)="%" and POW(14)="^". (mwe)
 //	
