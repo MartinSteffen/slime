@@ -1,23 +1,29 @@
 // --------------------------------------------------------------------
 /**
  * Absfc2SFCConverter.java<br>
- *
+ * converts a given {@link slime.absfc.SFCabtree} to<br>
+ * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.4 2002-06-28 15:04:55 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.5 2002-06-28 20:30:49 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
- * Revision 1.3  2002/06/27 14:30:56  swprakt
- * tried to remove Error 19: "_public ugliness",
- * now header comments consist of two parts, one
- * for javadoc and one containing CVS Versio log.
- *<br>
+ * Revision 1.4  2002/06/28 15:04:55  swprakt<br>
+ * Thanks for removing the entry ./sfcparser<br>
+ * and forgetting ./editor/resources/images.<br>
+ * Should still compile. (mwe)<br>
+ * <br>
+ * Revision 1.3  2002/06/27 14:30:56  swprakt<br>
+ * tried to remove Error 19: "_public ugliness",<br>
+ * now header comments consist of two parts, one<br>
+ * for javadoc and one containing CVS Versio log.<br>
+ * <br>
  * Revision 1.2  2002/06/26 06:33:03  swprakt<br>
  * Makefile geaendert nun mit fuer Slime gueltigem CLASSPATH "../..".<br>
  * Absfc2SFCConverter.java nun in slime.sfcparser-package.<br>
  * Parser nicht veraendert nur neu erzeugt. (mwe)<br>
- *
+ * <br>
  * Revision 1.1  2002/06/25 05:44:08  swprakt<br>
  * Phase 2 des Parsers:<br>
  * Soll eine Konvertierung von slime.absynt.absfc.SFCabtree<br>
@@ -78,9 +84,13 @@ public class Absfc2SFCConverter {
      * myWantedSFC = theConverter.getSFC();<br>
      * <br>
      * </code>
+     *
      * @author initially provided by Marco Wendel<br>
      * @version 1.1 should be running good<br>
      * @param slime.absynt.absfc.SFCabtree SFC2 the input meta-tree to convert<br>
+     * @see slime.absynt.absfc.SFCabtree for the input format
+     * @see slime.absynt.SFC for the output format
+     * @see slime.sfcparser.ParserTest for an example
      **/
     public Absfc2SFCConverter( slime.absynt.absfc.SFCabtree absfcobj ) {
 	stepCounter       = 0;  // for enumberating steps

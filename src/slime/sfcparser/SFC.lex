@@ -1,14 +1,20 @@
 package slime.sfcparser;
 import java_cup.runtime.Symbol;
-import slime.sfcparser.*;
   /**
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.10 2002-06-28 20:01:08 swprakt Exp $
+    * $Id: SFC.lex,v 1.11 2002-06-28 20:30:50 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.10  2002/06/28 20:01:08  swprakt
+   /* Modified PrettyPrint for use with slime.absfc.SFCabtree,
+   /* may now use it to debug Absfc2SFCConverter. I will try
+   /* to check in a fully functional SFCParser incl. nested
+   /* statements within one week, so 'round about 05/07/2002.
+   /* (mwe)
+   /*
    /* Revision 1.9  2002/06/28 08:03:12  swprakt
    /* old versions did conflict with "global" Makefile
    /* in src/slime, albeight the GLOBAL Makefile should
@@ -40,7 +46,7 @@ import slime.sfcparser.*;
     *
     * Revision 1.1  2002/06/25 15:02:51  swprakt
     * missing files added
-    *
+    * -------------------------------------------------
     * Revision 1.3  2002/05/05 22:24:12  mwe
     * added something from the grammar
     * i think something like slime.absynt.process
@@ -63,11 +69,11 @@ import slime.sfcparser.*;
     * %char	-	yychar() is accessible in Symboldefinition
     * %line	-	yyline() contains the current line in src-file
     * %function - 	use instead of next_Token()
-    *		- THIS HAS TO BE CHANGED TO GET A RUNNING SFCParser.class :)
     * %notunix	-	does not care about ^M :) (skips \r)
     * %init{
     * %init}
     * %yy_eof
+    * %initthrow{ ....  see JLex Manual for more options
     **/
 %%
 %char
@@ -92,7 +98,7 @@ c3      = ("(*".*"*)")
 comment	= ({c1}|{c2}|{c3})
 space	= [\ \r\t\f\n\b\015\012]+
 alpha   = [A-Za-z]
-extra   = ("!"|"$"|"%"|"/"|"("|")"|"="|"?"|"["|"]"|"{"|"}"|"\"|"_"|"."|":"|";"|"#"|"*")
+extra   = ( "!" | "$" | "%" | "/" | "(" | ")" | "=" | "?" | "[" | "]" | "{" | "}" | "\" | "_" | "." | ":" | ";" | "#" | "*" )
 letter	= ({alpha}|"_")
 digit	= [0-9]
 sign    = [+-]?
@@ -113,8 +119,8 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "("        {return new Symbol(slime.sfcparser.SFCSymbols.LPAREN); 	/* */}
 ")"        {return new Symbol(slime.sfcparser.SFCSymbols.RPAREN); 	/* */}
 "SFC"      {return new Symbol(slime.sfcparser.SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
-"input"    {return new Symbol(slime.sfcparser.SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
-"output"   {return new Symbol(slime.sfcparser.SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
+"input"    {return new Symbol(slime.sfcparser.SFCSymbols.INPUT); 	/* syntax !? */}
+"output"   {return new Symbol(slime.sfcparser.SFCSymbols.OUTPUT); 	/* syntax !? */}
 "split"    {return new Symbol(slime.sfcparser.SFCSymbols.SPLIT); 	/* */}
 "join"     {return new Symbol(slime.sfcparser.SFCSymbols.JOIN); 	/* */}
 "process"  {return new Symbol(slime.sfcparser.SFCSymbols.PROCESS); 	/* */}
@@ -143,26 +149,11 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 ">="       {return new Symbol(slime.sfcparser.SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
 "!="       {return new Symbol(slime.sfcparser.SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
 ","        {return new Symbol(slime.sfcparser.SFCSymbols.COMMA); 	/* */}
-"."        {return new Symbol(slime.sfcparser.SFCSymbols.DOT); 	/* */}
-"#"        {return new Symbol(slime.sfcparser.SFCSymbols.HASH); 	/* END OF FILE, END OF EXPRESSION MARKER */}
-{identif}  {return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-{number}   {return new Symbol(slime.sfcparser.SFCSymbols.INTEGER, 
-		   new Integer( yytext() ) ); 		/* t INTEGER */}
+"."        {return new Symbol(slime.sfcparser.SFCSymbols.DOT); 		/* */}
+"#"        {return new Symbol(slime.sfcparser.SFCSymbols.HASH); 	/* */}
+{identif}  {return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
+{number}   {return new Symbol(slime.sfcparser.SFCSymbols.INTEGER, new Integer( yytext() ) );/* t INTEGER */}
 .          {System.out.println( "Error during lexical analysis"+
 	    "\nLine number = "  + yyline + 
 	    "\nChar number = "  + yychar +
 	    "\nText content = " + yytext() ); 		/* LexError */}
-
-
-
-
-
-
-
-
-
-
-
-
-

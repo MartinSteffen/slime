@@ -1,14 +1,17 @@
-// 
-// URLS 
-// $Id: URLS,v 1.1 2002-06-25 15:02:54 swprakt Exp $
-// $Log: not supported by cvs2svn $
-// Revision 1.2  2002/05/01 11:10:26  mwe
-// corrected missing ":" in URLS
-// and a test if the cvs is functioning
-//
-// 
-// URLs related to JLex, CUP, compiler construction:
-//
+# URLS 
+# Author: initially provided by {@link http://www.google.com} selected by Marco Wendel
+# $Id: URLS,v 1.2 2002-06-28 20:30:51 swprakt Exp $
+# $Log: not supported by cvs2svn $
+# Revision 1.1  2002/06/25 15:02:54  swprakt
+# missing files added
+#
+# Revision 1.2  2002/05/01 11:10:26  mwe
+# corrected missing ":" in URLS
+# and a test if the cvs is functioning
+#
+# 
+# URLs related to JLex, CUP, compiler construction:
+#
 http://www.cc.gatech.edu/gvu/people/Faculty/Scott.E.Hudson.html                                                            
 http://www.cs.purdue.edu/homes/hosking                                                                                     
 http://www.princeton.edu/~frankf                                                                                           

@@ -4,10 +4,27 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFCLex.java,v 1.6 2002-06-27 20:20:18 swprakt Exp $
+    * $Id: SFCLex.java,v 1.7 2002-06-28 20:30:50 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.10  2002/06/28 20:01:08  swprakt
+   /* Modified PrettyPrint for use with slime.absfc.SFCabtree,
+   /* may now use it to debug Absfc2SFCConverter. I will try
+   /* to check in a fully functional SFCParser incl. nested
+   /* statements within one week, so 'round about 05/07/2002.
+   /* (mwe)
+   /*
+   /* Revision 1.9  2002/06/28 08:03:12  swprakt
+   /* old versions did conflict with "global" Makefile
+   /* in src/slime, albeight the GLOBAL Makefile should
+   /* exist in src. (mwe)
+   /*
+   /* Revision 1.8  2002/06/27 20:20:18  swprakt
+   /* The SFCSymbols.EOF symbol has is an int with value 0.
+   /* The YYlex.EOF is a symbol with int value -1.
+   /* SFCParser now correctly parses 1+1, 7*8.. (mwe)
+   /*
    /* Revision 1.7  2002/06/27 19:39:37  swprakt
    /* slightly improved exceptionhandling
    /*
@@ -29,7 +46,7 @@ import java_cup.runtime.Symbol;
     *
     * Revision 1.1  2002/06/25 15:02:51  swprakt
     * missing files added
-    *
+    * -------------------------------------------------
     * Revision 1.3  2002/05/05 22:24:12  mwe
     * added something from the grammar
     * i think something like slime.absynt.process
@@ -52,11 +69,11 @@ import java_cup.runtime.Symbol;
     * %char	-	yychar() is accessible in Symboldefinition
     * %line	-	yyline() contains the current line in src-file
     * %function - 	use instead of next_Token()
-    *		- THIS HAS TO BE CHANGED TO GET A RUNNING SFCParser.class :)
     * %notunix	-	does not care about ^M :) (skips \r)
     * %init{
     * %init}
     * %yy_eof
+    * %initthrow{ ....  see JLex Manual for more options
     **/
 
 
@@ -453,7 +470,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 			if (YY_EOF == yy_lookahead && true == yy_initial) {
 				yy_do_eof();
 
-    return new Symbol(SFCSymbols.EOF); //Symbol(-1);
+    return new Symbol(slime.sfcparser.SFCSymbols.EOF); //Symbol(-1);
 			}
 			if (YY_F != yy_next_state) {
 				yy_state = yy_next_state;
@@ -484,7 +501,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -3:
 						break;
 					case 3:
-						{return new Symbol(SFCSymbols.DIV); 	/* Expr.DIV     =  3 "%"        {return new Symbol(SFCSymbols.MOD); 	 Expr.MOD     =  undef */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.DIV); 	/* Expr.DIV     =  3 "%"        {return new Symbol(slime.sfcparser.SFCSymbols.MOD); 	 Expr.MOD     =  undef */}
 					case -4:
 						break;
 					case 4:
@@ -495,165 +512,163 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -5:
 						break;
 					case 5:
-						{return new Symbol(SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
 					case -6:
 						break;
 					case 6:
-						{return new Symbol(SFCSymbols.LPAREN); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.LPAREN); 	/* */}
 					case -7:
 						break;
 					case 7:
-						{return new Symbol(SFCSymbols.RPAREN); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.RPAREN); 	/* */}
 					case -8:
 						break;
 					case 8:
-						{return new Symbol(SFCSymbols.SEMICOLON);	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.SEMICOLON);	/* */}
 					case -9:
 						break;
 					case 9:
-						{return new Symbol(SFCSymbols.LPSET); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
 					case -10:
 						break;
 					case 10:
-						{return new Symbol(SFCSymbols.RPSET); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.RPSET); 	/* */}
 					case -11:
 						break;
 					case 11:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -12:
 						break;
 					case 12:
-						{return new Symbol(SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
 					case -13:
 						break;
 					case 13:
-						{return new Symbol(SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
 					case -14:
 						break;
 					case 14:
-						{return new Symbol(SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
 					case -15:
 						break;
 					case 15:
-						{return new Symbol(SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
 					case -16:
 						break;
 					case 16:
-						{return new Symbol(SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
 					case -17:
 						break;
 					case 17:
-						{return new Symbol(SFCSymbols.COMMA); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.COMMA); 	/* */}
 					case -18:
 						break;
 					case 18:
-						{return new Symbol(SFCSymbols.DOT); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.DOT); 		/* */}
 					case -19:
 						break;
 					case 19:
-						{return new Symbol(SFCSymbols.HASH); 	/* END OF FILE, END OF EXPRESSION MARKER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.HASH); 	/* */}
 					case -20:
 						break;
 					case 20:
-						{return new Symbol(SFCSymbols.INTEGER, 
-		   new Integer( yytext() ) ); 		/* t INTEGER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.INTEGER, new Integer( yytext() ) );/* t INTEGER */}
 					case -21:
 						break;
 					case 21:
-						{ /* return new Symbol(SFCSymbols.COMMENT); */ }
+						{ /* return new Symbol(slime.sfcparser.SFCSymbols.COMMENT); */ }
 					case -22:
 						break;
 					case 22:
-						{return new Symbol(SFCSymbols.IF); 		/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IF); 		/* */}
 					case -23:
 						break;
 					case 23:
-						{return new Symbol(SFCSymbols.ASSIGN); 	/* Class Assign */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.ASSIGN); 	/* Class Assign */}
 					case -24:
 						break;
 					case 24:
-						{return new Symbol(SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
 					case -25:
 						break;
 					case 25:
-						{return new Symbol(SFCSymbols.AND); 	/* Expr.AND     =  4 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.AND); 	/* Expr.AND     =  4 */}
 					case -26:
 						break;
 					case 26:
-						{return new Symbol(SFCSymbols.OR);  	/* Expr.OR      =  5 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.OR);  	/* Expr.OR      =  5 */}
 					case -27:
 						break;
 					case 27:
-						{return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
 					case -28:
 						break;
 					case 28:
-						{return new Symbol(SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
 					case -29:
 						break;
 					case 29:
-						{return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
 					case -30:
 						break;
 					case 30:
-						{return new Symbol(SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
 					case -31:
 						break;
 					case 31:
-						{return new Symbol(SFCSymbols.INTTYPE); 	/* Class IntType */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.INTTYPE); 	/* Class IntType */}
 					case -32:
 						break;
 					case 32:
-						{return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.SKIP); 	/* Class Skip */}
 					case -33:
 						break;
 					case 33:
-						{return new Symbol(SFCSymbols.TRUE);	        /* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.TRUE);	        /* */}
 					case -34:
 						break;
 					case 34:
-						{return new Symbol(SFCSymbols.JOIN); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.JOIN); 	/* */}
 					case -35:
 						break;
 					case 35:
-						{return new Symbol(SFCSymbols.ELSE); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.ELSE); 	/* */}
 					case -36:
 						break;
 					case 36:
-						{return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
 					case -37:
 						break;
 					case 37:
-						{return new Symbol(SFCSymbols.SPLIT); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.SPLIT); 	/* */}
 					case -38:
 						break;
 					case 38:
-						{return new Symbol(SFCSymbols.FALSE); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.FALSE); 	/* */}
 					case -39:
 						break;
 					case 39:
-						{return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.INPUT); 	/* syntax !? */}
 					case -40:
 						break;
 					case 40:
-						{return new Symbol(SFCSymbols.UNTIL); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.UNTIL); 	/* */}
 					case -41:
 						break;
 					case 41:
-						{return new Symbol(SFCSymbols.LPSET); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
 					case -42:
 						break;
 					case 42:
-						{return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.OUTPUT); 	/* syntax !? */}
 					case -43:
 						break;
 					case 43:
-						{return new Symbol(SFCSymbols.REPEAT); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.REPEAT); 	/* */}
 					case -44:
 						break;
 					case 44:
-						{return new Symbol(SFCSymbols.PROCESS); 	/* */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.PROCESS); 	/* */}
 					case -45:
 						break;
 					case 46:
@@ -664,12 +679,11 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -46:
 						break;
 					case 47:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -47:
 						break;
 					case 48:
-						{ /* return new Symbol(SFCSymbols.COMMENT); */ }
+						{ /* return new Symbol(slime.sfcparser.SFCSymbols.COMMENT); */ }
 					case -48:
 						break;
 					case 50:
@@ -680,12 +694,11 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -49:
 						break;
 					case 51:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -50:
 						break;
 					case 52:
-						{ /* return new Symbol(SFCSymbols.COMMENT); */ }
+						{ /* return new Symbol(slime.sfcparser.SFCSymbols.COMMENT); */ }
 					case -51:
 						break;
 					case 54:
@@ -696,8 +709,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -52:
 						break;
 					case 55:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -53:
 						break;
 					case 57:
@@ -708,248 +720,199 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -54:
 						break;
 					case 58:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -55:
 						break;
 					case 59:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -56:
 						break;
 					case 60:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -57:
 						break;
 					case 61:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -58:
 						break;
 					case 62:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -59:
 						break;
 					case 63:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -60:
 						break;
 					case 64:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -61:
 						break;
 					case 65:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -62:
 						break;
 					case 66:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -63:
 						break;
 					case 67:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -64:
 						break;
 					case 68:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -65:
 						break;
 					case 69:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -66:
 						break;
 					case 70:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -67:
 						break;
 					case 71:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -68:
 						break;
 					case 72:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -69:
 						break;
 					case 73:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -70:
 						break;
 					case 74:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -71:
 						break;
 					case 75:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -72:
 						break;
 					case 76:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -73:
 						break;
 					case 77:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -74:
 						break;
 					case 78:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -75:
 						break;
 					case 79:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -76:
 						break;
 					case 80:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -77:
 						break;
 					case 81:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -78:
 						break;
 					case 82:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -79:
 						break;
 					case 83:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -80:
 						break;
 					case 84:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -81:
 						break;
 					case 85:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -82:
 						break;
 					case 86:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -83:
 						break;
 					case 88:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -84:
 						break;
 					case 89:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -85:
 						break;
 					case 90:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -86:
 						break;
 					case 91:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -87:
 						break;
 					case 92:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -88:
 						break;
 					case 93:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -89:
 						break;
 					case 94:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -90:
 						break;
 					case 95:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -91:
 						break;
 					case 96:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -92:
 						break;
 					case 97:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -93:
 						break;
 					case 98:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -94:
 						break;
 					case 99:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -95:
 						break;
 					case 100:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -96:
 						break;
 					case 101:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -97:
 						break;
 					case 102:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -98:
 						break;
 					case 103:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -99:
 						break;
 					case 104:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -100:
 						break;
 					case 105:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -101:
 						break;
 					case 106:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -102:
 						break;
 					case 107:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, yytext()); /* t IDENTIFIER */}
 					case -103:
 						break;
 					default:
