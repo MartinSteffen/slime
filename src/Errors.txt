@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.84 2002-07-05 15:15:00 swprakt Exp $
+## $Id: Errors.txt,v 1.85 2002-07-05 15:50:03 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,14 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+Error 48:   parse erro
+ class:     fatal
+ package:   utils.parser
+ status:    reported
+ description: "(1 <= 2) or  (-1 = (-2 * 4)" gives
+
+              ParserTest: slime.utils.ParseException: [module parser2] fatal parsing error
 
 
 Error 46:   typecheck error
@@ -92,7 +100,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.84 2002-07-05 15:15:00 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.85 2002-07-05 15:50:03 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -272,6 +280,19 @@ Error 1:  parser warnings
 	        (cf. lex/yacc output: 10 terminals declared but not used)
 
 
+Errors47:   parser error
+ class:     fatal 
+ package:   utils/parser
+ status:    reported: 5.7.02, Steffen
+ description:  description: I thought the error was repaired:
+
+              1*2+3 =>[B_expr] 
+                  |   [Constval] 1
+                  |   <TIMES> 
+                  |   [B_expr] 
+                  |   |   [Constval] 2
+                  |   |   <PLUS> 
+                  |   |   [Constval] 3
 
 -------------------- Repaired errors -------------------------
 
