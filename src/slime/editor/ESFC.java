@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
+import java.lang.reflect.*;
 
 /**
  * An object of this class is used to add some functionality to the sfc.
@@ -13,7 +14,7 @@ import java.util.*;
  * Status: nearly complete,  but i am not satisfied with it <br>
  * Known bugs: update does not remove unused variables <br>
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.10 2002-06-20 11:25:05 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.11 2002-07-05 14:14:36 swprakt Exp $
  */
 
 public final class ESFC{
@@ -150,6 +151,116 @@ public final class ESFC{
     }
 
     /**
+     * Returns the i-th step of the step list.
+     */
+    protected Step getStep(int i) {
+	LinkedList steps = this.sfc.steps;
+	
+	if ((i < 0) || (i >= steps.size())) return null;
+
+	return (Step)steps.get(i);
+    }
+
+    /**
+     * Returns the positon of the i-th step in the step list.
+     */
+    protected Position getPosition(int i) {
+	Step step = this.getStep(i);
+	
+	if (step == null) return null;
+
+	return step.pos;
+    }
+
+    /**
+     * Returns the i-th transition of the transition list.
+     */
+    protected Transition getTransition(int i) {
+	LinkedList transitions = this.sfc.transs;
+
+	if ((i < 0) || (i >= transitions.size())) return null;
+	
+	return (Transition)transitions.get(i);
+    }
+
+    /**
+     * Invoces the given method on the given object for every step as
+     * the first argument together with the other given arguments.
+     */
+    protected void forAllSteps(Object o, String method, Object[] args) {
+	Object[] newArgs = this.getNewArgs(args);
+	Method   m       = this.getMethod(o, method);
+
+	for (int i=0; i<this.sfc.steps.size(); i++) {
+	    newArgs[0] = this.getStep(i);
+	    this.forOne(o, m, newArgs);
+	}
+    }
+
+    /**
+     * Invoces the given method on the given object for every position as
+     * the first argument together with the other given arguments.
+     */
+    protected void forAllPositions(Object o, String method, Object[] args) {
+	Object[] newArgs = this.getNewArgs(args);
+	Method   m       = this.getMethod(o, method);
+
+	for (int i=0; i<this.sfc.steps.size(); i++) {
+	    newArgs[0] = this.getPosition(i);
+	    this.forOne(o, m, newArgs);
+	}
+    }
+
+    /**
+     * Invoces the given method on the given object for every transition as
+     * the first argument together with the other given arguments.
+     */
+    protected void forAllTransitions(Object o, String method, Object[] args) {
+	Object[] newArgs = this.getNewArgs(args);
+	Method   m       = this.getMethod(o, method);
+
+	for (int i=0; i<this.sfc.transs.size(); i++) {
+	    newArgs[0] = this.getTransition(i);
+	    this.forOne(o, m, newArgs);
+	}
+    }
+
+    private void forOne(Object o, Method m, Object[] args) {
+	try {
+	    m.invoke(o, args);
+	} catch (IllegalAccessException iae) {
+	    System.out.println("Reflection error");
+	} catch (InvocationTargetException iae) {
+	    System.out.println("Invocation error");
+	}
+    }
+
+    private Object[] getNewArgs(Object[] args) {
+	Object[] newArgs;
+
+	if (args != null) 
+	    newArgs = new Object[args.length+1];
+	else 
+	    newArgs = new Object[1];
+
+	for (int i=1; i<newArgs.length; i++) 
+	    newArgs[i] = args[i-1];
+
+	return newArgs;
+    }
+
+    /**
+     * Returns the first found method with the given name.
+     */
+    private static Method getMethod(Object o, String name) {
+	Method[] methods = o.getClass().getDeclaredMethods();
+	for (int i=0; i<methods.length; i++) 
+	    if ((methods[i].getName()).equals(name))
+		return methods[i];
+	return null;
+    }
+
+    /**
      * Returns a list steps which are marked as source.
      */
     protected LinkedList getSourceSteps() {
@@ -241,6 +352,9 @@ public final class ESFC{
 	this.setChecked(false);
     }
 
+    /**
+     * Removes the given transition.
+     */
     protected void removeTransition(Transition transition) {
 	this.sfc.transs.remove(transition);
 	this.setChecked(false);
@@ -329,18 +443,29 @@ public final class ESFC{
      */
     private Hashtable createColorHashtable() {
 	Hashtable colors = new Hashtable();
-	for (int nr=0; nr<this.sfc.steps.size(); nr++) { 
-	    Step step = (Step)(this.sfc.steps).get(nr);
-	    if (step == this.sfc.istep)
-		colors.put(step, INITIAL);
-	    else
-		colors.put(step, STEP_NORMAL);
-	}
-	for (int nr=0; nr<sfc.transs.size(); nr++) { 
-	    Transition transition = (Transition)(this.sfc.transs).get(nr);
-	    colors.put(transition, TRANSITION_NORMAL);
-	}
+	Object[]  args   = new Object[1];
+
+	args[0] = colors;
+	this.forAllSteps(this, 
+			 "setDefaultColorInHastableForStep", 
+			 args);
+	this.forAllTransitions(this, 
+			       "setDefaultColorInHastableForTransition",
+			       args);
 	return colors;
+    }
+
+    private void setDefaultColorInHastableForStep(Step step, 
+						  Hashtable colors) {
+	if (step == this.sfc.istep)
+	    colors.put(step, INITIAL);
+	else
+	    colors.put(step, STEP_NORMAL);
+    }	
+
+    private void setDefaultColorInHastableForTransition(Transition transition, 
+							Hashtable colors) {
+	colors.put(transition, TRANSITION_NORMAL);
     }
 
     /**
@@ -430,6 +555,9 @@ public final class ESFC{
 	return SFCPainter.ACTION_GAP+max+8;
     }
 
+    /**
+     * Returns true iff the given name is used for an action.
+     */
     protected boolean actionNameExists(String name) {
 	LinkedList actions = this.sfc.actions;
 	for (int i=0; i<actions.size(); i++) {
@@ -624,9 +752,17 @@ public final class ESFC{
 
     protected static String output(Variable variable){
 	String s = variable.name+" ";
+	if (variable.inputvar && variable.outputvar)
+	    s = "INOUT "+s;
+	else if (variable.inputvar)
+	    s = "IN "+s;
+	else if (variable.outputvar)
+	    s = "OUT "+s;
 	//s += print(variable.type);
 	return s;
     }
+  public boolean inputvar = false;
+  public boolean outputvar = false;
 
     protected static String output(Assign assign){
 	String s = "";

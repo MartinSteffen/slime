@@ -13,7 +13,7 @@ import java.util.Hashtable;
  * Status: about 50% complete <br>
  * Known bugs: parallel branches are not shown correctly, some more trouble with steps with more than one transition 
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.10 2002-06-20 11:25:06 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.11 2002-07-05 14:14:36 swprakt Exp $
  */
 
 public final class SFCPainter{
@@ -109,6 +109,8 @@ public final class SFCPainter{
     }
 
     private void paintTransitions(Graphics g) {
+	// FIX-ME: ausgewaehlte Transitionen am Schluss malen, sonst
+	// sieht man sie eventuell nicht.
 	Object selectedObject = this.eSFC.getSelectedObject();
 	Hashtable colors = this.eSFC.getColorHashtable();
 	Hashtable guardPositions = new Hashtable();

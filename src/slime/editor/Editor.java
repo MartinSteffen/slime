@@ -20,7 +20,7 @@ import javax.swing.border.*;
  * Known bugs: Some semantic problems. 
  * But who cares when there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.16 2002-06-24 13:37:57 swprakt Exp $
+ * @version $Id: Editor.java,v 1.17 2002-07-05 14:14:36 swprakt Exp $
  */
 
 public final class Editor extends JComponent implements ChangeListener {
@@ -95,9 +95,8 @@ public final class Editor extends JComponent implements ChangeListener {
 	    new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    menuAndStatePanel.setStatusMessage(
-			"Adding new declaration ... ."
-			+" Not implemented yet, waiting for next"
-			+" parser version :-)");
+			"Adding new declaration ...");
+		    addDeclaration();
 		}
 	    });
     }
@@ -162,7 +161,7 @@ public final class Editor extends JComponent implements ChangeListener {
      */
     public void add(SFC sfc) {
 	this.eSFC = new ESFC(sfc);
-	this.eSFC.setDrawBoard(new DrawBoard(this));
+	this.eSFC.setDrawBoard(new DrawBoard(this, this.eSFC));
 	this.eSFCList.add(this.eSFC);
 	this.addTabbedPane(this.eSFC);
     }
@@ -496,24 +495,32 @@ public final class Editor extends JComponent implements ChangeListener {
     
     private boolean isInStep(Step step, int x, int y) {
 	Position position = step.pos;
-	int xOfStep = (int)position.x;
-	int yOfStep = (int)position.y;
-	int stepWidth = this.eSFC.getWidth(step);
-	if (x < xOfStep) return false;
-	if (y < yOfStep) return false;
+	// FIX-ME: Checker?
+	if (position == null) {
+	    position = new Position(0.0f, 0.0f);
+	    step.pos = position;
+	}
+	int xOfStep       = (int)position.x;
+	int yOfStep       = (int)position.y;
+	int stepWidth     = this.eSFC.getWidth(step);
+
+	if (x < xOfStep)               return false;
+	if (y < yOfStep)               return false;
 	if (x > (xOfStep + stepWidth)) return false;
-	if (y > (yOfStep + 30)) return false;
+	if (y > (yOfStep + 30))        return false;
 	return true;
     }
 
     protected int toggleMode(int newMode) {
 	int oldMode = this.mode;
-	this.mode = newMode;
+
+	this.mode   = newMode;
 	return oldMode;
     }
 
     protected int toggleMode() {
 	int newMode = (this.mode + 1) % 4;
+
 	this.toggleMode(newMode);
 	return newMode;
     }
@@ -688,6 +695,18 @@ public final class Editor extends JComponent implements ChangeListener {
 	}
     }
 
+    private void addDeclaration() {
+	slime.absynt.Declaration newDeclaration =
+	    dialogForDeclaration("", "", "Add new declaration");
+	if (newDeclaration != null) { 
+	    this.eSFC.getSFC().declist.add(newDeclaration);
+	    this.menuAndStatePanel.setStatusMessage("New declaration added.");
+	    this.updateWindow();
+	} else {
+	    this.menuAndStatePanel.setStatusMessage("No declaration added.");
+	}
+    }
+
     private slime.absynt.Action dialogForAction(String name, 
 						String sapString, 
 						String title) {
@@ -726,6 +745,87 @@ public final class Editor extends JComponent implements ChangeListener {
   		}
   	    }
 	}
+	return null;
+    }
+
+    private slime.absynt.Declaration dialogForDeclaration(String variable, 
+							  String constant, 
+							  String title) {
+	ButtonGroup  ioGroup = new ButtonGroup();
+	JRadioButton none    = new JRadioButton("none", true);
+	JRadioButton in      = new JRadioButton("IN");
+	JRadioButton out     = new JRadioButton("OUT");
+	JRadioButton inout   = new JRadioButton("INOUT");
+	none.setActionCommand( "" );
+	in.setActionCommand( "in " );
+	out.setActionCommand( "out " );
+	inout.setActionCommand( "inout " );
+	ioGroup.add(none); 
+	ioGroup.add(in);
+	ioGroup.add(out);
+	ioGroup.add(inout);
+
+	ButtonGroup  typeGroup = new ButtonGroup();
+	JRadioButton boolType  = new JRadioButton("BOOL", true);
+	JRadioButton intType   = new JRadioButton("INT");
+	boolType.setActionCommand( "bool " );
+	intType.setActionCommand( "int " );
+	typeGroup.add(boolType);
+	typeGroup.add(intType);
+
+	JPanel panel = new JPanel();
+	panel.setLayout(new BorderLayout());
+
+	JPanel typePanel = new JPanel();
+	typePanel.add(boolType);
+	typePanel.add(intType);
+	panel.add(typePanel, BorderLayout.CENTER);
+
+	JPanel ioPanel = new JPanel();
+	ioPanel.add(none);
+	ioPanel.add(in);
+	ioPanel.add(out);
+	ioPanel.add(inout);
+	panel.add(ioPanel, BorderLayout.SOUTH);
+
+	Object[] message = new Object[5];
+	message[0] = "Name:";
+	message[1] = (new JTextField(variable));
+	message[2] = "Value:";
+	message[3] = (new JTextField(constant));
+	message[4] = panel;
+	String[] options = {"Ok", "Cancel"};
+	
+	int result = JOptionPane.showOptionDialog(
+	    null,
+	    message,
+	    title,
+	    JOptionPane.DEFAULT_OPTION,
+	    JOptionPane.PLAIN_MESSAGE,
+	    null,
+	    options,
+	    options[0]);
+
+  	if (result == 0) {
+  	    this.eSFC.setChecked(false);
+  	    this.menuAndStatePanel.enableButtons();
+  	    String decString = new String();
+	    decString += typeGroup.getSelection().getActionCommand();
+	    decString += ioGroup.getSelection().getActionCommand();
+	    decString += ((JTextField)message[1]).getText();
+	    decString += " := ";
+	    decString += ((JTextField)message[3]).getText();
+	    slime.utils.DeclParser parser = new slime.utils.DeclParser();
+	    try {
+		slime.absynt.Declaration declaration = 
+		    parser.parseDecl(decString);
+		return declaration;
+	    } catch (ParseException e) {
+		this.menuAndStatePanel.setStatusMessage("Parser fails on declaration.");
+	    } catch (Exception e) {
+		this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
+	    }
+  	}
 	return null;
     }
 

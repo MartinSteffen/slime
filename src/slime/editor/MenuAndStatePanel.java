@@ -2,6 +2,8 @@ package slime.editor;
 
 import slime.absynt.*;
 import slime.layout.*;
+import slime.sfcparser.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -20,7 +22,7 @@ import java.io.File;
  * Status: nearly complete <br>
  * known bugs: - (But some expected) <br>
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.5 2002-06-24 13:37:58 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.6 2002-07-05 14:14:36 swprakt Exp $
  */
 
 public final class MenuAndStatePanel extends JPanel {
@@ -31,6 +33,7 @@ public final class MenuAndStatePanel extends JPanel {
     private JButton    simulateButton;
     private JButton    modeButton;
     private JButton    newButton;
+    private JButton    parseButton;
     private JButton    loadButton; 
     private JButton    saveButton;
     private JButton    closeButton;
@@ -58,6 +61,7 @@ public final class MenuAndStatePanel extends JPanel {
 	JPanel south = new JPanel();
 	JPanel file = new JPanel();
 	this.addNewButton(file);
+	this.addParseButton(file);
 	this.addLoadButton(file);
 	this.addSaveButton(file);
 	this.addCloseButton(file);
@@ -282,6 +286,30 @@ public final class MenuAndStatePanel extends JPanel {
 	panel.add(this.newButton);
     }
 
+    private void addParseButton(JPanel panel) {
+	this.parseButton = this.getSmallGapButton("Parse", "parse");
+	this.parseButton.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    statusMessage.setText("Parsing SFC-program ...");
+		    File f = getFileName(false);
+		    if (f == null)
+			return;
+		    String fN = f.getAbsolutePath();
+		    if (fN == null) return;
+		    SFCParser sfcParser = new SFCParser();
+		    try {
+			SFC sfc = sfcParser.parseFile(f);
+			editor.add(sfc, f.getName());
+		    } catch (SFCParseException sfcpe) {
+			statusMessage.setText("Parser fails on SFC-program!");
+		    } catch (Exception ex) {
+			statusMessage.setText("Parser throws an exception!");
+		    }
+		}
+	    });
+	panel.add(this.parseButton);
+    }
+
     private void addCloseButton(JPanel panel) {
 	this.closeButton = this.getSmallGapButton("Close", "close");
 	this.closeButton.addActionListener(new ActionListener() {
@@ -380,7 +408,7 @@ public final class MenuAndStatePanel extends JPanel {
 	    });
 	panel.add(this.saveButton);
     }
-    
+
     private File getFileName(boolean save) { 
 	JFileChooser chooser = new JFileChooser();
 	SFCFileFilter filter = new SFCFileFilter();

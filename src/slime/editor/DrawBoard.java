@@ -1,9 +1,11 @@
 package slime.editor;
 
 import slime.absynt.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.lang.reflect.*;
 
 /**
  * An object of this class is used to draw a sfc on it.
@@ -11,7 +13,7 @@ import javax.swing.*;
  * Status: nearly complete, only some docs are missing <br>
  * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.11 2002-06-20 11:25:05 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.12 2002-07-05 14:14:35 swprakt Exp $
  */
 
 public final class DrawBoard extends Canvas
@@ -22,13 +24,14 @@ public final class DrawBoard extends Canvas
     private int     mousePressedOnX, mousePressedOnY;
     private int     mouseReleasedOnX, mouseReleasedOnY;
     private boolean mouseDragged;
-    private boolean mouseMoved;
+
     private Editor  editor;
     private ESFC    eSFC;
+    private int     maxX, minX, maxY, minY;
 
-    protected DrawBoard(Editor editor) {
+    protected DrawBoard(Editor editor, ESFC eSFC) {
 	this.editor = editor;
-	this.eSFC = editor.getExtendedSelectedSFC();
+	this.eSFC   = eSFC;
 	this.initWindow();
     }
 
@@ -41,51 +44,55 @@ public final class DrawBoard extends Canvas
 	this.setVisible(true);
     }
 
-    protected ESFC getESFC() {
-	return this.eSFC;
-    }
-
     private void updateSize() {
-	SFC sfc = this.eSFC.getSFC();
-	int maxX = Integer.MIN_VALUE;
-	int minX = Integer.MAX_VALUE;
-	int maxY = Integer.MIN_VALUE;
-	int minY = Integer.MAX_VALUE;
-	for (int i=0; i<sfc.steps.size(); i++) {
-	    Step step = (Step)sfc.steps.get(i);
-	    Position position = step.pos;
-	    int x = (int)position.x;
-	    int y = (int)position.y;
-	    int stepWidth = this.eSFC.getWidth(step) 
-		+ this.eSFC.getWidthOfActionList(step.actions);
-	    if ((x + stepWidth) > maxX)
-		maxX = x + stepWidth;
-	    if (x < minX)
-		minX = x;
-	    if (y > maxY)
-		maxY = y;
-	    if (y < minY)
-		minY = y;
-	}
-	maxX += 30;
-	maxY += 30;
-	minX -= 30;
-	minY -= 30;
-	maxX -= minX;
-	maxY -= minY;
-	if (maxX < 700)
-	    maxX = 700;
-	if (maxY < 450)
-	    maxY = 450;
-	for (int i=0; i<sfc.steps.size(); i++) {
-	    Step step = (Step)sfc.steps.get(i);
-	    Position position = step.pos;
-	    position.x -= (float)minX;
-	    position.y -= (float)minY;
-	}
+	this.maxX = Integer.MIN_VALUE;
+	this.minX = Integer.MAX_VALUE;
+	this.maxY = Integer.MIN_VALUE;
+	this.minY = Integer.MAX_VALUE;
+
+	eSFC.forAllSteps(this, "determineDimension", null);
+
+	this.adjustDimension();
+
+	Object[] args = new Object[2];
+	args[0] = new Float((float)minX);
+	args[1] = new Float((float)minY);
+	eSFC.forAllPositions(this, "translatePosition" , args);
+
 	this.setSize(maxX, maxY+32);
     }
     
+    protected void translatePosition(Position position, float x, float y) {
+	position.x -= x;
+	position.y -= y;
+    }
+
+    protected void determineDimension(Step step) {
+	Position position  = step.pos;
+	// FIX-ME: Checker?
+	if (position == null) {
+	    position = new Position(0.0f, 0.0f);
+	    step.pos = position;
+	}
+	int      x         = (int)position.x;
+	int      y         = (int)position.y;
+	int      stepWidth = this.eSFC.getWidth(step) 
+	    + this.eSFC.getWidthOfActionList(step.actions);
+	
+	if ((x + stepWidth) > this.maxX) this.maxX = x + stepWidth;
+	if (x < this.minX) this.minX = x;
+	if (y > this.maxY) this.maxY = y;
+	if (y < this.minY) this.minY = y;
+    }
+
+    protected void adjustDimension() {
+	this.maxX += 30; this.maxY += 30;
+	this.minX -= 30; this.minY -= 30;
+	this.maxX -= this.minX; this.maxY -= minY;
+	if (this.maxX < 700) this.maxX = 700;
+	if (this.maxY < 450) this.maxY = 450;
+    }
+
     public void mouseClicked(MouseEvent e) {
 	e.consume();
 	this.editor.evaluateSingleMouseClickOn(this.mousePressedOnX, 
@@ -142,10 +149,9 @@ public final class DrawBoard extends Canvas
 	this.repaint();
     }
 
-    public void keyPressed(KeyEvent e) {
-    }
-    public void keyReleased(KeyEvent e) {
-    }
+    public void keyPressed(KeyEvent e) {}
+
+    public void keyReleased(KeyEvent e) {}
 
     /**
      * This method updates the size of this DrawBoard 
