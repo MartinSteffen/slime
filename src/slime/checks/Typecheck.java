@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.20 2002-06-26 18:09:01 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.21 2002-07-05 06:49:41 swprakt Exp $
  */
 
 public class Typecheck {
@@ -35,6 +35,8 @@ public class Typecheck {
    * the declaration of the exceptions must ``enclose''
    * the place where the can be thrown, here the  check-routines below.
    */
+
+
 
 
   /**
@@ -96,7 +98,7 @@ public class Typecheck {
 
   public class TypeMismatch extends TypecheckException{
     String message = "Type mismatch";
-    String explanation = "In an assigment, the type of the expression on the \n right-hand side must coincide with the declared type of the variable. The same restriction\n holds for the variables and the initial value int a type declaration.";
+    String explanation = " A type mismatch can occur in various situations: in compund expressions, for instance int ``1+true''. \n Furthermore, in an assigment, the type of the expression on the \n right-hand side must coincide with the declared type of the variable. The same restriction\n holds for the variables and the initial value int a type declaration.";
   }
 
   /** Type check cisitor for SFC's, the entry point of the recursion.
@@ -204,6 +206,17 @@ public class Typecheck {
 
   /** type checking visitor for expressions.
    */
+
+
+  public boolean checkexprxxx (Expr e)  throws CheckException {
+    try {
+      e.accept(new ExprV());
+    }
+    catch (Exception ex) {
+      throw (CheckException)(ex);};
+    return true;
+  }
+  
   public class ExprV implements Visitors.IExpr{
         
     public Object forB_Expr(Expr l, int o, Expr r) throws CheckException {
@@ -368,6 +381,11 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.20  2002/06/26 18:09:01  swprakt
+//    ok for today.
+//
+//    Steffen
+//
 //    Revision 1.19  2002/06/26 05:13:58  swprakt
 //    *** empty log message ***
 //
@@ -450,6 +468,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.20 2002-06-26 18:09:01 swprakt Exp $
+//    $Id: Typecheck.java,v 1.21 2002-07-05 06:49:41 swprakt Exp $
 //
 //---------------------------------------------------------------------
