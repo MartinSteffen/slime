@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.25 2002-06-27 07:01:56 swprakt Exp $
+## $Id: Errors.txt,v 1.26 2002-06-27 13:32:36 swprakt Exp $
 ###########################################################
 
 
@@ -53,7 +53,7 @@ Error 18:      compilation broken
   Class:      fatal and deadly!!!
   status:     reported, 26.6.02, Boeck/Steffen
   description: probably confussion with the new stuff added by 
-               sfc parser. breaks everything!!! Probably name confusion
+               sfc parser. (Well, not clear) Breaks everything!!! Probably name confusion
 	       with the sfcparser-Parser with the utils-Parser.
 
 	        The error in more than one sub-directory is a cup-error:
