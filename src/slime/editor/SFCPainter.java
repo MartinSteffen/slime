@@ -1,0 +1,89 @@
+package editor;
+
+import absynt.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.util.LinkedList;
+
+/**
+ * For the Slime project of the Fortgeschrittenen-Praktikum.
+ * @author Andreas Niemann
+ * @version $Id: SFCPainter.java,v 1.1 2002-05-22 12:25:06 swprakt Exp $
+ */
+
+public final class SFCPainter{
+
+    private static final int STEP_HEIGHT = 30;
+    private static final int STEP_WIDTH  = 30;
+
+    private Editor editor;
+    private SFC    sfc;
+
+    public SFCPainter(Editor editor, SFC sfc) {
+	this.editor = editor;
+	this.sfc    = sfc;
+    }
+
+    protected void paintSFC(Graphics g) {
+	this.paintTransitions(g);
+	this.paintSteps(g);
+    }
+
+    private void paintSteps(Graphics g) {
+	for (int i=0; i<this.sfc.steps.size(); i++) {
+	    g.setColor(Color.black);
+	    if (i == this.editor.getSelectedStep())
+		g.setColor(Color.red);
+	    this.paintStep(g, (Step)this.sfc.steps.get(i));
+	}
+    }
+
+    private void paintStep(Graphics g, Step step) {
+	String text = step.name;
+	int    x0   = (int)(step.pos.x);
+	int    y0   = (int)(step.pos.y);
+	g.drawString(text, x0+4, y0+5+STEP_HEIGHT/2);
+	g.drawRect(x0, y0, STEP_WIDTH, STEP_HEIGHT);
+	if (step == this.sfc.istep)
+	    g.drawRect(x0+2, y0+2, STEP_WIDTH-4, STEP_HEIGHT-4);
+    }
+
+    private void paintTransitions(Graphics g) {
+	LinkedList transitionList = this.sfc.transs;
+	for (int i=0; i<transitionList.size(); i++) {
+	    Transition transition = (Transition)transitionList.get(i);
+	    LinkedList source = transition.source;
+	    LinkedList target = transition.target;
+	    for (int s=0; s<source.size(); s++) {
+		Step sStep = (Step)source.get(s);
+		Position sPosition = sStep.pos;
+		int x0 = (int)sStep.pos.x;
+		int y0 = (int)sStep.pos.y;
+		for (int t=0; t<target.size(); t++) {
+		    Step tStep = (Step)target.get(t);
+		    Position tPosition = tStep.pos;
+		    int x1 = (int)tStep.pos.x;
+		    int y1 = (int)tStep.pos.y;
+		    g.setColor(Color.black);
+		    if (y0 < y1)
+			g.drawLine(x0+15, y0+30, x1+15, y1);
+		    else {
+			g.drawLine(x0+15, y0+30, x0+35, y0+30);
+			g.drawLine(x0+35, y0+30, x1+35, y1);
+			g.drawLine(x1+15, y1, x1+35, y1);
+		    }
+		}
+	    }
+	}
+    }
+}
+
+
+
+
+
+
+
+
+

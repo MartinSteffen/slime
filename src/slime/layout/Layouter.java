@@ -8,13 +8,14 @@ import java.awt.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: Layouter.java,v 1.2 2002-05-07 12:50:15 swprakt Exp $
+ * @version $Id: Layouter.java,v 1.3 2002-05-22 12:25:07 swprakt Exp $
  */
 
 public final class Layouter {
 
-    private static final int     STEP_WIDTH  = 30;
+    private static final Integer NO_STEP     = new Integer(-1);
     private static final int     STEP_HEIGHT = 30;
+    private static final int     STEP_WIDTH  = 30;
     private static final boolean TOP = false, BOTTOM = true; 
 
     private StepList[]   graph;
@@ -23,16 +24,16 @@ public final class Layouter {
 
     private DebugWindow  debug;
 
-    private Layouter(SFC sfc, boolean debug) {
+    private Layouter(SFC sfc) {
 
-	this.debug = new DebugWindow(this, debug);
+	this.debug = new DebugWindow(this);
 
 	this.sfc = sfc;
-	this.debug.write("Have a look on the SFC: ");
-	this.debug.write("iStep = "+sfc.istep.name+", ");
-	this.debug.writeln("#steps = "+sfc.steps.size());
-
 	this.createHashtable();
+
+	this.debug.writeln("Hashtable: "+this.hashtable);
+	this.debug.writeln("iStep: "+sfc.istep.name);
+	this.debug.writeln("#steps: "+sfc.steps.size());
     }
 
     /**
@@ -41,14 +42,7 @@ public final class Layouter {
      * @return this sfc positioned.
      */
     public static SFC position_sfc(SFC sfc) {
-        return (new Layouter(sfc, false)).placeInLevelOrder();
-    }
-
-    /**
-     * For testing only! Will be removed in the final version of this package.
-     */
-    protected static SFC debug_position_sfc(SFC sfc) {
-        return (new Layouter(sfc, true)).placeInLevelOrder();
+        return (new Layouter(sfc)).placeInLevelOrder();
     }
 
     /**
@@ -61,7 +55,6 @@ public final class Layouter {
 	    Step step = (Step)(this.sfc.steps).get(nr);
 	    hashtable.put(step, new Integer(nr));
 	}
-	this.debug.writeln("Hashtable: "+this.hashtable);
     }
 
     private Integer getStepNumber(Step step) {
@@ -97,8 +90,6 @@ public final class Layouter {
      */
     private SFC placeInLevelOrder() {
 
-	this.debug.writeln("Let's work through the graph ...");
-
 	int[] orderOfSteps = 
 	    this.getOrderOfSteps();
 
@@ -121,7 +112,7 @@ public final class Layouter {
 	    for (int j=0; j<listOfParallelSteps.size(); j++) {
 		Step step = listOfParallelSteps.get(j);
 		int k = this.getIntStepNumber(step);
-		//orderOfSteps[k] = max;
+		orderOfSteps[k] = max;
 	    }
 	}
 	this.debug.write("Max-Depth-Order: ");
@@ -129,22 +120,17 @@ public final class Layouter {
 	    this.debug.write(orderOfSteps[i]+" ");
 	this.debug.writeln();
 	
-	this.debug.writeln("... and see the result:");
-
 	// FIX-ME: maxDepth nicht amountOfSteps
 	StepList[] bucketSortList = new StepList[this.sfc.steps.size()];
 	for (int i=0; i<this.sfc.steps.size(); i++)
 	    bucketSortList[i] = new StepList();
 	for (int i=0; i<this.sfc.steps.size(); i++)
 	    bucketSortList[orderOfSteps[i]].add(this.getStep(i));
-	debug.writeln("Graph:");
-	for (int i=0; i<this.sfc.steps.size(); i++)
-	    this.debug.writeln(bucketSortList[i].toString());
+	//for (int i=0; i<this.sfc.steps.size(); i++)
+	//    System.out.println(bucketSortList[i]);
 
 	this.graph = bucketSortList;
 	this.debug.repaint();
-
-	this.debug.writeln("Thanx for using this layouter :-)");
 	return this.sfc;
     }
 
@@ -159,6 +145,7 @@ public final class Layouter {
 	marked[iStepNumber] = true;
 	this.debug.write("Level-Order: ");
 	while (queue.size() > 0) {
+	    //System.out.println(queue);
 	    Step sourceStep = queue.remove();
 	    int source = this.getIntStepNumber(sourceStep);
 	    this.debug.write(source+" ");
@@ -227,7 +214,7 @@ public final class Layouter {
 	    for (int s=0; s<stepList.size(); s++) {
 		Step target = stepList.get(s);
 		Position pos = new Position((float)(s*(this.STEP_WIDTH)),
-					    (float)(20+i*(this.STEP_HEIGHT+10)));
+					    (float)(i*(this.STEP_HEIGHT+10)));
 		//if (i == 2)
 		//    pos = new Position((float)((s+1)*(this.STEP_WIDTH+10)),
 		//		       (float)(20+i*(this.STEP_HEIGHT+10)));
@@ -250,6 +237,7 @@ public final class Layouter {
 			n += 1;
 		    }
 		}
+		this.debug.writeln(i+" "+s+" "+n+" "+x+" "+source);
 		if (n == 0)
 		    x = 0;
 		else
@@ -262,6 +250,7 @@ public final class Layouter {
 			x = preX+30;
 		} 
 		Step sourceStep2 = (Step)this.sfc.steps.get(source);
+		this.debug.writeln(x);
 		sourceStep2.pos.x = x;
 	    }
 	}
@@ -277,9 +266,6 @@ public final class Layouter {
 	}
     }
 
-    /*
-     * Paints the given step.
-     */
     private void paintStep(Graphics g, Step step) {
 	String text = step.name;
 	int    x0   = (int)(step.pos.x);
