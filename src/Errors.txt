@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.43 2002-07-02 08:06:50 swprakt Exp $
+## $Id: Errors.txt,v 1.44 2002-07-02 08:17:55 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -39,7 +39,12 @@ Error 30:     grammar
  class:       question  (by code inspection)
  status:      reported, 2.7.02, Steffen
  description: what's the difference between stmtlist and stmtblock?
-              can they be merged?
+              can they be merged? Especially since in the clause
+	      for sfcprogram, there seem to be a
+
+	         ``{ stmt; stmtlist }''
+	       which is the same as stmt-block, i.e., there's
+	       an overlap. (SFC.cup v1.10)
               
 
 Error 29:     grammar for stmt
