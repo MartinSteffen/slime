@@ -5,24 +5,25 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.LinkedList;
+import java.util.Hashtable;
 
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.1 2002-05-22 12:25:06 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.2 2002-05-30 13:03:53 swprakt Exp $
  */
 
-public final class SFCPainter{
+final class SFCPainter{
 
     private static final int STEP_HEIGHT = 30;
     private static final int STEP_WIDTH  = 30;
 
-    private Editor editor;
-    private SFC    sfc;
+    private ESFC      eSFC;
+    private SFC       sfc;
 
-    public SFCPainter(Editor editor, SFC sfc) {
-	this.editor = editor;
-	this.sfc    = sfc;
+    protected SFCPainter(ESFC eSFC) {
+	this.eSFC = eSFC;
+	this.sfc  = eSFC.getSFC();
     }
 
     protected void paintSFC(Graphics g) {
@@ -31,11 +32,11 @@ public final class SFCPainter{
     }
 
     private void paintSteps(Graphics g) {
+	Hashtable colors = this.eSFC.getColorHashtable();
 	for (int i=0; i<this.sfc.steps.size(); i++) {
-	    g.setColor(Color.black);
-	    if (i == this.editor.getSelectedStep())
-		g.setColor(Color.red);
-	    this.paintStep(g, (Step)this.sfc.steps.get(i));
+	    Step step = (Step)this.sfc.steps.get(i);
+	    g.setColor((Color)colors.get(step));
+	    this.paintStep(g, step);
 	}
     }
 
@@ -44,15 +45,17 @@ public final class SFCPainter{
 	int    x0   = (int)(step.pos.x);
 	int    y0   = (int)(step.pos.y);
 	g.drawString(text, x0+4, y0+5+STEP_HEIGHT/2);
-	g.drawRect(x0, y0, STEP_WIDTH, STEP_HEIGHT);
+	g.drawRect(x0, y0, STEP_WIDTH-1, STEP_HEIGHT-1);
 	if (step == this.sfc.istep)
-	    g.drawRect(x0+2, y0+2, STEP_WIDTH-4, STEP_HEIGHT-4);
+	    g.drawRect(x0+2, y0+2, STEP_WIDTH-5, STEP_HEIGHT-5);
     }
 
     private void paintTransitions(Graphics g) {
+	Hashtable colors = this.eSFC.getColorHashtable();
 	LinkedList transitionList = this.sfc.transs;
 	for (int i=0; i<transitionList.size(); i++) {
 	    Transition transition = (Transition)transitionList.get(i);
+	    g.setColor((Color)colors.get(transition));
 	    LinkedList source = transition.source;
 	    LinkedList target = transition.target;
 	    for (int s=0; s<source.size(); s++) {

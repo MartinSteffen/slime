@@ -8,10 +8,10 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.1 2002-05-22 12:25:06 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.2 2002-05-30 13:03:52 swprakt Exp $
  */
 
-public final class DrawBoard extends Canvas
+final class DrawBoard extends Canvas
     implements MouseListener, MouseMotionListener, KeyListener {
 
     private static final int START_WIDTH = 640, START_HEIGHT = 480;
@@ -21,9 +21,11 @@ public final class DrawBoard extends Canvas
     private boolean mouseDragged;
     private boolean mouseMoved;
     private Editor  editor;
+    private ESFC    eSFC;
 
-    public DrawBoard(Editor editor) {
+    protected DrawBoard(Editor editor) {
 	this.editor = editor;
+	this.eSFC = editor.getExtendedSelectedSFC();
 	this.initWindow();
     }
 
@@ -36,8 +38,12 @@ public final class DrawBoard extends Canvas
 	this.setVisible(true);
     }
 
+    protected ESFC getESFC() {
+	return this.eSFC;
+    }
+
     protected void updateSize() {
-	SFC sfc = this.editor.getSFC();
+	SFC sfc = this.editor.getSelectedSFC();
 	int maxX = Integer.MIN_VALUE;
 	int minX = Integer.MAX_VALUE;
 	int maxY = Integer.MIN_VALUE;
@@ -56,6 +62,10 @@ public final class DrawBoard extends Canvas
 	    if (y < minY)
 		minY = y;
 	}
+	maxX += 30;
+	maxY += 30;
+	minX -= 30;
+	minY -= 30;
 	maxX -= minX;
 	maxY -= minY;
 	for (int i=0; i<sfc.steps.size(); i++) {
@@ -70,10 +80,10 @@ public final class DrawBoard extends Canvas
     public void mouseClicked(MouseEvent e) {
 	e.consume();
 	int amountOfClicks = e.getClickCount();
-	this.editor.setStatusMessage("Mouse clicked "
-				     +amountOfClicks+" time(s) at ("
-				     +this.mousePressedOnX+","
-				     +this.mousePressedOnY+")");
+//  	this.editor.setStatusMessage("Mouse clicked "
+//  				     +amountOfClicks+" time(s) at ("
+//  				     +this.mousePressedOnX+","
+//  				     +this.mousePressedOnY+")");
 	if (amountOfClicks == 1)
 	    this.editor.evaluateSingleMouseClickOn(this.mousePressedOnX, 
 						   this.mousePressedOnY);
@@ -104,8 +114,8 @@ public final class DrawBoard extends Canvas
 	e.consume();
 	this.mousePressedOnX = e.getX();
 	this.mousePressedOnY = e.getY();
-	this.editor.evaluateSingleMousePressedOn(this.mousePressedOnX, 
-					       this.mousePressedOnY);
+	//this.editor.evaluateSingleMousePressedOn(this.mousePressedOnX, 
+	//				       this.mousePressedOnY);
 	this.editor.setStatusMessage("Mouse pressed on ("
 				     +this.mousePressedOnX+","
 				     +this.mousePressedOnY+")");
@@ -151,8 +161,7 @@ public final class DrawBoard extends Canvas
 	this.editor.setStatusMessage("Key "
 				     +e.getKeyChar()
 				     +" typed");
-	if (e.getKeyChar() == (new String("d")).charAt(0))
-	    this.editor.processDelete();
+	this.editor.evaluateKeyTyped(e.getKeyChar());
 	this.repaint();
     }
 
@@ -163,7 +172,8 @@ public final class DrawBoard extends Canvas
 
     public void paint(Graphics g) {
 	this.updateSize();
-	this.editor.getSFCPainter().paintSFC(g);
+	SFCPainter sfcPainter = new SFCPainter(this.eSFC);
+	sfcPainter.paintSFC(g);
     }
 }
 
