@@ -4,10 +4,10 @@ import  slime.absynt.Example;
 
 
 /**
- * some description
- * Bla
+ * This class  is a simple test wrapper for the simulator for
+ * the common example.
  * @author Initially provided by Immo Grabe.
- * @version $Id: Test.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
+ * @version $Id: Test.java,v 1.3 2002-07-19 11:47:26 swprakt Exp $
  */
 
 
