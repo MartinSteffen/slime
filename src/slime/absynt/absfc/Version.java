@@ -5,13 +5,13 @@ package slime.absynt.absfc;
  * serialized objects of this package.
  *
  * @author initially provided by Marco Wendel.
- * @version  $Id: Version.java,v 1.4 2002-06-25 05:25:02 swprakt Exp $
+ * @version  $Id: Version.java,v 1.5 2002-06-27 20:29:02 swprakt Exp $
  */
 
 public class Version {
-    private static final int radix = 6;
+    private static final int radix = 36;
     private static long version;
-    private static String thisVersionString = "Slime v1.0";
+    private static String thisVersionString = "slime";
 
     Version() { 
 	renderVersion();
@@ -42,7 +42,7 @@ public class Version {
 	try {
 		version = java.lang.Long.parseLong( thisVersionString, radix); 
 	} catch (NumberFormatException nfe) {
-	        System.out.println("Falsche Versions-Kennung :)");
+	        System.out.println("Version: NumberFormatException");
 	}
     } 
 
