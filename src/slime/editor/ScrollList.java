@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
  * Status: complete <br> 
  * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: ScrollList.java,v 1.2 2002-07-06 12:22:30 swprakt Exp $
+ * @version $Id: ScrollList.java,v 1.3 2002-07-09 23:37:24 swprakt Exp $
  */
 
 public final class ScrollList extends JPanel{

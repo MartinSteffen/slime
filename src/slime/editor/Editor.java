@@ -21,7 +21,7 @@ import javax.swing.border.*;
  * Known bugs: Some semantic problems. 
  * But who cares when there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.18 2002-07-06 12:22:29 swprakt Exp $
+ * @version $Id: Editor.java,v 1.19 2002-07-09 23:37:24 swprakt Exp $
  */
 
 // FIX ME: Double Buffering dringend notwendig !!!
@@ -783,6 +783,8 @@ public final class Editor extends JComponent implements ChangeListener {
 	if (newDeclaration != null) {
 	    if (!(declaration.var.name).equals(newDeclaration.var.name))
 		declaration.var  = newDeclaration.var;
+	    declaration.var.inputvar = newDeclaration.var.inputvar; 
+	    declaration.var.outputvar = newDeclaration.var.outputvar; 
 	    declaration.type = newDeclaration.type;
 	    declaration.val  = newDeclaration.val;
 	    this.updateWindow();

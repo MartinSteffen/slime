@@ -14,7 +14,7 @@ import java.lang.reflect.*;
  * Status: nearly complete,  but i am not satisfied with it <br>
  * Known bugs: update does not remove unused variables <br>
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.12 2002-07-06 12:22:29 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.13 2002-07-09 23:37:23 swprakt Exp $
  */
 
 public final class ESFC{
@@ -781,10 +781,17 @@ public final class ESFC{
 	    s += print((StepAction)i.next());
 	return s;
     }
-
+    
     protected static String output(Declaration dec) {
 	String s = "";
 	s += print(dec.type) + " ";
+	Variable variable = dec.var;
+	if (variable.inputvar && variable.outputvar)
+	    s += "INOUT ";
+	else if (variable.inputvar)
+	    s += "IN ";
+	else if (variable.outputvar)
+	    s += "OUT ";
 	s += print(dec.var) + ":= ";
         s += print(dec.val);
 	return s;
@@ -801,12 +808,6 @@ public final class ESFC{
 
     protected static String output(Variable variable){
 	String s = variable.name+" ";
-	if (variable.inputvar && variable.outputvar)
-	    s = "INOUT "+s;
-	else if (variable.inputvar)
-	    s = "IN "+s;
-	else if (variable.outputvar)
-	    s = "OUT "+s;
 	//s += print(variable.type);
 	return s;
     }

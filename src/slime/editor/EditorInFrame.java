@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * <br><br>
  * Status: always complete, since it is for testing only<br>
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.11 2002-07-06 12:22:29 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.12 2002-07-09 23:37:24 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {

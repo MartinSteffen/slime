@@ -22,7 +22,7 @@ import java.io.File;
  * Status: nearly complete <br>
  * known bugs: - (But some expected) <br>
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.7 2002-07-06 12:22:29 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.8 2002-07-09 23:37:24 swprakt Exp $
  */
 
 public final class MenuAndStatePanel extends JPanel {

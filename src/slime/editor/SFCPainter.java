@@ -13,7 +13,7 @@ import java.util.Hashtable;
  * Status: about 80% complete <br>
  * Known bugs: parallel branches are not shown correctly, some more trouble with steps with more than one transition 
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.12 2002-07-06 12:22:29 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.13 2002-07-09 23:37:24 swprakt Exp $
  */
 
 public final class SFCPainter{

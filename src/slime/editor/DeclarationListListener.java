@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
  * Status: complete <br> 
  * Known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: DeclarationListListener.java,v 1.1 2002-07-08 13:56:02 swprakt Exp $
+ * @version $Id: DeclarationListListener.java,v 1.2 2002-07-09 23:37:23 swprakt Exp $
  */
 
 public final class DeclarationListListener implements MouseListener {
