@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.18 2002-06-25 17:30:56 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.19 2002-06-26 05:13:58 swprakt Exp $
  */
 
 public class Typecheck {
@@ -67,6 +67,8 @@ public class Typecheck {
   }
 
   /** Type check cisitor for SFC's, the entry point of the recursion.
+   *  To cope with contextual information, we use a  hash table.
+   *  The key objects are the variables, the values are the types.
    *
    */
   public class SFCV implements Visitors.ISFC{
@@ -326,6 +328,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.18  2002/06/25 17:30:56  swprakt
+//    ok
+//
 //    Revision 1.17  2002/06/25 17:20:45  swprakt
 //    Type check done for transitions.
 //
@@ -402,6 +407,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.18 2002-06-25 17:30:56 swprakt Exp $
+//    $Id: Typecheck.java,v 1.19 2002-06-26 05:13:58 swprakt Exp $
 //
 //---------------------------------------------------------------------
