@@ -17,7 +17,7 @@ import javax.swing.event.*;
  * unchecked SFC's. Please report all other crashes and bugs !!!
  * 
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.4 2002-06-08 20:20:55 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.5 2002-06-10 18:07:23 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {
@@ -65,6 +65,11 @@ public final class EditorInFrame extends JFrame {
     public static void main(String[] argv) {
 	SFC sfc1 = Example.getExample1();
 	SFC sfc2 = Example.getExample1();
+	Constval cfalse = new Constval (false);
+	BoolType btype = new BoolType();
+	Variable v_x = new Variable ("a", btype);
+	Declaration dec_x = new Declaration(v_x, btype, cfalse);
+	sfc2.declist.add(dec_x);
 	for (int i=0; i < sfc1.steps.size(); i++) {
 	    Step step = (Step)(sfc1.steps).get(i);
 	    step.pos = new Position((float)(i*40), (float)(i*40));

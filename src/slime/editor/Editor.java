@@ -8,13 +8,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.border.*;
 
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.8 2002-06-08 20:20:55 swprakt Exp $
+ * @version $Id: Editor.java,v 1.9 2002-06-10 18:07:23 swprakt Exp $
  */
 
 public final class Editor extends JComponent 
@@ -105,21 +106,21 @@ public final class Editor extends JComponent
 
     private void initWindow(String title) {
 	this.setSize(WIDTH, HEIGHT);
-	this.setBackground(Color.gray);
+	this.setBackground(Color.lightGray);
 	this.setVisible(true);
+	this.setLayout( new BorderLayout() );
+	this.add(this.getCenterPanel(), BorderLayout.CENTER);
+	this.add(this.getSouthPanel(), BorderLayout.SOUTH);
 	this.updateWindow();
     }
 
     private void updateWindow() {
-	this.setLayout( new BorderLayout() );
-	this.add(this.getCenterPanel(), BorderLayout.CENTER);
-	this.add(this.getSouthPanel(), BorderLayout.SOUTH);
 	this.add(this.getWestPanel(), BorderLayout.WEST);
     }
 
 
-    private Panel getWestPanel() {
-	Panel panel = new Panel();
+    private JPanel getWestPanel() {
+	JPanel panel = new JPanel();
 	panel.setLayout( new BorderLayout() );
 	panel.add(this.getGuardList(), BorderLayout.NORTH);
 	panel.add(this.getActionList(), BorderLayout.CENTER);
@@ -146,7 +147,9 @@ public final class Editor extends JComponent
 	}
 	guardJList = new JList(o);
 	guardJList.addMouseListener(this);
+	guardJList.setBackground(this.getBackground());
 	guardList = new JScrollPane(guardJList);
+ 	guardList.setBorder(new TitledBorder("Guards")); 
 	return guardList;
     }
 
@@ -171,7 +174,9 @@ public final class Editor extends JComponent
 	    }
 	}
 	this.actionJList = new JList(o);
+	actionJList.setBackground(this.getBackground());
 	actionList = new JScrollPane(this.actionJList);
+ 	actionList.setBorder(new TitledBorder("Actions")); 
 	return actionList;
     }
 
@@ -187,20 +192,23 @@ public final class Editor extends JComponent
 		String s = this.eSFC.output((absynt.Declaration)dList.get(i));
 		o[i] = s;
 	    }
-	}
-	declaringList = new JScrollPane(new JList(o));
+	}	
+	JList list = new JList(o);
+	list.setBackground(this.getBackground());
+	declaringList = new JScrollPane(list);
+ 	declaringList.setBorder(new TitledBorder("Declarations")); 
 	return declaringList;
     }    
 
-    private Panel getCenterPanel() {
-	Panel panel = new Panel();
+    private JPanel getCenterPanel() {
+	JPanel panel = new JPanel();
 	panel.add(this.drawBoardTabbedPane);
 	return panel;
     }
 
     private void addTabbedPane(ESFC eSFC) {
 	ScrollPane jsp = new ScrollPane();
-	jsp.setSize(800,600);
+	jsp.setSize(900,600);
 	jsp.add(eSFC.getDrawBoard());
 	this.drawBoardTabbedPane.add(jsp);
 	this.drawBoardTabbedPane.setSelectedComponent(jsp);
@@ -209,6 +217,7 @@ public final class Editor extends JComponent
     private JPanel getSouthPanel() {
 	JPanel panel = new JPanel();
 	this.statusMessage = new JTextField( 40 );
+	panel.setLayout(new FlowLayout());
 	panel.add(this.getGuardButton());
 	panel.add(this.getActionButton());
 	panel.add(this.getVariableButton());
@@ -221,8 +230,8 @@ public final class Editor extends JComponent
 	return panel;
     }
 
-    private Button getCloseButton() {
-	Button close = new Button("Close");
+    private JButton getCloseButton() {
+	JButton close = new JButton("Close");
 	close.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    System.exit(0);
@@ -231,8 +240,8 @@ public final class Editor extends JComponent
 	return close;
     }
 
-    private Button getHelpButton() {
-	Button help = new Button("Help");
+    private JButton getHelpButton() {
+	JButton help = new JButton("Help");
 	help.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Showing some help.");
@@ -271,8 +280,8 @@ public final class Editor extends JComponent
 	return help;
     }
 
-    private Button getSimulateButton() {
-	Button simulate = new Button("Simulate");
+    private JButton getSimulateButton() {
+	JButton simulate = new JButton("Simulate");
 	simulate.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Simulator not yet implemented.");
@@ -281,8 +290,8 @@ public final class Editor extends JComponent
 	return simulate;
     }
 
-    private Button getLayoutButton() {
-	Button layout = new Button("Layout");
+    private JButton getLayoutButton() {
+	JButton layout = new JButton("Layout");
 	layout.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Layouter trys his best at his actual implementation ...");
@@ -292,8 +301,8 @@ public final class Editor extends JComponent
 	return layout;
     }
 
-    private Button getCheckButton() {
-	Button check = new Button("Check");
+    private JButton getCheckButton() {
+	JButton check = new JButton("Check");
 	check.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Checker not yet implemented.");
@@ -302,8 +311,8 @@ public final class Editor extends JComponent
 	return check;
     }
 
-    private Button getVariableButton() {
-	Button variable = new Button("Variable");
+    private JButton getVariableButton() {
+	JButton variable = new JButton("Variable");
 	variable.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Add new variable.");
@@ -312,8 +321,8 @@ public final class Editor extends JComponent
 	return variable;
     }
 
-    private Button getActionButton() {
-	Button action = new Button("Action");
+    private JButton getActionButton() {
+	JButton action = new JButton("Action");
 	action.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Add new action.");
@@ -322,8 +331,8 @@ public final class Editor extends JComponent
 	return action;
     }
 
-    private Button getGuardButton() {
-	Button guard = new Button("Guard");
+    private JButton getGuardButton() {
+	JButton guard = new JButton("Guard");
 	guard.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
 		    statusMessage.setText("Add new guard.");
@@ -380,7 +389,7 @@ public final class Editor extends JComponent
 	    message,
 	    title,
 	    JOptionPane.DEFAULT_OPTION,
-	    JOptionPane.INFORMATION_MESSAGE,
+	    JOptionPane.PLAIN_MESSAGE,
 	    null,
 	    options,
 	    options[0]);
@@ -585,7 +594,7 @@ public final class Editor extends JComponent
 		message,
 		"Add new transition",
 		JOptionPane.DEFAULT_OPTION,
-		JOptionPane.INFORMATION_MESSAGE,
+		JOptionPane.PLAIN_MESSAGE,
 		null,
 		options,
 		options[0]);

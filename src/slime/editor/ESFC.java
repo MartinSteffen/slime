@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.5 2002-06-08 20:20:54 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.6 2002-06-10 18:07:22 swprakt Exp $
  */
 
 final class ESFC{
@@ -187,12 +187,13 @@ final class ESFC{
     protected void deHighlight(Object key) {
 	if (key instanceof Transition)
 	    this.highlight(key, TRANSITION_NORMAL);
-	if (key instanceof Step)
+	else if (key instanceof Step)
 	    if (key == this.sfc.istep)
 		this.highlight(key, INITIAL);
 	    else
 		this.highlight(key, STEP_NORMAL);
-	this.highlight(key, STEP_NORMAL);
+	else
+	    this.highlight(key, STEP_NORMAL);
     }
 
     public static int getWidth(Step step) {
