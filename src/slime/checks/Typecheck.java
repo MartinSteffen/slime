@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.21 2002-07-05 06:49:41 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.22 2002-07-05 14:01:56 swprakt Exp $
  */
 
 public class Typecheck {
@@ -208,15 +208,15 @@ public class Typecheck {
    */
 
 
-  public boolean checkexprxxx (Expr e)  throws CheckException {
+  public slime.absynt.Type checkexprxxx (Expr e)  throws CheckException {
     try {
-      e.accept(new ExprV());
+      slime.absynt.Type t = (slime.absynt.Type)(e.accept(new ExprV()));
+      return t;
     }
     catch (Exception ex) {
-      throw (CheckException)(ex);};
-    return true;
+      throw (CheckException)(ex);}
   }
-  
+
   public class ExprV implements Visitors.IExpr{
         
     public Object forB_Expr(Expr l, int o, Expr r) throws CheckException {
@@ -227,27 +227,35 @@ public class Typecheck {
                 if ((o == Expr.LEQ) | (o == Expr.GEQ) | (o == Expr.LESS) | (o == Expr.GREATER)) {
                     if ((t_l instanceof IntType) && (t_r instanceof IntType))
                         return new BoolType();
-                    else throw new CheckException();
+                    else throw new TypeMismatch();
                 }
                 else if  ((o == Expr.PLUS) || (o == Expr.MINUS) || (o == Expr.TIMES) || (o == Expr.DIV)) {
                     if ((t_l instanceof IntType) && (t_r instanceof IntType))
                         return new IntType();
-                    else throw new CheckException();
+                    else throw new TypeMismatch();
                 }
-                else if ((o == Expr.EQ) || (o == Expr.NEQ)) {
+                else if ((o == Expr.AND) || (o == Expr.OR)) {
+		  System.out.println ("andor");
+		  if ((t_l instanceof IntType) && (t_r instanceof IntType))
+		    return new BoolType();
+		  else throw new TypeMismatch();
+                }
+		else if ((o == Expr.EQ) || (o == Expr.NEQ)) {
                     if (((t_l instanceof IntType) && (t_r instanceof IntType)) ||
                     ((t_l instanceof BoolType) && (t_r instanceof BoolType)))
                         return new BoolType();
-                    else throw new CheckException();
+                    else throw new TypeMismatch();
                 }
                 else
-                    throw new CheckException();
+                    throw new TypeMismatch();
             }
             catch (Exception e) {
-                throw (CheckException)(e);
+	      System.out.println("here we go");
+	      System.out.println(e.getMessage());
+	      throw (TypeMismatch)(e);
             }
             // this last try-catch-throw is a type-cast for
-            // exceptions. The visitor is declared to thow the most
+            // exceptions. The visitor is declared to throw the most
             // general exception, but here, in the check package,
             // it is better to be specific.  Since for instance  l.accept(this)
             // is only known to throw a general ``Exception'', the type checker
@@ -381,6 +389,11 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.21  2002/07/05 06:49:41  swprakt
+//    Some more messages. Type mismatch will also be used for expressions.
+//
+//    Steffen
+//
 //    Revision 1.20  2002/06/26 18:09:01  swprakt
 //    ok for today.
 //
@@ -468,6 +481,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.21 2002-07-05 06:49:41 swprakt Exp $
+//    $Id: Typecheck.java,v 1.22 2002-07-05 14:01:56 swprakt Exp $
 //
 //---------------------------------------------------------------------
