@@ -1,6 +1,7 @@
 ###########################################################
-## $Id: Errors.txt,v 1.127 2002-07-07 14:55:06 swprakt Exp $
+## $Id: Errors.txt,v 1.128 2002-07-08 05:59:25 swprakt Exp $
 ###########################################################
+
 
 
 
@@ -205,7 +206,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.127 2002-07-07 14:55:06 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.128 2002-07-08 05:59:25 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
