@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.80 2002-07-05 11:53:29 swprakt Exp $
+## $Id: Errors.txt,v 1.81 2002-07-05 11:57:33 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,10 +35,18 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 45:   null-pointer:
+ package:   checks
+ class:     should not happen, same as for #44
+ status:    reported, 5.7.02 Steffen
+ description:   java slime.checks.tests.TypecheckTest -e"5";  gives an exception
+                java slime.checks.tests.TypecheckTest -e "5"; reads the commandline ok
+ 
 
 Error 44:     null-pointer
  package:     sfcparser.
- class:       should not happen
+ class:       should not happen. Since it is a
+              Testfile for internal usage, it's tolerable
  status:      reported, 5.7.02, Steffen
  description: java slime.sfcparser.ParserTest -3 =>
 
@@ -76,7 +84,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.80 2002-07-05 11:53:29 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.81 2002-07-05 11:57:33 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
