@@ -6,8 +6,8 @@ import java.io.Serializable;
  * Variables of the simple assignement language.
  * They are very simply implemented as strings
  * 
- * @author Initially provided by Martin Steffen.
- * @version $Id: Variable.java,v 1.5 2002-06-26 15:50:04 swprakt Exp $	
+ * @author Initially provided by Martin Steffen/Karsten Stahl.
+ * @version $Id: Variable.java,v 1.6 2002-06-27 14:05:50 swprakt Exp $	
  */
 
 
@@ -32,6 +32,9 @@ public class Variable extends Expr implements Serializable {
     inputvar = _i;
     outputvar = _o;};
 
+  public boolean equals(Variable v) { // comparison is based on the string, only
+    return (name.equals(v.name));
+      }
 
   /**
      visitor acceptor
@@ -48,9 +51,12 @@ public class Variable extends Expr implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Variable.java,v 1.5 2002-06-26 15:50:04 swprakt Exp $
+//	$Id: Variable.java,v 1.6 2002-06-27 14:05:50 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2002/06/26 15:50:04  swprakt
+//	added input/output flags for variables
+//	
 //	Revision 1.4  2002/06/13 12:34:27  swprakt
 //	Started to add vistors + typechecks [M. Steffen]
 //	
