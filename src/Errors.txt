@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.7 2002-06-13 05:57:38 swprakt Exp $
+## $Id: Errors.txt,v 1.8 2002-06-23 16:08:36 swprakt Exp $
 ###########################################################
 
 
@@ -36,6 +36,12 @@ Rules of the game:
 
 
 ------------------- Open errors ---------------------------------------
+
+Error 6:       Makefile
+  package:     top-level
+  status:      reported 23.6.02 M.Steffen
+  class:       fatal 
+  description: top-level make does not work, make a better concept
 
 
 
