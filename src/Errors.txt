@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Errors.txt,v 1.2 2002-06-12 06:40:24 swprakt Exp $
+## $Id: Errors.txt,v 1.3 2002-06-12 07:16:14 swprakt Exp $
 ######################################################
 
 
@@ -16,7 +16,8 @@ to the following format:
 
 	       + <date> + <author>
    
-    class:       fatal|non-fatal|feature-request ....
+    class:       fatal|non-fatal|
+                 feature-request|coding convention violation ....
     description: <longer description, hints for repair>
    -----------------------------------------------------
 
@@ -36,15 +37,6 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
-Error 1:  parser warnings
-
-   package:  utils.
-   status: reported 12.6.2002 (M. Steffen)
-   class:  warning, non-fatal
-   description: Parser grammar contains superfluous stuff
-	        (cf. lex/yacc output: 10 terminals declared but not used)
-
-
 
 Error 2:   structure of the tool, Manifest
    package:     gui/all
@@ -54,6 +46,18 @@ Error 2:   structure of the tool, Manifest
 	        perhaps not ideal (according to the
    	        discussions from 8.5.2002).
 	        Manifest file missing
+
+
+
+
+Error 1:  parser warnings
+
+   package:  utils.
+   status: reported 12.6.2002 (M. Steffen)
+   class:  warning, non-fatal
+   description: Parser grammar contains superfluous stuff
+	        (cf. lex/yacc output: 10 terminals declared but not used)
+
 
 
 
