@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Visitors for Slime abstract syntax (just for the fun of it)
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version  $Id: Visitors.java,v 1.4 2002-06-24 19:14:06 swprakt Exp $
+ * @version  $Id: Visitors.java,v 1.5 2002-06-24 19:30:17 swprakt Exp $
  */
 
 
@@ -40,6 +40,10 @@ public class Visitors {
     public Object forDeclaration(Variable var, Type type, Constval val)
       throws Exception;
   }
+
+  public interface IType{
+    public Object forType() throws Exception;
+  }
 }
 
 
@@ -48,8 +52,15 @@ public class Visitors {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Visitors.java,v 1.4 2002-06-24 19:14:06 swprakt Exp $
+//	$Id: Visitors.java,v 1.5 2002-06-24 19:30:17 swprakt Exp $
 // //	$Log: not supported by cvs2svn $
+// //	Revision 1.4  2002/06/24 19:14:06  swprakt
+// //	I removed the class Typeerrors. It's inner classes (the
+// //	exceptions for typechecking) I put into the class Typcheck.
+// //	Java does not allow the previously intended setup.
+// //	
+// //	[Steffen]
+// //	
 // //	Revision 1.3  2002/06/14 16:50:32  swprakt
 // //	ok, 1 week pause
 // //	
