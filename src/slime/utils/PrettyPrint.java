@@ -1,9 +1,4 @@
 
-/**
- * Pretty printer for SFC's
- * @author Initially provided by Karsten Stahl.
- * @version $Id: PrettyPrint.java,v 1.9 2002-07-11 07:14:35 swprakt Exp $
- */
 
 
 package slime.utils;
@@ -11,6 +6,14 @@ package slime.utils;
 import slime.absynt.*;
 import java.io.PrintStream;
 import java.util.*;
+
+
+/**
+ * Pretty printer for SFC's
+ * @author Initially provided by Karsten Stahl.
+ * @version $Id: PrettyPrint.java,v 1.10 2002-07-11 12:49:25 swprakt Exp $
+ */
+
 
 public class PrettyPrint {
 
@@ -336,9 +339,23 @@ public class PrettyPrint {
 //	Pretty-Printer
 //	--------------
 //
-//	$Id: PrettyPrint.java,v 1.9 2002-07-11 07:14:35 swprakt Exp $
+//	$Id: PrettyPrint.java,v 1.10 2002-07-11 12:49:25 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.9  2002/07/11 07:14:35  swprakt
+//	I replaced the cases like
+//	
+//		case 5:
+//		    string ="<NEQ> ";
+//	by
+//		case Expr.NEQ
+//		    string ="<NEQ> ";
+//	
+//	The explicit mention of 5 etc is a serious breach of
+//	modularity and encapsulation.
+//	
+//	[Steffen]
+//	
 //	Revision 1.8  2002/07/11 06:51:12  swprakt
 //	I removed the >>>>> ``comments'' [Steffen]
 //	

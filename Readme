@@ -1,5 +1,5 @@
 ############################################################
-## $Id: Readme,v 1.6 2002-07-02 15:01:30 swprakt Exp $
+## $Id: Readme,v 1.7 2002-07-11 12:49:24 swprakt Exp $
 ############################################################
 
 
@@ -10,15 +10,20 @@ The package contains the following files and subdirectories:
 
 
     o Readme:            this file
+
+
+
     o Snapshots:         short description about major
                          development steps
   
 
-    o requirements/    informal description of the task
-    o evaluation/      end-of-semester evaluation, summary (including talk)
-    o web/               The web-site for coordination,
+    o requirements        description of the task
+    o evaluation/        end-of-semester evaluation, summary (including talk)
+    o web/               web-site material for coordination,
                          tracking the progress etc.
     o org/               internal information about members etc
-    o src/               The Java-sources
+    o build/             
+    o src/               the Java-sources
     o tex/               common LaTeX-macros 
-    o doc/               Generated Javadoc stuff
+    o doc/               generated javadoc stuff
+
