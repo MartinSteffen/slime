@@ -17,7 +17,7 @@
 	                   isinput    : boolean
 			   isoutput   : boolean
                            type       : type
-     action_qualifier ::=  Nqual                            (* may be extended *)
+     action_qualifier ::=  Nqual                    (* may be extended *)
 
            transition ::=  source     : step list
                            guard      : expr
@@ -38,8 +38,8 @@
          u_expr       ::=  sub_expr   : expr
                            op         : operand             
                            type       : type
-           operand    ::=               PLUS | MINUS | TIMES | DIV  (* Operand als *)
-                       |                AND | OR | NEG              (* Konstanten in expr *)
+           operand    ::=               PLUS | MINUS | TIMES | DIV  (* operand as *)
+                       |                AND | OR | NEG              (* const. in expr *)
                        |                LESS | GREATER | LEQ | GEQ | EQ | NEQ
             constval  ::=               ...| -2 | -1 | 0 | 1 | ... | true | false
             type      ::=               inttype
