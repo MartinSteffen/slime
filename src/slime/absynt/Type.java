@@ -3,11 +3,11 @@ import java.io.Serializable;
 
 
 /**
- * Types for the assgnement language of Slime, with the concrete
+ * Types for the assignement language of Slime, with the concrete
  * types as subclasses.
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
 
- * @version $Id: Type.java,v 1.8 2002-07-11 05:58:34 swprakt Exp $
+ * @version $Id: Type.java,v 1.9 2002-07-18 07:12:58 swprakt Exp $
  */
 
 public abstract class Type extends Absynt implements Serializable { 
@@ -24,9 +24,12 @@ public abstract class Type extends Absynt implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Type.java,v 1.8 2002-07-11 05:58:34 swprakt Exp $
+//	$Id: Type.java,v 1.9 2002-07-18 07:12:58 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.8  2002/07/11 05:58:34  swprakt
+//	The exception is made more informative. [Steffen]
+//	
 //	Revision 1.7  2002/07/10 17:04:29  swprakt
 //	As announced in the group meeting: I added the
 //	equals method to the types. This overrides the
