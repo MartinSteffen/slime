@@ -1,0 +1,76 @@
+
+
+
+\usepackage{hyperref}
+
+\usepackage{pstricks,pst-node,pst-text,pst-3d}
+\usepackage{epic,eepic,epsfig}
+%\usepackage{listings}
+%\usepackage{lstpseudo}
+%\lstset{language=pseudo}   % pseudo defines the keywords etc
+%\lstset{labelstyle=\tiny}  %
+%\lstset{basicstyle=\tiny}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% The color names are from dvipsnam.def   %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{graphics,color}
+\usepackage{graphicx}
+
+
+\definecolor{sectionshadecolor}{cmyk}{0.9,0.83,1,0.70}
+\definecolor{myheadcolor}{named}{MidnightBlue}
+\definecolor{myred}{named}{BrickRed}
+\definecolor{mygreen}{named}{PineGreen}
+\definecolor{mygreen}{named}{OliveGreen}
+\definecolor{myblue}{named}{Periwinkle}
+\definecolor{myblue}{named}{NavyBlue}
+\definecolor{myblue}{named}{BlueViolet}
+\definecolor{mygray}{named}{Gray}
+\definecolor{myyellow}{named}{Yellow}
+\definecolor{myorange}{named}{YellowOrange}
+
+
+\newcommand{\mygray}  [1]{\textcolor{mygray}{#1}}
+\newcommand{\myblue}  [1]{\textcolor{myblue}{#1}}
+\newcommand{\mygreen} [1]{{\textcolor{mygreen}{#1}}}
+\newcommand{\myred}   [1]{\textcolor{myred}{#1}}
+\newcommand{\myyellow}[1]{\textcolor{myyellow}{#1}}
+\newcommand{\myorange}[1]{\textcolor{myorange}{#1}}
+
+\newcommand{\unimportant}[1]{\textcolor{mygray}{#1}}
+\newcommand{\important}  [1]{\textcolor{myblue}{#1}}
+\newcommand{\importantx} [1]{\textcolor{mygreen}{#1}}
+\newcommand{\importantxx}[1]{\textcolor{myred}{#1}}
+%\newcommand{\sectionshade}[1]{\colorbox{sectionshadecolor}{#1}}
+\newcommand{\sectionshade}[1]{\colorbox{myheadcolor}{#1}}
+
+%%%% KAI
+%\FontTitle{\usefont{T1}{phv}{b}{sl}\fontsize{14.4pt}{12pt}\selectfont\myred}{%
+%   \usefont{T1}{phv}{b}{sl}\fontsize{14.4pt}{12pt}\selectfont\black}
+%\FontText{\darkblue\usefont{T1}{phv}{m}{n}\fontsize{12pt}{11pt}\selectfont}{%
+%   \black\usefont{T1}{phv}{m}{n}\fontsize{12pt}{11pt}\selectfont}
+
+
+\FontTitle{\usefont{T1}{phv}{b}{sl}\fontsize{14.4pt}{12pt}\selectfont}{%
+   \usefont{T1}{phv}{b}{sl}\fontsize{14.4pt}{12pt}\selectfont\black}
+\FontText{\black\usefont{T1}{phv}{m}{n}\fontsize{12pt}{11pt}\selectfont}{%
+   \black\usefont{T1}{phv}{m}{n}\fontsize{12pt}{11pt}\selectfont}
+
+
+\newrgbcolor{LemonChiffon}{1. 0.98 0.8}
+\newrgbcolor{LightBlue}{0.68 0.85 0.9}
+
+
+\newenvironment{myslide}[1]   {\begin{slide}{#1}}{\end{slide}}
+
+
+\usepackage{fancybox}  % Fancybox redefines. filedate
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
