@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.8 2002-06-23 16:08:36 swprakt Exp $
+## $Id: Errors.txt,v 1.9 2002-06-24 17:15:03 swprakt Exp $
 ###########################################################
 
 
@@ -37,6 +37,13 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+Error 7:       no code
+ package:      simulator
+ status:       emailed to Immo 24.6.02, M. Steffen
+ class:        fatal
+ description:  contrary to announcement, the checked in code is
+               not in repors
+  
 Error 6:       Makefile
   package:     top-level
   status:      reported 23.6.02 M.Steffen
