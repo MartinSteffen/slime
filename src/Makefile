@@ -1,10 +1,17 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.19 2002-07-03 17:18:12 swprakt Exp $
+# $Id: Makefile,v 1.20 2002-07-04 06:47:48 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # $Log: not supported by cvs2svn $
+# Revision 1.19  2002/07/03 17:18:12  swprakt
+# Something has to happen with those
+# Input/OutputActions, either they are
+# going to be supported by Visitors
+# and Simulator, or I will have to remove
+# them from the parser. (mwe)
+#
 # Revision 1.18  2002/06/27 16:52:33  swprakt
 # added java_cup/*.class and
 # added java_cup/runtime/*.class to jar-file
@@ -41,10 +48,6 @@ PACKAGEDIRS   = slime.absynt\
 		slime.gui.listener\
 		slime.gui.model\
 		slime.simulator\
-		Jlex\
-		java_cup\
-		java_cup.runtime
-#                io
 
 
 ################################################
