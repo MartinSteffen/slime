@@ -4,10 +4,33 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.13 2002-07-02 13:09:53 swprakt Exp $
+    * $Id: SFC.lex,v 1.14 2002-07-02 15:23:50 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.13  2002/07/02 13:09:53  swprakt
+   /* "example.sfc" contains some constructs possible in this
+   /* sfc-language. output.txt is the output of
+   /* java slime.sfcparser.ParserTest example.sfc > output.txt.
+   /* The last line was added by hand, you may use (if your os
+   /* does support this) 2>&1 for outputting the last line into
+   /* that file too.
+   /* The error that occurs in an error within the
+   /* slime.utils.PrettyPrint,
+   /*
+   /* I will try to fix this error now, but the fixed version
+   /* will reside in slime/sfcparser, because i do not want to
+   /* change someones code without a prior discussion.
+   /* Btw. someone modified my SFC.lex with the result that
+   /* the whilestatement did not function for a long period of
+   /* time - thank you very much.
+   /*
+   /* My advice for the next semester would be to use LOGIN-
+   /* accounts for cvs. In my humble opinion it was Thomas
+   /* Richter who was the first to propose this. It makes the
+   /* logs more useful and avoids problems with $CVS_RSH.
+   /* (mwe)
+   /*
    /* Revision 1.12  2002/07/02 12:29:48  swprakt
    /* Phase 1 completed, correct parsing of complex
    /* SFC programs into slime.absynt.absfc.SFCabtree.
@@ -163,7 +186,7 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "repeat"   {return new Symbol(slime.sfcparser.SFCSymbols.REPEAT); 	/* */}
 "until"    {return new Symbol(slime.sfcparser.SFCSymbols.UNTIL); 	/* */}
 "skip"     {return new Symbol(slime.sfcparser.SFCSymbols.SKIP); 	/* Class Skip */}
-"="       {return new Symbol(slime.sfcparser.SFCSymbols.ASSIGN); 	/* Class Assign */}
+"="        {return new Symbol(slime.sfcparser.SFCSymbols.ASSIGN); 	/* Class Assign */}
 "int"      {return new Symbol(slime.sfcparser.SFCSymbols.INTTYPE); 	/* Class IntType */}
 "bool"     {return new Symbol(slime.sfcparser.SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
 "true"     {return new Symbol(slime.sfcparser.SFCSymbols.TRUE);	        /* */}

@@ -1,0 +1,41 @@
+SFC testprog { 
+int x3;
+int z;
+z = 0;
+x3 = 5;
+
+split { 
+
+process p1 {
+ int px1;
+ px1 = 1;
+ while (px1 < 20) {
+    px1 = px1 + x3;
+ }
+ z = z + px1;
+}
+
+process p2 {
+ int px1;
+ px1 = 2;
+ repeat {
+    px1 = px1 + x3;
+ } until (px1 > 20);
+ z = z + px2;
+}
+
+process p3 {
+ int px3;
+ while (true) {
+   px1 = px1 + 1;
+ }
+}
+
+}  // end of split
+
+
+join ( p1 , p2 , p3 );
+
+output( z, z );
+
+} // end of SFC testprog

@@ -4,11 +4,25 @@
  * converts a given {@link slime.absfc.SFCabtree} to<br>
  * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.6 2002-07-02 12:29:47 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.7 2002-07-02 15:23:49 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
+ * Revision 1.6  2002/07/02 12:29:47  swprakt
+ * Phase 1 completed, correct parsing of complex
+ * SFC programs into slime.absynt.absfc.SFCabtree.
+ *
+ * Phase 2 still in progress: today fixed some bug
+ * with PrettyPrint4Absfc - partially the print(SFCabtree)
+ * by simply outcommenting the lists for vars and decls.
+ *
+ * Left to do in phase 2:
+ * verifying the correct(and complete!) creation of
+ * the varlist, decllist for the slime.absynt.SFC.
+ *
+ * 02.07.2002 mwe@informatik.uni-kiel.de
+ *
  * Revision 1.5  2002/06/28 20:30:49  swprakt
  * updated package information
  *
@@ -53,7 +67,15 @@ public class Absfc2SFCConverter {
     public int statementCounter;  /** for enumberating statements */
     public int declarationCounter;/** for enumberating declarations */
     public int actionCounter;     /** for enumberating actions */
-    public int processCounter;    /** for enumberating processes */
+    // the following counter(used for some naming of objects
+    // are about to be used in the next version...
+    public int procStepCounter;       /** for enumberating steps in processes */
+    public int procTransitionCounter; /** for enumberating transitions in processes */
+    public int procStatementCounter;  /** for enumberating statements in processes */
+    public int procDeclarationCounter;/** for enumberating declarations in processes */
+    public int procActionCounter;     /** for enumberating actions in processes */
+    public int procProcessCounter;    /** for enumberating processes in processes */
+    public int processCounter;    /** for enumberating processes in processes */
     private int runNr;            /** current state of tree processing - see notes */
     public boolean debugflag;     /** turn stdout debugoutput on/off */
     private boolean collectProcs; /** first run gathers all processes */
@@ -144,6 +166,20 @@ public class Absfc2SFCConverter {
      * @return slime.absynt.SFC the generated slime.absynt.SFC tree.<br>
      **/
     protected slime.absynt.SFC convertTree( slime.absynt.absfc.SFCabtree srctree) {
+	// have to be set here! if set in initialize SFC, convertion does
+	// stuck, because myProcessList is cleaned...
+	// if some time is left  we will have to methods:
+	// initializeSFC() and cleanSFC()
+	processCounter         = 0;
+	runNr                  = 0;
+	procStepCounter        = 0;
+	procTransitionCounter  = 0;
+	procStatementCounter   = 0;
+	procDeclarationCounter = 0;
+	procActionCounter      = 0;
+	procProcessCounter     = 0;
+	myProcessList	  = new LinkedList();
+
 	String sfcname = (String) srctree.sfcprogname;
 	LinkedList s = (LinkedList) srctree.stmtlist;
 	LinkedList p = (LinkedList) srctree.proclist;
@@ -217,15 +253,12 @@ public class Absfc2SFCConverter {
 	transitionCounter = 0;
 	statementCounter  = 0;
 	actionCounter     = 0;
-	processCounter    = 0;
-	runNr             = 0;
 	/** initialize global lists */
 	theSFC	          = new slime.absynt.SFC(); 
 	myStepList	  = new LinkedList();
 	myDeclarationList = new LinkedList();
 	myTransitionList  = new LinkedList();
 	myActionList      = new LinkedList();
-	myProcessList	  = new LinkedList();
 	/** build initial step */
 	slime.absynt.Step sourceStep  = 
 	    new slime.absynt.Step( (new Integer ( stepCounter )).toString() ); /** create Step nr. 0 */
@@ -438,7 +471,7 @@ public class Absfc2SFCConverter {
 	for (Iterator i = myProcessList.iterator(); i.hasNext();) {
 	    slime.absynt.absfc.Process currentProcess =
 		(slime.absynt.absfc.Process) i.next();
-	    if ( processName.equals( currentProcess.name ) ) {
+	    if ( processName.equals( (String)currentProcess.name ) ) {
 		aProcess = currentProcess;
 	    } // end if-processName.equals
 	} // end of for-i
@@ -484,19 +517,24 @@ public class Absfc2SFCConverter {
 	    actionlist.add( lass ); 
 	    /** create new action */
 	    System.out.println("next: creating new action with number "+actionCounter+".");
-	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
-	    /** increase actioncounter */
-	    System.out.println("next: increasing actionCounter.");
-	    actionCounter++;
-	    System.out.println("next: adding new action to myActionlist.");
+	    if (curInProc && collectProcs) {
+		lact = new slime.absynt.Action( (new Integer(procActionCounter)).toString(), actionlist );
+		procActionCounter++;
+	    } else {
+		lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
+		actionCounter++;
+	    }
 	    myActionList.add( lact );
 	    outeractionlist.add( lact );
 	    /** create new targetstep */
-	    System.out.println("next: creating new step with actionlist.");
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-	    /** increase stepcounter */
+	    if (curInProc && collectProcs) {
+		targetStep = new slime.absynt.Step( (new Integer(procStepCounter)).toString(), outeractionlist );
+		procStepCounter++;
+	    } else {
+		targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
+		stepCounter++;
+	    }
 	    myStepList.add( targetStep );	    
-	    stepCounter++;
 	    /** sourcestep is the end step from the previous statement */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    /** clear already empty sourcesteplist */
@@ -529,12 +567,46 @@ public class Absfc2SFCConverter {
      * @return slime.absynt.Step the new step.<br>
      **/
     public slime.absynt.Step newStep() {
-	slime.absynt.Step out = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
+	slime.absynt.Step out = null;
+	if (curInProc && collectProcs) {
+	    out = new slime.absynt.Step( "p-"+((new Integer(processCounter)).toString())+
+					  "-"+((new Integer(procStepCounter)).toString()) );
+	    procStepCounter++;
+	    dbgOut(0,"New Process-step nr. " + (procStepCounter-1) + " created and added to myStepList");
+	} else {
+	    out = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
+	    stepCounter++;
+	dbgOut(0,"New Program-step nr. " + (stepCounter-1) + " created and added to myStepList");
+	}
 	myStepList.add( out );
-	dbgOut(0,"New step nr. "+stepCounter+" created and added to myStepList");
-	stepCounter++;
 	return out;
     } // end of newStep
+    // --------------------------------------------------------------------
+
+    // --------------------------------------------------------------------
+    /**
+     * <b>newAction</b><br>
+     * creates a new {@link slime.absynt.Step} <br>
+     * and adds it to {@link slime.sfcparser.Absfc2SFCConverter.myStepList} <br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.0<br>
+     * @return slime.absynt.Step the new step.<br>
+     **/
+    public slime.absynt.Action newAction( LinkedList inlist ) {
+	slime.absynt.Action out = null;
+	if (curInProc && collectProcs) {
+	    out = new slime.absynt.Action(  "p-"+((new Integer(processCounter)).toString())+
+					    ((new Integer(procActionCounter)).toString()), inlist );
+	    procActionCounter++;
+	    dbgOut(0,"New Process-Action nr. " + (procActionCounter-1) + " created and added to myActionList");
+	} else {
+	    out = new slime.absynt.Action( (new Integer(actionCounter)).toString(), inlist );
+	    actionCounter++;
+	    dbgOut(0,"New Program-Action nr. " + (actionCounter-1) + " created and added to myActionList");
+	}
+	myActionList.add( out );
+	return out;
+    } // end of newAction
     // --------------------------------------------------------------------
 
 
@@ -569,19 +641,14 @@ public class Absfc2SFCConverter {
 	    LinkedList               actionlist      = new LinkedList();
 	    LinkedList               outeractionlist = new LinkedList();
 	    slime.absynt.Action      lact            = null;
-	    slime.absynt.Constval    lconsv          = new slime.absynt.Constval( true );
-            /////////////////////////// neuer Constructor ... ?
+	    slime.absynt.Constval    lconsv          = tmpNode.val; // hmm ...
 	    ldecl = new slime.absynt.Declaration( lvar, ltyp, lconsv );
 	    declarationCounter++; // increase declarationCounter
 	    myDeclarationList.add( ldecl );
 	    actionlist.add( ldecl ); // add Declaration to actionlist
-	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
-	    actionCounter++;
-	    System.out.println("next: adding new action to myActionlist.");
-	    myActionList.add( lact );
+	    lact = newAction( actionlist );
 	    outeractionlist.add( lact );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-	    stepCounter++; // increase stepCounter
+	    targetStep = newStep();
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
@@ -634,12 +701,9 @@ public class Absfc2SFCConverter {
 	    LinkedList              outeractionlist= new LinkedList();
 	    slime.absynt.Action     lact           = null;
 	    actionlist.add( linp ); // add Input to actionlist
-	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
-	    actionCounter++;
+	    lact = newAction( actionlist );
 	    outeractionlist.add( lact );
-	    myActionList.add( lact );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-	    stepCounter++;
+	    targetStep = newStep();
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
@@ -692,12 +756,9 @@ public class Absfc2SFCConverter {
 	    LinkedList              outeractionlist= new LinkedList();
 	    slime.absynt.Action     lact           = null;
 	    actionlist.add( loup ); // add output to actionlist
-	    lact = new slime.absynt.Action( (new Integer(actionCounter)).toString(), actionlist );
-	    actionCounter++;
+	    lact = newAction( actionlist );
 	    outeractionlist.add( lact );
-	    myActionList.add( lact );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString(), outeractionlist );
-	    stepCounter++;
+	    targetStep = newStep();
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
@@ -743,9 +804,7 @@ public class Absfc2SFCConverter {
 	    slime.absynt.Step       targetStep	     = null;
 	    LinkedList              targetStepList   = new LinkedList();
 	    slime.absynt.Transition transition       = null;
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    sourceStepList.add( sourceStep );
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
@@ -803,9 +862,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)lastStartStep; // not required :)
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step ( (new Integer(stepCounter)).toString() );       
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition(
@@ -819,9 +876,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)ifStart;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -835,9 +890,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)ifStart;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, ifguard, targetStepList );
@@ -851,9 +904,7 @@ public class Absfc2SFCConverter {
 	    sourceStepList.add( sourceStep );
 	    sourceStep = (slime.absynt.Step)ifcaseEnd;
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
@@ -916,9 +967,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer( stepCounter )).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -932,9 +981,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)ifStart;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -948,9 +995,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)ifStart;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -970,9 +1015,7 @@ public class Absfc2SFCConverter {
 	    sourceStepList.add( sourceStep );
 	    sourceStep = (slime.absynt.Step)elsecaseEnd;
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -1034,9 +1077,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
@@ -1047,9 +1088,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)whileStart;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -1063,9 +1102,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)whileStart;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, whileguard, targetStepList );
@@ -1078,9 +1115,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)loopEnd;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( whileStart );
 	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
@@ -1141,9 +1176,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer( stepCounter )).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -1160,7 +1193,6 @@ public class Absfc2SFCConverter {
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
 	    targetStep = (slime.absynt.Step)repeatStart;
-	    stepCounter++;
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -1173,9 +1205,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)loopEnd;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, untilguard, targetStepList );
@@ -1229,9 +1259,7 @@ public class Absfc2SFCConverter {
 	sourceStep = (slime.absynt.Step)lastStartStep;
 	sourceStepList.clear();
 	sourceStepList.add( sourceStep );
-	targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	stepCounter++;
-	myStepList.add( targetStep );
+	targetStep = newStep();
 	targetStepList.clear();
 	targetStepList.add( targetStep );
 	transition = new slime.absynt.Transition( 
@@ -1246,8 +1274,7 @@ public class Absfc2SFCConverter {
 	/** process all processes in plist */
         for (Iterator processIterator = plist.iterator(); processIterator.hasNext(); ) {
 	    if (curProc < spawnedProcesses) { // do not allow Array-out-of-Bounds!
-		procStart[ curProc ] = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-		stepCounter++;
+		procStart[ curProc ] = newStep();
 		myStepList.add( (slime.absynt.Step)(procStart[curProc]) );
 		procEnd[ curProc ] = processProcess( processIterator.next(), procStart[ curProc ] );
 		targetStepList.add( procStart[ curProc ] );
@@ -1268,9 +1295,7 @@ public class Absfc2SFCConverter {
 	sourceStep = (slime.absynt.Step)splitStart;
 	sourceStepList.clear();
 	sourceStepList.add( sourceStep );
-	targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	stepCounter++;
-	myStepList.add( targetStep );
+	targetStep = newStep();
 	targetStepList.clear();
 	targetStepList.add( targetStep );
 	transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
@@ -1287,7 +1312,7 @@ public class Absfc2SFCConverter {
     // --------------------------------------------------------------------
     /**
      * <b>processJoin</b><br>
-     * processes a {@link slime.absynt.absfc.StmtJoin <br>
+     * processes a @see slime.absynt.absfc.StmtJoin <br>
      * and creates the needed steps and transitions and <br>
      * adds them to myStepList and myTransitionList. <br>
      * The latest step wihtin the flow is assumed to be myStep <br>
@@ -1318,9 +1343,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( 
@@ -1343,9 +1366,11 @@ public class Absfc2SFCConverter {
 	    sourceStepList.clear();
 	    /** first of all there must have been the myProcessList generated ! */
 	    for (Iterator j=pnlist.iterator(); j.hasNext(); ) {
-		slime.absynt.absfc.Process lproc = getProcessByName( (String)j.next() );
+		String curProc2JoinName = (String)j.next();
+		dbgOut( 2, "Current process in joining-stmt: "+ curProc2JoinName );
+		slime.absynt.absfc.Process lproc = getProcessByName( curProc2JoinName  );
 		if (curProc < nrofprocs) {
-		    procArray[ curProc] = (slime.absynt.absfc.Process)lproc;
+		    procArray[ curProc ] = (slime.absynt.absfc.Process)lproc;
 		    curProc++;
 		    sourceStepList.add( lproc.end_step ); // sind nat. keine echten prozesse
 		/*
@@ -1361,9 +1386,7 @@ public class Absfc2SFCConverter {
 	    sourceStepList.add( joinStart );
 	    /* hier muesste natuerlich nun etwas komplizierteres hin ...*/
 	    /** link all ending Processes together with join */
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
@@ -1377,9 +1400,7 @@ public class Absfc2SFCConverter {
 	    sourceStep = (slime.absynt.Step)targetStep;
 	    sourceStepList.clear();
 	    sourceStepList.add( sourceStep );
-	    targetStep = new slime.absynt.Step( (new Integer(stepCounter)).toString() );
-	    stepCounter++;
-	    myStepList.add( targetStep );
+	    targetStep = newStep();
 	    targetStepList.clear();
 	    targetStepList.add( targetStep );
 	    transition = new slime.absynt.Transition( sourceStepList, trueGuard, targetStepList );
@@ -1412,7 +1433,7 @@ public class Absfc2SFCConverter {
      * @return slime.absynt.Step the step after "executing" the current statement.<br>
      **/
     protected slime.absynt.Step processProcess( Object curStmt, slime.absynt.Step lastStartStep ) {
-	    dbgOut( 2 , "Process: " );
+	    dbgOut( 2 , "Process: "+processCounter );
 	    slime.absynt.absfc.Process tmpNode =
 		(slime.absynt.absfc.Process) curStmt;
 	    /** add current Process to global process list */
@@ -1461,6 +1482,7 @@ public class Absfc2SFCConverter {
 	    curInProc = false;
 	    return tmpNode.end_step;
 	} else { // !collectProcs - get Steps and Transitions from first run ...
+	    dbgOut(2, "Process -> not in collectProcs now... ");
 	    /** get the lastStartStep from the split statement */
 	    sourceStep = (slime.absynt.Step)lastStartStep;
 	    sourceStepList.clear();
@@ -1524,6 +1546,7 @@ public class Absfc2SFCConverter {
 
     
 } // end of class Absfc2SFCConverter
+
 
 
 

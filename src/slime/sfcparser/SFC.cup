@@ -15,11 +15,34 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.12 2002-07-02 13:09:53 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.13 2002-07-02 15:23:49 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.12  2002/07/02 13:09:53  swprakt
+ * "example.sfc" contains some constructs possible in this
+ * sfc-language. output.txt is the output of
+ * java slime.sfcparser.ParserTest example.sfc > output.txt.
+ * The last line was added by hand, you may use (if your os
+ * does support this) 2>&1 for outputting the last line into
+ * that file too.
+ * The error that occurs in an error within the
+ * slime.utils.PrettyPrint,
+ *
+ * I will try to fix this error now, but the fixed version
+ * will reside in slime/sfcparser, because i do not want to
+ * change someones code without a prior discussion.
+ * Btw. someone modified my SFC.lex with the result that
+ * the whilestatement did not function for a long period of
+ * time - thank you very much.
+ *
+ * My advice for the next semester would be to use LOGIN-
+ * accounts for cvs. In my humble opinion it was Thomas
+ * Richter who was the first to propose this. It makes the
+ * logs more useful and avoids problems with $CVS_RSH.
+ * (mwe)
+ *
  * Revision 1.11  2002/07/02 12:29:48  swprakt
  * Phase 1 completed, correct parsing of complex
  * SFC programs into slime.absynt.absfc.SFCabtree.
@@ -406,6 +429,7 @@ non terminal    slime.absynt.absfc.StmtJoin	stmtjoin;
 non terminal    slime.absynt.absfc.Comment	stmtdummy;
 
 non terminal    slime.absynt.absfc.Process	process;
+// non terminal    
 non terminal    LinkedList                      processlist;
 non terminal    LinkedList                      procidlist;
 
@@ -687,6 +711,7 @@ stmtjoin ::=	JOIN
 		               (java.util.LinkedList) pidl 
 		   ); 
 		 :}
+                SEMICOLON
 ;
 
 /** PROCODLIST -------------------------------------------- **/
@@ -697,6 +722,7 @@ procidlist ::=	IDENTIFIER:procname
 		   RESULT=ll_procidlist; 
 		 :}
               |	IDENTIFIER:procname
+	        COMMA
 	        procidlist:proclist
                 {: 
 		   LinkedList ll_procidlist2 = new LinkedList();
@@ -726,10 +752,10 @@ processlist ::=	process:p1
 /** PROCESS ---------------------------------------------- **/
 process ::= PROCESS
             IDENTIFIER:name
-            stmtblock:b
+            stmtblock:blockInProcess
             {: 
 	       RESULT= new slime.absynt.absfc.Process( 
-		            name, (java.util.LinkedList) b
+		            name, (java.util.LinkedList) blockInProcess
 	       ); 
 	     :}
 ;

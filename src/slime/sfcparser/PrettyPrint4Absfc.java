@@ -3,7 +3,7 @@
  * Pretty printer for abstract SFC trees {@link slime.absfc.SFCabtree}
  * @author Initially provided by Karsten Stahl. <br>
  * @author modified for SFCabtree by Marco Wendel. <br>
- * @version $Id: PrettyPrint4Absfc.java,v 1.2 2002-07-02 12:29:48 swprakt Exp $
+ * @version $Id: PrettyPrint4Absfc.java,v 1.3 2002-07-02 15:23:49 swprakt Exp $
  */
 
 package slime.sfcparser;
@@ -65,7 +65,7 @@ public class PrettyPrint4Absfc {
 	    if(absynt instanceof StmtDecl)   output((StmtDecl)absynt);
 	    if(absynt instanceof StmtAssign) output((StmtAssign)absynt);
 	    if(absynt instanceof StmtSplit)  output((StmtSplit)absynt);
-	    if(absynt instanceof StmtJoin)   output((StmtSplit)absynt);
+	    if(absynt instanceof StmtJoin)   output((StmtJoin)absynt);
 	    if(absynt instanceof slime.absynt.absfc.Process)    output((slime.absynt.absfc.Process)absynt);
 	    if(absynt instanceof Variable)  output((Variable)absynt);
 	    if(absynt instanceof B_expr)    output((B_expr)absynt);
