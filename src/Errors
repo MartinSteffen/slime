@@ -1,0 +1,13 @@
+########################################################
+## $Id: Errors,v 1.1 2002-06-12 06:07:45 swprakt Exp $
+########################################################
+
+
+
+Error 1: 
+
+   package:     10 terminals declared but not used.
+   description: Parser grammar contains superfluous stuff
+	        
+   status: reported 12.6.2002 (M. Steffen)
+   class:  warning, non-fatal
