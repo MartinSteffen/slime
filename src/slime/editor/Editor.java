@@ -21,7 +21,7 @@ import javax.swing.border.*;
  * Known bugs: Some semantic problems. 
  * But who cares when there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.19 2002-07-09 23:37:24 swprakt Exp $
+ * @version $Id: Editor.java,v 1.20 2002-07-17 22:18:45 swprakt Exp $
  */
 
 // FIX ME: Double Buffering dringend notwendig !!!
@@ -210,6 +210,7 @@ public final class Editor extends JComponent implements ChangeListener {
     }
 
     protected void setSimulatorActive(boolean active) {
+	this.drawBoardTabbedPane.setEnabled(!active);
 	this.simulatorActive = active;
 	this.menuAndStatePanel.enableButtons();
     }

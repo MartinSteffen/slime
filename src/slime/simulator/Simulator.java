@@ -4,6 +4,7 @@ import  java.awt.event.*;
 import  javax.swing.*;
 import  javax.swing.event.*;
 import  slime.absynt.SFC;
+import  slime.editor.Editor;
 
 /**
  * some description
@@ -15,6 +16,7 @@ import  slime.absynt.SFC;
 
 public class Simulator extends JFrame implements ActionListener, ChangeListener, WindowListener{
   private SimSFC      sfc;
+  private Editor      editor;
 
   private JSplitPane  contentPane;
 
@@ -30,8 +32,26 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
   private JList       possibleActions;
 
   Simulator(SFC model){
-    super("SFC Simulator v0.2");
+    super("SFC simulator v0.2");
     sfc = new SimSFC(model);
+
+    createInformationPane();
+    createExecutionPane();
+    contentPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, informationPane, executionPane);
+
+    addWindowListener(this);
+    setContentPane(contentPane);
+
+    init();
+
+    pack();
+    setVisible(true);
+  }
+
+  Simulator(Editor ed){
+    super("SFC simulator v0.2");
+    editor = ed;
+    sfc    = new SimSFC(editor.getSelectedSFC());
 
     createInformationPane();
     createExecutionPane();
@@ -71,7 +91,7 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
     actionPane.setLayout(gridbag);
     c.fill = GridBagConstraints.HORIZONTAL;
 
-    startButton = new JButton("Simulator neustarten");
+    startButton = new JButton("restart");
     startButton.setActionCommand("Start");
     startButton.addActionListener(this);
     c.weightx = 1.0;
@@ -90,7 +110,7 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
     gridbag.setConstraints(actionChooser, c);
     actionPane.add(actionChooser);
 
-    stepButton = new JButton("Aktion auswählen");
+    stepButton = new JButton("choose action");
     stepButton.setActionCommand("Step");
     stepButton.addActionListener(this);
     c.weighty = 0.0;
@@ -110,7 +130,7 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
 
   private void start(){
     sfc.start();
-    stepButton.setText("Aktion auswählen");
+    stepButton.setText("choose action");
   }
 
   public void actionPerformed(ActionEvent e){
@@ -119,10 +139,10 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
     if (e.getActionCommand() == "Step"){
       sfc.perform((String) possibleActions.getSelectedValue());
       if (sfc.getPossibleActions().length == 0){
-        if (stepButton.getText().equals("Aktion auswählen"))
-          stepButton.setText("Transition auswählen");
+        if (stepButton.getText().equals("choose action"))
+          stepButton.setText("choose transition");
         else
-          stepButton.setText("Aktion auswählen");
+          stepButton.setText("choose action");
         sfc.changePhase();
       }
     }

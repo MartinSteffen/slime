@@ -14,7 +14,7 @@ import java.lang.reflect.*;
  * Status: nearly complete,  but i am not satisfied with it <br>
  * Known bugs: update does not remove unused variables <br>
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.13 2002-07-09 23:37:23 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.14 2002-07-17 22:18:44 swprakt Exp $
  */
 
 public final class ESFC{
@@ -913,6 +913,8 @@ public final class ESFC{
     protected static String output(Type type){
 	String string = new String();
 	if(type !=null){
+	    if(type instanceof DoubleType)
+		string="[double]";
 	    if(type instanceof BoolType)
 		string="[bool]";
 	    if(type instanceof IntType)

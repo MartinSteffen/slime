@@ -22,7 +22,7 @@ import java.io.File;
  * Status: nearly complete <br>
  * known bugs: - (But some expected) <br>
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.8 2002-07-09 23:37:24 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.9 2002-07-17 22:18:45 swprakt Exp $
  */
 
 public final class MenuAndStatePanel extends JPanel {
@@ -83,7 +83,7 @@ public final class MenuAndStatePanel extends JPanel {
 	JPanel whatAmI = new JPanel();
 	this.addEditorButton(whatAmI);
 	whatAmI.setBackground(Editor.BACKGROUND_COLOR);
-	whatAmI.setBorder(editor.getTitledBorder("Mode"));
+	whatAmI.setBorder(editor.getTitledBorder("What am I"));
 	south.add(whatAmI);
 	JPanel exit = new JPanel();
 	this.addExitButton(exit);
@@ -255,10 +255,11 @@ public final class MenuAndStatePanel extends JPanel {
 		    statusMessage.setText("Checker not yet implemented.");
 		    ESFC eSFC = editor.getExtendedSelectedSFC();
 		    eSFC.setChecked(true);
-		    if (eSFC.getSFC().istep == null) {
-			statusMessage.setText("Check fails, there is no initial step in this SFC.");
-			eSFC.setChecked(false);
-		    }
+		    //		    if (eSFC.getSFC().istep == null) {
+		    //statusMessage.setText("Check fails, there is no initial step in this SFC.");
+		    //eSFC.setChecked(false);
+		    //}
+		    
 		    enableButtons();
 		}
 	    });
@@ -469,7 +470,7 @@ class SimulatorTest extends Thread {
 	this.editor.setSimulatorActive(true);
     }
 
-    public void run() {
+    public void run() {	
 	editor.getItemFromList(editor.getSelectedSFC().steps,
 			       "Select one step.");
 	editor.getItemFromList(editor.getSelectedSFC().transs,
