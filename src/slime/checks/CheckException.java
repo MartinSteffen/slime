@@ -12,7 +12,7 @@ import slime.absynt.*;
  * the general visitor exception offered by the abstract syntax.
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version  $Id: CheckException.java,v 1.8 2002-07-07 14:57:45 swprakt Exp $
+ * @version  $Id: CheckException.java,v 1.9 2002-07-11 08:39:53 swprakt Exp $
  */
 public class CheckException extends Exception {
   /** contains exception message
@@ -25,31 +25,14 @@ public class CheckException extends Exception {
 }
     
 
-  /** set the message of the exception (internal)
-   * @param msg exception message
-   */
-  // private void setMessage(String msg) { message = msg;  }
-    
-  /** Creates new <code>CheckException</code> without detail message.
-   */
-  // public CheckException() { super("Check Exception"); }
-    
-    
-  /** Constructs an <code>CheckException</code> with the specified detail message.
-   * @param msg the detail message
-   */
-  //public CheckException(String msg) {
-  //super(msg);
-  // setMessage(msg);
-  //}
-//}
-
-
 //----------------------------------------------------------------------
 //    checks/static analysis  Slime programs
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.8  2002/07/07 14:57:45  swprakt
+//    ok for today [Steffen]
+//
 //    Revision 1.7  2002/07/05 16:50:54  swprakt
 //    ok
 //
