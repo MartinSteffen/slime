@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.37 2002-07-01 07:36:00 swprakt Exp $
+## $Id: Errors.txt,v 1.38 2002-07-02 07:17:31 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,6 +35,13 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 27:   doc wargings
+ package:   sfcparser
+ class:     non-fatal
+ status:    reported, 2.7.02
+ description: make doc generates again -it was better in the meantime-
+             loads of dire warnings.
+	     See Error 12 in the repaired section
 
 
 Error 26:    clean up
