@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.15 2002-06-25 17:00:53 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.16 2002-06-25 17:16:11 swprakt Exp $
  */
 
 public class Typecheck {
@@ -129,12 +129,19 @@ public class Typecheck {
 
   /** Type checking visitor for actions. An action does not return
    *  a value, so it has type UnitType, when well-typed.
+   *  In our language and type system, each statement int
+   *  the sequence is required to be of unit type. As it
+   *  is an invariant, that a statement's type is indeed
+   *  a unit type (or else an exception is raised), we
+   *  don't check this in the iteration again.
    */
 
   public class ActionV implements Visitors.IAction{
     public Object forAction(String a_name, LinkedList sap) throws Exception{
-      // XXXXX this does not work:    sap.accept(new StmtlistV());
-      // XXX add typechecking for sap
+      for (Iterator i = sap.iterator(); i.hasNext(); ) {
+ 	Stmt sa  = (Stmt)i.next();
+	sa.accept(new StmtV()); 
+      }
       return new UnitType();
     }
   }
@@ -309,6 +316,11 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.15  2002/06/25 17:00:53  swprakt
+//    step typechcking done
+//
+//    [Steffen]
+//
 //    Revision 1.14  2002/06/25 16:52:26  swprakt
 //    all fields of SFC-clause are covered by the recusive
 //    visitor structure of the type checker.
@@ -370,6 +382,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.15 2002-06-25 17:00:53 swprakt Exp $
+//    $Id: Typecheck.java,v 1.16 2002-06-25 17:16:11 swprakt Exp $
 //
 //---------------------------------------------------------------------
