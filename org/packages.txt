@@ -1,0 +1,21 @@
+Here's the short-list of packages + responsible person including
+email-addresses for internal usage.
+
+
+Norbert Boeck:     nboeck@web.de                    (GUI)
+Benjamin Bahnsen:  BenjaminBahnsen@web.de           (Editor)
+Yasin Taskin: y_taskin@web.de                       (Editor)
+Francesco Donini: d0na@libero.it                    (Checks)
+Fabrizio Picchiarecci: f.picchiarelli@tiscalinet.it (Checks)
+Immo Grabe: immograbe@gmx.de                        (Simulator)
+Marco Wendel: Marco.Wendel@gmxpro.net               (Parser)
+Andreas Niemann: ani@informatik.uni-kiel.de         (Plazierung)
+
+
+----?
+
+Jens Schneider von Deimling: jenss@pclab.ifg.uni-kiel.de
+Jens Schoenborn: jes@informatik.uni-kiel.de
+
+
+
