@@ -7,10 +7,9 @@ import slime.absynt.*;
 
 
 /** Standalone file to test the parser on input files
- * @author Martin Steffen, Karsten Stahl
- * @version $Id: TestParser.java,v 1.5 2002-06-26 15:43:11 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+ * @version $Id: TestParser.java,v 1.6 2002-07-11 10:28:46 swprakt Exp $
  *
- * ============== //-->
  */
 public class TestParser {
     
