@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.11 2002-07-09 16:06:45 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.12 2002-07-11 06:05:48 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors (combined into one exception) together with the
  * checker proper, which recurs over the abstract syntax.
@@ -27,6 +27,8 @@ import slime.absynt.*;
  *  <li> all steps and transitions are non-null.
  *  <li> no step occurs twice (by name)
  *  <li> no transition has a non-existing step as source or target (by name)
+ *  <li> no transition has at the same time more that one source and
+ * more than one target.
  * </ul>
  * Note that test of non-nullness is not done for parts other than mentioned (for instance
  * sap's etc.)
@@ -128,7 +130,7 @@ public class Wellformed {
 			   LinkedList declist) throws Exception {
 	for (Iterator i = steps.iterator(); i.hasNext(); ){
 	  Step s = (Step)i.next();
-	  if (s==null) throw new WException("null-step");
+	  if (s == null) throw new WException("null-step");
 	  pp.print(s);
 	  if (stepset.contains(s.name))
 	    throw new WException("duplicated step, named: " + s.name);  
@@ -146,14 +148,14 @@ public class Wellformed {
     }
 
     /** Well-formed visitor for transitions.
-     * We check, whether all source and target steps are indeed
+     * It checks, whether all source and target steps are indeed
      * listed in the previously collected set of steps.
      */
     class TransitionV implements Visitors.ITransition{
-      public Object forTransition(LinkedList source,
+	public Object forTransition(LinkedList source,
 				  Expr guard,
-				  LinkedList target) throws WException {
-	try {
+				    LinkedList target) throws WException {
+	    try {
 	  for (Iterator i = source.iterator(); i.hasNext(); ) {
 	    Step s  = (Step)i.next();
 	    s.accept(new StepV()); 
@@ -170,7 +172,7 @@ public class Wellformed {
       }
     }
     
-    /** consistenct  visitor for one step. This means, checking 
+    /** consistency  visitor for one step. This means, checking 
      *  whether the step (i.e., its name) has been defined.
      */
     
@@ -197,6 +199,9 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.11  2002/07/09 16:06:45  swprakt
+//    OK
+//
 //    Revision 1.10  2002/07/09 14:49:08  swprakt
 //    *** empty log message ***
 //
