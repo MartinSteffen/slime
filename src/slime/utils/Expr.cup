@@ -4,7 +4,7 @@
  * Offers the methods parseExpr 
  *
  * @author Karsten Stahl, Martin Steffen
- * @version $Id: Expr.cup,v 1.3 2002-06-26 15:43:10 swprakt Exp $
+ * @version $Id: Expr.cup,v 1.4 2002-07-04 15:18:23 swprakt Exp $
  *
  * The grammar definition contains 4 parts:
  *    -  initialization declarations and how to generate the parser
@@ -137,16 +137,36 @@ start with expr;
 
 
 
-expr            ::= op:o expr:e
-                    {: RESULT = new slime.absynt.U_expr(o.intValue(),e); :}
-                 |  expr:e1 op:o expr:e2
-                    {: RESULT = new slime.absynt.B_expr(e1,o.intValue(),e2); :}
-                 |  LPAREN expr:e RPAREN
-                    {: RESULT = e; :}
-                 |  var:v
-                    {: RESULT = v; :}
-                 | constval:v
-                    {: RESULT = v; :}
+expr ::=
+|  PLUS     expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.PLUS,e); :}
+|  MINUS    expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.MINUS,e); :}
+|  TIMES    expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.TIMES,e); :}
+|  DIV      expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.DIV,e); :}
+|  AND      expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.AND,e); :}
+|  OR       expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.OR,e); :}
+|  NEG      expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.NEG,e); :}
+|  LESS     expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.LESS,e); :}
+|  GREATER  expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.GREATER,e); :}
+|  LEQ      expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.LEQ,e); :}
+|  GEQ      expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.GEQ,e); :}
+|  EQ       expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.EQ,e); :}
+|  NEQ      expr:e {: RESULT = new slime.absynt.U_expr(slime.absynt.Expr.NEQ,e); :}
+|  expr:e1 PLUS     expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.PLUS,e2); :}
+|  expr:e1 MINUS    expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.MINUS,e2); :}
+|  expr:e1 TIMES    expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.TIMES,e2); :}
+|  expr:e1 DIV      expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.DIV,e2); :}
+|  expr:e1 AND      expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.AND,e2); :}
+|  expr:e1 OR       expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.OR,e2); :}
+|  expr:e1 NEG      expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.NEG,e2); :}
+|  expr:e1 LESS     expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.LESS,e2); :}
+|  expr:e1 GREATER  expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.GREATER,e2); :}
+|  expr:e1 LEQ      expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.LEQ,e2); :}
+|  expr:e1 GEQ      expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.GEQ,e2); :}
+|  expr:e1 EQ       expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.EQ,e2); :}
+|  expr:e1 NEQ      expr:e2 {: RESULT = new slime.absynt.B_expr(e1,slime.absynt.Expr.NEQ,e2); :}
+|  LPAREN expr:e RPAREN  {: RESULT = e; :}
+|  var:v       {: RESULT = v; :}
+| constval:v   {: RESULT = v; :}
   ;
 
 op              ::= PLUS     {: RESULT= new Integer(slime.absynt.Expr.PLUS); :}
