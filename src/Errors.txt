@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.60 2002-07-03 17:58:14 swprakt Exp $
+## $Id: Errors.txt,v 1.61 2002-07-04 12:39:42 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,18 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+Error 37:  expres. parser
+ package:  parser
+ class:    doubtful
+ status:   reported, 4.Juli.02
+ description:  java slime.sfcparser.ParserTest -e "-1 + -4" parst
+             dies als -(1 + (-4)). Das ist vermutlich nicht 
+	     so gewollt, nat"urlicher w"are
+	     
+	             (-1) + (-4)
+	       
+ 
 
 Error 23: deprecation
  package:  gui
