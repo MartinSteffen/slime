@@ -41,7 +41,7 @@ tests:
 	cd test; make all
 
 clean:
-	\rm -f *.class *~ Yylex.java Scanner.lex.java sym.java Parser.java ExprParser.java $(LEXLOGFILE) $(CUPLOGFILE)
+	\rm -f *.class *~ Yylex.java Scanner.lex.java sym.java Parser.java DeclParser.java ExprParser.java $(LEXLOGFILE) $(CUPLOGFILE)
 
 
 localdoc: Parser.java ExprParser.java sym.java
@@ -53,6 +53,9 @@ www:
 
 # ------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 1.5  2002/06/26 15:43:10  swprakt
+#	added declaration parser
+#	
 #	Revision 1.4  2002/06/10 14:41:57  swprakt
 #	added expression parser
 #	
