@@ -1,40 +1,41 @@
 \section{Checks}
+
 \label{sec:checks}
 
-\team{---}
+\team{Fabrizio Picchiarecci and Francesco Donini}
 
-Nur syntaktisch korrekte Systeme können simuliert und als Basis für die
-Codegenerierung verwendet werden.  Deshalb soll die syntaktische
-Korrektheit überprüft werden.
-
-Die Aufgabe beinhaltet die Definition der syntaktischen Korrektheit, d.h.\ 
-der Begriff der Korrektheit (was soll alles gecheckt werden) soll
-formuliert und als Modul implementiert werden.
+Only syntactically correct systems can be meaningfully processed, in our
+case \emph{simulated}. The task of this package is to check syntactical
+consistency. The task comprises the \emph{definition} of what syntactical
+correctness means, i.e., what is guaranteed/checked by this group upon
+which the others can rely on.
 
 
 
 
-\subsubsection*{Schnittstelle}
 
-Mit der Gui. Die Gui stellt darüber hinaus sicher, daß die Pakete
-Graphplatzierung, Simulation, Model-Checking und Codegenerierung nur gecheckte
-Syntax bekommen. Nicht gecheckt wird ``graphische'' Notation (ob Steps
-übereinanderliegen etc.), dafür ist der Editor aus Abschnitt~\ref{sec:editor}
-da.
+\subsubsection*{Interface}
 
+With the gui. The gui has to take care that the packages for
+graph-placement, simulation, model-checking, code-generation \ldots are
+handed over only checked syntax. What needs not to be checked are
+``graphical lapses'', e.g., whether the nodes are placed one over the other
+or similar things. 
+
+\iffalse
 Die Schnittstelle sei (zumindest) eine Methode \texttt{start\_check} mit
 Parameter eines Objektes der abstrakten Syntax.
+\fi
 
 
-Überprüfte Eigenschaften:
+Proposals for things checked:
 \begin{itemize}
-\item Wohlgeformtheit (was das genau ist, bleibt festzulegen)
-\item wohltypisiertheit der Aussdrücke. Wir gehen davon aus, das die
-  Sprache stark typisiert ist. Die Typen der Operatoren sind in
-  Tabelle~\ref{tab:types} festgehalten.
-\item Der Initialstep ist in der Liste der Steps enthalten.
-\item Die Verwendung von ausschließlich \emph{booleschen} Variablen (dies
-  ist für die SMV-Gruppe wichtig.)
+\item well-formedness (to be discussed)
+\item well-typedness of expressions. We assume that the language is
+  well-typed. The types of the operators is shown in Table~\ref{tab:types}.
+\item there's exactly one initial step.
+%\item Die Verwendung von ausschließlich \emph{booleschen} Variablen (dies
+%  ist für die SMV-Gruppe wichtig.)
 \end{itemize}
 
 \begin{table}[htbp]
@@ -59,13 +60,9 @@ Parameter eines Objektes der abstrakten Syntax.
       \neg & \Bool\times\Bool
     \end{array}
   \end{displaymath}
-  \caption{Typen}
+  \caption{Types}
   \label{tab:types}
 \end{table}
-
-
-
-Was genau gecheckt wird, bleibt zu \emph{diskutieren!}
 
 
 

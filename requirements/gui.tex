@@ -1,36 +1,31 @@
-\section{Graphische Benutzerschnittstelle (Gui)}
+\section{Graphical user interface  (Gui)}
 \label{sec:gui}
 
-\team{}
+\team{Norbert Boeck}
 
-\Slime{} besteht aus verschiedenen Komponenten, die ihrerseits mit dem
-Benutzer interagieren. Es gibt ein übergeordnetes Paket, welches für die
-folgenden Aufgaben verantwortlich zeichnet:
-
+\Slime{} is built from various components interacting with the user.
+There's an integrating top-level packages responsible for the following tasks:
 
 \begin{itemize}
-\item\textbf{Start:} Beim Start einer \Slime-Session erscheint ein Fenster,
-  von dem aus es möglich ist, verschiedene Komponenten des Systems
-  aufzurufen.
-\item\textbf{Abhängigkeitsverwaltung:} Eine Simulation kann erst dann
-  aufgerufen werden, wenn das Programm syntaktisch korrekt ist.  Das
-  gleiche gilt für den Modelchecker. Die Aufgabe besteht darin, eine
-  Definition der Abhängigkeiten zwischen den Komponenten festzulegen und
-  sie im Tool zu implementieren.
-\item\textbf{Sessionsverwaltung:} (2te Priorität) Es soll möglich sein,
-  eine Session (geöffnete Fenster, geladene Dateien, gewählte Optionen) zu
-  speichern.  Eine gespeicherte Session sollte wieder hergestellt werden
-  können.
+\item\textbf{Start:} When invoking a \Slime-session, a ``window'' appears
+  which allows to activate the various sub-components of the system.
+\item\textbf{Dependency:} Not all interactions are sensible all situations,
+  for instance: a simulation can be started only on a syntactically correct
+  program. The task is, to define the dependencies between the packages and
+  implement them in the tool.
+\item\textbf{Session management:} (2nd priority) It should be possible to
+  save a session (opened windows, loaded files, chosen options \ldots).  It should be possible to reload a saved session.
 \end{itemize}
-Die Benutzeroberfläche \emph{integriert} alle anderen Komponenten, aus
-diesem Grund ist in dieser Gruppe besonders auf die \emph{Konsistenz} bzw.\ 
-Verletzung dieser zu achten. 
+The user interface \emph{integrates} all other packages. Thus, the one
+responsible for the GUI should be especially aware of inconsistencies
+between the packages and react upon detected violations.
 
-\subsubsection*{Schnittstellen}
+\subsubsection*{Interfaces}
 
-Mit allen anderen Paketen. Siehe die entsprechenden Abschnitte dort. 
+With all other packages, cf.\ the corresponding description there.
 
 
+\iffalse
 \subsubsection*{Design-Entscheidungen}
 \begin{itemize}
 \item Die Oberflache wird mit \textsl{swing}-Komponenten aufgebaut; das
@@ -38,6 +33,7 @@ Mit allen anderen Paketen. Siehe die entsprechenden Abschnitte dort.
 \item Die Oberfläche wird mit dem Werkzeug \textsl{Forte 2.0} aufgebaut,
   das gleiche gilt für den Editor.
 \end{itemize}
+\fi
 
 
 

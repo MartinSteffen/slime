@@ -2,52 +2,41 @@
 \label{sec:introduction}
 
 The document describes informally the functionality of \Slime, a graphical
-tool for editing and analysing SFCs (\textit{\textbf{S}equentia\textbf{l}
+tool for editing and analyzing SFCs (\textit{\textbf{S}equentia\textbf{l}
   funct\textbf{i}on charts \textbf{m}odeling \textbf{e}nvironment}).
 
 
-One crucial part of the implementation, around which most of the rest has been
-arranged, is the \emph{abstract syntax}
+One crucial part of the implementation, around which most of the rest has
+been arranged, is the \emph{abstract syntax} (cf.\ 
+Section~\ref{sec:abstractsyntax})/
 
 
-
-%Sie ist (ohne graphische Komponenten) in
-%Anhang~\ref{sec:AbstrakteSyntax} beschrieben.  
-
-Die weiteren Abschnitte skizzieren Teilaufgaben des Projektes, die jeweils als
-ein \emph{Paket} implementiert werden. Die \emph{optionalen} Aufgaben sind
-sekundär und werden nur hinzugenommen, falls es mehr Gruppen als Aufgaben gibt
-oder falls eine Gruppe sehr schnell fertig ist.
-
-
-Insbesondere wird das Dokument für jedes Paket
+The rest of the documents sketches the parts of the project, each
+implemented by one \emph{package} of the project. Especially, we describe
+in first approximation
 \begin{itemize}
-\item die von ihr bereitgestellte Funktionalität, und
-\item die von den anderen Gruppen erwartete Funktionalität festlegen.
+\item the functionality offered by each package, and
+\item the functionality expected from other packages.
 \end{itemize}
-Dies gilt vor allem für die Gruppe, die die \emph{Integration} über die
-graphische Benutzerschnittstelle übernimmt (Abschnitt~\ref{sec:gui}).
-
-Da wir \emph{früh} mit der \emph{Integration} beginnen wollen, liegt die
-Priorität hierbei auf frühzeitiger Bereitsstellung der versprochenen
-Methoden, ohne daß dabei die Funktionalität bereits erbracht werden muß
-(als \textit{stubs}). Siehe hierzu auch den angegebenen Zeitplan.
 
 
-Von unserer Seite wird eine Implementierung der abstrakten Syntax
-(Abschnitt~\ref{sec:AbstrakteSyntax}) geliefert und ein globaler Rahmen
-für das Projekt (Versionskontrolle etc.).
+As we intend to start \emph{early} with the \emph{integration}, the
+required methods should be provided rather quickly without being (fully)
+implemented (i.e., as \textit{stubs}). See also the time-line of the
+project.
 
-Falls man aus der Sicht seiner eigenen Gruppe Änderungs- oder
-Erweiterungswünsche in Bezug auf die Klassen der abstrakten Syntax hat,
-sollte man sie auch sobald wie möglich anmelden, bzw.\ nach passender
-Warnung an alle selber implementieren.
+We provide as starting point a first implementation of the abstract syntax
+(cf.\ Section~\ref{sec:abstractsyntax}) and a small textual printer in the
+utilities package.
 
+
+
+If from the perspective of a package, changes or extensions seem necessary
+or desirable as far as the abstract syntax is concerned, the wish should be
+uttered and justified as early as possible to all participants (and then
+potentially implemented by us or the requester, if everyone agrees).
 
 %%% Local Variables: 
 %%% mode: latex
-%%% ispell-dictionary: "deutsch"
-%%% TeX-master: "main"
-%%% TeX-master: "main"
 %%% TeX-master: "main"
 %%% End: 

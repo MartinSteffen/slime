@@ -1,63 +1,54 @@
 \section{Editor}
 \label{sec:editor}
 
-\team{---}
+\team{Yasin Taskin and Benjamin Bahnsen}
 
 
-Es wird ein graphischer \emph{Editor} für die SFC's mit den folgenden
-Eigenschaften implementiert:
+The graphical \emph{editor} for SFC's should support the following features:
 
 \begin{itemize}
-\item\textbf{Aufbau:} Es soll möglich sein, ein SFC aus \emph{Schablonen}
-  von \emph{Schritten} (\textit{steps}), Transitionen und Pfaden zu
-  zeichnen. Ein Vorschlag, wie SFCs aussehen können, ist in
-  Abbildung~\ref{fig:SFC} zu sehen.
-\item \textbf{Speichern und Laden:} Die Systeme sollen gespeichert und
-  geladen werden können. Die Verwaltung des Speicherns liegt in der
-  Zuständigkeit der Gui
-\item \textbf{Selektieren:} Einzelne Komponenten sollen selektiert werden
-  können. Das dient zur Vorbereitung weiterer Aktionen.
-\item \textbf{Löschen \& Kopieren:} Es soll möglich sein, selektierte
-  Komponenten zu entfernen und zu kopieren.
-\item \textbf{Highlight}: der Editor soll eine Highlightfunktion zur
-  Verfügung stellen.  Es soll möglich sein, bestimmte Schritte und
-  Transitionen  hervorzuheben. 
+\item\textbf{construction:} The editor must be able to build-up a SFC
+  |perhaps using some templates. A proposal how an SFC could look like is
+  shown in Figure~\ref{fig:SFC}.
+\item \textbf{save and load:} It must be able to store and reload programs
+\item \textbf{select:} Parts of an SFC must be selectable; this is needed
+  for other actions
+\item \textbf{delete and copy:} selected parts can be deleted and copied.
+\item \textbf{highlight}: parts of the displayed SFC, especially steps and
+  transitions, can be marked as highlighted.  
 \end{itemize}
 
 
 
+\subsubsection*{Interfaces}
 
+With the Gui (Section~\ref{sec:gui}), where the division of work between
+gui and editor should be discussed. Furthermore with the simulator
+(Section~\ref{sec:simulator}), concerning the highlighting.  \iffalse Ob es
+auch ein De-Highlighten gibt, ist noch ungeklärt. 
 
-
-
-\subsubsection*{Schnittstelle}
-
-Mit der Gui (Abschnitt~\ref{sec:gui}). Die Aufgabenverteilung zwischen Gui
-und Editor ist zu diskutieren. Desweiteren mit dem Simulator
-(Abschnitt~\ref{sec:simulator}), was das Highlighten betrifft. Ob es auch
-ein De-Highlighten gibt, ist noch ungeklärt.
-
-Auf jeden Fall: eine Methode \texttt{highlight\_state}, als Übergabe
-entweder
+In any case: a method such as \texttt{highlight\_state}, given either
 \begin{itemize}
-\item der Bezeichner des Zustandes, oder
-\item der Zustand als Objekt.
+\item the name of the state, oder
+\item the state as object.
 \end{itemize}
-Die Wahl muß mit dem Simulator oder der Gui vereinbart werden, abhängig
-davon, wer die Methode aufruft.
+The choice must be agreed upon with the simulator or the gui werden,
+depending on who calls the method.\fi
 
-Weitere Methoden, die der Editor zur Verfügung stellen muß, sind der
-Zugriff auf
+\iffalse
+Further methods offered by the editor tZugriff auf
 \begin{enumerate}
 \item das gespeicherte SFC (für den Simulator aus
   Abschnitt~\ref{sec:simulator}) und
 \item Zugriff auf den Status (unveräandert, gespeichert \ldots)
 \end{enumerate}
+\fi
 
-Eine \emph{wichtige} Schnittstelle (wie bei allen) ist die abstrakte
-Syntax.  Um das Zeichnen zu unterstützen, müssen eventuell
-\emph{Koordinaten} in die abstrakte Syntax mit aufgenommen werden, dies ist
-zu diskutieren.
+An important interface (as for all other packages) is with the abstract
+syntax package. To support the graphical representation, the abstract
+syntax classes are equipped with \emph{coordinates,} the meaning and the
+representation is to be discussed among editor and the
+graphical-placement-package. 
 
 
 

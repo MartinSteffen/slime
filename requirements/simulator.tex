@@ -1,39 +1,35 @@
 \section{Simulator}
 \label{sec:simulator}
 
-\team{---}
+\team{Immo Grabe}
 
 
+(Interactive) simulation of a programs is its step-wise execution such that
+the user can initate steps, choose among different alternatives \ldots and
+can follow the execution on the editor. The simulator realizes the
+\emph{semantics} from Section~\ref{sec:semantics}. The following points
+should be implemented
 
-Interaktive Simulation eines Programmes ist deren schrittweise Ausführung, so
-daß der Benutzer die Schritte initiieren und sie anhand der
-Quell-\Slime-Prozesse nachvollziehen kann.  Der Simulator realisiert die
-\emph{Semantik} aus Anhang~\ref{sec:semantik}.
-
-Die Funktionalität umfaßt folgende Punkte:
-
-\paragraph{Berechnung des Nachfolgezustandes:}
-Der Algorithmus zur Berechnung des Nachfolgezustandes soll implementiert
-werden.
-
-\paragraph{Anzeige eines Schrittes:}
-Der vom Simulator genommene Schritt muß im Editor angezeigt werden. Dazu
-wird die Highlight-Funktion des Editors genutzt.
-
-
-Weiteres für erweiterte Funktionalität, was in der ersten Stufe
-unberücksichtigt bleibt:
 \begin{itemize}
-\item Back-stepping
-\item Aufzeichnen (und Speichern) der genommenen Schritte.
+\item computation of a successor state
+\item display of the taken step in the editor, using the highlight-function
+  of the editor.
 \end{itemize}
 
 
-\subsubsection*{Schnittstelle}
+For an extended functionality, one could think of 
+\begin{itemize}
+\item interactive simulation, non-deterministic simulation
+\item back-stepping
+\item recording, storing, and replay of the taken steps
+\end{itemize}
 
-Insbesondere mit dem Editor (wg.\ des Highlightens). Simuliert werden kann
-nur mit geöffnetem Editor. Der \emph{Editor} wird beim Aufruf des
-Simulators übergeben (und nicht (zusätzlich) der SFC).
+
+\subsubsection*{Interface}
+
+With the editor (highlighting). \iffalse Simuliert werden kann nur mit
+geöffnetem Editor. Der \emph{Editor} wird beim Aufruf des Simulators
+übergeben (und nicht (zusätzlich) der SFC). \fi
 
 %%% Local Variables: 
 %%% mode: latex

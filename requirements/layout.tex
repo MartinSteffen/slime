@@ -1,22 +1,19 @@
 
-\section{Platzierung}
-\label{sec:platziering}
+\section{Graphical layout}
+\label{sec:layout}
 
 
-\team{---}
+\team{Andreas Niemann}
 
-Der Editor erlaubt es, SFC's frei-hand zu zeichnen. Daneben
-soll es möglich sein, die Koordinaten der Transitionssysteme automatisch
-zu berechnen.  Dazu muß ein \emph{Graphplazierungsalgorithmus} entworfen
-und implementiert werden.  Die SFC's
-sollen möglichst ``schön'' dargestellt werden.
-
+The editor allows to draw SFC's free-handedly. Besides that it should be
+possible to calculate coordinates of the transition system automatically.
+To this end, a \emph{graphical layout algorithm} must be implemented, that
+takes care of displaying the SFC in a readable manner.
 
 
-\subsubsection*{Schnittstelle}
-Gui und Editor. Die Graphplatzierung darf von gecheckter Syntax ausgehen.
-Was die Bedeutung der Koordinaten betrifft: siehe den entsprechenden
-Abschnitt beim Editor (Abschnitt~\ref{sec:editor}).
+\subsubsection*{Interface}
+Gui and editor. The layouter may assume checked syntax. What the meaning of
+the coordinates is concerned, this must be agreed upon with the editor
 %  Da der Editor genau ein
 % Fenster pro Prozess bereitstellt, müssen nur diese vom Platzierungsgruppe
 % positioniert werde, nicht ganze Programme. Gui übernimmt die
@@ -24,6 +21,7 @@ Abschnitt beim Editor (Abschnitt~\ref{sec:editor}).
 % z.B., derjenige, dessen Fenster den Fokus hat), oder alle Prozesse sollen
 % positioniert werden.
 
+\iffalse
 Angebote: eine Methode \texttt{position\_sfc}, die ein SFC in abstrakter
 Syntax nimmt und ihn mit Koordinaten zurückgibt. Ob dies ebenfalls ein
 Objekt der abstrakten Syntax ist oder einer anderen Datenstruktur, wurde
@@ -32,15 +30,18 @@ in Abschnitt~\ref{sec:editor}).
 
 Für den Anfang sei davon ausgegangen, daß alle Steps \emph{gleich groß}
 seien und Kanten als Geraden dargestellt werden.
+\fi
 
 
 
+\iffalse
 \paragraph{Erweiterungsmöglichkeiten:} In einem ersten Schritt sollen
 \emph{die Steps} plaziert werden, und die Transitionen als
 \emph{Geraden} dazwischen. Falls Zeit ist, kann man versuchen,
 \emph{gebogene} Transitionen zeichnen (d.h. auch berechnen!) zu lassen.
 Sonstige Erweiterungsmöglichkeiten: Steps verschiedener Größen,
 Berücksichtigung der Größe der Labels etc.
+\fi
 
 
 

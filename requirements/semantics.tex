@@ -1,12 +1,12 @@
 \section{Semantics}
 \label{sec:semantics}
 
-The section informally describes the semantics of \textit{Sequential Function
-  Charts (SFC's)}, as realized in the tool \Slime.  The semantics is defined
-for successfully \emph{checked} SFC's (cf.\ Section~\ref{sec:checks});
-unchecked SFC's don't have a meaning.  Especially, the simultor and the
-model-checker (Section~\ref{sec:simulator} and \ref{sec:assert}), which
-realize the semantics, can assume checked syntax
+The section informally describes the semantics of \textit{Sequential
+  Function Charts (SFC's)}, as realized in the tool \Slime.  The semantics
+is defined for successfully \emph{checked} SFC's (cf.\ 
+Section~\ref{sec:checks}); unchecked SFC's don't have a meaning.
+Especially, the simulator, which realizes the semantics, can assume checked
+syntax.
 
 \subsection{Sequential Function Charts}
 
@@ -74,24 +74,21 @@ The cycle is executed repeatedly.  The parts for \emph{reading inputs} and
 ony, i.e., systems whose variables are changed only by the system itself, but
 not by the outside.
 
-Die Transitionen sind mit einem \emph{Guard} ausgestattet sein, einem
-\emph{booleschen Ausdruck.}  Eine Transition kann nur genommen werden,
-falls sich der Guard zu \emph{true} evaluiert.
+Each transition is equipped by a \emph{guard,} i.e., a boolean expression. A transition can be taken only if the guard evaluates to true.
 
-Sind aufgrund einer parallelen Verzweigung \emph{mehrere} Steps aktiv, so
-erfolgt die Ausführung der zugehörigen Aktionen nichtdeterministisch, d.h. sie
-sind in beliebiger Reihenfolge möglich (\emph{Interleaving-Semantik}).
-Folglich gibt es unter Umständen eine Vielzahl verschiedener Läufe eines
-SFC's, abhängig von diesen Ausführungsreihenfolgen.  Der Simulator soll dies
-dadurch realisieren, dass er nach Wahl des Benutzers diesen fragt in welcher
-Reihenfolge die Aktionen ausgeführt werden sollen, oder aber die Reihenfolge
-per Zufallsgenerator festlegt.
+If more than one step is active in a parallel branch, the execution of the
+corresponding action is chosen \emph{non-deterministically}. This means,
+they can be executed in an arbitrary order (\emph{interleaving semantics}).
+Consequently, a program may have a number of different execution runs.  The
+simulator could realize the different runs in that it asks the user, in
+which order the actions should be performed. An alternative is, to determie
+the order by a random generator.
 
-Die Transition von $s_4$ und $s_5$ zu $s_8$ schließt die paralelle Verzweigung
-wieder.  Solche Transitionenen können nur genommen werden, wenn \emph{alle}
-Quell-Steps aktiv sind.  Folglich kann diese Transition nur genommen werden
-kann, wenn ihr Guard zu \emph{true} evaluiert wird, und ferner die beiden
-Steps $s_4$ und $s_5$ aktiv sein.
+
+The transition from $s_4$ and $s_5$ to $s_8$ closes the parallel branch
+again.  Such a transition can be taken only, if \emph{all} source, steps
+are active. In other words, this transition can be taken if it's guard
+evaluates to true and furthermore both $s_4$ und $s_5$ are active.
 
 
 \subsection{States}

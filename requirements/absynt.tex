@@ -4,21 +4,20 @@
 
 \team{Karsten Stahl, Martin Steffen, and all others}
 
-Folgende \emph{erweiterte BNF}-Notation faßt die \emph{abstrakte Syntax}
-als gemeinsame Zwischenrepresentierung zusammen. Abgesehen von einigen
-Namenkonventionen (Großschreibung) ist die Umsetzung in \Java{} trivial.
-Jeder nichtterminale Eintrag wird ein \emph{Klasse.} Alternativen,
-gekennzeichnet durch $\bnfbar$, sind Unterklassen der \emph{abstrakten
-  Klasse,} deren Unterfälle sie bilden. Die Einträge der mittleren Spalte
-werden als \emph{Felder} der Klassen repräsentiert. Die Konstruktoren sind,
-bis auf die Reihenfolge der Argumente, durch die Felder der Klasse
-festgelegt.\footnote{Es gibt Ausnahmen von der letzten Regel, nämlich für
-  die (\Slime-)Typen in den Ausdrücken. Die Typen sind nicht in die
-  Konstruktoren mit aufgenommen. Die entsprechenden Felder werden
-  nachträglich eingetragen.} Die \emph{Listen} der EBNF wurden als
-\texttt{java.lang.LinkedList}-Klassen implementiert. Graphische Information
-zur Positionierung, die nur für den Editor relevant ist, wurde nicht mit in
-die EBNF des Pflichtenheftes mit aufgenommen.
+The following \emph{extended BNF}-notation specifies the \emph{abstract
+  syntax} as common intermediate data represenation for the project. Modulo
+some naming conventions (capitalization), the \Java-implementation is
+straightforward. Each non-terminal is represented as a separate class.
+Alternatives, specified by $\bnfbar$, are subclasses of the \emph{abstract
+  class,} to which they build the alternative. The entries of the middle
+collum constitute the \emph{fields} of the classes. The constructors of the
+classes are conventionally fixed by the fields of the class (up to the
+order of the arguments.\footnote{There are exceptions to this rule, notably
+  for the (\Slime-)types in the expressions. The type-fields are not
+  included in the constructors. The corresponding fields will be set
+  later.}  The \emph{lists} of the EBNF are implemented as
+\texttt{java.lang.LinkedList}.  Graphical position information, relevant
+only for the editor and the layout group, is omitted in the EBNF.
 
 
 \medskip
@@ -28,7 +27,7 @@ die EBNF des Pflichtenheftes mit aufgenommen.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% $Id: absynt.tex,v 1.1 2002-04-15 06:02:25 swprakt Exp $
+%% $Id: absynt.tex,v 1.2 2002-04-22 09:56:55 swprakt Exp $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Local Variables: 
 %%% mode: latex
