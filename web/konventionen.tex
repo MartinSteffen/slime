@@ -1,41 +1,46 @@
 
 
 
-\section*{Konventionen und Spielregeln}
-\label{sec:konventionen}
+\section*{Conventions and rules of the game}
+\label{sec:conventions}
 
-Neben den gesondert ausgeteilten und diskutierten \emph{CVS-Spielregeln}
-sollen folgenden Dinge beachtet werden.
+Besides the \emph{CVS-strategies} which have been handed out and discussed,
+we should take care of the following:
 
 \begin{itemize}
-\item \textbf{Makefile}: jedes Paket, d.h.\ die Wurzel des entsprechenden
-  Unterverzeichnisses soll ein \texttt{Makefile} enhalten. Als erstes Target
-  muß \texttt{make all} unterstützt werden, welche für das Paket den Java
-  Bytecode erzeugt. Daneben soll ein \texttt{make clean} unterstüzt werden,
-  welches den byte-code und temporäre Dateien wieder entfernt. Ein einfaches
-  Beispiel für ein passendes Makefile findet sich im Unterverzeichnis 
-  \texttt{src/templates/}.
-\item \textbf{Dokumentation:} Der \Java-Code soll sinnvoll kommentiert und
-  dokumentiert werden.  Für Information über die Implementierung, die für
-  die Mit-Entwickler von Interesse ist, soll dies mittels \javadoc{}
-  geschehen.  Dies betrifft insbesondere die Methoden, die zur Schnittstelle
-  mit anderen Paketen gehören. Zur öffentlichen (aber projekt-interne)
-  Dokumentation gehört auch der Name der Entwickler und die Version.
-  Weitere sinnvolle Information kann den \emph{Status} der Methode, Klasse,
-  oder sonstigen Programmteils betreffen. Beispielsweise, ob die
-  Implementierung noch virtuell ist (als stub), ob nur Teile der
-  vereinbarten Funktionalität bereitstehen, ob die Funktionalität noch
-  ungetested ist, ob Fehler bekannt sind eind.
+\item \textbf{Makefile}: each package, i.e., the root of the respective
+  sub-directory must containt a \texttt{Makefile}.  Its first target must
+  be \texttt{make all}, which generates for the packges the \Java{} byte
+  code (whatever it takes in intermediate steps).  Additionally, a target
+  \texttt{make clean} must be supported, which removes the byte-code and
+  all temporary files again.  An example for a workable Makefile is
+  contained in the \texttt{absynt}-package which covers the (\emph{very
+    simple}) needs just described.
+
   
-  Die \javadoc-Kommentare dienen unter anderem zur internen Koordination,
-  d.h.\ den anderen Gruppen Schnittstelle und Status des eigenen Paketes
-  mitzuteilen.  Die generierten Seiten werden in regelmäßigen Abständen in
-  unserer
-  \url{http://www.informatik.uni-kiel.de/inf/deRoever/SS02/Java/Slime/doc}{Projektseite}
-  aktualisiert.
+\item \textbf{Documentation:} the \Java-code should be meaningfully
+  commented and documented. Information about the implementations which are
+  relevant for the co-developers, are done in \javadoc. This especially
+  applies to the intended meaning and usage of the public interfaces
+  between the packages. Part of the documentation should be the name of the
+  developer(s) and the version of the file. Further useful information
+  could be the status of the method, class, \ldots, e.g., whether the
+  implementation currently is only available as stub, whether the
+  functionality is finished, but not yet tested, which are the known
+  bugs/features \ldots.
+  
+  The \javadoc-comments may serve the internal communication to state what
+  the package offers (and what it assumes). The generated web-pages are
+  available via the project page, they are refreshed from time to time, and
+  kept
+  \url{http://www.informatik.uni-kiel.de/inf/deRoever/SS02/Java/Slime/doc}{here}.
 \end{itemize}
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% $Id: konventionen.tex,v 1.3 2002-07-10 09:30:20 swprakt Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Local Variables: 
 %%% mode: latex
 %%% TeX-master: "main"
