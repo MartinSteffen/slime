@@ -1,269 +1,269 @@
-//   // --------------------------------------------------------------------
-//  /**
-//   * Absfc2SFCConverter.java<br>
-//   * converts a given {@link slime.absfc.SFCabtree} to<br>
-//   * a required {@link slime.absynt.SFC}.<br>
-//   * @author initialy provided by Marco Wendel<br>
-//   * @version $Id: Absfc2SFCConverter.java,v 1.15 2002-07-09 05:07:28 swprakt Exp $<br>
-//  */
-//  /*
-//   * Changelog:<br>
-//   * $Log: not supported by cvs2svn $
-//   * Revision 1.14  2002/07/08 20:30:24  swprakt
-//   * *** empty log message ***
-//   *
-//   * Revision 1.13  2002/07/08 18:25:22  swprakt
-//   * Corrected processWhile, there was an important
-//   * transition missing. Now it jumps not to whileStart,
-//   * but to loopStart and the guardiancheck is taken 2 times,
-//   * 1. when entering the while-loop and then
-//   * 2. after every successful execution of the loop.
-//   * (mwe)
-//   *
-//   * Revision 1.12  2002/07/08 13:10:06  swprakt
-//   * Small changes due to adding assignment-declarations-values
-//   * as remarked by Andreas Niemann. (mwe)
-//   *
-//   * Revision 1.11  2002/07/04 16:27:18  swprakt
-//   * New Versions without the expressions-operations-precedence-error
-//   * and with added support for doubles and for-loops.
-//   *
-//   * Revision 1.10  2002/07/03 19:41:25  swprakt
-//   * Erste voll funktionsfaehige Absfc2SFCConverter-Version.
-//   * Liefert korrekte Step-Benennung und kompletten Baum.
-//   * Leider noch fehlend: InputAction und OutputAction-
-//   * Behandlung im PrettyPrint. (mwe)
-//   *
-//   * Revision 1.9  2002/07/03 16:50:08  swprakt
-//   * SFC generates and does not conflic with PrettyPrint.
-//   * Previous conflicts with PrettyPrint occured because
-//   * noone felt responsible for input & output. (mwe)
-//   *
-//   * Revision 1.8  2002/07/02 19:26:48  swprakt
-//   * Now supporting StepActions, but the PrettyPrint.java
-//   * fails at Action... Tomorrow we will have a chart
-//   * expaining why to use such a construct as ActionQualifier
-//   * and StepAction and Action and ...
-//   * (mwe)
-//   *
-//   * Revision 1.7  2002/07/02 15:23:49  swprakt
-//   * you may look at example.procs.sfc and the output
-//   * output.procs.txt for an idea what i am doing
-//   * currently. The naming scheme for steps and actions has to
-//   * be improved... (mwe)
-//   *
-//   * Revision 1.6  2002/07/02 12:29:47  swprakt
-//   * Phase 1 completed, correct parsing of complex
-//   * SFC programs into slime.absynt.absfc.SFCabtree.
-//   *
-//   * Phase 2 still in progress: today fixed some bug
-//   * with PrettyPrint4Absfc - partially the print(SFCabtree)
-//   * by simply outcommenting the lists for vars and decls.
-//   *
-//   * Left to do in phase 2:
-//   * verifying the correct(and complete!) creation of
-//   * the varlist, decllist for the slime.absynt.SFC.
-//   *
-//   * 02.07.2002 mwe@informatik.uni-kiel.de
-//   *
-//   * Revision 1.5  2002/06/28 20:30:49  swprakt
-//   * updated package information
-//   *
-//   * Revision 1.4  2002/06/28 15:04:55  swprakt<br>
-//   * Thanks for removing the entry ./sfcparser<br>
-//   * and forgetting ./editor/resources/images.<br>
-//   * Should still compile. (mwe)<br>
-//   * <br>
-//   * Revision 1.3  2002/06/27 14:30:56  swprakt<br>
-//   * tried to remove Error 19: "_public ugliness",<br>
-//   * now header comments consist of two parts, one<br>
-//   * for javadoc and one containing CVS Versio log.<br>
-//   * <br>
-//   * Revision 1.2  2002/06/26 06:33:03  swprakt<br>
-//   * Makefile geaendert nun mit fuer Slime gueltigem CLASSPATH "../..".<br>
-//   * Absfc2SFCConverter.java nun in slime.sfcparser-package.<br>
-//   * Parser nicht veraendert nur neu erzeugt. (mwe)<br>
-//   * <br>
-//   * Revision 1.1  2002/06/25 05:44:08  swprakt<br>
-//   * Phase 2 des Parsers:<br>
-//   * Soll eine Konvertierung von slime.absynt.absfc.SFCabtree<br>
-//   * nach slime.absynt.SFC durchfuehren koennen. Weitere<br>
-//   * Details werden falls moeglich dann am 26.06.2002<br>
-//   * besprochen. (mwe@informatik.uni-kiel.de)<br>
-//    */
-//  // --------------------------------------------------------------------
+ // --------------------------------------------------------------------
+/**
+ * Absfc2SFCConverter.java<br>
+ * converts a given {@link slime.absfc.SFCabtree} to<br>
+ * a required {@link slime.absynt.SFC}.<br>
+ * @author initialy provided by Marco Wendel<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.16 2002-07-09 05:14:24 swprakt Exp $<br>
+*/
+/*
+ * Changelog:<br>
+ * $Log: not supported by cvs2svn $
+ * Revision 1.14  2002/07/08 20:30:24  swprakt
+ * *** empty log message ***
+ *
+ * Revision 1.13  2002/07/08 18:25:22  swprakt
+ * Corrected processWhile, there was an important
+ * transition missing. Now it jumps not to whileStart,
+ * but to loopStart and the guardiancheck is taken 2 times,
+ * 1. when entering the while-loop and then
+ * 2. after every successful execution of the loop.
+ * (mwe)
+ *
+ * Revision 1.12  2002/07/08 13:10:06  swprakt
+ * Small changes due to adding assignment-declarations-values
+ * as remarked by Andreas Niemann. (mwe)
+ *
+ * Revision 1.11  2002/07/04 16:27:18  swprakt
+ * New Versions without the expressions-operations-precedence-error
+ * and with added support for doubles and for-loops.
+ *
+ * Revision 1.10  2002/07/03 19:41:25  swprakt
+ * Erste voll funktionsfaehige Absfc2SFCConverter-Version.
+ * Liefert korrekte Step-Benennung und kompletten Baum.
+ * Leider noch fehlend: InputAction und OutputAction-
+ * Behandlung im PrettyPrint. (mwe)
+ *
+ * Revision 1.9  2002/07/03 16:50:08  swprakt
+ * SFC generates and does not conflic with PrettyPrint.
+ * Previous conflicts with PrettyPrint occured because
+ * noone felt responsible for input & output. (mwe)
+ *
+ * Revision 1.8  2002/07/02 19:26:48  swprakt
+ * Now supporting StepActions, but the PrettyPrint.java
+ * fails at Action... Tomorrow we will have a chart
+ * expaining why to use such a construct as ActionQualifier
+ * and StepAction and Action and ...
+ * (mwe)
+ *
+ * Revision 1.7  2002/07/02 15:23:49  swprakt
+ * you may look at example.procs.sfc and the output
+ * output.procs.txt for an idea what i am doing
+ * currently. The naming scheme for steps and actions has to
+ * be improved... (mwe)
+ *
+ * Revision 1.6  2002/07/02 12:29:47  swprakt
+ * Phase 1 completed, correct parsing of complex
+ * SFC programs into slime.absynt.absfc.SFCabtree.
+ *
+ * Phase 2 still in progress: today fixed some bug
+ * with PrettyPrint4Absfc - partially the print(SFCabtree)
+ * by simply outcommenting the lists for vars and decls.
+ *
+ * Left to do in phase 2:
+ * verifying the correct(and complete!) creation of
+ * the varlist, decllist for the slime.absynt.SFC.
+ *
+ * 02.07.2002 mwe@informatik.uni-kiel.de
+ *
+ * Revision 1.5  2002/06/28 20:30:49  swprakt
+ * updated package information
+ *
+ * Revision 1.4  2002/06/28 15:04:55  swprakt<br>
+ * Thanks for removing the entry ./sfcparser<br>
+ * and forgetting ./editor/resources/images.<br>
+ * Should still compile. (mwe)<br>
+ * <br>
+ * Revision 1.3  2002/06/27 14:30:56  swprakt<br>
+ * tried to remove Error 19: "_public ugliness",<br>
+ * now header comments consist of two parts, one<br>
+ * for javadoc and one containing CVS Versio log.<br>
+ * <br>
+ * Revision 1.2  2002/06/26 06:33:03  swprakt<br>
+ * Makefile geaendert nun mit fuer Slime gueltigem CLASSPATH "../..".<br>
+ * Absfc2SFCConverter.java nun in slime.sfcparser-package.<br>
+ * Parser nicht veraendert nur neu erzeugt. (mwe)<br>
+ * <br>
+ * Revision 1.1  2002/06/25 05:44:08  swprakt<br>
+ * Phase 2 des Parsers:<br>
+ * Soll eine Konvertierung von slime.absynt.absfc.SFCabtree<br>
+ * nach slime.absynt.SFC durchfuehren koennen. Weitere<br>
+ * Details werden falls moeglich dann am 26.06.2002<br>
+ * besprochen. (mwe@informatik.uni-kiel.de)<br>
+  */
+// --------------------------------------------------------------------
 
-//  package slime.sfcparser; // absynt.absfc;
-//  import java.util.LinkedList;
-//  import java.util.Iterator;
-//  // import java.util.Stack; for someone who wants to enhance slime (supporting functions)
-//  import java.lang.String;
-//  import java.io.FileOutputStream;
+package slime.sfcparser; // absynt.absfc;
+import java.util.LinkedList;
+import java.util.Iterator;
+// import java.util.Stack; for someone who wants to enhance slime (supporting functions)
+import java.lang.String;
+import java.io.FileOutputStream;
 
-//  public class Absfc2SFCConverter {
-//      public final slime.absynt.Constval trueGuard =
-//         new slime.absynt.Constval( true );
-//      public final slime.absynt.Constval falseGuard =
-//         new slime.absynt.Constval( false );
-//      public int stepCounter;       /** for enumberating steps */
-//      public int transitionCounter; /** for enumberating transitions */
-//      public int statementCounter;  /** for enumberating statements */
-//      public int declarationCounter;/** for enumberating declarations */
-//      public int actionCounter;     /** for enumberating actions */
-//      // the following counter(used for some naming of objects
-//      // are about to be used in the next version...
-//      public int procStepCounter;       /** for enumberating steps in processes */
-//      public int procTransitionCounter; /** for enumberating transitions in processes */
-//      public int procStatementCounter;  /** for enumberating statements in processes */
-//      public int procDeclarationCounter;/** for enumberating declarations in processes */
-//      public int procActionCounter;     /** for enumberating actions in processes */
-//      public int procProcessCounter;    /** for enumberating processes in processes */
-//      public int processCounter;    /** for enumberating processes in processes */
-//      private int runNr;            /** current state of tree processing - see notes */
-//      public boolean debugflag;     /** turn stdout debugoutput on/off */
-//      private boolean collectProcs; /** first run gathers all processes */
-//      private boolean curInProc;    /** determines whether currently in process or main */
-//      /** remembers previous statement for the preInc and preDec operations */
-//      private slime.absynt.absfc.Absfc prevStmt = null;
-//      private slime.absynt.SFC theSFC = null;
-//      /** global LinkedList's for the SFC Program	-
-//  	they stay the same for a single SFC */
-//      private LinkedList myStepList;
-//      private LinkedList myDeclarationList;
-//      private LinkedList myTransitionList;
-//      private LinkedList myActionList;
-//      private LinkedList myProcessList;
-//      private slime.absynt.Step myIStep;
-//      /** switch whether output should be shown or redirected to outputfilename */
-//      public boolean viewOutputOnStdOut = true;
-//      /** used for output if viewOutputOnStdOut is false */
-//      public String outputfilename = "sfc2dbgout.txt";
-//      // --------------------------------------------------------------------
+public class Absfc2SFCConverter {
+    public final slime.absynt.Constval trueGuard =
+       new slime.absynt.Constval( true );
+    public final slime.absynt.Constval falseGuard =
+       new slime.absynt.Constval( false );
+    public int stepCounter;       /** for enumberating steps */
+    public int transitionCounter; /** for enumberating transitions */
+    public int statementCounter;  /** for enumberating statements */
+    public int declarationCounter;/** for enumberating declarations */
+    public int actionCounter;     /** for enumberating actions */
+    // the following counter(used for some naming of objects
+    // are about to be used in the next version...
+    public int procStepCounter;       /** for enumberating steps in processes */
+    public int procTransitionCounter; /** for enumberating transitions in processes */
+    public int procStatementCounter;  /** for enumberating statements in processes */
+    public int procDeclarationCounter;/** for enumberating declarations in processes */
+    public int procActionCounter;     /** for enumberating actions in processes */
+    public int procProcessCounter;    /** for enumberating processes in processes */
+    public int processCounter;    /** for enumberating processes in processes */
+    private int runNr;            /** current state of tree processing - see notes */
+    public boolean debugflag;     /** turn stdout debugoutput on/off */
+    private boolean collectProcs; /** first run gathers all processes */
+    private boolean curInProc;    /** determines whether currently in process or main */
+    /** remembers previous statement for the preInc and preDec operations */
+    private slime.absynt.absfc.Absfc prevStmt = null;
+    private slime.absynt.SFC theSFC = null;
+    /** global LinkedList's for the SFC Program	-
+	they stay the same for a single SFC */
+    private LinkedList myStepList;
+    private LinkedList myDeclarationList;
+    private LinkedList myTransitionList;
+    private LinkedList myActionList;
+    private LinkedList myProcessList;
+    private slime.absynt.Step myIStep;
+    /** switch whether output should be shown or redirected to outputfilename */
+    public boolean viewOutputOnStdOut = true;
+    /** used for output if viewOutputOnStdOut is false */
+    public String outputfilename = "sfc2dbgout.txt";
+    // --------------------------------------------------------------------
 
-//      // --------------------------------------------------------------------
-//      /**
-//       * <b>Absfc2SFCConverter</b>
-//       * the constructor for creating a converter object, which transform <br>
-//       * a given {@link slime.absynt.absfc.SFCabtree}-tree to an equivalent <br>
-//       * {@link slime.absynt.SFC}-tree. The followgin code explains how to <br>
-//       * use this object: <br><code>
-//       * <br>
-//       * slime.absynt.SFC myWantedSFC = null;<br>
-//       * slime.absynt.absfc.SFCabtree theInputAbsfc =<br>
-//       *      someKindOfParserOutput( fileName );<br>
-//       * slime.absynt.absfc.Absfc2SFCConverter theConverter =<br>
-//       *  new slime.absynt.absfc.Absfc2SFCConverter( theInputAbsfc );<br>
-//       * myWantedSFC = theConverter.getSFC();<br>
-//       * <br>
-//       * </code><br>
-//       * @author initially provided by Marco Wendel<br>
-//       * @version 1.1 should be running good<br>
-//       * @param slime.absynt.absfc.SFCabtree SFC2 the input meta-tree to convert<br>
-//       * @see slime.absynt.absfc.SFCabtree for the input format
-//       * @see slime.absynt.SFC for the output format
-//       * @see slime.sfcparser.ParserTest for an example
-//       **/
-//      public Absfc2SFCConverter( slime.absynt.absfc.SFCabtree absfcobj ) {
-//  	stepCounter             = 0; // for enumberating steps
-//  	transitionCounter       = 0; // for enumberating transitions
-//  	statementCounter        = 0; // for enumberating statements
-//  	actionCounter           = 0; // for enumberating actions
-//  	processCounter          = 0; // for enumberating processes
-//  	procStepCounter         = 0; // for enumberating steps within processes
-//  	procTransitionCounter   = 0; // for enumberating transitions within processes
-//  	procStatementCounter    = 0; // for enumberating statements within processes
-//  	procDeclarationCounter  = 0; // for enumberating declarations within processes
-//  	procActionCounter       = 0; // for enumberating actions within processes
-//  	procProcessCounter      = 0; // for enumberating subprocesses within processes
-//  	runNr                   = 0; // current state of tree processing - see notes
-//  	debugflag               = true;  // turn stdout debugoutput on/off
-//  	collectProcs            = true;  // first run gathers all processes
-//  	curInProc               = false; // determines whether currently in process or main
-//  	slime.absynt.SFC theSFC = new slime.absynt.SFC(); //null
-//  	myStepList	        = new LinkedList(); // the global steplist
-//  	myDeclarationList       = new LinkedList(); // the global declarationlist
-//  	myTransitionList        = new LinkedList(); // the global transitionslist
-//  	myActionList            = new LinkedList(); // the global actionlist
-//  	myProcessList	        = new LinkedList(); // the global processlist
-//  	myIStep                 = new slime.absynt.Step( "initial Step" ); // the initial step
-//  	theSFC                  = convertTree( absfcobj ); // do the convertion
-//      } // end constructor Absfc2SFCConverter( slime.absynt.absfc.SFCabtree )
-//      // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+    /**
+     * <b>Absfc2SFCConverter</b>
+     * the constructor for creating a converter object, which transform <br>
+     * a given {@link slime.absynt.absfc.SFCabtree}-tree to an equivalent <br>
+     * {@link slime.absynt.SFC}-tree. The followgin code explains how to <br>
+     * use this object: <br><code>
+     * <br>
+     * slime.absynt.SFC myWantedSFC = null;<br>
+     * slime.absynt.absfc.SFCabtree theInputAbsfc =<br>
+     *      someKindOfParserOutput( fileName );<br>
+     * slime.absynt.absfc.Absfc2SFCConverter theConverter =<br>
+     *  new slime.absynt.absfc.Absfc2SFCConverter( theInputAbsfc );<br>
+     * myWantedSFC = theConverter.getSFC();<br>
+     * <br>
+     * </code><br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.1 should be running good<br>
+     * @param slime.absynt.absfc.SFCabtree SFC2 the input meta-tree to convert<br>
+     * @see slime.absynt.absfc.SFCabtree for the input format
+     * @see slime.absynt.SFC for the output format
+     * @see slime.sfcparser.ParserTest for an example
+     **/
+    public Absfc2SFCConverter( slime.absynt.absfc.SFCabtree absfcobj ) {
+	stepCounter             = 0; // for enumberating steps
+	transitionCounter       = 0; // for enumberating transitions
+	statementCounter        = 0; // for enumberating statements
+	actionCounter           = 0; // for enumberating actions
+	processCounter          = 0; // for enumberating processes
+	procStepCounter         = 0; // for enumberating steps within processes
+	procTransitionCounter   = 0; // for enumberating transitions within processes
+	procStatementCounter    = 0; // for enumberating statements within processes
+	procDeclarationCounter  = 0; // for enumberating declarations within processes
+	procActionCounter       = 0; // for enumberating actions within processes
+	procProcessCounter      = 0; // for enumberating subprocesses within processes
+	runNr                   = 0; // current state of tree processing - see notes
+	debugflag               = true;  // turn stdout debugoutput on/off
+	collectProcs            = true;  // first run gathers all processes
+	curInProc               = false; // determines whether currently in process or main
+	slime.absynt.SFC theSFC = new slime.absynt.SFC(); //null
+	myStepList	        = new LinkedList(); // the global steplist
+	myDeclarationList       = new LinkedList(); // the global declarationlist
+	myTransitionList        = new LinkedList(); // the global transitionslist
+	myActionList            = new LinkedList(); // the global actionlist
+	myProcessList	        = new LinkedList(); // the global processlist
+	myIStep                 = new slime.absynt.Step( "initial Step" ); // the initial step
+	theSFC                  = convertTree( absfcobj ); // do the convertion
+    } // end constructor Absfc2SFCConverter( slime.absynt.absfc.SFCabtree )
+    // --------------------------------------------------------------------
  
 
 
-//      // --------------------------------------------------------------------
-//      /**
-//       * <b>getSFC</b>
-//       * returns the generated SFC-Object<br>
-//       * @author initially provided by Marco Wendel<br>
-//       * @version 1.1 should be running good<br>
-//       * @see slime.absynt.absfc.SFCabtree for the input format
-//       * @see slime.absynt.SFC for the output format
-//       * @see slime.sfcparser.ParserTest for an example
-//       * @return slime.absynt.SFC the generated SFC.
-//       **/
-//      public slime.absynt.SFC getSFC() {
-//  	return theSFC;
-//      } // end getSFC
-//      // --------------------------------------------------------------------
+    // --------------------------------------------------------------------
+    /**
+     * <b>getSFC</b>
+     * returns the generated SFC-Object<br>
+     * @author initially provided by Marco Wendel<br>
+     * @version 1.1 should be running good<br>
+     * @see slime.absynt.absfc.SFCabtree for the input format
+     * @see slime.absynt.SFC for the output format
+     * @see slime.sfcparser.ParserTest for an example
+     * @return slime.absynt.SFC the generated SFC.
+     **/
+    public slime.absynt.SFC getSFC() {
+	return theSFC;
+    } // end getSFC
+    // --------------------------------------------------------------------
 
-//      private void clearProcessCounters() {
-//  	procStepCounter        = 0;
-//  	procTransitionCounter  = 0;
-//  	procStatementCounter   = 0;
-//  	procDeclarationCounter = 0;
-//  	procActionCounter      = 0;
-//  	procProcessCounter     = 0;
-//      } // end cleanProcessCounters
+    private void clearProcessCounters() {
+	procStepCounter        = 0;
+	procTransitionCounter  = 0;
+	procStatementCounter   = 0;
+	procDeclarationCounter = 0;
+	procActionCounter      = 0;
+	procProcessCounter     = 0;
+    } // end cleanProcessCounters
 
-//      private slime.absynt.SFC convertTree( slime.absynt.absfc.SFCabtree srctree) {
-//  	String sfcname = (String) srctree.sfcprogname;
-//  	LinkedList s = (LinkedList) srctree.stmtlist;
-//  	clearProcessCounters();
-//  	slime.absynt.Step beginProgramStep = initializeSFC();
-//  	slime.absynt.Step nextStmtStartStep = beginProgramStep;
-//  	curInProc    = false;
-//  	collectProcs = true; 
-//  	nextStmtStartStep = processStatementList( s, nextStmtStartStep );
-//  	curInProc    = false;
-//  	collectProcs = false; 
-//  	myStepList.clear();
-//  	myTransitionList.clear();
-//  	myDeclarationList.clear();
-//  	myActionList.clear();
-//  	beginProgramStep = initializeSFC(); 
-//  	nextStmtStartStep = beginProgramStep;
-//  	nextStmtStartStep = processStatementList( s, nextStmtStartStep );
-//  	slime.absynt.Step endProgramStep = nextStmtStartStep;
-//  	theSFC = new slime.absynt.SFC( 
-//  	    (slime.absynt.Step) myIStep,
-//  	    (LinkedList) myStepList,
-//  	    (LinkedList) myTransitionList,
-//  	    (LinkedList) myActionList,
-//  	    (LinkedList) myDeclarationList );
-//  	return theSFC;
-//      } // end of convertTree
+    private slime.absynt.SFC convertTree( slime.absynt.absfc.SFCabtree srctree) {
+	String sfcname = (String) srctree.sfcprogname;
+	LinkedList s = (LinkedList) srctree.stmtlist;
+	clearProcessCounters();
+	slime.absynt.Step beginProgramStep = initializeSFC();
+	slime.absynt.Step nextStmtStartStep = beginProgramStep;
+	curInProc    = false;
+	collectProcs = true; 
+	nextStmtStartStep = processStatementList( s, nextStmtStartStep );
+	curInProc    = false;
+	collectProcs = false; 
+	myStepList.clear();
+	myTransitionList.clear();
+	myDeclarationList.clear();
+	myActionList.clear();
+	beginProgramStep = initializeSFC(); 
+	nextStmtStartStep = beginProgramStep;
+	nextStmtStartStep = processStatementList( s, nextStmtStartStep );
+	slime.absynt.Step endProgramStep = nextStmtStartStep;
+	theSFC = new slime.absynt.SFC( 
+	    (slime.absynt.Step) myIStep,
+	    (LinkedList) myStepList,
+	    (LinkedList) myTransitionList,
+	    (LinkedList) myActionList,
+	    (LinkedList) myDeclarationList );
+	return theSFC;
+    } // end of convertTree
 
-//      private slime.absynt.Step initializeSFC(){
-//  	stepCounter       = 0;
-//  	transitionCounter = 0;
-//  	statementCounter  = 0;
-//  	actionCounter     = 0;
-//  	theSFC	          = new slime.absynt.SFC(); 
-//  	myStepList	  = new LinkedList();
-//  	myDeclarationList = new LinkedList();
-//  	myTransitionList  = new LinkedList();
-//  	myActionList      = new LinkedList();
-//  	slime.absynt.Step sourceStep  = 
-//  	    new slime.absynt.Step( (new Integer ( stepCounter )).toString() ); /** create Step nr. 0 */
-//  	myStepList.add( sourceStep ); /** put initial Step nr. 0 into myStepList */
-//  	stepCounter++; /** increase stepcounter */
-//  	myIStep = sourceStep; /** set SFC.istep to step nr. 0 */
-//  	LinkedList sourceStepList = new LinkedList(); /** create empty list for source steps */
-//  	sourceStepList.addFirst( sourceStep );/** add step nr. 0 to sourceStepList */
-//  	slime.absynt.Step targetStep = 
-//  	    new slime.absynt.Step( (new Integer ( stepCounter )).toString() ); /** create Step nr. 1 */
+    private slime.absynt.Step initializeSFC(){
+	stepCounter       = 0;
+	transitionCounter = 0;
+	statementCounter  = 0;
+	actionCounter     = 0;
+	theSFC	          = new slime.absynt.SFC(); 
+	myStepList	  = new LinkedList();
+	myDeclarationList = new LinkedList();
+	myTransitionList  = new LinkedList();
+	myActionList      = new LinkedList();
+	slime.absynt.Step sourceStep  = 
+	    new slime.absynt.Step( (new Integer ( stepCounter )).toString() ); /** create Step nr. 0 */
+	myStepList.add( sourceStep ); /** put initial Step nr. 0 into myStepList */
+	stepCounter++; /** increase stepcounter */
+	myIStep = sourceStep; /** set SFC.istep to step nr. 0 */
+	LinkedList sourceStepList = new LinkedList(); /** create empty list for source steps */
+	sourceStepList.addFirst( sourceStep );/** add step nr. 0 to sourceStepList */
+	slime.absynt.Step targetStep = 
+	    new slime.absynt.Step( (new Integer ( stepCounter )).toString() ); /** create Step nr. 1 */
 	myStepList.add( targetStep ); /** put initial Step nr. 1 into myStepList */
 	stepCounter++;/** increase stepcounter */
 	LinkedList targetStepList = new LinkedList(); /** create empty list for target steps */
@@ -788,7 +788,7 @@
 
 	    sourceStep = (slime.absynt.Step)loopEnd;
 	    targetStep = loopStart;
-	    newTransition( sourceStep, (slime.absynt.Expr)whileguard, targetStep ); // < I repaired that [Steffen]
+	    newTransition( sourceStep, (slime.absynt.Expr)whileguard, targetStep );
 
 	    sourceStep = (slime.absynt.Step)loopEnd;
 	    targetStep = whileEnd;
