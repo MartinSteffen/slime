@@ -124,14 +124,14 @@ the set of all active steps.
 \subsection{Formal semantics}
 
 In this section, we define the operational semantics for SFCs as realized
-in \Slime. An SFC-program is as a tuple $(S,s_i,T,\Var,\act)$, where $S
-\subseteq \Steps$ is the (finite) set of steps, $s_i \in S$ the initial
-step, and $T$ the set of transitions, where $T \subseteq 2^S \times \Expr
-\times 2^S$. We write $s, s' \ldots$ for typical elements of $\Steps$
-$t,t', t_1, \ldots$ for typical transitions. The set $\Var$ is the set of
-\emph{variables} where we silently assume all variables to be well
+in \Slime. An SFC-program is as a tuple $(S,s_i,T,\Var,\act)$, where $S$ is
+the (finite) set of steps, $s_i \in S$ the initial step, and $T$ the set of
+transitions, where $T \subseteq 2^S \times \Expr \times 2^S$ and $\Expr$ is
+the set of expressions. We write $s, s' \ldots$ for typical elements of
+$\Steps$ $t,t', t_1, \ldots$ for typical transitions. The set $\Var$ is the
+set of \emph{variables} where we silently assume all variables to be well
 typed.\footnote{This corresponds to the agreement, that the simulator can
-  rely on \emph{checked} syntax.} By the typing, some variables are marked
+  rely on \emph{checked} syntax.}  By the typing, some variables are marked
 as input or output variables or both, and we write $\Varin$ and $\Varout$
 for the corresponding subsets of $\Var$. Variables that are neither input
 nor output variable we call \emph{local} variable from the set $\Varloc$
@@ -179,15 +179,14 @@ collected, i.e., the transitions whose source steps are all active and
 whose guards evaluate to $\ltrue$ (cf.\ rule \rn{No-Act}). The rule
 \rn{Next-Steps} calucates the set of active successor steps by working off
 the transitions from $\finished{T}$ one after the other. Note that this
-rule and rule \rn{No-Act} do not have side effects. As a consequence, the
-order in which the \rn{Next-Steps} rule are applied, unlike the order of
-the \rn{Act}-steps, is immaterial.\footnote{The formulation in \rn{No-Act}
-  collecting all enabled transitions and afterwards calculating the
-  successors with \rn{Next-Steps} rests on the assumption that the guards
-  are side-effect free.  Especially, there are no expressions checking for
-  enabledness of transitions.} When the transitions are worked-off, output
-is written in the last stage of the cycle and the system enters phase where
-it waits for new input again (cf.\ rule \rn{Output}).
+rule and rule \rn{No-Act} do not have side effects.\footnote{The
+  formulation in \rn{No-Act} collecting all enabled transitions and
+  afterwards calculating the successors with \rn{Next-Steps} rests on the
+  assumption that the guards are side-effect free. Especially, there are
+  no expressions checking for enabledness of transitions.} When the
+transitions are worked-off, output is written in the last stage of the
+cycle and the system enters phase where it waits for new input again (cf.\ 
+rule \rn{Output}).
 
 
 \begin{table}[htbp]
