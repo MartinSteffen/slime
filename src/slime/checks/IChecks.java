@@ -8,13 +8,13 @@ import absynt.*;
  * Slime tool.
 
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: IChecks.java,v 1.3 2002-06-12 07:31:02 swprakt Exp $
+ * @version  $Id: IChecks.java,v 1.4 2002-06-12 07:41:10 swprakt Exp $
  */
 
 
 public interface IChecks{
-  public boolean isWellTyped (SFC p);
-  public boolean isWellformed (SFC p);
+  public boolean isWellTyped (SFC p)  throws CheckException;
+  public boolean isWellformed (SFC p) throws CheckException;
 }
 
 
@@ -24,6 +24,13 @@ public interface IChecks{
 //	----------------------------------------
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.3  2002/06/12 07:31:02  swprakt
+//	minimalistic interface (no exceptions given as yet),
+//	
+//	compiles.
+//	
+//	M. Steffen
+//	
 //	Revision 1.2  2002/06/12 07:28:46  swprakt
 //	*** empty log message ***
 //	
