@@ -1,5 +1,5 @@
 ################################################################
-## $Id: Todo,v 1.10 2002-06-26 15:48:42 swprakt Exp $
+## $Id: Todo,v 1.11 2002-07-05 06:54:07 swprakt Exp $
 ################################################################
 
 
@@ -20,6 +20,9 @@
   - Perhaps make all Exceptions start with an E?
 
   - make a clean structure/name conventions etc.
+
+  - Make the exceptions a bit more informative (i.e., constructor with
+	additional message)
 
   - Do something useful with the explanation
     add also messages.
