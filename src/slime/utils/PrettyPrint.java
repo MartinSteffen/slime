@@ -2,7 +2,7 @@
 /**
  * Pretty printer for SFC's
  * @author Initially provided by Karsten Stahl.
- * @version $Id: PrettyPrint.java,v 1.4 2002-07-04 16:33:29 swprakt Exp $
+ * @version $Id: PrettyPrint.java,v 1.5 2002-07-05 10:05:48 swprakt Exp $
  */
 
 
@@ -306,7 +306,7 @@ public class PrettyPrint {
     }
 
 
-    private void print(Type type){
+    public void print(Type type){
 	String string;
 	string="[Type] ";
 	if(type !=null){
@@ -340,9 +340,12 @@ public class PrettyPrint {
 //	Pretty-Printer
 //	--------------
 //
-//	$Id: PrettyPrint.java,v 1.4 2002-07-04 16:33:29 swprakt Exp $
+//	$Id: PrettyPrint.java,v 1.5 2002-07-05 10:05:48 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.4  2002/07/04 16:33:29  swprakt
+//	Added support for MOD(13)="%" and POW(14)="^". (mwe)
+//	
 //	Revision 1.3  2002/06/12 18:52:08  swprakt
 //	reorganization of the package-structure
 //	
