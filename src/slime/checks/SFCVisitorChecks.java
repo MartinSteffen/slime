@@ -8,14 +8,18 @@ import slime.absynt.*;
 /** Top-level class providing the functionality for the static
  * analysis par for Slime.
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: Checks.java,v 1.5 2002-06-19 19:40:48 swprakt Exp $
+ * @version  $Id: SFCVisitorChecks.java,v 1.1 2002-06-19 20:14:16 swprakt Exp $
  */
-public class Checks implements SFCVisitorInterface {
+public class SFCVisitorChecks implements SFCVisitorInterface {
     public boolean isWellTyped(SFC p) throws CheckException {
         return true;
     }
     
-    public  boolean isWellformed(SFC p) throws CheckException{
+    public  boolean isWellformed(SFC p) throws CheckException {
+        return true;
+    }
+    
+    public boolean isEmpty(SFC p)throws CheckException {
         return true;
     }
 }
@@ -27,6 +31,9 @@ public class Checks implements SFCVisitorInterface {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.5  2002/06/19 19:40:48  swprakt
+//    IChecks -> SFCVisitorInterface [Thomas Richter]
+//
 //    Revision 1.4  2002/06/12 18:52:00  swprakt
 //    reorganization of the package-structure
 //
