@@ -6,11 +6,12 @@ import java.io.Serializable;
  * Types for the assgnement language of Slime, with the concrete
  * types as subclasses.
  * @author Initially provided by Martin Steffen.
- * @version $Id: Type.java,v 1.5 2002-07-10 14:06:28 swprakt Exp $
+ * @version $Id: Type.java,v 1.6 2002-07-10 14:32:49 swprakt Exp $
  */
 
 public abstract class Type extends Absynt implements Serializable { 
-  //  public abstract Object accept (Visitors.IType ask) throws Exception;
+   public Object accept (Visitors.IType ask) throws Exception
+  { throw new  Exception();}
 }
 
 
@@ -20,9 +21,12 @@ public abstract class Type extends Absynt implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Type.java,v 1.5 2002-07-10 14:06:28 swprakt Exp $
+//	$Id: Type.java,v 1.6 2002-07-10 14:32:49 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.5  2002/07/10 14:06:28  swprakt
+//	We removed the abstract accept methods. [Steffen]
+//	
 //	Revision 1.4  2002/06/24 20:08:11  swprakt
 //	Types extended with visitor methods,
 //	also extended is the type ckecker, which is a visitor to the absynt.

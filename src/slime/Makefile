@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.31 2002-07-09 12:22:37 swprakt Exp $
+# $Id: Makefile,v 1.32 2002-07-10 14:32:48 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -52,7 +52,7 @@ packets:
 	(cd ./gui; make)
 	(cd ./simulator; make)
 	(cd ./editor; make)
-#	(cd ./checks; make)
+	(cd ./checks; make)
 #	(cd ./io; make)
 
 # the checks is temporarily commented out from
