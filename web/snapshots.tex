@@ -11,27 +11,20 @@ can retrieve those snapshots of course with cvs.\footnote{The command is
 
 
 To \emph{execute} one of the archived snapshots, save it at some convenient
-place, and do (from version 3 on)
+place, set the \texttt{CLASSPATH} (or use the \texttt{-classpath} option)
+of \texttt{java}) to include the saved jar-file + the required versions of
+\texttt{JLex} and \texttt{java\_cup}, and do\footnote{Since the archive is
+  not stand-alone in that it requires additionally at run-time the lexer
+  and the parser generator, the archive is not executable with the
+  \texttt{-jar} option.}
 
 \begin{center}
-  \texttt{java -jar slime\_v[x].jar}
+  \texttt{java <slimeversion>.jar slime.Main}
 \end{center}
 
 
-In the versions befor, set the the classpath to point to the jar-archve,
-and invoke the interpreter, i.e., Java's virtual machine as indicated in
-the table below. For instance, after downloading, you can do
-
-\begin{verbatim}
-  java -classpath ./slime_v[x].jar <command>
-\end{verbatim}
-to start the tool. Alternatively, you can set the
-\texttt{CLASSPATH}-variable appropriatly, in which case the
-\texttt{-classpath}-option is not needed.
-
-
-In any case, the \emph{required} version is \texttt{jdk1.4,} earlier
-version may cause trouble, later ones are not tested.
+The \emph{required} version is \texttt{jdk1.4,} earlier version may cause
+trouble, later ones are not tested.
 
 
 \medskip
@@ -46,6 +39,13 @@ version may cause trouble, later ones are not tested.
   &
   command
   \\\hline 
+  4. & \url{snapshots/slime.jar}{18.\ July 2002}
+  &
+  snapshot ``endofsemester'': last-minute integration
+  &
+  \texttt{java slime.jar}
+  \\
+
   3. & \url{snapshots/slime\_v3.jar}{10.\ July 2002}
   &
   snapshot 3: compiles, but not integrated
@@ -70,7 +70,7 @@ version may cause trouble, later ones are not tested.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% $Id: snapshots.tex,v 1.7 2002-07-10 16:43:42 swprakt Exp $
+%% $Id: snapshots.tex,v 1.8 2002-07-18 13:14:10 swprakt Exp $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Local Variables: 
 %%% mode: latex
