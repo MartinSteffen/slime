@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.187 2002-07-19 07:32:00 swprakt Exp $
+## $Id: Errors.txt,v 1.188 2002-07-19 07:35:14 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -47,21 +47,6 @@ Error 92:     CD
  status:      reported, 15.7.02, Steffen
  description: we need a shipping concept for the CD
 
-
-
-Error 91:     jarfile 3 
- package:     parser + integration
- class:       fatal
- status:      reported, 10.7.02, Steffen
- description: starting the tool, clicking on parser,
-              and entering a  file name gives:
-
-               java.lang.NoClassDefFoundError: java_cup/runtime/lr_parser
-
-	       it seems we need to link in cup, or what?
-
-               also things like:  export CLASSPATH=/home/ms/Swprakt/Slime/lib/java_cup.jar:/home/ms/Swprakt/Slime/lib/JLex.jar 	       
-	       do not help
 
 
 
@@ -350,7 +335,7 @@ Error 43:     non-portable code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.187 2002-07-19 07:32:00 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.188 2002-07-19 07:35:14 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -508,6 +493,26 @@ Error 3:      doc warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 91:     jarfile 3 
+ package:     parser + integration
+ class:       fatal
+ status:      reported, 10.7.02, Steffen, repaired, 19.7.02, Steffen
+ description: starting the tool, clicking on parser,
+              and entering a  file name gives:
+
+               java.lang.NoClassDefFoundError: java_cup/runtime/lr_parser
+
+	       it seems we need to link in cup, or what?
+
+               also things like:  export CLASSPATH=/home/ms/Swprakt/Slime/lib/java_cup.jar:/home/ms/Swprakt/Slime/lib/JLex.jar 	       
+	       do not help
+
+	       Repair: for the CD, we include it in the jar,
+	       on the web-page, the user is required to get a
+	       copy of lex/yacc and  set the class path accordingly
+
 
 
 Error 1:  parser warnings
