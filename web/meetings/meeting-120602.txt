@@ -1,0 +1,212 @@
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Subject: Ged"achtnisprotokol der Slime-Besprechung vom 12.6.02
+To: swprakt+slime@informatik.uni-kiel.de
+Date: 12 Jun 2002 19:18:43 +0200
+X-From-Line: ms@informatik.uni-kiel.de  Wed Jun 12 19:18:44 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from sokrates.informatik.uni-kiel.de (IDENT:sn4DZ3BRM7jwx/D5wBQi4R8nxwLC1lym@sokrates [134.245.253.17])
+	by falbala.informatik.uni-kiel.de (8.12.4/8.12.4) with ESMTP id g5CHIh1s025411;
+	Wed, 12 Jun 2002 19:18:43 +0200 (MEST)
+Received: (from ms@localhost)
+	by sokrates.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g5CHIhH28809;
+	Wed, 12 Jun 2002 19:18:43 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+Message-ID: <yfvadq0quto.fsf@sokrates.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:1
+Lines: 117
+X-Gnus-Article-Number: 1   Sun Jul  7 11:53:45 2002
+
+
+
+
+Anwesend: Boeck, Grabe, Niemann, Richter, Stahl, Steffen
+
+Hier soweit meine Erinnerung reicht:
+
+
+o Umstrukturierung: src/<paket> wird umgestellt auf src/slime/<paket>
+	            D.h. die Pakete werde auch entsprechend von beispielsweise
+	
+	            absynt auf slime.absynt umgestellt.
+
+	            Dies entspricht dem Vorschlag von Anfang Mai.
+	            deswegen auch der Freeze.
+
+
+	   Grund: - Bessere "Ubersichtlichkeit was den Einstiegspunkt betrifft
+	          - sauberere Trennung von Developers-Sources und Kundensources
+	          
+
+o Absynt:  
+
+	- SFC werden einen namen (= String) bekommen, 
+	  die alten Konstruktoren bleiber erhalten.
+
+	  dummy-Name: "unknown"
+
+
+o Wir (Richter/Stahl/Steffen) werden einen Not-Checker implementieren.
+
+      Ob er als Visitor oder ``Internalisiert'' oder unter Zuhilfenahme
+      der Funktionalit"at von Immo realisiert wird, werden wir sehen,
+      was der beste Kompromiss aus Einfachheit und Klarheit ist.
+
+
+o Gui: Status: Laut Auskunft: compilierf"ahig, arbeitet mit Editor zusammem,
+	       eine Menge von Funktionalit"at bereits vorhanden.
+
+               Nicht eingecheckt, deswegen kann ich dazu nichts sagen.
+
+	       Eingecheckt wird morgen, nachdem der Freeze
+	       aufgehoben wurde, wobei _volle noch nicht so wichtig ist.
+
+	       - Speichern ("uber serializable) geht problemlos,
+	         laden noch nicht, sollte aber ebenfalls kein Problem sein.
+
+o Parser (in einer Besprechung vorab diskutiert).
+
+	Status: in der Mache, kein Code bislang eingecheckt. insofern Status unklar.
+
+       - der Parser wird einen ``zweiphasigen'' Ansatz realisieren,
+	 will hei"sen:
+
+	     a)  Als erstes parst er seinen Syntax-Vorschlag, mit einer
+	         einfachen und ``eng-anliegenden'' abstrakten Syntax-Datenstrukture.
+	      
+	         Er kann Teile der offiziellen Abstrakten Systax dazu verwenden und
+	         nur seine Zus"atze dazutun (while, if-then-else etc).
+
+                 An welche Stelle/Paket seine Extradatenstrukturen hinlegt, bleibt
+	         dem Parser "uberlassen (wobei Kopieren und damit verdoppeln eine
+	         L"osung ist, die ich nicht favorisieren w"urde,)
+
+
+             b) Danach transformiert er diese Datenstruktur in die 
+	        offizielle Abstrakte Syntax.
+
+	  Teil a) ist relativ straightforward. der Plan ist, dies bis
+	  kommende Woche fertig zu haben. Falls sich das als zu komplex
+	  erweist, wird die Gruppe davon in Kenntnis gesetzt (bzw. um
+	  Hilfe/Unterst"utzung gebeten) Der Rest des Semesters wird
+	  f"ur Teil b) draufgehen, der schwieriger ist als a)
+
+
+o Simulator:   laut Auskunft: bestimmte Kernfunktionalit"at zuverl"assig vorhanden,
+	       daf"ur aber keine Anbindung an den Rest. Wird bis kommende
+	       Woche angestrebt. Optimistische Einsch"atzung des Erreichten,
+	       in dem Sinne da"s im Vergleich von Erriechtem zum noch
+	       zu Implementierendem (laut Semantik) ein Gutteil bereits vorhanden 
+	       ist. Vorraussichtlich (sofern nichts Unvorhergesehenes passiert)
+	       wird das Teil so rechtzeitig fertig da"s man es noch testen kann.
+
+
+	       Teile der Abstrakten Systax wurden vom simulator kopiert und
+	       re-implementiert indem sie auf eigene BEd"urfnisse zugeschnitten
+	       wurden. Teilweise scheinen auch ``Checks'' implementiert worden zu
+	       sein. Ob und wie das allgemein von Nutzen sein kann, ist noch nicht klar.
+
+	       Es wurde auch die Weisheit der Entscheidung, Listen "uber die LinkedList
+	       zu implementieren in Frage gestellt.
+
+	       Entschlu"s:  die Abstrakte Syntax bleibt so wie sie ist, es ist
+	       zu sp"at um es umzustellen, wenn sie nur unbequem ist.
+
+	       Noch nichts eingecheckt.
+
+
+o Editor:   Tritt in seine ``Testphase'', scheint laut Augenschein und kleinen
+	    Probel"aufen  relativ stabil zu laufen. Morgen Vorf"uhrung.
+
+Martin
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     
+
+From nobody Sun Jul  7 12:01:30 2002
+X-From-Line: swprakt@informatik.uni-kiel.de  Wed Jun 12 20:23:59 2002
+Return-Path: <swprakt@informatik.uni-kiel.de>
+Received: from falbala.informatik.uni-kiel.de (IDENT:2zS3i5xfoyt4ECPLN2VOLPt0hUJWzN3X@localhost [127.0.0.1])
+	by falbala.informatik.uni-kiel.de (8.12.4/8.12.4) with ESMTP id g5CINw1t026748
+	(version=TLSv1/SSLv3 cipher=EDH-RSA-DES-CBC3-SHA bits=168 verify=NO);
+	Wed, 12 Jun 2002 20:23:58 +0200 (MEST)
+Received: (from swprakt@localhost)
+	by falbala.informatik.uni-kiel.de (8.12.4/8.12.4/Submit) id g5CINsRR026747;
+	Wed, 12 Jun 2002 20:23:54 +0200 (MEST)
+Received: from mx0.gmx.net (mx0.gmx.net [213.165.64.100])
+	by falbala.informatik.uni-kiel.de (8.12.4/8.12.4) with SMTP id g5CINr1s026740
+	for <swprakt+slime@informatik.uni-kiel.de>; Wed, 12 Jun 2002 20:23:53 +0200 (MEST)
+Received: (qmail 27767 invoked by uid 0); 12 Jun 2002 18:23:48 -0000
+Date: Wed, 12 Jun 2002 20:23:48 +0200 (MEST)
+From: Andreas Niemann <Andreas.Niemann@gmx.de>
+To: swprakt+slime@informatik.uni-kiel.de
+MIME-Version: 1.0
+References: <yfvadq0quto.fsf@sokrates.informatik.uni-kiel.de>
+Subject: Re: Ged"achtnisprotokol der Slime-Besprechung vom 12.6.02
+X-Priority: 3 (Normal)
+X-Authenticated-Sender: #0001663653@gmx.net
+X-Authenticated-IP: [217.227.205.183]
+Message-ID: <11192.1023906228@www5.gmx.net>
+X-Mailer: WWW-Mail 1.5 (Global Message Exchange)
+X-Flags: 0001
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: 8bit
+X-Loop: loop-slime-protection@informatik.uni-kiel.de
+Reply-To: swprakt+slime@informatik.uni-kiel.de
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:14
+Lines: 12
+X-Gnus-Article-Number: 14   Sun Jul  7 11:54:09 2002
+
+Hallo,
+
+ich wuerde als Dummy-Namen für SFC's eher "unnamed" anstatt "unknown"
+bevorzugen. Das SFC selbst ist ja bekannt und sichtbar, es hat halt nur noch keinen
+eigenen Namen.
+
+Gruss
+Andreas
+
+-- 
+GMX - Die Kommunikationsplattform im Internet.
+http://www.gmx.net
+
+From nobody Sun Jul  7 12:01:50 2002
+X-From-Line: ms@informatik.uni-kiel.de  Wed Jun 12 20:25:40 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from sokrates.informatik.uni-kiel.de (IDENT:n+ZfURy/jAjwDZh7uqewAqRhInKUPK2h@sokrates [134.245.253.17])
+	by falbala.informatik.uni-kiel.de (8.12.4/8.12.4) with ESMTP id g5CIPd1s026810;
+	Wed, 12 Jun 2002 20:25:39 +0200 (MEST)
+Received: (from ms@localhost)
+	by sokrates.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g5CIPdS29345;
+	Wed, 12 Jun 2002 20:25:39 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+To: swprakt+slime@informatik.uni-kiel.de
+Subject: Re: Ged"achtnisprotokol der Slime-Besprechung vom 12.6.02
+References: <yfvadq0quto.fsf@sokrates.informatik.uni-kiel.de> <11192.1023906228@www5.gmx.net>
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Date: 12 Jun 2002 20:25:39 +0200
+In-Reply-To: Andreas Niemann's message of "Wed, 12 Jun 2002 20:23:48 +0200 (MEST)"
+Message-ID: <yfv3cvspd5o.fsf@sokrates.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:15
+Lines: 5
+X-Gnus-Article-Number: 15   Sun Jul  7 11:54:09 2002
+
+
+
+Ok, wird gemacht.
+
+Martin
+

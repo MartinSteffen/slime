@@ -1,0 +1,252 @@
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Subject:  Slime Besprechung vom 8.5.02
+To: swprakt+slime@informatik.uni-kiel.de
+Date: 08 May 2002 19:50:02 +0200
+X-From-Line: ms@informatik.uni-kiel.de  Wed May  8 19:50:03 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from sokrates.informatik.uni-kiel.de (IDENT:Tjg3YucotFRLnCAA9IwuUkORiG0za2qP@sokrates [134.245.253.17])
+	by falbala.informatik.uni-kiel.de (8.12.3/8.12.3) with ESMTP id g48Ho3cq005597;
+	Wed, 8 May 2002 19:50:03 +0200 (MEST)
+Received: (from ms@localhost)
+	by sokrates.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g48Ho3r11047;
+	Wed, 8 May 2002 19:50:03 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+Message-ID: <yfvd6w6zfzp.fsf@sokrates.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:5
+Lines: 233
+X-Gnus-Article-Number: 5   Sun Jul  7 11:53:46 2002
+
+
+
+Hier das was mir im Ged"achtnis geblieben ist. Jeder soll durchlesen und
+checken ob ich was wesentliches vergessen habe. Anmerkungen erw"unscht.
+
+
+
+o Semantik:
+  
+  Wir haben die Semantik durchgesprochen. Von den Anwesenden
+  gabe es keine gr"o"seren Einw"ande. Der Hauptbetroffene, Immo,
+  hatte ein paar Bedenken, was die Darstellung betrifft (die Stati)
+  aber es waren keine ernste Schwierigkeiten, sondern eher
+  Geschmacksfragen.
+
+  Hauptdesignmerkmal der Semantik: so einfach wie m"oglich, um
+  allen Schmutz vom Simulator fernzuhalten (entweder durchs
+  checken und verbieten, oder dadurch, da"s der Editor dies
+  nicht malen kann.  Jedenfalls: der Simulator braucht sich
+  was die Semantik betrifft, um nicht komplexere Sachen
+  sorgen, als was dasteht.
+
+
+o Konventionen, die Marco vorgeschlagen hat (email vor einiger Zeit):
+
+    wollen wir partiell realisieren, insofern es die 
+    Einf"uhrung eines Main programms betrifft, + Manifest
+    + Umstrukturierung insofern, als da"s es ein Verzeichnis
+    src/slime geben wird und darunter alle absynt, layout etc.
+
+    Die Umstruktierung erfolgt zu einem festen Stichtag, der 
+    noch bekannt gegeben werden wird.
+
+    Wir sollten es am besten mit dem Termin koppeln, an dem
+    wir die erste Gesamt-Kompilation machen, nicht nur
+    Kompilation per Unterverzeichnis.
+
+	
+    Weitergehende Restrukturierung (checks unterhalb editor oder 
+    "ahnliches, schien nicht zweckm"a"sig)
+
+o Gui/Editor:
+
+     Wir legen, in erster Ausbaustufe fest: es gibt 1 Editor,
+     falls noch Zeit und Energie, kann man sp"ater "uberlegen
+     ob/wie  das Tool damit umgehen kann, da"s mehrere Editoren
+     aufmacht.
+
+    Wir streben keine Neben"laufige Implementierung and (keine
+    threads).
+
+
+Gui: [Rest ist in English, perhaps we'll reuse it in the Requirements-text]
+  
+    - will be resposible (after the abovementioned restructuring) 
+      for the Main-file +manifest.
+
+    - uses swing-classes, especially expects from the editor to
+      use swing components
+
+    - responsible for save and reload of sfcs (not the editor).
+      convention: stored in <file>.slime
+
+
+    - question of what gui exactly expects from the rest: not
+      settled yet. Neither is, what kind of exceptions (if any)
+      each package hands over to gui.
+
+      The proposal (Steffen) that each group at least has an 
+       default-exception (ParseException, LayoutException etc)
+      as superclass of all more specific exceptions was not
+      accepted.
+
+     - Absynt: will be made serializable (Richter/Stahl/Steffen)
+
+o Editor:
+     - plans and requests to other groups unknown. Requests to
+       the editor-group, cf. the other groups
+     
+o  Layout: 
+     - Since the exact way things are displayed is not known as yet,
+       layout can only talk abstractly of the plans: in principle
+
+	  - states,
+	  - size of the states
+	  - font size and text length
+	  - structure of the graph
+	
+       are preliminarily planned to be taken into acount.
+
+     - there will be ``user-options'' to select among various 
+       layout modes.  The exact nature is to be explored
+       and strongly depends on the way things are shown in the
+       editor. An advice that came up: separate the logic of
+       the layout from the exact presentation, i.e., calculate
+       it in a first stage with relative coordinates, and only
+       afterwards: fit it onto the screen.
+ 
+     - testable code is already there!
+
+     - layouter will work with side-effect on the position, but
+       affecting _only_ the position of an sfc but nothing else.
+
+      - in case, editor-group does not appear any more (which
+	would considerably impact the whole thing), Andreas
+	has tentatively volonteered to overtake the editor 
+	(which means, the layouter is cancelled, for the time
+         being) on the ground that the tool with editor but without
+	layouter is a tool, but the other way round is not.
+
+        Let's see and wait (but not too long).
+
+
+o Simulator:
+
+      - tries to decouple himself from parser etc. in that
+	he will avoid textual input and relies on slide bars,
+        radio-buttons, or what-have-you.
+
+      - offers various forms of simulations (single-step, mutli-step ...)
+	(probably single step should be first...)
+
+      - needs an ``editor'' on which the highlighting takes place
+        (current step, next step...) The editor should be in
+       ``NO-EDIT-MODE'' how exectly this will be realized,
+	was not clear.
+
+       - simulator can assume checked SFC's
+
+
+o Checks group: they said ciao.
+
+	Here we got a problem, too. (not as big as when the editor is
+        gone..) This problem was not discussed today, since time was
+        over. We need to solve it at some point soon.
+
+
+o Parser:
+
+	- will us a C-like syntax, supporting some sort of processes [ms: I
+	  wouldn't call it processes, since they are not full-fledged
+	  processes, but some parallel construct] + the normal sequential
+	  control flow.
+
+	   ``;'', if-then-else, while, until
+
+	 - how input/output is treated, is not clear.
+
+	    a) per variable, i.e., as ``typing concept'', so
+	           out int x 
+
+               is an integer output variable, for instance.
+
+	    b) as statement: output x send the value of x to the output.
+               [proposed by Immo]
+
+          - uses .sfc as extension [Now that I think about it: the stuff
+	    that Marco parses are not really sfc,s it's quite a 
+	    different language, but ok.]
+
+          - uses JLex and Cup, which is/will be incoporated in his
+	    subdirectory + some xtra tools,
+
+
+======
+
+   In discussion afterwards, a few question came up, are there any milestones?
+   Wouldn't it be nice that everything is nicely programmed and tested and
+   documented? Should there be document at the end describing the stuff?
+
+   I like this, good proposal :-)
+
+  No, I mean, there are deadline (today was one! well, it was of
+  course actually last week, but there was first of May).
+  In the middle of the semester, there will be another a bit
+  larger discussion/progress review, etc., and at the end
+  the final demo and presentation.  
+
+   In between, the next milestone will be the integration of
+   the packages (i.e., one toplevel main file) which we should plan
+   in 2 weeks or so.
+
+
+   Now, we have stated that everything should be well-documented, that's
+   clear, I mean, we are computer scientists and not first-graders :-)
+
+   There was the proposal (during the discussion) that one should look
+   inside each other's code to read question etc. I think this will not
+   work, at least we should not rely on it and expect everyone to
+   read everyone else's stuff.
+
+   We will set-up and fix more formally an error-reporting mechanism
+   (some format for a text-file) which everyone should take care of.
+   (Bug reported, confirmed, fixed, Feature requested/accepted/planned/implemented etc.)  
+    So, we can be happy if everyone seriously works through this, but 
+    of course, it is not forbidden to read other's code and comment 
+    on it an make proposals. Especially, one is _expected_ to report
+    problems with other packages (and not saying: yes, I knew that 
+    the other stuff did not work, but I did not care, probably
+    someone else find it out as well...)
+
+    Now: for documenting the tool and the implementation: as said,
+    that's a nice idea, we think about what to do with that
+    and how to incorporate that.
+
+That's it,
+
+Martin
+
+
+
+
+    
+
+
+
+
+    
+
+
+
+
+	
+
+
+
+ 
+
+   
+
+
+
+    

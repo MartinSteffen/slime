@@ -1,0 +1,93 @@
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Subject: Notizen der vergangenen Slime-Besprechung, Mittwoch 19.06.02
+To: swprakt+slime@informatik.uni-kiel.de
+Cc: Ben Lukoschus <bls@informatik.uni-kiel.de>
+Date: 24 Jun 2002 07:56:05 +0200
+X-From-Line: ms@informatik.uni-kiel.de  Mon Jun 24 07:56:06 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from sokrates.informatik.uni-kiel.de (IDENT:Wfh7ZbH1wm1NhhnK7WYNNrWAGHwz9Z2p@sokrates [134.245.253.17])
+	by falbala.informatik.uni-kiel.de (8.12.4/8.12.4) with ESMTP id g5O5u51s001381;
+	Mon, 24 Jun 2002 07:56:05 +0200 (MEST)
+Received: (from ms@localhost)
+	by sokrates.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g5O5u5a11984;
+	Mon, 24 Jun 2002 07:56:05 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+Message-ID: <yfvptyh8bka.fsf@sokrates.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:9
+Lines: 73
+X-Gnus-Article-Number: 9   Sun Jul  7 11:53:48 2002
+
+
+
+
+Hallo, Wegen meiner Abwesenheit etwas versp"atet: hier das Kurzprotokoll
+der letzten Gruppenbesprechung, wie von Ben mitnotiert.
+
+Es k"onnte sein, da"s einige Punkte sich bereits gekl"art haben, d.h., die
+Email entspricht einfach dem Stand vom Mittwoch.
+
+=======
+
+
+Anwesend: Thomas Richter, Ben Lukoschus, Immo Grabe, Marco Wendel, Andreas
+          Niemann
+
+
+Simulator:
+	- neue Version ist eingecheckt
+	- Stand-alone geht's
+	- Makefile hat noch fehler, geht aber auch so
+	- Beispiel-SFC aus dem Pflichtenheft kann simuliert werden	
+	   [Martin: das ist cool!!!]
+        - Plan:
+	      Verbesserungen
+	      Anbindung an den Editor
+
+GUI:
+        - konnte nicht kommen, wichtige private Verhinderung 
+	  [Martin: Norbert hatte Ben bescheidgesagt, das ging in
+	   Ordnung]
+        - plant am Mittwoch (19.6.)  was einzuchecken
+
+Parser:
+	- Zwei Stufen Plan wird momentan in Arbeit,
+	  erste Stufe geht
+
+Editor: 
+	- das Ding l"auft, und stabilisiert sich, d.h. keine 
+	  gr"o"sen "Anderungen zu erwarten.
+	- Ausw"ahlen der Transitionen fehtl noch/etwas knifflig
+
+        - Interface zu Karstens Deklarationsparser: letzter Vorschlag
+	  f"ur die Syntax is ok und fast bereits implementiert.
+	
+	- ein wenig Koordinationsbedarf zum Simulator bzg. Ausw"ahlen
+	  (s.o). 
+	  Au"serdem: mu"s der Simulator ein ``redraw'' vom Editor
+	   explizit anfordern?
+
+	- Soll man automatisch oder manuell nicht (mehr) verwendete
+	  Variablen, Steps etc entfernen k"onnen oder ist das nicht
+	  die Aufgabe des Editors?
+
+	- Andreas wartet auf die GUI (z.b. 
+
+	    Disabling von den Kn"opfen,
+	    load/save entfernen)
+
+
+
+
+Algemeines: 
+
+	- F"ur wen ist der Begriff input/output variable relevant? Nur
+	  f"ur Simulator? aber dort sollte man auch nicht-input
+	  Variablen "andern sowie nicht-output Variablen betrachten
+	  k"onnen (white box testing).
+
+=====
+
+Martin
+
+      

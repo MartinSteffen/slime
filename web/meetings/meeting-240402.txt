@@ -1,0 +1,111 @@
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Subject: Ergebnis der Besprechung gestern
+To: swprakt+slime@informatik.uni-kiel.de
+Date: 25 Apr 2002 08:21:29 +0200
+X-From-Line: ms@informatik.uni-kiel.de  Thu Apr 25 08:21:30 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from sokrates.informatik.uni-kiel.de (IDENT:g/aOfiq5Dva3E03zFjKLvFHUUgeLvp2Q@sokrates [134.245.253.17])
+	by falbala.informatik.uni-kiel.de (8.12.3/8.12.3) with ESMTP id g3P6LUcq006046;
+	Thu, 25 Apr 2002 08:21:30 +0200 (MEST)
+Received: (from ms@localhost)
+	by sokrates.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g3P6LTW12054;
+	Thu, 25 Apr 2002 08:21:29 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+Message-ID: <yfvznzsuwly.fsf@sokrates.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:4
+Lines: 92
+X-Gnus-Article-Number: 4   Sun Jul  7 11:53:46 2002
+
+
+
+Hallo, 
+
+das waren gestern das Ergebnis der Besprechung:
+
+Termin: Vorverschoben nach Diskussion auf 15:00 (ohne ct)
+
+	Vorraussichtlich bleibt's beim Seminarraum von gestern
+	(vorbehaltlich Frau Pollakowskis Einspruch)
+
+----
+Abstrakte Syntax: gemeinsam durchgegangen, keine gr"o"seren Proteste
+	 Folgende "Anderungen werden gemacht:
+
+	   - neues Statement ``input x'' damit der Simulator
+	     Benutzerinteraktion machen kann
+
+	   - Accessfunktionen: die Felder werden privat gemacht, 
+	     und mit get/set Zugegriffen
+
+	   - Iteratoren "uber die Abstrakte Syntax. (Letzten
+	     Punkt bin ich nicht richtig vom Kosten/Nuzten 
+	     "uberzeugt, ehrlich gesagt, das denke ich 
+	     nochmal dr"uber nach und machen eine Stellungnahme
+	     n"achste Woche (ich bin auch von dem get/set im
+	     Fall der absynt nicht "uberzeugt, aber gut) wobei
+	     ich nicht sage, da"s es nicht ``schick'' w"are das
+	     alles zu haben, die Frage ist nur, wer wieoft 
+	     durch die Syntax iterieren wird.
+
+           - Weitere Punkte wurden erstmal vertagt: (cloneable/singleton)
+	     bis die Hauptbetroffenen eine fundierte Meinung haben (d.h.
+	     sobald sie absch"atzen k"onnen, was sie aus "ihrer Sicht
+	     und ihren Pl"anen heraus  bevorzugen)
+	     
+	     
+Semantik: wir schreiben eine formalereSemantik auf (operationell)
+          Dies dient vor allem dem Simulator. Die Semantik ist 
+	  bis n"achste Woche fertig im ersten Vorschlag.
+
+
+
+
+Aufgabe bis n"achstes Mal (wie auf dem Zeitplan angek"undigt):
+
+	jeder soll seine Gedanken/Pl"ane  soweit gesammelt haben (und
+	mit uns diskutiert), da"s er n"achste Woche vor der Klasse 
+	sie geordnet zusammenfassen kann und Stellung nehmen kann zu
+	zum Beispiel
+
+		
+	 - Was tut mein Teil?
+
+	 - Was plane ich 
+
+
+         - Wie sieht mein Zeitplan aus (``Als Kern wird als erstes
+	   .... bis ... enstehen... dann ..... Damit steht ein
+	   funktionsf"ahiger Kern. Als m"ogliche Erweiterung (sobald
+	   der Rest steht) k"onnte ich mir vorstellen....
+
+
+         - Wichtig: Welche (wenigen) Schnittstellen bietet mein Paket!
+	            (Klassen-/Interface-/Methodenname, Parameter.
+	
+	            Was erwarte ich umgekehrt von den anderen Gruppen?
+
+
+
+                  
+	
+     - Nobert Boeck (Gui)  denkt eventuell "uber ein paar Usecases f"ur die
+    	                   Verwendung des Tools nach, um die Benutzerf"uhrung
+	                   einfacher Darzustellen.
+
+
+------
+
+Diese Dinge dienen das n"achste Mal zur Diskussion. Wer wei"s und dr"uber
+nachgedacht hat, was er will (und was er nicht will) kann besser
+argumentieren....
+
+Martin
+
+
+
+
+
+
+ 	     
+  

@@ -1,0 +1,104 @@
+From nobody Sun Jul  7 12:34:24 2002
+X-From-Line: ms@informatik.uni-kiel.de  Tue Apr 16 20:18:54 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from sokrates.informatik.uni-kiel.de (IDENT:hr5bw971oFK7Kis0i9XcDadmHYkl00iN@sokrates [134.245.253.17])
+	by falbala.informatik.uni-kiel.de (8.12.3/8.12.3) with ESMTP id g3GIIscq010922;
+	Tue, 16 Apr 2002 20:18:54 +0200 (MEST)
+Received: (from ms@localhost)
+	by sokrates.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g3GIIrq29289;
+	Tue, 16 Apr 2002 20:18:53 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+To: Benjamin Bahnsen <BenjaminBahnsen@web.de>, Norbert Bueck <nbueck@web.de>,
+   Jens Schneider von Deimling <jenss@pclab.ifg.uni-kiel.de>,
+   Immo Grabe <immograbe@gmx.de>, Andreas Niemann <ani@informatik.uni-kiel.de>,
+   Fabrizio Picchiarecci <f.picchiarellu@tiscalinet.it>,
+   Jens Schoenborn <jes@informatik.uni-kiel.de>,
+   Yasin Taskin <y_taskin@web.de>, Marco-Wendel@t-online.de
+Cc: kst@informatik.uni-kiel.de, Thomas Richter <richter@thomas-richter.de>
+Subject: Java Slime: Meeting 
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Date: 16 Apr 2002 20:18:53 +0200
+Message-ID: <yfvzo03bj76.fsf@sokrates.informatik.uni-kiel.de>
+Lines: 79
+Xref: sokrates.informatik.uni-kiel.de cau.SS02.java.slime:48
+X-Gnus-Article-Number: 48   Tue Apr 16 20:19:32 2002
+
+
+
+Hier die Entscheidungen des Treffens von heute:
+
+   o ----- !!NEUER TERMIN!!: ----
+       W"ochentliches Treffen: Mittwoch 16:00Uhr 
+       danach Programmieren
+
+
+   o Einteilung (die meisten scheinen bereits fest entschlossen) 
+       der Pakete soweit bekannt:
+
+      - Simulator: Immo
+      - Platzierung: Andreas
+      - Parser: Marco
+      - Gui:    Norbert
+      - Editor: Yasin + Benjamin
+      - Checks: Fabrizio/Donini
+
+   o Aufgaben der Teilnehmer bis n"achste Woche (innerhalb 2./3. Woche)
+    
+      - R"ucksprachen mit uns, "uber die gew"ahlte Aufgabe/
+	 Abgrenzung etc.
+
+      - Klarmachen der CVS/ssh-Rahmenbedingungen
+
+   o Aufgaben von uns bis n"achste Woche:
+
+      - Vertigstellen der Version 1 des Pflichtenheftes
+      - Kompilationsf"ahigkeit des Pp, absynt.
+      - Einrichten der Mailingliste.
+
+Hier nochmal, wie versprochen, die Vollen Namen der Teilnehmer: (falls
+ keiner bis n"achste Woche Einspruch einlegt (wg. Datenschutz,
+ Internetsuchmachinen), werden wir die Namen zusammen mit den Paketen auf
+ die Webseite der Dokumentation tun (allerdings ohne email-Adressen, um
+ nicht unn"otig spam anzulocken).
+
+---------------------------------------------------------------
+Benjamin Bahnsen
+            net: BenjaminBahnsen@web.de
+
+Norbert Bueck
+            net: nbueck@web.de
+
+Jens Schneider von Deimling
+            net: jenss@pclab.ifg.uni-kiel.de
+
+Immo Grabe
+            net: immograbe@gmx.de
+
+Andreas Niemann
+            net: ani@informatik.uni-kiel.de
+
+Fabrizio Picchiarecci
+            net: f.picchiarellu@tiscalinet.it
+
+Jens Schoenborn
+            net: jes@informatik.uni-kiel.de
+
+Yasin Taskin
+            net: y_taskin@web.de
+
+Marco Wendel
+            net: Marco-Wendel@t-online.de, Marco.Wendel@gmxpro.net
+---------------------------------------------------------------
+
+
+
+   
+
+
+  
+       
+
+
+
+	
+

@@ -1,0 +1,182 @@
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Subject:  Ged"achtnisprotokoll (3. Juli 2002) + WICHTIGE AENDERUNGEN!!!!!
+To: swprakt+slime@informatik.uni-kiel.de
+Date: 03 Jul 2002 17:43:52 +0200
+X-From-Line: ms@informatik.uni-kiel.de  Wed Jul  3 17:43:54 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from gollum.informatik.uni-kiel.de (IDENT:1LyxZB3WdRa446+rpVagfFvnNF8gdUnD@gollum [134.245.248.28])
+	by falbala.informatik.uni-kiel.de (8.12.5/8.12.5) with ESMTP id g63FhrUa024374;
+	Wed, 3 Jul 2002 17:43:54 +0200 (MEST)
+Received: (from ms@localhost)
+	by gollum.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g63Fhra20678;
+	Wed, 3 Jul 2002 17:43:53 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+Message-ID: <yfv7kkczuiv.fsf@gollum.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:3
+Lines: 163
+X-Gnus-Article-Number: 3   Sun Jul  7 11:53:46 2002
+
+
+
+Anwesend: Steffen, Wendel, Niemann
+Abwesend: entschuldigt: Stahl, Richter, Grabe, Boeck
+
+(wobei von jetzt an eine email um 14:56 mit ``heute habe ich keine Zeit''
+nicht mehr als entschuldigtes Fehlen gewertet wird).
+
+Fortschrittsbericht:
+
+------------------------------------------------------
+	 - checks/absynt/utils:  sehr geringer Fortschritt (equals
+	     gemacht + input output var's in den utils.parser
+
+         - simulator: kein Fortschritt (letzter Update im Repos
+	    vom 26.6.02, also von vor einer Woche)
+	
+	 - Editor: wartet im wesentliche auf Fortschritte
+	     von gui
+	
+	 - parser: deutliche Fortschritte, phase 1 abgeschlossen
+	     (nach Eigenaussage), inmitten von Phase 2.
+	     Bestimmte technische Probleme die mit dem
+	     PrettyPrinter zusammenh"angen.
+
+	 - gui: nach Eigenaussage (email) ``im Zeitplan''
+	     im Repositorium:  kein Fortschritt seit 
+	     letzter Woche
+------------------------------------------------------
+	  
+============================================================
+
+Entscheidungen:
+
+	Diskussion und Entscheidung der Anwesenden (abwesende
+	hatten keine Stimme) in Bezug 
+	auf die vergangene Woche diskutierten Fragen in 
+	Bezug auf
+
+	     - CLASSPATH
+	     - Makefile
+	     - jlex + yacc eingecheckte Versionen
+
+        -------------------------------------------------
+	Die bislang Offiziell geltenden Bestimmungen was 
+	den CLASSPATH betrifft werden ge"andert!
+	------------------------------------------------
+
+	es werden Verzeichnise 
+			<WORKDIR>/Slime/lib
+			<WORKDIR>/Slime/build
+
+        angelegt (Aufgabe: Steffen). In lib
+	wird die verbindliche Version es jlex und yacc eingecheckt.
+
+	Alle anderen Varainten von lex, yacc + deren Doku etc
+	werden ersatzlos gel"oscht (ich l"osche sie direkt 
+	im Repos, was eine Umgehung des eigentlichen Versionsmechanismus
+	darstellt. Aber egal, wir wollen diese Versionen auch nicht
+	wieder hervorkramen.
+
+
+	Der CLASSPATH bekommt damit f"ur alle verbindlich den Wert:
+
+           CLASSPATH=<WORKDIR>/Slime/src:<WORKDIR>/Slime/lib/JLex.jar:<WORKDIR>/slime/lib/java_cup.jar:
+
+	[PS: <WORKDIR> ist nat"urlich ein Platzhalter]
+
+	[PPS:  nachdem unter <WORKDIR>/Slime/src 
+	  keinerlei `Fremdmaterial'' mehr eingecheckt wird, insbesondere
+	  keine Lex und yacc Versionen-- spielt die Frage: 
+	
+	      soll Local vor  Global im Pfad vorkommen (wie oben 
+	      festgelegt) oder umgekehrt keine Rolle.      ]
+
+	
+	Weiterhin k"ummert sich Steffen um die Anpassung des globalen
+	Makefiles, was das momentane Kompilation f"ur die Developer
+	betrifft. Die jar-Aufgabe bleibt weiterhin in H"anden Norberts.
+
+	Weiterhin k"ummert sich Steffen um die Anpassung der 
+	Readme's + der offiziellen Webseite, was das betrifft.
+
+
+    o   generierte Files: es werden keine generierten Files mehr eingecheckt,
+	die bereits generierten werden entfernt. M. Steffen "ubernimmt
+	auch dies.
+
+          ==============================================
+
+
+WICHTIG: dies ist nur das Sitzungsprotokoll. Ich schreibe noch eine email,
+sobald die "Anderungen von mir durchgef"uhrt sind! Momentan ist noch alles
+beim alten. also nicht gleich sagen, es geht nicht.
+
+
+Weiteres:
+
+	- Antrag von M. Wendel: Die Developer's log's sollen ``Pflichlekt"ure''
+	    werden, d.h. man verwendet sie als Kommunikationsmittel.
+
+	   Begr"unding: es ist  eine bequeme  (und oft angewandte) Art
+	    der Kommunikation.
+
+	 Antrag ablehnt (2:1). Es ist zu sp"at im Semester, f"ur
+	   die eine Woche lohnt nicht mehr.
+
+	   Will hei"sen, log's kann man verwenden (sie sind auch n"uztlich), 
+	   aber kein Developer kann drauf bauen, da"s ein Anderer
+	   auf seine Log-Eintr"age reagiert (was nicht hei"st, da"s
+	   das verboten ist, wer etwas findet in jemandes anderen log,
+	   welches er einer Reaktion f"ur w"urdig h"alt, darf	
+           das (weiterhin) machen).
+	   Offizielle Kommunikationsmittel bleiben weiterhin
+
+	    - email bzw. email-liste
+	    - pers"onliches Gespr"ach/Telephon
+	    - Error.txt
+
+        - Es hat verschiedene nicht reportierte "Anderungen (von anderen
+	    Leuten) in sfcparser code gegeben, die f"ur Verwirrung sorgten.
+
+	    Ma"snahmen: keiner der Anwesenden war dies, eine Recherche, wer
+	    von den Anderen es war, lohnt nicht.
+
+	- Es gibt ein Problem mit dem utils.prettyprinter (in bestimmten
+	  versionen?) 
+
+           Es wird versucht, das Problem zu beheben, wenn das Problem
+	  verstanden ist (und nicht nur das Symptom) und es in utils.pp
+	  liegt, und Einigkeit herrscht, kann M. Wendel es "andern nach
+	  Vorank"undigung, oder den utils-Leuten die Reparatur "uberlassen.
+
+	  M. Steffen versucht (sobald die Compilation hinhaut), das Problem zu
+	  rekonstruieren und den Fehler zu lokalisieren.
+	
+        - M. Steffen versucht, verst"arkt Kontakt mit N. Boeck
+	  zu bekommen, die Integration k"onnen wir sonst knicken.
+
+
+
+===
+
+Martin
+
+
+
+	
+
+	   
+
+	
+	  
+	
+
+
+	  
+	   	
+
+
+
+	
+	              

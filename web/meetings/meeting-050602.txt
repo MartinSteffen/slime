@@ -1,0 +1,115 @@
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Subject: Slime Besprechung, letzten Mittwoch
+To: javaprakt+slime@informatik.uni-kiel.de
+Date: 07 Jun 2002 16:50:17 +0200
+X-From-Line: ms@informatik.uni-kiel.de  Fri Jun  7 16:50:18 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from sokrates.informatik.uni-kiel.de (IDENT:jTpKeNQtDh4IklMutW2W2Gh0PmVga7T/@sokrates [134.245.253.17])
+	by falbala.informatik.uni-kiel.de (8.12.4/8.12.4) with ESMTP id g57EoH1s029053;
+	Fri, 7 Jun 2002 16:50:17 +0200 (MEST)
+Received: (from ms@localhost)
+	by sokrates.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g57EoHW20204;
+	Fri, 7 Jun 2002 16:50:17 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+Message-ID: <yfvbsanw3bq.fsf@sokrates.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:6
+Lines: 96
+X-Gnus-Article-Number: 6   Sun Jul  7 11:53:47 2002
+
+
+
+
+Hallo, 
+
+hier sind die Ergebnisse der Besprechung vergangenen Mittwoch, 5.6.02.
+
+Anwesend: Steffen, Stahl, Richter, Niemann.
+
+
+
+Editor (Niemann): macht gute Fortschritte, man kann seinen Code
+       bereits testen.
+       die Schnittstellen mit ``Simulator'' scheinen (laut Andreas)
+       soweit klar, die beiden Gruppen stehen in Kontakt.
+
+
+Die anderen Teilnehmer waren nicht anwesend, wobei Immo seine Verhinderung
+vorher angek"undigt hatte.
+
+
+
+Gui:  Status: unklar, aber anscheinden Absprachen zwischen Editor & Gui
+   
+
+Parser: Status: unklar.
+
+
+
+Wir hatten beschlossen, da"s sich Steffen/Stahl/Richter sich um den Parser
+k"ummern, da uns nicht klar war wie es um den offiziellen Parser
+steht. Unsere Notl"osung betrifft nur die Anforderungen, die von Editor (+
+eventuell Simulator) gestellt sind (d.h. SAP + eventuell expressions)
+
+In der Zwischenzeit hat sich Marco (Parser) wieder gemeldet: er ist an der
+Arbeit am Parser weiter dabei. Karsten hat in der Zwischenzeit ersten
+Parsercode als Notl"osung gebaut, der unter momentan
+
+
+	utils
+
+liegt (nicht io). Inwieweit man ``Code-sharing'' mit dem Code was Marco
+produziert/produzieren wird machen kann/soll und wie, bleibt zu
+diskutieren.
+
+
+Weiterer Beschlu"s der Anwesenden: 
+
+
+	erster Integrationstest ist  kommende Woche!
+
+
+d.h., erste gemeinsame Kompilation (ohne nat"urlich volle Funktioalit"at,
+stubs reichen.)
+
+Martin & Karsten
+
+PS: bitte in Zukunft: wenn man, aus welchen Gr"unden auch immer und wenn es
+    die WM ist, verhindert sein sollte, _BESCHEIDSAGEN_. Es ist
+    unerfreulich, rumzusitzen, auf die Uhr zu schauen und zu r"atseln,
+    kommt er, kommt er nicht, ist er noch dabei, hat jemand Neuigkeiten von
+    Gruppe XXX .... Hier nochmal der auszug aus unserer Seite:
+
+> Die zu erbringende Leistung besteht nicht nur aus dem Paket alleine,
+> sondern auch die aktive Projektteilnahme. Das beinhaltet insbesondere
+> wöchentlicher Fortschrittsbericht jeder Gruppe, d.h. explizite
+> Stellungnahme z.B. zu folgenden Punkten
+
+>       gegenwärtiger Status, insbesondere in Hinblick auf den eigenen Zeitplan 
+>       aufgetretene Probleme 
+>       eventuellen Verzögerungen 
+>        (begründete) Wünsche an andere Gruppen 
+>        Stellungnahme zu aufgetretenen Fehlern im eigenen Teil ...
+
+> Ein fester Termin ist das Semesterende. Es ist wichtig, rechtzeitig zu
+> erkennen, daß ein Ziel sich als unrealistisch herausstellt und dies auch
+> in den Besprechungen offen, begründet und realistisch zur Sprache zu
+> bringen, so daß man geeignet und rechtzeitig darauf reagieren kann, z.B.,
+> durch Redefinition der Ziele, Umlagern der Last oder ähnlichem. Wichtiger
+> und am Ende des Projektes befriedigender, als viele Features ein bischen
+> und wackelig realisiert zu haben ist es, eine sinnvolle, geringere
+> Auswahl vollständig und sicher implementiert zu haben.
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

@@ -1,0 +1,176 @@
+From: Martin Steffen <ms@informatik.uni-kiel.de>
+Subject: Ged"achtnisnotiz der heutigen Slime-Besprechung: 26.6.2
+To: swprakt+slime@informatik.uni-kiel.de
+Date: 26 Jun 2002 20:05:28 +0200
+X-From-Line: ms@informatik.uni-kiel.de  Wed Jun 26 20:05:29 2002
+Return-Path: <ms@informatik.uni-kiel.de>
+Received: from gollum.informatik.uni-kiel.de (IDENT:nlNaXX29OW9YrIcWL+EmJ4gu1E+UEgpU@gollum [134.245.248.28])
+	by falbala.informatik.uni-kiel.de (8.12.5/8.12.5) with ESMTP id g5QI5TST024249;
+	Wed, 26 Jun 2002 20:05:29 +0200 (MEST)
+Received: (from ms@localhost)
+	by gollum.informatik.uni-kiel.de (8.10.2+Sun/8.10.2) id g5QI5SA23861;
+	Wed, 26 Jun 2002 20:05:28 +0200 (MEST)
+Sender: ms@informatik.uni-kiel.de
+Message-ID: <yfv4rfp7w5z.fsf@gollum.informatik.uni-kiel.de>
+X-Mailer: Gnus v5.7/Emacs 20.6
+Xref: gollum.informatik.uni-kiel.de cau.SS02.java.slime.besprechungen:2
+Lines: 157
+X-Gnus-Article-Number: 2   Sun Jul  7 11:53:46 2002
+
+
+
+
+Hier das, war ich errinere (da ich viel geredet habe, habe ich nix
+aufgeschriebenn):
+
+
+Anwesend: Stahl, Steffen, Boeck, Grabe, Wendel, Niemann
+
+Abwensend und entschuldigt: Richter.
+-------------------------------------------------------
+
+
+- Stand: 
+
+	alle sind jetzt and Bord, was die gemeinsamen Quellen (unter
+	cvs) betreffen, dh. ein gro"ser Schritt nach vorne, heute!!!!
+
+- wichtiger Punkt: NOCH 3 WOCHEN!
+
+
+- Organisatorisches:
+
+	Abschlusstreffen: 18.7.02, 17:00 hier
+        Thema 
+	  Vorstellung des SFC-Tools, jeder tr"agt vor, was sein Teil
+	  tut und demonstriert es:
+
+	      > Globalvorstellung/Einleitung/Koordination: Norbert
+
+          Dazu: Stellungnahme  (positiv/negativ, sonstwie)
+	        zu allem was die Umsetzung einschlie"slich der
+	        ``Softwareengineeringaspekte''
+	        des Praktikums betrifft, d.h. alles was 
+	        sich zum Gelingen/Nicht-Gelingen des ganzen beigetragen
+	        hat, was man besser machen sollte, was man beibehalten
+	        sollte. Das bezieht sich aber _nicht_ auf eindeutig 
+                technische Details,                d.h.:
+	  
+	
+	         a) nicht erw"unscht ist zu sagen: 
+
+	              Es gab zuviel Exceptions im Paket typecheck,
+	              man h"atte weniger nehmen sollen, stattdessen
+	              h"atte man ein Interface.....
+
+                 b) Erw"ahnenswert w"are:
+
+	             wir h"atten von vorneherein "uberall 
+	             einheitlich Exceptions festgelegt sein 
+	             mu"ssen (was eine Verfahrensfrage ist:
+	             was ist vorgeben und was nicht.)
+
+                Das bedeutet nicht, das a) nicht wissenswert ist
+                (man kann das beispielsweise in die Wishlist.txt
+	        festhalten oder allgemein zur Sprache bringen), 
+	        aber zu Technisch soll es am Ende nicht
+	        werden, eher so die grundlegenden Fragen.
+
+                   - war die emailliste gut oder schlecht?	
+                   - hat sich das Error.txt bew"ahrt oder nicht.
+	           - war die globale Stuktur ok?
+	           - h"atte man coding-conventions vorschreiben sollen?
+
+                und vieles mehr, ich will auch hier nicht festhalten
+	        worauf man antworten soll, denn sonst antwortet
+	        man auf das was ich hier erw"ahne und sonst nichts.
+
+	    Vielleicht gibt es noch genauere info's wie wir 
+	    das durchziehen.
+
+
+Status reports der Gruppen + Plan der verbleibenden 3 Wochen.
+==============================================================
+	(-) ist immer optional.
+
+	checks: 
+
+	   status: wie heute morgen per email berichtet: kompiliert,
+	           alle F"alle abgedeckt, d.h.  die Logik steht (bis auf
+	           .equals-methode, wie geschildert) Ungetestet.
+
+           plan:   o checks einbinden (lassen)
+	           o well-formed checks:
+	              - initialstep _element_ der steps (nicht extra)
+	              - transitionen: die source und target steps m"ussen
+	                existieren
+	              (-) keine doppelten Steps	
+	              (-) Konnektivit"at
+                    
+
+        absynt: 
+	   status: stabil 
+
+	   plan:   - es kommen aber noch in/out Variablen hinzu,
+	              bzw ist bereits geschehen, siehe Karstens
+	                     email.
+                   - es kommt eine Methode zu Var equals hinzu.
+	             (siehe einer der vorangegangene emails)
+
+        utils.Pp: 
+	  plan:   (-) erweiterung um die in/out Variablen  
+
+        - editor: 
+	     status: testphase, im Kern stabil
+	     plan:   - Anbindung, spezielle Diskussion (+ evtl Umsetzung)
+	               mit Simulator bez"uglich Zust"andigkeit was
+	               darstellung betriff, "ahnliches mit Gui
+	             - Ansonsten verschiedene kosmetische Dinge
+	
+        - simulator:
+	     status:  frisch eingecheckt, ``l"auft'' nach
+	              Augenschein.
+             plan:    - einbindung.
+	              - kommende Woche abwesend.
+	              - Nichtdeterminism + mehrere Schritte
+
+  
+         - gui:
+	     status:  soeben eingescheckt.
+	              status unklar, da sich das Projekt nicht
+	              mehr kompilieren l"ast. [Grund des kompilations
+	              fehlers scheint aber nicht an der Gui zu liegen]
+	
+            plan:     - Anbindung!! Abgrenzung/Absprache gegen"uber Editor
+	              - Integration
+	              - Sorgen f"ur ein jar-file, welches
+	                 am ende mit 
+	                       java slime.jar 
+	                das Ding transparent l"auft (und zwar
+	                auch f"ur externe Nutzer).
+	   
+         - parser:
+	     status:    heute morgen eingecheckt.	
+                        status: heute morgen schien's zu kompilieren	
+                        jetzt ist es unklar (wg. globalem Kompilationsfehler)
+	                einige technische Fragen offen
+	     plan:      Diskussion mit den Betreuern bezuglich der technischen
+                        Fragen.
+	                
+                        - globale Vars, keine scopes, einfache Parallelit"at
+	                  keine geschachtelten Kontrollkonstrukte
+	                (-) verschiedene Verkomplizierungen (dynamisches Join,
+	                    Subprozesse, geschachtelte Kontrollkonstrukte,
+	                    Deklarationen an beliebigen Stellen, keine
+	                    Konstanten auf der rechten Seite von Dec's...)
+
+
+===
+
+	Soweit mein Ged"achtnis
+	
+	   
+	                
+
+           
+	
