@@ -1,7 +1,7 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.13 2002-06-23 16:08:36 swprakt Exp $
+# $Id: Makefile,v 1.14 2002-06-23 16:19:00 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -18,6 +18,7 @@ BASELINESDIR  = $(WEBDIR)/baselines
 SNAPSHOTSDIR  = $(WEBDIR)/snapshots
 LOCALDOCDIR   = doc
 PACKAGEDIRS   = slime.absynt\
+	        slime.absynt.absfc\
 	        slime.utils\
 	        slime.layout\
 	        slime.editor\
