@@ -1,7 +1,7 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.15 2002-06-28 15:07:31 swprakt Exp $
+# $Id: Makefile,v 1.16 2002-06-28 15:14:08 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -10,6 +10,11 @@
 # Why should the developers(students) not be informed about
 # what is happening with their files ??? (mwe)
 # $Log: not supported by cvs2svn $
+# Revision 1.15  2002/06/28 15:07:31  swprakt
+# Added Log-Entries.
+# Everybody should see what is happening and who has done what.
+# For this file i recommend "cvs annotate Makefile". (mwe)
+#
 #
 
 #
@@ -81,7 +86,7 @@ clean:
 	(cd ./gui; make clean)
 	(cd ./checks; make clean)
 	(cd ./simulator; make clean)
-	/cd ./sfcparser; make clean)
+	(cd ./sfcparser; make clean)
 
 
 %.class:	%.java
