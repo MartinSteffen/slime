@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.65 2002-07-05 05:57:20 swprakt Exp $
+## $Id: Errors.txt,v 1.66 2002-07-05 06:19:30 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,13 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+Error 39:     parser command line
+ package:     sfcparser
+ class:       curiosity
+ status:      reporter, 5. 7 02, Steffen
+ description: the expression parser accepts multiple arg's
+              -e "2+5" -e "4+5"
 
 Error 38:     compile error
  package:     all
