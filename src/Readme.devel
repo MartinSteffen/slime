@@ -1,5 +1,5 @@
 ############################################################
-# $Id: Readme.devel,v 1.8 2002-07-03 16:11:03 swprakt Exp $
+# $Id: Readme.devel,v 1.9 2002-07-03 16:11:19 swprakt Exp $
 ############################################################
 
 
@@ -22,7 +22,7 @@ o Requirements:
 
      CLASSPATH=<WORKDIR>/Slime/src:\
                <WORKDIR>/Slime/lib/JLex.jar:\
-               <WORKDIR>/slime/lib/java_cup.jar:
+               <WORKDIR>/Slime/lib/java_cup.jar:
     
 o Files and directories
 
