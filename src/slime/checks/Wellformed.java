@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.5 2002-07-08 10:25:27 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.6 2002-07-09 12:58:25 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors as exceptions together with the
  * checker proper, which recurs over the abstract syntax.
@@ -104,6 +104,9 @@ public class Wellformed {
    */
 
   public class Consistency {
+    slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint(); //temporary
+    private HashMap steptable = new HashMap();    // hash table for steps
+
     public boolean check (SFC s)  throws Wellformed.WException {
       try {
 	Boolean  b = (Boolean)(s.accept(new SFCV()));
@@ -112,17 +115,47 @@ public class Wellformed {
       catch (Exception ex) {
 	throw (Wellformed.WException)(ex);}
     }
-    
+
+    /** SFC-visitor for consistency. currently stub.
+     *  The checker guarantes the following properties.
+     *  The steps are unique, and each step mentionend in
+     *  a transition is listed in the set of steps.
+     *  In all cases, steps are identified up-to their
+     *  name, not the instance identity.
+     */
     class SFCV implements Visitors.ISFC{
       public Object forSFC(Step istep, 
 			   LinkedList steps, // list of steps
 			   LinkedList transs,
 			   LinkedList actions, 
 			   LinkedList declist) throws Exception {
+	for (Iterator i = steps.iterator(); i.hasNext(); ){
+	  Step s = (Step)i.next();
+	  pp.print(s);
+	  if (steptable.containsKey(s.name))
+	    throw new WException("duplicated step, named: " + s.name);  
+	  steptable.put(s.name, null);
+	}
 	return (new Boolean(true)); // stub
       }
     }
-  }
+    
+    /** consistency  visitor for a step.
+     */
+    
+//      class StepV implements Visitors.IStep{
+//        public Object forStep(String name, LinkedList actions) throws Exception {
+//  	for (Iterator i = actions.iterator(); i.hasNext(); ) {
+//  	  StepAction sa  = (StepAction)i.next();
+//  	sa.accept(new StepActionV()); 
+//  	}
+//  	return new UnitType();
+//        }
+//      }
+
+
+    
+  } // end of Consistency
 
 
 
@@ -135,6 +168,10 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.5  2002/07/08 10:25:27  swprakt
+//    Stub code for consistency checking added.
+//    [Steffen]
+//
 //    Revision 1.4  2002/07/08 09:01:32  swprakt
 //    *** empty log message ***
 //
