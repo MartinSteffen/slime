@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.17 2002-06-25 09:40:22 swprakt Exp $
+## $Id: Errors.txt,v 1.18 2002-06-25 15:43:04 swprakt Exp $
 ###########################################################
 
 
@@ -40,6 +40,13 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+Error 14:      checked in class files
+ package:      sfcparser
+ status:       non-fatal (but potential source of curious errors
+ status:       reported (via email to Marco), 25.6.02, Steffen
+ description:  non source files (especially class files) should
+               not be checked in.
 
 Error 13:      package structure 
  package:      sfcparser
