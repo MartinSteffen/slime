@@ -1,0 +1,34 @@
+SFC ProgramName {
+// $Id: example.9.sfc,v 1.1 2002-07-04 16:54:46 swprakt Exp $
+bool flag;
+int x1;
+double x3;
+
+split {
+
+ process proc1 {
+
+   flag = false;
+
+   if (!flag) {
+      flag = true;
+
+   } else {
+
+      flag = false;
+
+   } // end of if-then-else
+  
+   x3 = x3 ^ 2;
+   x3 = 0;
+   x1 = x1 % x3;
+    
+  for ( int i = 0 ; i < 9 ; i = i + 1;) { // man beachte das Semikolon hinter dem Statement!
+    x3 = 3.14159;
+  }
+
+ } // end of proc1
+
+} // end of split
+
+} // end of SFC program ProgramName
