@@ -48,7 +48,7 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
     setVisible(true);
   }
 
-  Simulator(Editor ed){
+  public Simulator(Editor ed){
     super("SFC simulator v0.2");
     editor = ed;
     sfc    = new SimSFC(editor.getSelectedSFC());
@@ -159,7 +159,7 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
   }
 
   public void windowClosing(WindowEvent e){
-    System.exit(0);
+      this.dispose(); //System.exit(0);
   }
 
   public void windowActivated(WindowEvent e){

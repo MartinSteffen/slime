@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * Top-level file for the Slime project of the Fortgeschrittenen-Praktikum.
  * <br><br>
  * @author Andreas Niemann
- * @version $Id: Main.java,v 1.2 2002-07-18 08:35:13 swprakt Exp $
+ * @version $Id: Main.java,v 1.3 2002-07-18 11:37:08 swprakt Exp $
  */
 
 
@@ -60,22 +60,12 @@ public final class Main extends JFrame {
 
     public static void main(String[] argv) {
 	SFC sfc1 = Example.getExample1();
-	SFC sfc2 = Example.getExample1();
-	BoolType btype = new BoolType();
-	Variable v_x = new Variable ("a", btype);
-	Constval cfalse = new Constval (false);
-	Declaration dec_x = new Declaration(v_x, btype, cfalse);
-	sfc2.declist.add(dec_x);
+	sfc1.name = "SFC von Folie";
 	for (int i=0; i < sfc1.steps.size(); i++) {
 	    Step step = (Step)(sfc1.steps).get(i);
 	    step.pos = new Position((float)(i*40), (float)(i*40));
 	}
-	for (int i=0; i < sfc2.steps.size(); i++) {
-	    Step step = (Step)(sfc2.steps).get(i);
-	    step.pos = new Position((float)(i*40), (float)(i*40));
-	}
 	Editor editor = new Editor(sfc1);
-	editor.add(sfc2);
 	new Main(editor);
     }
 

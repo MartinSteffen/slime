@@ -3,6 +3,8 @@ package slime.editor;
 import slime.absynt.*;
 import slime.layout.*;
 import slime.sfcparser.*;
+import slime.simulator.*;
+import slime.checks.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -19,10 +21,10 @@ import java.io.File;
  * It contains a status message line and several buttons for operating
  * on a sfc.
  * <br><br>
- * Status: nearly complete <br>
- * known bugs: - (But some expected) <br>
+ * Status: complete <br>
+ * known bugs: - <br>
  * @author Andreas Niemann
- * @version $Id: MenuAndStatePanel.java,v 1.9 2002-07-17 22:18:45 swprakt Exp $
+ * @version $Id: MenuAndStatePanel.java,v 1.10 2002-07-18 11:37:09 swprakt Exp $
  */
 
 public final class MenuAndStatePanel extends JPanel {
@@ -237,7 +239,7 @@ public final class MenuAndStatePanel extends JPanel {
 	this.layoutButton = this.getSmallGapButton("Layout", "layout");
 	this.layoutButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
-		    statusMessage.setText("Layouter tries his best at his actual implementation ...");
+		    setStatusMessage("Layouter tries his best at his actual implementation ...");
 		    ESFC eSFC = editor.getExtendedSelectedSFC();
 		    Layouter.position_sfc(eSFC.getSFC());
 		    eSFC.getDrawBoard().repaint();
@@ -252,14 +254,19 @@ public final class MenuAndStatePanel extends JPanel {
 	this.checkButton = this.getSmallGapButton("Check", "check");
 	this.checkButton.addActionListener(new ActionListener() {
 		public void actionPerformed (ActionEvent e) {
-		    statusMessage.setText("Checker not yet implemented.");
 		    ESFC eSFC = editor.getExtendedSelectedSFC();
 		    eSFC.setChecked(true);
-		    //		    if (eSFC.getSFC().istep == null) {
-		    //statusMessage.setText("Check fails, there is no initial step in this SFC.");
-		    //eSFC.setChecked(false);
-		    //}
-		    
+		    try {
+			Wellformed wellformed = new Wellformed();
+			wellformed.check(eSFC.getSFC());
+			Typecheck typecheck = new Typecheck();
+			typecheck.check(eSFC.getSFC());
+			setStatusMessage("Checker found no errors.");
+		    } catch (CheckException ce) {
+			String ceMessage = editor.getExceptionMessage(ce);
+			setStatusMessage(ceMessage);
+			eSFC.setChecked(false);
+		    } 
 		    enableButtons();
 		}
 	    });
@@ -470,14 +477,19 @@ class SimulatorTest extends Thread {
 	this.editor.setSimulatorActive(true);
     }
 
-    public void run() {	
-	editor.getItemFromList(editor.getSelectedSFC().steps,
-			       "Select one step.");
-	editor.getItemFromList(editor.getSelectedSFC().transs,
-			       "Select one transition.");
-	editor.getItemFromList(editor.getSelectedSFC().actions,
-			       "Select one action.");
-	this.editor.setSimulatorActive(false);
+    public void run() {
+	if(editor.getSelectedSFC().name.equals("First SFC")) {
+	    editor.getItemFromList(editor.getSelectedSFC().steps,
+				   "Select one step.");
+	    editor.getItemFromList(editor.getSelectedSFC().transs,
+				   "Select one transition.");
+	    editor.getItemFromList(editor.getSelectedSFC().actions,
+				   "Select one action.");
+	} else {
+	    Simulator simulator = new Simulator(this.editor);
+	    while (simulator.isVisible()) {}
+	}
+  	this.editor.setSimulatorActive(false);
     }
 }    
     

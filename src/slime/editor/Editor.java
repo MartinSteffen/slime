@@ -3,6 +3,7 @@ package slime.editor;
 import slime.absynt.*;
 import slime.layout.*;
 import slime.utils.*;
+import slime.checks.*;
 
 import java.util.LinkedList;
 import java.util.Hashtable;
@@ -21,7 +22,7 @@ import javax.swing.border.*;
  * Known bugs: Some semantic problems. 
  * But who cares when there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.20 2002-07-17 22:18:45 swprakt Exp $
+ * @version $Id: Editor.java,v 1.21 2002-07-18 11:37:09 swprakt Exp $
  */
 
 // FIX ME: Double Buffering dringend notwendig !!!
@@ -370,6 +371,7 @@ public final class Editor extends JComponent implements ChangeListener {
 		if (isIStep)
 		    this.eSFC.getSFC().istep = null;
 	    step.actions = this.getStepActions(actionScrollList.getList());
+	    this.checkSFC();
 	}
     }
     
@@ -685,8 +687,19 @@ public final class Editor extends JComponent implements ChangeListener {
 		    expr = parser.parseExpr(exprString);
 		} catch (ParseException e) {
 		    this.menuAndStatePanel.setStatusMessage("Parser fails on Expr");
+		    return null;
 		} catch (Exception e) {
 		    this.menuAndStatePanel.setStatusMessage("Oh no !!!!");
+		    return null;
+		}
+		try {
+		Typecheck typecheck = new Typecheck();
+		typecheck.check(this.eSFC.getSFC());
+		typecheck.check(expr);
+		} catch (CheckException ce) {
+		    String ceMessage = this.getExceptionMessage(ce);
+		    this.menuAndStatePanel.setStatusMessage(ceMessage);
+		    return null;
 		}
 		return expr;
 	    }
@@ -736,6 +749,7 @@ public final class Editor extends JComponent implements ChangeListener {
 	    }
 	    action.sap = newAction.sap;
 	    this.menuAndStatePanel.setStatusMessage("Action changed.");
+	    this.checkSFC();
 	    this.updateWindow();
 	} else {
 	    this.menuAndStatePanel.setStatusMessage("Action has not changed.");
@@ -749,6 +763,7 @@ public final class Editor extends JComponent implements ChangeListener {
 	    if (!this.eSFC.actionNameExists(newAction.a_name)) {
   		this.eSFC.addAction(newAction);
 		this.menuAndStatePanel.setStatusMessage("New action added.");
+		this.checkSFC();
 		this.updateWindow();
 	    } else {
 		this.menuAndStatePanel.setStatusMessage("Name of action already exists. Modify action by double clicking on it in this list.");
@@ -788,6 +803,7 @@ public final class Editor extends JComponent implements ChangeListener {
 	    declaration.var.outputvar = newDeclaration.var.outputvar; 
 	    declaration.type = newDeclaration.type;
 	    declaration.val  = newDeclaration.val;
+	    this.checkSFC();
 	    this.updateWindow();
 	} else {
 	    this.menuAndStatePanel.setStatusMessage("Declaration has not changed.");
@@ -800,6 +816,7 @@ public final class Editor extends JComponent implements ChangeListener {
 	if (newDeclaration != null) { 
 	    this.eSFC.getSFC().declist.add(newDeclaration);
 	    this.menuAndStatePanel.setStatusMessage("New declaration added.");
+	    this.checkSFC();
 	    this.updateWindow();
 	} else {
 	    this.menuAndStatePanel.setStatusMessage("No declaration added.");
@@ -957,7 +974,7 @@ public final class Editor extends JComponent implements ChangeListener {
 	this.menuAndStatePanel.setStatusMessage(message);
 	this.selectedItem = null;
 	this.stateChanged(null);
-	while (!items.contains(this.selectedItem)) {}
+	while (!items.contains(this.selectedItem) && (items.size()!=0)) {}
 	this.setColors(items);
 	this.stateChanged(null);
 	return (slime.absynt.Absynt)this.selectedItem;
@@ -974,8 +991,40 @@ public final class Editor extends JComponent implements ChangeListener {
 	for (int i=0; i<objects.size(); i++) 
 	    this.eSFC.deHighlight(objects.get(i));
     }
-}
 
+    protected String getExceptionMessage(CheckException ce) {
+	String message = ce.getMessage();
+	if (ce instanceof Typecheck.IncompleteDeclaration) 
+	    message = ((Typecheck.IncompleteDeclaration)ce).getMessage();
+	if (ce instanceof Typecheck.MissingType) 
+	    message = ((Typecheck.MissingType)ce).getMessage();
+	if (ce instanceof Typecheck.NonuniqueDeclaration) 
+	    message = ((Typecheck.NonuniqueDeclaration)ce).getMessage();
+	if (ce instanceof Typecheck.NoUsertype) 
+	    message = ((Typecheck.NoUsertype)ce).getMessage();	    
+	if (ce instanceof Typecheck.TypeMismatch) 
+	    message = ((Typecheck.TypeMismatch)ce).getMessage();
+	if (ce instanceof Typecheck.UnbooleanGuard) 
+	    message = ((Typecheck.UnbooleanGuard)ce).getMessage();
+	if (ce instanceof Typecheck.UndeclaredVariable) 
+	    message = ((Typecheck.UndeclaredVariable)ce).getMessage();	
+	return message;  
+    }
+    
+    private void checkSFC() {
+	try {
+	    Wellformed wellformed = new Wellformed();
+	    wellformed.check(eSFC.getSFC());
+	    Typecheck typecheck = new Typecheck();
+	    typecheck.check(eSFC.getSFC());
+	} catch (CheckException ce) {
+	    String ceMessage = this.getExceptionMessage(ce);
+	    this.menuAndStatePanel.setStatusMessage(ceMessage);
+	    eSFC.setChecked(false);
+	} 
+    }
+}
+    
 
 
 
