@@ -1,3 +1,4 @@
+package slime.sfcparser;
 import slime.absynt.Expr;
 import java.io.*;
 
@@ -6,9 +7,14 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.2 2002-06-26 06:33:04 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.3 2002-06-26 07:28:38 swprakt Exp $
  * ---------------------------------------------------------------
  * $Log: not supported by cvs2svn $
+ * Revision 1.2  2002/06/26 06:33:04  swprakt
+ * Makefile geaendert nun mit fuer Slime gueltigem CLASSPATH "../..".
+ * Absfc2SFCConverter.java nun in slime.sfcparser-package.
+ * Parser nicht veraendert nur neu erzeugt. (mwe)
+ *
  * Revision 1.1  2002/06/25 06:01:31  swprakt
  * added Absfc2SFCConverter Object and
  * theConverter.getSFC(); missing return of SFC,
