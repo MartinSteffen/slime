@@ -1,5 +1,5 @@
 ############################################################
-## $Id: Readme,v 1.7 2002-07-11 12:49:24 swprakt Exp $
+## $Id: Readme,v 1.8 2002-07-16 08:40:24 swprakt Exp $
 ############################################################
 
 
@@ -23,6 +23,7 @@ The package contains the following files and subdirectories:
                          tracking the progress etc.
     o org/               internal information about members etc
     o build/             
+    o cd/                info's for the cd-rom
     o src/               the Java-sources
     o tex/               common LaTeX-macros 
     o doc/               generated javadoc stuff
