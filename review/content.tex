@@ -1,67 +1,35 @@
 
 
 
-\begin{myslide}{Task}
+\begin{myslide}{}
+  
   
 \end{myslide}
+
+\begin{myslide}{Results}
+  \begin{itemize}
+  \item runnable tool, all modules integrated, executable under jdk-1.4
+    \begin{itemize}
+    \item graphical interface for editing 
+    \item checks (type checking, well-formed checking)
+    \item parser
+    \item simulator
+    \end{itemize}
+  \item \important{CD-Rom} with jar'ed tool (+ doc + sources + repos
+    \ldots)
+  \end{itemize}
+\end{myslide}
+
 
 
 \begin{myslide}{Develoment process}
   \begin{itemize}
-  \item CVS, modules as packages
+  \item \important{CVS}, modules as packages
   \item Error-list, Status list
   \item email-list
-  \item javadoc public web doc
-  \item weekly progress report
-  \item 3 review meetings, including this one. 
-  \end{itemize}
-\end{myslide}
-
-
-\begin{myslide}{Good}
-  \begin{itemize}
-  \item it's over
-  \item we have the tool ready, nice result for so few people
-  \item task distribution
-  \item good \important{specification}: \important{formal} semantics
-  \end{itemize}
-  
-\end{myslide}
-\begin{myslide}{Neutral/beyond our control}
-  \begin{itemize}
-  \item not much people, 
-  \item lot of (late) drop outs, and lately announced
-  \end{itemize}
-\end{myslide}
-
-\begin{myslide}{Less good}
-  \begin{itemize}
-  \item \important{Attracting} students
-    \begin{itemize}
-    \item another topic?
-    \item stressing collaborative  work over programming in \Java?
-    \end{itemize}
-  \item \important{laaaate} first code delivery (26.\ June) /compilation,
-    \important{laaate} integration (with all the consequences)
-  \item we always had quite some breaches of \important{interfaces}, but:
-    this year was the first time, I had to \importantxx{discuss} (and more
-    than once) why this is should be avoided without much discussion
-  \item communication
-  \item no test group, no Error ever \texttt{confirmed}
-  \end{itemize}
-\end{myslide}
-
-\begin{myslide}{Next time}
-  \begin{itemize}
-  \item first \emph{Readme} or first \important{written plan}
-    \important{required} to be checked in after 2 weeks
-  \item stricter, enforced cvs-strategy?: \important{enforced
-    compilability} for checking-in?
-  \item user logging (currently, I don't know how, the official
-    university's server can do it, but there are other disadvantages of
-    that solution)?
-  \item set the common absynt ander stricter surveillance
-    (\important{watches})
+  \item public \important{web-page} including \javadoc{} documentation
+  \item weekly progress \important{report}
+  \item 3 \important{review} meetings, including this one.
   \end{itemize}
 \end{myslide}
 
@@ -74,15 +42,8 @@
 
 
 
-\begin{myslide}{Results}
-  xx
-\end{myslide}
-
-
 \begin{myslide}{Error reporting}
-{\footnotesize 
-
-\begin{verbatim}
+  \begin{lstlisting}{}
  --------------------------------------------------------
   Error <nr>:    <short description>
     package:     <in which package/class does it occur
@@ -96,39 +57,25 @@
 
     description: <longer description, hints for repair>
    -----------------------------------------------------
-
-\end{verbatim}
-}
-\end{myslide}
-\begin{myslide}{Tagesordnung}
-  \begin{itemize}
-  \item Soll die Absynt-Schnittstelle erweitert werden oder nicht?
-    (Visitor).
-  \item Marcos Antrag: I/O Variablen.
-  \end{itemize}
-  
+  \end{lstlisting}
 \end{myslide}
 
-\begin{myslide}{Events}
-  \begin{itemize}
-  \item people at the beginning:\footnote{except coaches} \important{10},
-    at the end: \important{4}
-  \end{itemize}
-\end{myslide}
 
 
 \begin{myslide}{Statistics}
   \begin{itemize}
-  \item 13 meetings
+  \item 13 official meetings
   \item 4 iterations of the requirement specification
   \item \important{500} emails concerning \Slime\ in my
     mailbox\footnote{including those exchanged directly with the
       participants, but without the approx.\ 700 cvs-log emails.}
   \item approximately
     \begin{itemize}
+    \item \important{100} officially reported errors\footnote{none
+        confirmed \ldots}
     \item \important{170} Java files
     \item \important{200} class files, i.e. 200 public classes
-    \item \important{45}  \LaTeX files (documentation, web-pages, requirements)
+    \item \important{50} \LaTeX-files (doc, web-pages, requirements)
     \item handfull of other files (Makefiles, Error lists etc.)
     \end{itemize}
   \end{itemize}
@@ -139,9 +86,73 @@
 
 
 
+\begin{myslide}{Good}
+  \begin{itemize}
+  \item it's over
+  \item we have a running tool ready
+  \item nice result for so few people
+  \item task distribution
+  \item good \important{specification}: \important{formal} semantics
+  \end{itemize}
+  
+\end{myslide}
+\begin{myslide}{Neutral/beyond our control}
+  \begin{itemize}
+  \item not much people, 
+  \item lot of (late) drop outs,\footnote{people at the beginning:
+      \important{11} (except coaches), at the end: \important{4}} and
+    lately announced
+  \end{itemize}
+\end{myslide}
+
+\begin{myslide}{Less good}
+  \begin{itemize}
+  \item \important{Attracting} students
+    \begin{itemize}
+    \item another topic?
+    \item stressing collaborative  work over programming in \Java?
+    \end{itemize}
+  \item \important{laaaate} first code delivery (26.\ June) /compilation,
+    \important{laaate} integration (with all the consequences)
+  \item we always had quite some breaches of \important{interfaces}, but:
+    this year was the first time, I had to \important{discuss} why this is
+    should be avoided without much discussion
+  \item communication
+  \item no test group, no Error ever \texttt{confirmed}
+  \end{itemize}
+\end{myslide}
+
+\begin{myslide}{Next time}
+  \begin{itemize}
+  \item first \emph{Readme} or first \important{written plan}
+    \important{required} to be \important{checked-in} in after 2 weeks
+  \item stricter, enforced cvs-strategy?: \important{enforced
+    compilability} for checking-in?
+\item user \important{logging} (currently, I don't know how, the official
+  university's server can do it, but there are other disadvantages of that
+  solution)?
+  \item stricter surveillance (e.g.\ for absynt), \important{watches}
+  \item no \important{separation} between gui and editor? But an explicit
+    \important{test} group.
+  \item other means of communication? (\emph{news-group?}, cvs-logs?)
+  \end{itemize}
+\end{myslide}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% $Id: content.tex,v 1.17 2002-07-12 06:23:09 swprakt Exp $
+%% $Id: content.tex,v 1.18 2002-07-12 08:18:56 swprakt Exp $
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Local Variables: 
 %%% mode: latex

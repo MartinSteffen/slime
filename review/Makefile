@@ -1,5 +1,5 @@
 ######################################################
-## $Id: Makefile,v 1.1 2002-07-02 15:00:12 swprakt Exp $ 
+## $Id: Makefile,v 1.2 2002-07-12 08:18:56 swprakt Exp $ 
 ######################################################
 
 TEXDIR1     = $(HOME)/dc/tex/inputs
@@ -11,9 +11,13 @@ HACHA       = hacha
 
 
 all:	
-	dvips -o main.ps main.dvi
+	dvips  -Pwww -o main.ps main.dvi
 
 
+
+
+%.pdf: %.ps
+	ps2pdf -sPAPERSIZE=a4 $*.ps
 
 
 
