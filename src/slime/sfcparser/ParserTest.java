@@ -7,9 +7,13 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.4 2002-06-26 10:39:48 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.5 2002-06-27 14:30:56 swprakt Exp $
  * ---------------------------------------------------------------
- * $Log: not supported by cvs2svn $
+ */
+/* $Log: not supported by cvs2svn $
+ * Revision 1.4  2002/06/26 10:39:48  swprakt
+ * yy_eof muss nun noch irgendwie behandelt werden...
+ *
  * Revision 1.3  2002/06/26 07:28:38  swprakt
  * ParserTest.java gehoert nun zum Package slime.sfcparser
  * CVS
@@ -53,6 +57,7 @@ public class ParserTest {
 		for (int i=1; i<args.length; i++) {
 		    sbuf.append(args[i]);
 		}
+		sbuf.append("\n");
 		String theExpression = sbuf.toString();
 		sfcexpr = mySFCParser.parseExpression( theExpression );
 		if (sfcexpr == null) 

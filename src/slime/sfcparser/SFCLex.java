@@ -1,10 +1,20 @@
 package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
+    *  <b>SFC.lex</b><br>
+    *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFCLex.java,v 1.3 2002-06-26 09:19:34 swprakt Exp $
+    * $Id: SFCLex.java,v 1.4 2002-06-27 14:30:57 swprakt Exp $
     * -----
-    * $Log: not supported by cvs2svn $
+    */
+   /* $Log: not supported by cvs2svn $
+    * Revision 1.5  2002/06/26 10:39:48  swprakt
+    * yy_eof muss nun noch irgendwie behandelt werden...
+    *
+    * Revision 1.4  2002/06/26 09:19:34  swprakt
+    * Debug die 1.: von einer Expression 1+1 parst er nur
+    * 1+ korrekt, danach Abbruch
+    *
     * Revision 1.2  2002/06/26 06:50:57  swprakt
     * removed unused entries in SFC.lex
     * and removed wrong entry in SFC.cup "stmtblock" in "stmtlist"
@@ -38,8 +48,6 @@ import java_cup.runtime.Symbol;
     * %notunix	-	does not care about ^M :) (skips \r)
     * %init{
     * %init}
-"++"       {return new Symbol(SFCSymbols.INC); }
-"--"	   {return new Symbol(SFCSymbols.DEC); }
     **/
 
 
@@ -357,26 +365,26 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 106 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,258,
-"3:8,4:2,1,3,4,1,3:18,4,36,3:3,33,34,3,6,7,5,31,39,32,3,2,42:10,28,8,37,29,3" +
-"8,3:2,26,30,13,40,23,12,40,25,14,21,27,20,40,15,19,16,40,22,11,18,17,40,24," +
-"40:3,3:4,41,3,26,30,13,40,23,12,40,25,14,21,27,20,40,15,19,16,40,22,11,18,1" +
-"7,40,24,40:3,9,35,10,3:130,0:2")[0];
+"3:8,4:2,1,3,4,1,3:18,4,35,3:4,33,3,6,7,5,31,38,32,39,2,42:10,28,8,36,29,37," +
+"3:2,26,30,13,40,23,12,40,25,14,21,27,20,40,15,19,16,40,22,11,18,17,40,24,40" +
+":3,3:4,41,3,26,30,13,40,23,12,40,25,14,21,27,20,40,15,19,16,40,22,11,18,17," +
+"40,24,40:3,9,34,10,3:130,0:2")[0];
 
 	private int yy_rmap[] = unpackFromString(1,107,
-"0,1,2,3,1:2,4,1:4,5,1:3,6,7,8,1,9,10,11,1:7,11:15,12,13,14,12,15,16,17,18:2" +
-",19,20,21,22,23,11,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42" +
-",43,44,45,46,47,48,49,50,18,51,52,53,54,55,56,57,58,11,59,60,61,62,63,64,65" +
-",66,67,68,69")[0];
+"0,1,2,3,1:2,4,1:4,5,1:2,6,7,8,1:2,9,10,11,1:7,11:15,12,13,14,12,15,16,17,18" +
+":2,19,20,21,22,23,11,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41," +
+"42,43,44,45,46,47,48,49,50,18,51,52,53,54,55,56,57,58,11,59,60,61,62,63,64," +
+"65,66,67,68,69")[0];
 
 	private int yy_nxt[][] = unpackFromString(70,43,
 "1,2,3,4,2,5,6,7,8,9,10,11,85,95,46,95,97,99,100,101,95,102,103,104,105,95:3" +
-",45,49,106,12,13,14,53,56,15,16,17,18,95:2,19,-1:44,2,-1:2,2,-1:40,20,-1:2," +
+",45,49,106,12,13,53,56,14,15,16,17,18,95:2,19,-1:44,2,-1:2,2,-1:40,20,-1:2," +
 "44,-1:42,86,-1:48,95,50,95:3,54,95:10,57,-1:2,95,-1:9,95,58:2,-1:29,26,-1:4" +
 "2,27,-1:42,28,-1:55,19,-1:2,20:41,-1:11,95:17,-1:2,95,-1:9,95,58:2,-1:2,44:" +
 "3,48,44:37,-1:29,22,-1:24,95,21,95:2,59,95:12,-1:2,95,-1:9,95,58:2,-1:2,47," +
 "44:2,48,44:37,-1:29,23,-1:24,95:2,29,95:14,-1:2,95,-1:9,95,58:2,-1:2,52:3,5" +
-"5,52:37,-1:34,24,-1:19,95:9,98,95:7,-1:2,95,-1:9,95,58:2,-1:2,52:3,55,52,51" +
-",52:35,-1:35,25,-1:18,95:3,65,95:13,-1:2,95,-1:9,95,58:2,-1:11,95:5,91,95,3" +
+"5,52:37,-1:33,24,-1:20,95:9,98,95:7,-1:2,95,-1:9,95,58:2,-1:2,52:3,55,52,51" +
+",52:35,-1:34,25,-1:19,95:3,65,95:13,-1:2,95,-1:9,95,58:2,-1:11,95:5,91,95,3" +
 "0,95:9,-1:2,95,-1:9,95,58:2,-1:11,95:8,66,95:8,-1:2,95,-1:9,95,58:2,-1:11,9" +
 "5:7,67,95:9,-1:2,95,-1:9,95,58:2,-1:11,95:6,68,95:10,-1:2,95,-1:9,95,58:2,-" +
 "1:11,95:5,70,95:11,-1:2,95,-1:9,95,58:2,-1:11,71,95:16,-1:2,95,-1:9,95,58:2" +
@@ -425,7 +433,8 @@ public class SFCLex implements java_cup.runtime.Scanner {
 			yy_next_state = YY_F;
 			yy_next_state = yy_nxt[yy_rmap[yy_state]][yy_cmap[yy_lookahead]];
 			if (YY_EOF == yy_lookahead && true == yy_initial) {
-				return null;
+
+    return new Symbol( SFCSymbols.DOT );
 			}
 			if (YY_F != yy_next_state) {
 				yy_state = yy_next_state;
@@ -452,11 +461,11 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -2:
 						break;
 					case 2:
-						{}
+						{ }
 					case -3:
 						break;
 					case 3:
-						{return new Symbol(SFCSymbols.DIV); 	/* Expr.DIV     =  3 */}
+						{return new Symbol(SFCSymbols.DIV); 	/* Expr.DIV     =  3 "%"        {return new Symbol(SFCSymbols.MOD); 	 Expr.MOD     =  undef */}
 					case -4:
 						break;
 					case 4:
@@ -504,23 +513,23 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -14:
 						break;
 					case 14:
-						{return new Symbol(SFCSymbols.MOD); 	/* Expr.MOD     =  undef */}
+						{return new Symbol(SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
 					case -15:
 						break;
 					case 15:
-						{return new Symbol(SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
+						{return new Symbol(SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
 					case -16:
 						break;
 					case 16:
-						{return new Symbol(SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
+						{return new Symbol(SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
 					case -17:
 						break;
 					case 17:
-						{return new Symbol(SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
+						{return new Symbol(SFCSymbols.COMMA); 	/* */}
 					case -18:
 						break;
 					case 18:
-						{return new Symbol(SFCSymbols.COMMA); 	/* */}
+						{return new Symbol(SFCSymbols.DOT); 	/* */}
 					case -19:
 						break;
 					case 19:
@@ -529,7 +538,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -20:
 						break;
 					case 20:
-						{return new Symbol(SFCSymbols.COMMENT);}
+						{ /* return new Symbol(SFCSymbols.COMMENT); */ }
 					case -21:
 						break;
 					case 21:
@@ -637,7 +646,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -46:
 						break;
 					case 47:
-						{return new Symbol(SFCSymbols.COMMENT);}
+						{ /* return new Symbol(SFCSymbols.COMMENT); */ }
 					case -47:
 						break;
 					case 49:
@@ -653,7 +662,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -49:
 						break;
 					case 51:
-						{return new Symbol(SFCSymbols.COMMENT);}
+						{ /* return new Symbol(SFCSymbols.COMMENT); */ }
 					case -50:
 						break;
 					case 53:

@@ -6,8 +6,12 @@ package slime.sfcparser;
  *      SFCParseException with the errortype as <br>
  *	exception message
  * @author initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
- * $Id: SFCParseException.java,v 1.1 2002-06-25 15:02:52 swprakt Exp $
- * $Log: not supported by cvs2svn $
+ * $Id: SFCParseException.java,v 1.2 2002-06-27 14:30:57 swprakt Exp $
+ */
+/* $Log: not supported by cvs2svn $
+ * Revision 1.1  2002/06/25 15:02:52  swprakt
+ * missing files added
+ *
  * Revision 1.1  2002/05/01 11:06:27  mwe
  * *** empty log message ***
  *

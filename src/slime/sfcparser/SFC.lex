@@ -1,10 +1,16 @@
 package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
+    *  <b>SFC.lex</b><br>
+    *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.5 2002-06-26 10:39:48 swprakt Exp $
+    * $Id: SFC.lex,v 1.6 2002-06-27 14:30:57 swprakt Exp $
     * -----
-    * $Log: not supported by cvs2svn $
+    */
+   /* $Log: not supported by cvs2svn $
+    * Revision 1.5  2002/06/26 10:39:48  swprakt
+    * yy_eof muss nun noch irgendwie behandelt werden...
+    *
     * Revision 1.4  2002/06/26 09:19:34  swprakt
     * Debug die 1.: von einer Expression 1+1 parst er nur
     * 1+ korrekt, danach Abbruch
@@ -51,6 +57,9 @@ import java_cup.runtime.Symbol;
 %ignorecase
 %full
 %public
+%eofval{
+    return new Symbol( SFCSymbols.DOT );
+%eofval}
 %cup
 
 c1      = ("//".*)
@@ -110,7 +119,7 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 ">="       {return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
 "!="       {return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
 ","        {return new Symbol(SFCSymbols.COMMA); 	/* */}
-
+"."        {return new Symbol(SFCSymbols.DOT); 	/* */}
 
 {identif}  {return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
