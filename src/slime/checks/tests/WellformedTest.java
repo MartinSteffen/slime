@@ -1,20 +1,20 @@
 package slime.checks.tests;
 import java.io.*;
+
 import java.util.*;
 import slime.absynt.*;
 
-
 /**
- * TypecheckTest <break>
- * A little testing of the typechecker, using the parser
- * code ``recycled'' from sfcparser.ParserTest.java
+ * WellformedTest <break>
+ * A little testing of the wellformedness checker, using the parser
+ *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl. 
- * @version $Id: TypecheckTest.java,v 1.8 2002-07-07 14:57:47 swprakt Exp $
+ * @version $Id: WellformedTest.java,v 1.1 2002-07-07 14:57:47 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
 
-public class TypecheckTest {
+public class WellformedTest {
   public static void main (String args []) {
     slime.absynt.SFC                    theSFC = null;
     slime.absynt.Expr                   sfcexpr = null;
@@ -23,6 +23,10 @@ public class TypecheckTest {
     slime.sfcparser.Absfc2SFCConverter  theConverter = null;
     slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint();
     slime.checks.Typecheck              tc =  new slime.checks.Typecheck();
+    slime.checks.Wellformed             wc =  new slime.checks.Wellformed();
+    //     slime.checks.Wellformed.Initcheck wci  =  new slime.checks.Wellformed.Initcheck();
+    wc.check(null);    
+    // wci.Initcheck.check(null);
     // slime.sfcparser.PPActions prettyPrinter =  new slime.sfcparser.PPActions(); for the version without that StepAction...
     slime.sfcparser.PrettyPrint4Absfc   prettyAbsfc = new slime.sfcparser.PrettyPrint4Absfc();
     try {

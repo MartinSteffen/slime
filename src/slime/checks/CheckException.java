@@ -11,8 +11,8 @@ import slime.absynt.*;
  * syntax, the most general exception must be a subclass of
  * the general visitor exception offered by the abstract syntax.
  *
- * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: CheckException.java,v 1.7 2002-07-05 16:50:54 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+ * @version  $Id: CheckException.java,v 1.8 2002-07-07 14:57:45 swprakt Exp $
  */
 public class CheckException extends Exception {
   /** contains exception message
@@ -50,6 +50,9 @@ public class CheckException extends Exception {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.7  2002/07/05 16:50:54  swprakt
+//    ok
+//
 //    Revision 1.6  2002/06/19 20:20:25  swprakt
 //    ?
 //

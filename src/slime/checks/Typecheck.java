@@ -10,6 +10,9 @@ import slime.absynt.*;
 
 /** Type checker for Slime programs
  *
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms"  Target =main> Martin Steffen</a> and Karsten Stahl.
+ * @version $Id: Typecheck.java,v 1.33 2002-07-07 14:57:45 swprakt Exp $
+ *
  * <p>
  * It consists of the various typecheck errors together with the
  * type checker proper, which recurs over the abstract syntax.
@@ -24,8 +27,6 @@ import slime.absynt.*;
  * class has the matching name, suffixed  with a ``V'', for instance
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
- * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.32 2002-07-07 08:27:49 swprakt Exp $
  */
 
 public class Typecheck {
@@ -74,6 +75,13 @@ public class Typecheck {
   TEnv env  = new TEnv();  // initially emtpy
 
   /* Next the list of exceptions */
+
+  /**
+   *  General, non-specific exception when doing type checking.
+   *  The exception is subclassed by various specific, concrete
+   *  exceptions and the type checker never throws the the general
+   *  one.
+   */
   public class TypecheckException extends CheckException {
     String message = "general typecheck exception";    
     public String getMessage(){return message;  }
@@ -125,7 +133,7 @@ public class Typecheck {
     public String getMessage(){return message;  }
   }
 
-  /** Type check cisitor for SFC's, the entry point of the recursion.
+  /** Type check visitor for SFC's, the entry point of the recursion.
    *  To cope with contextual information, we use a  hash table.
    *  The key objects are the variables, the values are the types.
    *
@@ -443,6 +451,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.32  2002/07/07 08:27:49  swprakt
+//    OK
+//
 //    Revision 1.31  2002/07/07 07:06:24  swprakt
 //
 //
@@ -584,6 +595,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.32 2002-07-07 08:27:49 swprakt Exp $
+//    $Id: Typecheck.java,v 1.33 2002-07-07 14:57:45 swprakt Exp $
 //
 //---------------------------------------------------------------------

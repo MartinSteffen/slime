@@ -11,10 +11,10 @@ import slime.absynt.*;
  * to derive omitted type information. Therefore, the return-type
  * of the methods is boolean. The convention is that the a return
  * value of true indicates success, a failure is indicated by
- * an exception. Int other woirds: false is never returned.</p>
+ * an exception. In other words: false is never returned.</p>
  *
- * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: SFCVisitorInterface.java,v 1.2 2002-06-19 20:20:25 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms">Martin Steffen</a> and Karsten Stahl.
+ * @version $Id: SFCVisitorInterface.java,v 1.3 2002-07-07 14:57:45 swprakt Exp $
  */
 public  interface SFCVisitorInterface {
     public boolean isWellTyped(SFC p)  throws CheckException;
@@ -29,6 +29,9 @@ public  interface SFCVisitorInterface {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.2  2002/06/19 20:20:25  swprakt
+//    ?
+//
 //    Revision 1.1  2002/06/19 19:40:47  swprakt
 //    IChecks -> SFCVisitorInterface [Thomas Richter]
 //

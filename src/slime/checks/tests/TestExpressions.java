@@ -8,8 +8,8 @@ import slime.absynt.*;
 /**
  * Test expression <break>
  * This is just a list of string expressions that can be iterated through for testing.
- * @author Martin Steffen
- * @version $Id: TestExpressions.java,v 1.3 2002-07-05 17:38:33 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+ * @version $Id: TestExpressions.java,v 1.4 2002-07-07 14:57:47 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
