@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.153 2002-07-09 05:19:53 swprakt Exp $
+n## $Id: Errors.txt,v 1.154 2002-07-09 05:27:51 swprakt Exp $
 ###########################################################
 
 
@@ -220,7 +220,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.153 2002-07-09 05:19:53 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.154 2002-07-09 05:27:51 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -407,7 +407,7 @@ Error 1:  parser warnings
 Error 69:     compilation error
  package:     sfcparser
  class:       fatal, show-stop
- status:      reported, Steffen 9.7.02, repaired Steffen 9.7.02
+ status:      reported, Steffen 9.7.02, repaired Steffen 9.7.02 and emailed to Marco
  description: /home/ms/Swprakt/Slime/src/slime/sfcparser/Absfc2SFCConverter.java:791: cannot resolve symbol
 symbol  : variable whileuard  
 location: class slime.sfcparser.Absfc2SFCConverter
