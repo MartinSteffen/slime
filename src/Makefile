@@ -1,9 +1,12 @@
-
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.21 2002-07-05 18:48:27 swprakt Exp $
+# $Id: Makefile,v 1.22 2002-07-05 18:49:55 swprakt Exp $
 #----------------------------------------------------------------------
 #
+# The targets installing gobal web-infos can be executed only
+# by the maintainers
+######################################################################
+
 
 TOOLNAME      = Slime
 
@@ -74,6 +77,9 @@ clean:
 
 ########################################################################
 # $Log: not supported by cvs2svn $
+# Revision 1.21  2002/07/05 18:48:27  swprakt
+# Added checks.test to the doc target. [Steffen]
+#
 # Revision 1.20  2002/07/04 06:47:48  swprakt
 # I removed Lex and yacc stuff from the makefile, they are gone
 # [Steffen]
@@ -97,8 +103,5 @@ clean:
 # new packages are added. (mwe)
 #
 #
-# The targets installing gobal web-infos can be executed only
-# by the maintainers
-######################################
 
 
