@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.63 2002-07-04 13:57:48 swprakt Exp $
+## $Id: Errors.txt,v 1.64 2002-07-04 17:57:48 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,13 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+
+Error 38:     COMPILARTION
+ package:     all
+ class:       deadly fatal
+ status:      reporter, 4. Juli 02, Steffen
+ description: Extending the visitor screwed it up (checker does not compile any more)
 
 Error 34(2):  expression parser
  package:     parser
