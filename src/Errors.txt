@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.95 2002-07-05 19:29:38 swprakt Exp $
+## $Id: Errors.txt,v 1.96 2002-07-05 19:34:16 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -43,15 +43,6 @@ Error 53:    hacks
               the catching of the exceptions is just copied from
 	      ParserTest. But the stuff does its purpose
 
-Error 52:    cast
- package:     checks?
- class:       fatal
- status:      reported, 5.7.02, Steffen
- description:        SFC sfc1 = Example.getExample1();
-                     slime.absynt.Type t = tc.check(sfc1);
-              gives
-
-               TypecheckTest: slime.checks.Typecheck$UndeclaredVariable: general typecheck exception
 
 Error 50:     precedence
  package:     sfc-parser
@@ -121,7 +112,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.95 2002-07-05 19:29:38 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.96 2002-07-05 19:34:16 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -303,6 +294,20 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 52:    
+ package:     checks?
+ class:       fatal
+ status:      reported, 5.7.02, Steffen, repaired (= explained) 5.7.02, Steffen
+ description:        SFC sfc1 = Example.getExample1();
+                     slime.absynt.Type t = tc.check(sfc1);
+              gives
+
+               TypecheckTest: slime.checks.Typecheck$UndeclaredVariable: general typecheck exception
+	       Solution: it's not an error in the type checker a priory, it looks
+	       like the correct way for the checker to treat the thing.
+
 
 
 Errors 51:    cast
