@@ -1,0 +1,51 @@
+\section*{Baselines}
+\label{sec:Baselines}
+
+
+Die \emph{Baselines} oder \emph{Snapshots} sind hier zur schnelleren
+Referenz als \emph{Javaarchiv} \texttt{slime\_v[x].jar} festgehalten, wobei
+\texttt{[x]} die Nummber des Schnappschusses ist. Als Entwickler mit
+Zugriff auf das Quellcoderepositorium kann man die Entwicklungsschritte sie
+natürlich mittels \cvs{} wieder zurückholen. Zum Ausführen der Archivs
+speichere man die Datei \texttt{slime\_v[x].jar} an einen geeigneten Platz,
+und rufe
+
+\begin{verbatim}
+  java -classpath [geeigneter_platz]/slime_v[x].jar gui.Gui
+\end{verbatim}
+auf; alternativ kann man auch fest
+\begin{verbatim}
+ export CLASSPATH=[geeigneter_platz]/slime_v[x].jar
+\end{verbatim}
+setzen, dann kann man sich die option \texttt{-classpath} schenken.
+
+
+\medskip
+
+\iffalse
+\begin{tabular}{llll}
+  3. & \url{baselines/slime\_v3.0.jar}{Baseline 3}
+  &
+  Parser an Bord
+  &
+  1. Juli 2001
+  \\
+  2. & \url{baselines/snot\_v2.0.jar}{Baseline 2}
+  &
+  Simulator an Bord
+  &
+  13. Juni 2001
+  \\
+  1. & \url{baselines/snot\_v1.0.jar}{Baseline 1}
+  &
+  erste Gesamtkompilation
+  &
+  5. Juni 2001
+\end{tabular}
+\fi
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
