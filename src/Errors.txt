@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.49 2002-07-03 06:10:38 swprakt Exp $
+## $Id: Errors.txt,v 1.50 2002-07-03 06:19:25 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -52,6 +52,12 @@ Error 34:     expression parsing
                |   |   |   |   |   [Constval] 7
                |   |   |   |   |   <PLUS>
                |   |   |   |   |   [Constval] 1		
+
+	       the cause of the error is unclear, since the	
+	       precedences seem ok (sfcparser.SFC.cup v.1.13)
+
+               precedence left ADD, SUB;				   // +, -
+               precedence left MUL, DIV;				   // *,/; MOD=%
  
 
 Error 33:     grammar: stmt
