@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.31 2002-07-07 07:06:24 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.32 2002-07-07 08:27:49 swprakt Exp $
  */
 
 public class Typecheck {
@@ -51,15 +51,11 @@ public class Typecheck {
 
   public class TEnv {
     // Hashmap is more efficient that Hashtable (but not thread safe)
-    slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();
     private Hashtable e = new Hashtable();  
     public void add (String s, Type t) throws DuplicatedBinding { 
-      System.out.println("TEnv.add " + s);
       if (e.containsKey(s))
 	throw new DuplicatedBinding();
       e.put(s,t);
-      System.out.println("put into hashtable: " + s + "with type");
-      pp.print(t);
     }
 
     public Type lookup (String s)  {
@@ -141,73 +137,21 @@ public class Typecheck {
 			 LinkedList actions, 
 			 LinkedList declist) throws Exception {
       // first  the declations:
-      slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();
       for (Iterator i = declist.iterator(); i.hasNext(); ) {
-	System.out.print (">> declaration to add: ");
  	Declaration d  = (Declaration)i.next();
-	pp.print(d);
 	d.accept(new DeclarationV());  // enlarges the environment
-      }
-      System.out.println ("test the list");
-      Variable v1 =  new Variable("aaa");
-      Variable v2 =  new Variable("aaa");
-      System.out.print ("v1 = v2? = " + v1.equals(v2));
-      env.add(v1.name, new IntType());
-      System.out.println("and now look it up");
-      pp.print(env.lookup(v1.name));
-      pp.print(env.lookup(v2.name));
-      System.out.println ("contains 1" + env.containsKey(v1.name));
-      System.out.println ("contains 2" + env.containsKey(v2.name));
-
-      System.out.println("next we print the stored keys = strings of variables");
-      for (Enumeration e = env.keys(); e.hasMoreElements();){
-	String v = (String)e.nextElement();
-	pp.print(new Variable (v));
-	//	pp.print((new Variable ("x")));
-	System.out.print("lookup " + v + ": ");
-	pp.print(env.lookup(v));
-	//	System.out.print("lookup x ");
-	//	pp.print(env.lookup(new Variable ("x")));
-	//	System.out.println("");
-	//	System.out.print("lookup x ");
-	//	pp.print(env.lookup(new Variable ("x", new BoolType())));
-	//	System.out.println("");
       };
-
-      System.out.println("next we print the stored elements = types");
-      for (Enumeration e = env.elements(); e.hasMoreElements();){
-	Type t = (Type)e.nextElement();
-	pp.print(t);
-      };
-      System.out.println("initial step check: ");
-      istep.accept(new StepV());
-      pp.print(istep);
-      System.out.println ("type of istep: ");
-      pp.print((Type)istep.accept(new StepV()));
-      // each step int the list of steps must be well-typed
-      // if one of the single steps fails, it will raise an error. 
-      System.out.println ("next: check the steps");
-      for (Iterator i = steps.iterator(); i.hasNext(); ) {
+      istep.accept(new StepV());       // check the initial step
+      for (Iterator i = steps.iterator(); i.hasNext(); ) { // now the steps
  	Step s = (Step)i.next();
-	System.out.print ("check of step: ");
-	pp.print(s);
-	s.accept(new StepV());
 	UnitType t = (UnitType)s.accept(new StepV());
-	System.out.print ("result type:");
-	pp.print(t);
       }
-      System.out.println ("next: check the transitions");
-      for (Iterator i = transs.iterator(); i.hasNext(); ) {
+      for (Iterator i = transs.iterator(); i.hasNext(); ) { // now the transitions
  	Transition t = (Transition)i.next();
-	System.out.print ("in transs-loop: ");
-	pp.print(t);
 	t.accept(new TransitionV()); 
       }
-      System.out.println("next the actions");
-      for (Iterator i = actions.iterator(); i.hasNext(); ) {
+      for (Iterator i = actions.iterator(); i.hasNext(); ) { // finally the actions
  	Action a = (Action)i.next();
-	System.out.print ("in actions-loop: ");
-	pp.print(a);
 	a.accept(new ActionV()); 
       }
       return new UnitType();
@@ -220,13 +164,9 @@ public class Typecheck {
    */
 
   class StepV implements Visitors.IStep{
-    slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();
     public Object forStep(String name, LinkedList actions) throws Exception {
-      System.out.println ("for step");
       for (Iterator i = actions.iterator(); i.hasNext(); ) {
  	StepAction sa  = (StepAction)i.next();
-	System.out.print ("step action: ");
-	pp.print(sa);
 	sa.accept(new StepActionV()); 
       }
       return new UnitType();
@@ -239,12 +179,9 @@ public class Typecheck {
    *  implement it as visitor for uniformity and extensibility.
    */
   class StepActionV implements Visitors.IStepAction{
-    slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();
     public Object forStepAction(ActionQualifier qualifier,
 				String a_name) throws Exception {
-      System.out.println ("for stepaction");
       qualifier.accept(new ActionQualifierV());
-      pp.print(new UnitType());
       return new UnitType();
     }
   }
@@ -333,7 +270,6 @@ public class Typecheck {
 
 
   class ExprV implements Visitors.IExpr{
-    slime.utils.PrettyPrint pp = new slime.utils.PrettyPrint();        
     public Object forB_Expr(Expr l, int o, Expr r) throws CheckException {
             // binary expressions
             try {
@@ -364,9 +300,6 @@ public class Typecheck {
                     throw new TypeMismatch();
             }
             catch (Exception e) {
-	      //System.out.println("here we go");
-	      // System.out.println(e.getMessage());
-	      //	      throw (TypeMismatch)(e);  // probably wrong
 	      throw (TypecheckException)(e);  // probably wrong
             }
             // this last try-catch-throw is a type-cast for
@@ -395,11 +328,6 @@ public class Typecheck {
         
     public Object forVariable(String s, Type t) throws CheckException {
       Type t_dec = env.lookup(s);
-      System.out.println ("tc: for variable " + s);
-      //      env.add(new Variable("x"), new BoolType());
-      System.out.println ("the type is: ");
-      pp.print(t_dec);
-      System.out.print (" = ? " + (new Variable("A")).equals(new Variable("A")));
       if (t_dec == null)
 	throw new UndeclaredVariable();
       return t_dec;
@@ -430,13 +358,10 @@ public class Typecheck {
      */
   
   class TransitionV implements Visitors.ITransition{
-    slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint();
     public Object forTransition(LinkedList source,
 				Expr guard,
 				LinkedList target) throws CheckException {
       try {
-	System.out.println ("in the trans', first check the guard");
-	pp.print(guard);
 	Type t = (Type)guard.accept(new ExprV());
 	
 	if (!(t instanceof BoolType)) // guards must be boolean
@@ -470,12 +395,6 @@ public class Typecheck {
      */
     public Object  forDeclaration(Variable var, Type type, Constval val)
       throws CheckException {
-      slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint();
-
-      System.out.println ("Typcheck.for declartion");
-      System.out.print (var.name + " ");
-      pp.print(type);
-      System.out.print (" " + val.val + "\n");
       try{
 	if ((var == null) || (type == null) || val == null)
 	  throw new IncompleteDeclaration();
@@ -483,43 +402,12 @@ public class Typecheck {
 	if (t_dec instanceof UnitType)
 	  throw new NoUsertype();
 	Type t_act = (Type)(val.accept(new ExprV()));  // actual type
-	// System.out.print ("actual/declared type");
-	//  pp.print (t_act);
-//  	pp.print (t_dec);
-//  	System.out.println ("?? " + t_act.equals(t_dec));
-//  	System.out.println ("instance = " + (t_act instanceof BoolType));
-//  	System.out.println ("instance = " + (t_dec instanceof BoolType));
-//  	System.out.println ("?? " + t_act.equals(t_act));
-//  	System.out.println ("?? " + t_dec.equals(t_act));
-//  	System.out.println ("?? " + t_dec.equals(t_act));
-//  	System.out.println ("?? " + t_act.equals(t_dec));
 	if (!(t_dec.equals(t_act)))
 	  {
-	    //	    System.out.print ("equal" + (new BoolType()).equals(new BoolType()));
-	    //	    System.out.print (">>not equal");
 	    throw  new TypeMismatch();
 	  }
 	// --- add the binding x:T to the enviroment.
 	env.add(var.name, t_dec);  // 1: key, 2: value
-	//test	env.add(var, t_dec);  // 1: key, 2: value
-	System.out.println ("we have added it, let's check");
-	Variable var3 = new Variable(var.name);
-	System.out.print ("var/var3: ");
-	pp.print (var);
-	pp.print (var3);
-	//	env.add(var3, new IntType()); //WRONWRONGWRONG FOR TESTING!!XXX
-	System.out.print ("var = var3: " + (var.equals(var3)));
-	System.out.print ("\nvar3 = var: " + (var3.equals(var)));
-	Type t_dec2 = env.lookup(var.name);
-	t_dec2 = env.lookup(var.name);
-	System.out.println ("type2 (= orig) is: ");
-	pp.print(t_dec2);
-	Type t_dec3 = env.lookup(var3.name);
-	System.out.println ("type3 is: ");
-	pp.print(t_dec3);
-	System.out.println (var.hashCode());
-	System.out.println (var3.hashCode());
-	// System.exit(0);
 	return new UnitType(); 
       }
       catch (Exception e){
@@ -555,6 +443,15 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.31  2002/07/07 07:06:24  swprakt
+//
+//
+//    The typechecker works now as I expect on the abstract syntax
+//    example sfc1.  It checks the example correctly (and prints out
+//    what it does during the run.) The print's will now be removed.
+//
+//    [Steffen]
+//
 //    Revision 1.30  2002/07/06 16:51:04  swprakt
 //    the class variables was not usable as keys in
 //    the hashtable. it's based on identities, therefore
@@ -687,6 +584,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.31 2002-07-07 07:06:24 swprakt Exp $
+//    $Id: Typecheck.java,v 1.32 2002-07-07 08:27:49 swprakt Exp $
 //
 //---------------------------------------------------------------------
