@@ -1,8 +1,12 @@
 ################################################################
-## $Id: Todo,v 1.11 2002-07-05 06:54:07 swprakt Exp $
+## $Id: Todo,v 1.12 2002-07-05 16:50:54 swprakt Exp $
 ################################################################
 
 
+
+  - Check all this super/
+
+  - fill in the rest of messages
   - overwrite the equals-method
 
   - currently, eveerything is public for testing,
@@ -24,14 +28,5 @@
   - Make the exceptions a bit more informative (i.e., constructor with
 	additional message)
 
-  - Do something useful with the explanation
-    add also messages.
-
-
-
-
-  - Exceptions:
-
-	 -
 	
 	

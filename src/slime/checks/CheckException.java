@@ -9,45 +9,40 @@ import slime.absynt.*;
  * More specific exceptions are subclasses from this one.
  * Since the checks will be implemented as visitor to the abstract
  * syntax, the most general exception must be a subclass of
- * the general visitor exception offered byte the abstract syntax.
+ * the general visitor exception offered by the abstract syntax.
  *
  * @author Initially provided by Karsten Stahl, Martin Steffen.
- * @version  $Id: CheckException.java,v 1.6 2002-06-19 20:20:25 swprakt Exp $
+ * @version  $Id: CheckException.java,v 1.7 2002-07-05 16:50:54 swprakt Exp $
  */
 public class CheckException extends Exception {
-    /** contains exception message
-     */
-    protected String message;
-    
-    /** access the message of the exception
-     * @return exception message
-     */
-    public String getMessage(){
-        return message;
-    }
-    
-    /** set the message of the exception (internal)
-     * @param msg exception message
-     */
-    private void setMessage(String msg) {
-        message = msg;
-    }
-    
-    /** Creates new <code>CheckException</code> without detail message.
-     */
-    public CheckException() {
-        super("Check Exception");
-    }
-    
-    
-    /** Constructs an <code>CheckException</code> with the specified detail message.
-     * @param msg the detail message
-     */
-    public CheckException(String msg) {
-        super(msg);
-        setMessage(msg);
-    }
+  /** contains exception message
+   */
+  public  String message = "General exception of the checks-package";
+  /** access the message of the exception
+   * @return exception message
+   */
+  public String getMessage(){return message;  }
 }
+    
+
+  /** set the message of the exception (internal)
+   * @param msg exception message
+   */
+  // private void setMessage(String msg) { message = msg;  }
+    
+  /** Creates new <code>CheckException</code> without detail message.
+   */
+  // public CheckException() { super("Check Exception"); }
+    
+    
+  /** Constructs an <code>CheckException</code> with the specified detail message.
+   * @param msg the detail message
+   */
+  //public CheckException(String msg) {
+  //super(msg);
+  // setMessage(msg);
+  //}
+//}
 
 
 //----------------------------------------------------------------------
@@ -55,6 +50,9 @@ public class CheckException extends Exception {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.6  2002/06/19 20:20:25  swprakt
+//    ?
+//
 //    Revision 1.5  2002/06/19 14:13:01  swprakt
 //    added 2 constructors [Thomas Richter]
 //
@@ -80,3 +78,5 @@ public class CheckException extends Exception {
 //
 //
 //---------------------------------------------------------------------
+
+

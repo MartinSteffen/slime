@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.23 2002-07-05 14:05:32 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.24 2002-07-05 16:50:54 swprakt Exp $
  */
 
 public class Typecheck {
@@ -62,43 +62,54 @@ public class Typecheck {
 
   /* Next the list of exceptions */
   public class TypecheckException extends CheckException {
+    String message = "general typecheck exception";    
+    public String getMessage(){return message;  }
   }
 
 
   private class DuplicatedBinding extends Exception { // not for users
     String message = "Environments assume unique bindings";
+    public String getMessage(){return message;  }
   }
 
 
   public class  DuplicatedDeclaration extends TypecheckException {
     String message = "Variable bound twice.";
     String explanation = "No variable must be bound more than once";
+    public String getMessage(){return message;  }
   }
 
   public  class NonuniqueDeclaration extends TypecheckException {
     String explanation = "No variable may occur twice int the declaration list";  
+    public String getMessage(){return message;  }
   }
     
   public class UnbooleanGuard extends TypecheckException {
     String explanation = "The guard of a transition must be an expression\n of boolean type. This error indicates the occurrence of a\n well-typed guard-expression, but with a type other than a boolean." ;
+    public String getMessage(){return message;  }
   }
     
   public class UndeclaredVariable extends TypecheckException{
     String explanation = "Each variable occuring int a program must be\n covered by a type declaration for this variable where the declaration\n is unique";
+    public String getMessage(){return message;  }
     }
+
 
   public  class IncompleteDeclaration extends TypecheckException{
     String explanation = "A variable declation consists of three parts: \n 1) variable name, 2) a type, and 3), a constant value.\n If one of them is the missing (i.e., nil), this error is raised.";
+    public String getMessage(){return message;  }
   }
 
   public class NoUsertype extends TypecheckException{
     String message = "Not a user type";
     String explanation = "The type is not allowed for source programs, it's for\n type checker internal use, only."; 
+    public String getMessage(){return message;  }
   }
 
   public class TypeMismatch extends TypecheckException{
     String message = "Type mismatch";
     String explanation = " A type mismatch can occur in various situations: in compund expressions, for instance int ``1+true''. \n Furthermore, in an assigment, the type of the expression on the \n right-hand side must coincide with the declared type of the variable. The same restriction\n holds for the variables and the initial value int a type declaration.";
+    public String getMessage(){return message;  }
   }
 
   /** Type check cisitor for SFC's, the entry point of the recursion.
@@ -271,10 +282,10 @@ public class Typecheck {
 	Type t = (Type)(e.accept(this));   // we have to cast, that part of it.
 	if     ((t instanceof BoolType) &&  (o == Expr.NEG)) return t;
 	else if ((t instanceof IntType) &&  (o == Expr.MINUS)) return t;
-	else throw new CheckException();
+	else throw new TypeMismatch();
       }
       catch (Exception e2) {
-	throw new CheckException();
+	throw new TypeMismatch();
       }
     }
         
@@ -389,6 +400,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.23  2002/07/05 14:05:32  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.22  2002/07/05 14:01:56  swprakt
 //    *** empty log message ***
 //
@@ -484,6 +498,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.23 2002-07-05 14:05:32 swprakt Exp $
+//    $Id: Typecheck.java,v 1.24 2002-07-05 16:50:54 swprakt Exp $
 //
 //---------------------------------------------------------------------
