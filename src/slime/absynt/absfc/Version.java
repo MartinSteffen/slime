@@ -1,18 +1,17 @@
 package slime.absynt.absfc;
-import java.io.Serializable;
 
 /**
  * Version class to provide serial version for 
  * serialized objects of this package.
  *
  * @author initially provided by Marco Wendel.
- * @version  $Id: Version.java,v 1.3 2002-06-19 08:33:16 swprakt Exp $
+ * @version  $Id: Version.java,v 1.4 2002-06-25 05:25:02 swprakt Exp $
  */
 
-public class Version implements Serializable {
-    private static final int radix = 36;
-    private static long version = 1356099454469L;
-    private static String thisVersionString = "Slime";
+public class Version {
+    private static final int radix = 6;
+    private static long version;
+    private static String thisVersionString = "Slime v1.0";
 
     Version() { 
 	renderVersion();

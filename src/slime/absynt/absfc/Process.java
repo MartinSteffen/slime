@@ -15,11 +15,20 @@ public class Process extends Statement implements Serializable {
     public String name;
     public LinkedList stmtlist;
     public int procdepth;
+    public LinkedList internalStepList;
+    public LinkedList internalTransitionList;
+    public LinkedList internalActionList;
+    public LinkedList internalDeclarationList;
+
     
     public Process(String _name, LinkedList _stmtlist) {
 	name = _name;
 	stmtlist = _stmtlist;
 	nodetype = "process";
+	internalStepList        = new LinkedList();
+	internalTransitionList  = new LinkedList();
+	internalActionList      = new LinkedList();
+	internalDeclarationList = new LinkedList();
     }    
 
     public Process(String _name) {
@@ -27,6 +36,10 @@ public class Process extends Statement implements Serializable {
 	stmtlist = new LinkedList();
 	nodetype = "process";
 	hascontent = false;
+	internalStepList        = new LinkedList();
+	internalTransitionList  = new LinkedList();
+	internalActionList      = new LinkedList();
+	internalDeclarationList = new LinkedList();
     }    
 
     public Process() {
@@ -34,6 +47,10 @@ public class Process extends Statement implements Serializable {
 	stmtlist = new LinkedList();
 	nodetype = "process";
 	hascontent = false;
+	internalStepList        = new LinkedList();
+	internalTransitionList  = new LinkedList();
+	internalActionList      = new LinkedList();
+	internalDeclarationList = new LinkedList();
     }    
 
     private void readObject(java.io.ObjectInputStream stream)
@@ -42,6 +59,11 @@ public class Process extends Statement implements Serializable {
 	name       = (String) (stream.readObject());
 	stmtlist   = (LinkedList) (stream.readObject());
 	procdepth  = stream.readInt();
+	internalStepList        = (LinkedList) (stream.readObject());
+	internalTransitionList  = (LinkedList) (stream.readObject());
+	internalActionList      = (LinkedList) (stream.readObject());
+	internalDeclarationList = (LinkedList) (stream.readObject());
+	
 	// Absfc
 	depth      = stream.readInt();
 	processed  = stream.readBoolean();
@@ -60,6 +82,10 @@ public class Process extends Statement implements Serializable {
 	stream.writeObject(  name );
 	stream.writeObject(  stmtlist );
 	stream.writeInt(     procdepth );
+	stream.writeObject(  internalStepList );
+	stream.writeObject(  internalTransitionList );
+	stream.writeObject(  internalActionList );
+	stream.writeObject(  internalDeclarationList );
 	// Absfc
 	stream.writeInt(     depth );
 	stream.writeBoolean( processed );

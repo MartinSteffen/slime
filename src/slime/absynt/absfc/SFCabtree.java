@@ -9,7 +9,7 @@ import java.util.LinkedList;
  * the top level syntactic construct,
  * i.e., the entry point.
  * @author initially provided by Marco Wendel.
- * @version $Id: SFCabtree.java,v 1.1 2002-06-19 07:42:15 swprakt Exp $
+ * @version $Id: SFCabtree.java,v 1.2 2002-06-25 05:25:02 swprakt Exp $
  */
 
 

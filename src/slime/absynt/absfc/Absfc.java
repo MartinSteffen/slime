@@ -8,7 +8,7 @@ import java.io.Serializable;
  * are an implemementation of an abstract SFC tree
  *
  * @author initially provided by Marco Wendel.
- * @version  $Id: Absfc.java,v 1.1 2002-06-19 07:42:15 swprakt Exp $
+ * @version  $Id: Absfc.java,v 1.2 2002-06-25 05:25:02 swprakt Exp $
  */
 
 abstract public class Absfc implements Serializable {
@@ -20,7 +20,7 @@ abstract public class Absfc implements Serializable {
     /** for easier processing of the SFCabtree */
     public slime.absynt.Step start_step; /** start step within sfc */
     public slime.absynt.Step end_step; /** end step within sfc */
-    public slime.absynt.Transition stmt_trans; /** transition within sfc */
+    public slime.absynt.Transition stmt_trans; /** currently useless transition */
 }
 // ---------------------------------------------------------------------
 
