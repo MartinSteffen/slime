@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.85 2002-07-05 15:50:03 swprakt Exp $
+## $Id: Errors.txt,v 1.86 2002-07-05 15:53:13 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,9 +34,10 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-Error 48:   parse erro
+Error 48:   parse error 
  class:     fatal
- package:   utils.parser
+ package:   utils.parser (but the firstcompilaton-sep-version, which is unrepaired)
+            Nope: also in the current version!
  status:    reported
  description: "(1 <= 2) or  (-1 = (-2 * 4)" gives
 
@@ -100,7 +101,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.85 2002-07-05 15:50:03 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.86 2002-07-05 15:53:13 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
