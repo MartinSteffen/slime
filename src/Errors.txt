@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.120 2002-07-06 14:30:43 swprakt Exp $
+## $Id: Errors.txt,v 1.121 2002-07-06 15:03:14 swprakt Exp $
 ###########################################################
 
 
@@ -42,6 +42,17 @@ Rules of the game:
 
 
 
+Error 61:     curious Exception
+ class:       probably fatal
+ status:      reported, 6.7.02, Steffen
+ package:     checks
+ description: if I do (for testing)
+	env.add(var, t_dec);  // 1: key, 2: value
+	env.add(var, t_dec);  // 1: key, 2: value
+	it raised this error:
+ 
+  TypecheckTest: java.lang.ClassCastException: java.lang.ClassCastException
+  TypecheckTest: java.lang.ClassCastException
 
 Error 60:     undeclared var
  class:       unclear, check this
@@ -169,7 +180,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.120 2002-07-06 14:30:43 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.121 2002-07-06 15:03:14 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
