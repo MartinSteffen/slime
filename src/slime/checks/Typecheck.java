@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.16 2002-06-25 17:16:11 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.17 2002-06-25 17:20:45 swprakt Exp $
  */
 
 public class Typecheck {
@@ -219,6 +219,7 @@ public class Typecheck {
         }
         
         public Object forVariable(String s, Type t) {
+	  // XXX: this is not ok here. No context
             return t;
         }
         
@@ -245,24 +246,32 @@ public class Typecheck {
     
     /** Visitor for transitions
      */
-    
-    public class TransitionV implements Visitors.ITransition{
-      public Object forTransition(LinkedList source,
-				  Expr guard,
-				  LinkedList target) throws CheckException {
-	try {
-	  Type t = (Type)guard.accept(new ExprV());
-	  if (!(t instanceof BoolType)) // guards must be boolean
-	    throw new UnbooleanGuard();
-	  // source and targets are linked lists of steps.
-	  // they must iterated through and checked for well-typedness.
-	  return new UnitType();
+  
+  public class TransitionV implements Visitors.ITransition{
+    public Object forTransition(LinkedList source,
+				Expr guard,
+				LinkedList target) throws CheckException {
+      try {
+	Type t = (Type)guard.accept(new ExprV());
+	if (!(t instanceof BoolType)) // guards must be boolean
+	  throw new UnbooleanGuard();
+	// source and targets are linked lists of steps.
+	// they must iterated through and checked for well-typedness.
+	for (Iterator i = source.iterator(); i.hasNext(); ) {
+	  Step s  = (Step)i.next();
+	  s.accept(new StepV()); 
 	}
-	catch (Exception e) {
-	  throw ((CheckException)e);
+	for (Iterator i = target.iterator(); i.hasNext(); ) {
+	  Step s  = (Step)i.next();
+	  s.accept(new StepV()); 
 	}
+	return new UnitType();
+      }
+      catch (Exception e) {
+	throw ((CheckException)e);
       }
     }
+  }
 
   /** Type checking visitor for a declaration.
    *  A declaration must have all three fields filled in, i.e.,
@@ -316,6 +325,11 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.16  2002/06/25 17:16:11  swprakt
+//    type check clause for action is done
+//
+//    [Steffen]
+//
 //    Revision 1.15  2002/06/25 17:00:53  swprakt
 //    step typechcking done
 //
@@ -382,6 +396,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.16 2002-06-25 17:16:11 swprakt Exp $
+//    $Id: Typecheck.java,v 1.17 2002-06-25 17:20:45 swprakt Exp $
 //
 //---------------------------------------------------------------------
