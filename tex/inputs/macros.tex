@@ -1,0 +1,66 @@
+%\newcommand{\kommentar}[1]{[{\small\em #1}]
+
+\newcommand{\Slime}{\textsc{Slime}}
+\newcommand{\cvs}{cvs}
+\newcommand{\Java}{\textsc{Java}}
+\newcommand{\SMV}{\textsc{Smv}}
+\newcommand{\Cplusplus}{C$^{++}$}
+\newcommand{\javadoc}{\textsc{javadoc}}
+
+\newcommand{\Int}    {\mathit{Int}}
+\newcommand{\Bool}   {\mathit{Bool}}
+
+
+\newcommand{\team}[1]{\textbf{Team:} #1\bigskip{}}
+
+
+
+\newcommand{\bnfdef}{::=}
+\newcommand{\bnfbar}{\ensuremath{\mid}}
+\newcommand{\of}    {\ensuremath{\mathrel{:}}}
+
+\newenvironment{diagram}{\begin{displaymath}}{\end{displaymath}}
+
+%\newcommand{\inputcode}[2][Code]   {
+%  {\small
+%  \mbox{}
+%  \newline
+%  \mbox{}
+%  \hrulefill
+%  \verbatiminput{#1/#2.java}
+%  \hrulefill}}
+
+
+
+
+\newcommand{\inputcode}[2][.]{
+  {\footnotesize
+  \mbox{}
+  \newline\nopagebreak{}
+  \mbox{}
+  \hrulefill
+  \lstinputlisting{#1/#2}
+  \hrulefill}}
+
+\newenvironment{code}{%
+%  \small\mbox{}\nopagebreak{}\mbox\hrulefill{}
+  {\begin{lstlisting}{}}}{%
+  {\end{lstlisting}}}
+
+
+%\newenvironment{diagram}{\begin{displaymath}}{\end{displaymath}}
+
+
+
+
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

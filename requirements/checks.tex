@@ -1,0 +1,76 @@
+\section{Checks}
+\label{sec:checks}
+
+\team{---}
+
+Nur syntaktisch korrekte Systeme können simuliert und als Basis für die
+Codegenerierung verwendet werden.  Deshalb soll die syntaktische
+Korrektheit überprüft werden.
+
+Die Aufgabe beinhaltet die Definition der syntaktischen Korrektheit, d.h.\ 
+der Begriff der Korrektheit (was soll alles gecheckt werden) soll
+formuliert und als Modul implementiert werden.
+
+
+
+
+\subsubsection*{Schnittstelle}
+
+Mit der Gui. Die Gui stellt darüber hinaus sicher, daß die Pakete
+Graphplatzierung, Simulation, Model-Checking und Codegenerierung nur gecheckte
+Syntax bekommen. Nicht gecheckt wird ``graphische'' Notation (ob Steps
+übereinanderliegen etc.), dafür ist der Editor aus Abschnitt~\ref{sec:editor}
+da.
+
+Die Schnittstelle sei (zumindest) eine Methode \texttt{start\_check} mit
+Parameter eines Objektes der abstrakten Syntax.
+
+
+Überprüfte Eigenschaften:
+\begin{itemize}
+\item Wohlgeformtheit (was das genau ist, bleibt festzulegen)
+\item wohltypisiertheit der Aussdrücke. Wir gehen davon aus, das die
+  Sprache stark typisiert ist. Die Typen der Operatoren sind in
+  Tabelle~\ref{tab:types} festgehalten.
+\item Der Initialstep ist in der Liste der Steps enthalten.
+\item Die Verwendung von ausschließlich \emph{booleschen} Variablen (dies
+  ist für die SMV-Gruppe wichtig.)
+\end{itemize}
+
+\begin{table}[htbp]
+  \centering
+  \begin{displaymath}
+    \begin{array}{rl}
+      \text{operator/constant} & \text{type(s)}
+      \\\hline
+      \mathit{true},\mathit{false}
+      & \Bool
+      \\
+      0,1,\ldots & \Int
+      \\
+      +,*,/ & \Int \times \Int \to \Int
+      \\
+      -     & \Int \times \Int \to \Int, \Int\to\Int
+      \\
+      <,>,\leq,\geq & \Int \times\Int \to \Bool
+      \\
+      =, \not= & \Int\times\Int \to \Bool, \Bool\times\Bool\to\Bool
+      \\
+      \neg & \Bool\times\Bool
+    \end{array}
+  \end{displaymath}
+  \caption{Typen}
+  \label{tab:types}
+\end{table}
+
+
+
+Was genau gecheckt wird, bleibt zu \emph{diskutieren!}
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

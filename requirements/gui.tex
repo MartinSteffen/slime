@@ -1,0 +1,52 @@
+\section{Graphische Benutzerschnittstelle (Gui)}
+\label{sec:gui}
+
+\team{}
+
+\Slime{} besteht aus verschiedenen Komponenten, die ihrerseits mit dem
+Benutzer interagieren. Es gibt ein übergeordnetes Paket, welches für die
+folgenden Aufgaben verantwortlich zeichnet:
+
+
+\begin{itemize}
+\item\textbf{Start:} Beim Start einer \Slime-Session erscheint ein Fenster,
+  von dem aus es möglich ist, verschiedene Komponenten des Systems
+  aufzurufen.
+\item\textbf{Abhängigkeitsverwaltung:} Eine Simulation kann erst dann
+  aufgerufen werden, wenn das Programm syntaktisch korrekt ist.  Das
+  gleiche gilt für den Modelchecker. Die Aufgabe besteht darin, eine
+  Definition der Abhängigkeiten zwischen den Komponenten festzulegen und
+  sie im Tool zu implementieren.
+\item\textbf{Sessionsverwaltung:} (2te Priorität) Es soll möglich sein,
+  eine Session (geöffnete Fenster, geladene Dateien, gewählte Optionen) zu
+  speichern.  Eine gespeicherte Session sollte wieder hergestellt werden
+  können.
+\end{itemize}
+Die Benutzeroberfläche \emph{integriert} alle anderen Komponenten, aus
+diesem Grund ist in dieser Gruppe besonders auf die \emph{Konsistenz} bzw.\ 
+Verletzung dieser zu achten. 
+
+\subsubsection*{Schnittstellen}
+
+Mit allen anderen Paketen. Siehe die entsprechenden Abschnitte dort. 
+
+
+\subsubsection*{Design-Entscheidungen}
+\begin{itemize}
+\item Die Oberflache wird mit \textsl{swing}-Komponenten aufgebaut; das
+  gleiche gilt für den Editor.
+\item Die Oberfläche wird mit dem Werkzeug \textsl{Forte 2.0} aufgebaut,
+  das gleiche gilt für den Editor.
+\end{itemize}
+
+
+
+
+
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

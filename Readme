@@ -1,0 +1,20 @@
+############################################################
+## $Id: Readme,v 1.1 2002-04-15 06:02:23 swprakt Exp $
+############################################################
+
+
+This is the root of the Slime-project from summer term 2002.
+The package contains the following files and subdirectories:
+
+    o Readme:            this file
+    o Snapshots:         short description about major
+                         development steps
+  
+
+    o requirements/    informal description of the task
+    o web/               The web-site for coordination,
+                         tracking the progress etc.
+    o org/               internal information about members etc
+    o src/               The Java-sources
+    o tex/               common LaTeX-macros 
+    o doc/               Generated Javadoc stuff

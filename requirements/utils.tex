@@ -1,0 +1,33 @@
+\section{Utilities}
+\label{sec:utils}
+
+Different pieces of code, not specifically attributed to any other package,
+but useful for more than one other package.
+
+
+\subsection{Pretty-Printer}
+\label{sec:prettyprinter}
+
+\team{Karsten Stahl, Martin Steffen}
+
+A simple \emph{pretty-printer} with tabulated ascii-output, primarily intended
+for diagnosis. It should be used for testing and debugging the other parts
+already during development.
+
+
+\subsubsection*{Interface}
+
+The pretty-printer can used (and is supposed to be used) by everyone for
+debugging. The only interfac that counts is the abstract syntax, which must be
+printable. The interface is partially implemented, for the usage, see
+\texttt{utils.PpExample}. Besides the \texttt{print}-for whole programs, the
+same methods is provided publicly also for other syntactic constructs to make
+them printable for diagnosis.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% $Id: utils.tex,v 1.1 2002-04-15 06:02:33 swprakt Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

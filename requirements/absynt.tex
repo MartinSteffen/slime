@@ -1,0 +1,36 @@
+
+\section{Abstract syntax}
+\label{sec:abstractsyntax}
+
+\team{Karsten Stahl, Martin Steffen, and all others}
+
+Folgende \emph{erweiterte BNF}-Notation faßt die \emph{abstrakte Syntax}
+als gemeinsame Zwischenrepresentierung zusammen. Abgesehen von einigen
+Namenkonventionen (Großschreibung) ist die Umsetzung in \Java{} trivial.
+Jeder nichtterminale Eintrag wird ein \emph{Klasse.} Alternativen,
+gekennzeichnet durch $\bnfbar$, sind Unterklassen der \emph{abstrakten
+  Klasse,} deren Unterfälle sie bilden. Die Einträge der mittleren Spalte
+werden als \emph{Felder} der Klassen repräsentiert. Die Konstruktoren sind,
+bis auf die Reihenfolge der Argumente, durch die Felder der Klasse
+festgelegt.\footnote{Es gibt Ausnahmen von der letzten Regel, nämlich für
+  die (\Slime-)Typen in den Ausdrücken. Die Typen sind nicht in die
+  Konstruktoren mit aufgenommen. Die entsprechenden Felder werden
+  nachträglich eingetragen.} Die \emph{Listen} der EBNF wurden als
+\texttt{java.lang.LinkedList}-Klassen implementiert. Graphische Information
+zur Positionierung, die nur für den Editor relevant ist, wurde nicht mit in
+die EBNF des Pflichtenheftes mit aufgenommen.
+
+
+\medskip
+
+\inputcode{sfc-absynt.txt}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% $Id: absynt.tex,v 1.1 2002-04-15 06:02:25 swprakt Exp $
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

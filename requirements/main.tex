@@ -1,0 +1,96 @@
+
+
+\documentclass[11pt]{article}
+
+\input{switches}
+\input{preamble}
+\input{../tex/inputs/macros}
+\usepackage[english]{babel}
+\usepackage{hevea}
+
+\usepackage{handout}
+\usepackage[latin1]{inputenc}
+
+\ifweb\else
+%%---------
+\uebungfalse
+\handoutfalse
+\freeformtrue
+%%----------
+\fi
+
+
+%\begin{htmlonly}
+\ifweb
+\htmlfoot{\scriptsize\it last generated \today\  (\copyright Public License)}
+\renewcommand{\@bodyargs}{bgcolor="white" alink="red" vlink="\#407999"  link="\#7070ff"}    
+\title{Specification (1):  \Slime}
+%\end{htmlonly}
+
+
+\else
+\fi
+
+
+
+
+
+\begin{document}
+\ifweb
+\maketitle{}
+\else
+\ausgabe{5.\ April 2002}
+\abgabe{x}
+\maketitle{Pflichtenheft: \Slime\ (1)}{\Slime\ (1)}
+\fi
+
+
+
+\thispagestyle{empty}
+
+
+\input{abstract}
+\input{introduction}
+\input{gui}
+\input{editor}
+\input{checks}
+\input{simulator}
+\input{smv}
+
+\input{platzierung}
+\input{parser}
+\input{assert}
+\input{codegenerierung}
+\input{utils}
+\appendix
+
+
+%\input{syntax}
+\input{absynt}
+\input{semantics}
+
+
+\bibliographystyle{alpha}
+
+\addcontentsline{toc}{section}{Bibliography}
+
+
+{%\small
+  \bibliography{string,etc,imperative,oop,types,tools,protocol,logic,crossref}
+}
+
+
+
+
+
+\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%ende blatt1.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 

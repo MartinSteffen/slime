@@ -1,0 +1,44 @@
+                  SFC ::=  istep      : step
+                           steps      : step list
+                           transs     : transition list
+                           actions    : action list
+                           declist    : declaration list
+                 step ::=  name       : string
+                           actions    : stepaction list
+           stepaction ::=  qualifier  : action_qualifier
+                           a_name     : string
+               action ::=  a_name     : string
+                           sap        : stmt list  (* simple assignment program *)
+                stmt  ::=               skip
+                       |                assign
+               assign ::=  var        : variable
+                           val        : expr
+             variable ::=  name       : string
+                           type       : type
+     action_qualifier ::=  Nqual                            (* may be extended *)
+
+           transition ::=  source     : step list
+                           guard      : expr
+                           target     : step list
+
+          declaration ::=  var        : variable
+                           type       : type
+                           val        : constval
+
+           expr       ::=               b_expr
+                       |                u_expr
+                       |                constval
+                       |                variable
+         b_expr       ::=  left_expr  : expr
+                           right_expr : expr
+                           op         : operand
+                           type       : type
+         u_expr       ::=  sub_expr   : expr
+                           op         : operand             
+                           type       : type
+           operand    ::=               PLUS | MINUS | TIMES | DIV  (* Operand als *)
+                       |                AND | OR | NEG              (* Konstanten in expr *)
+                       |                LESS | GREATER | LEQ | GEQ | EQ | NEQ
+            constval  ::=               ...| -2 | -1 | 0 | 1 | ... | true | false
+            type      ::=               inttype
+                       |                booltype
