@@ -10,7 +10,7 @@ import java.util.Hashtable;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.5 2002-06-07 14:36:26 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.6 2002-06-08 20:20:55 swprakt Exp $
  */
 
 final class SFCPainter{
@@ -60,12 +60,12 @@ final class SFCPainter{
 	LinkedList actions = step.actions;
 	if (actions.size() != 0) {
 	    g.setColor(Color.gray);
-	    g.drawLine(x0+stepWidth, y0, x0+stepWidth+ACTION_GAP, y0);
+	    g.drawLine(x0+stepWidth, y0+7, x0+stepWidth+ACTION_GAP, y0+7);
 	    for (int i=0; i< actions.size(); i++) {
 		StepAction stepAction = (StepAction)actions.get(i);
 		String name = stepAction.a_name;
-		g.drawString(name, x0+4+ACTION_GAP+stepWidth, y0+10+i*15);
-		g.drawRect(x0+ACTION_GAP+stepWidth, y0, name.length()*7 + 8, 15);
+		g.drawString(name, x0+4+ACTION_GAP+stepWidth, y0+11+i*15);
+		g.drawRect(x0+ACTION_GAP+stepWidth, y0+i*15, name.length()*7 + 8, 15);
 	    }
 	}
     }
@@ -73,11 +73,14 @@ final class SFCPainter{
     private void paintTransitions(Graphics g) {
 	Hashtable colors = this.eSFC.getColorHashtable();
 	LinkedList transitionList = this.sfc.transs;
+	int gap = 20;
 	for (int i=0; i<transitionList.size(); i++) {
 	    Transition transition = (Transition)transitionList.get(i);
-	    g.setColor((Color)colors.get(transition));
 	    LinkedList source = transition.source;
 	    LinkedList target = transition.target;
+	    boolean openClosure = target.size() > 1;
+	    boolean closingClosure = source.size() > 1;
+	    String name = this.eSFC.output(transition.guard);
 	    for (int s=0; s<source.size(); s++) {
 		Step sStep = (Step)source.get(s);
 		Position sPosition = sStep.pos;
@@ -88,13 +91,33 @@ final class SFCPainter{
 		    Position tPosition = tStep.pos;
 		    int x1 = (int)tStep.pos.x;
 		    int y1 = (int)tStep.pos.y;
-		    g.setColor(Color.black);
-		    if (y0 < y1)
-			g.drawLine(x0+15, y0+30, x1+15, y1);
-		    else {
-			g.drawLine(x0+15, y0+30, x0+35, y0+30);
-			g.drawLine(x0+35, y0+30, x1+35, y1);
-			g.drawLine(x1+15, y1, x1+35, y1);
+		    g.setColor((Color)colors.get(transition));
+		    if (y0 < y1) {
+			int yOffset = (y1-y0-30)/2;
+			g.drawLine(x0+15, y0+30, x0+15, y0+30+yOffset);
+			g.drawLine(x0+15, y0+30+yOffset, x1+15, y0+30+yOffset);
+			g.drawLine(x1+15, y0+30+yOffset, x1+15, y1);
+		    } else {
+			int x0Offset = -40;
+			int x1Offset = -40-(x1-x0);
+			if (x1 < x0) {
+			    x0Offset = -40-(x0-x1);
+			    x1Offset = -40;
+			}
+			g.drawLine(x0+15, y0+30, x0+15, y0+30+gap);
+			g.drawLine(x0+15, y0+30+gap, x0+15+x0Offset, y0+30+gap);
+			g.drawLine(x0+15+x0Offset, y0+30+gap, x1+15+x1Offset, y1-gap);
+			g.drawLine(x1+15+x1Offset, y1-gap, x1+15, y1-gap);
+			g.drawLine(x1+15, y1-gap, x1+15, y1);
+		    }
+		    if (openClosure) {
+			g.drawLine(x0+10, y0+30+gap/2, x0+20, y0+30+gap/2);
+			g.setColor(Color.gray);
+			g.drawString(name, x0+23, y0+30+gap/2+2);
+		    } else {
+			g.drawLine(x1+10, y1-gap/2, x1+20, y1-gap/2);
+			g.setColor(Color.gray);
+			g.drawString(name, x1+23, y1-gap/2+2);
 		    }
 		}
 	    }

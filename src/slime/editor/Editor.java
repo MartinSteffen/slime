@@ -14,10 +14,11 @@ import javax.swing.event.*;
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.7 2002-06-07 15:07:30 swprakt Exp $
+ * @version $Id: Editor.java,v 1.8 2002-06-08 20:20:55 swprakt Exp $
  */
 
-public final class Editor extends JComponent implements ChangeListener{
+public final class Editor extends JComponent 
+    implements ChangeListener, MouseListener {
 
     private static final int WIDTH = 100, HEIGHT = 300;
 
@@ -27,6 +28,12 @@ public final class Editor extends JComponent implements ChangeListener{
     private static final int REMOVE_MODE = 3; // r
     // Guards über "g" setzen
     // Alle Markierungen löschen über "c"
+
+
+    // ScrollPane Action
+    // entf -> remove selected items in list and SFC!!!
+    // double click -> change (but not name!!!)
+    
     
     private int mode = EDIT_MODE;
     
@@ -37,6 +44,8 @@ public final class Editor extends JComponent implements ChangeListener{
     private JScrollPane  guardList;
     private JScrollPane  actionList;
     private JScrollPane  declaringList;
+    private JList        actionJList;
+    private JList        guardJList;
 
     // Toggel to transition mode by pressing t
     // Toggel to step mode by pressing s
@@ -59,7 +68,6 @@ public final class Editor extends JComponent implements ChangeListener{
 	this.eSFCList = new ESFCList();
 	this.add(sfc);
 	this.initWindow("SFC-Editor");
-	//this.pack();
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -67,6 +75,7 @@ public final class Editor extends JComponent implements ChangeListener{
 	c.repaint();
 	DrawBoard d = (DrawBoard)c.getComponent(0); // FIX ME: So nicht, aber es geht :-)
 	this.eSFC = d.getESFC();
+	this.updateWindow();
     }
 
     /**
@@ -97,17 +106,15 @@ public final class Editor extends JComponent implements ChangeListener{
     private void initWindow(String title) {
 	this.setSize(WIDTH, HEIGHT);
 	this.setBackground(Color.gray);
-	//this.setTitle(title);
+	this.setVisible(true);
+	this.updateWindow();
+    }
+
+    private void updateWindow() {
 	this.setLayout( new BorderLayout() );
 	this.add(this.getCenterPanel(), BorderLayout.CENTER);
 	this.add(this.getSouthPanel(), BorderLayout.SOUTH);
 	this.add(this.getWestPanel(), BorderLayout.WEST);
-	this.setVisible(true);
-//  	this.addWindowListener( new WindowAdapter() {
-//  		public void windowClosing(WindowEvent e) {
-//  		    System.exit( 0 );
-//  		}
-//  	    });
     }
 
 
@@ -121,10 +128,33 @@ public final class Editor extends JComponent implements ChangeListener{
     }
 
     private JScrollPane getGuardList() {
-	Object[] o = {"Hier","stehen","spaeter","die","Guards"};
-	Panel panel = new Panel();
-	guardList = new JScrollPane(new JList(o));
+	Object[] o;
+	SFC sfc = this.eSFC.getSFC();
+	if (sfc == null)
+	    o = new Object[0];
+	else {
+	    LinkedList transitionList = sfc.transs;
+	    LinkedList guards = new LinkedList();
+	    for (int i=0; i<transitionList.size(); i++) {
+		Transition transition = (Transition)transitionList.get(i);
+		Expr guard = transition.guard;
+		String name = this.eSFC.output(guard);
+		if (!this.isStringInList(guards, name))
+		    guards.add(name);
+	    }
+	    o = guards.toArray();
+	}
+	guardJList = new JList(o);
+	guardJList.addMouseListener(this);
+	guardList = new JScrollPane(guardJList);
 	return guardList;
+    }
+
+    private boolean isStringInList(LinkedList list, String string) {
+	for (int i=0; i<list.size(); i++) 
+	    if (list.get(i).toString().equals(string))
+		return true;
+	return false;
     }
 
     private JScrollPane getActionList() {
@@ -140,7 +170,8 @@ public final class Editor extends JComponent implements ChangeListener{
 		o[i] = s;
 	    }
 	}
-	actionList = new JScrollPane(new JList(o));
+	this.actionJList = new JList(o);
+	actionList = new JScrollPane(this.actionJList);
 	return actionList;
     }
 
@@ -178,6 +209,9 @@ public final class Editor extends JComponent implements ChangeListener{
     private JPanel getSouthPanel() {
 	JPanel panel = new JPanel();
 	this.statusMessage = new JTextField( 40 );
+	panel.add(this.getGuardButton());
+	panel.add(this.getActionButton());
+	panel.add(this.getVariableButton());
 	panel.add( statusMessage );
 	panel.add(this.getCheckButton());
 	panel.add(this.getLayoutButton());
@@ -225,7 +259,7 @@ public final class Editor extends JComponent implements ChangeListener{
 		    String[] options = {"Ok"};
 		    int result = JOptionPane.showOptionDialog(
 			null,
-			message,
+			message, //new JScrollPane(new JList(message)),
 			"Need some help?",
 			JOptionPane.DEFAULT_OPTION,
 			JOptionPane.INFORMATION_MESSAGE,
@@ -267,36 +301,135 @@ public final class Editor extends JComponent implements ChangeListener{
 	    });
 	return check;
     }
+
+    private Button getVariableButton() {
+	Button variable = new Button("Variable");
+	variable.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    statusMessage.setText("Add new variable.");
+		}
+	    });
+	return variable;
+    }
+
+    private Button getActionButton() {
+	Button action = new Button("Action");
+	action.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    statusMessage.setText("Add new action.");
+		}
+	    });
+	return action;
+    }
+
+    private Button getGuardButton() {
+	Button guard = new Button("Guard");
+	guard.addActionListener(new ActionListener() {
+		public void actionPerformed (ActionEvent e) {
+		    statusMessage.setText("Add new guard.");
+		}
+	    });
+	return guard;
+    }
     
     protected void evaluateDoubleMouseClickOn(int x, int y) {
 	Step step = this.determineSelectedStep(this.eSFC.getSFC().steps, x, y);
-	boolean isIStep = (step == this.eSFC.getSFC().istep);
 	if (step != null) {
-	    statusMessage.setText("Awaiting a new name for the step..");
-	    Object[] message = new Object[3];
-	    message[0] = "Name";
-	    message[1] = (new JTextField(step.name));
-	    message[2] = (new JRadioButton("Initial step", isIStep));
-	    String[] options = {"Ok", "Cancel"};
+	    statusMessage.setText("Change step attributes.");
+	    this.stepDialogWindow("Change step ...", step, x, y);
+	}
+    }
 
-	    int result = JOptionPane.showOptionDialog(
-		null,
-		message,
-		"Change name ...",
-		JOptionPane.DEFAULT_OPTION,
-		JOptionPane.INFORMATION_MESSAGE,
-		null,
-		options,
-		options[0]);
-	    if (result == 0) {
-		step.name = ((JTextField)message[1]).getText();
-		if (((JRadioButton)message[2]).isSelected())
-		    this.eSFC.getSFC().istep = step;
-		else
-		    if (isIStep)
-			this.eSFC.getSFC().istep = null;
+    private void stepDialogWindow(String title, Step step, int x, int y) {
+
+	Object[] o;
+	SFC sfc = this.eSFC.getSFC();
+	if (sfc == null)
+	    o = new Object[0];
+	else {
+	    LinkedList aList = sfc.actions;
+	    o = new Object[aList.size()];
+	    for (int i=0; i< aList.size(); i++) {
+		String s = this.eSFC.output((absynt.Action)aList.get(i));
+		o[i] = s;
 	    }
 	}
+	JList actionJList = new JList(o);
+	JScrollPane actionList = new JScrollPane(actionJList);
+	
+
+	int[] selectedIndices = this.getActionIndices(step);
+	actionJList.setSelectedIndices(selectedIndices);
+
+	boolean isIStep = (step == this.eSFC.getSFC().istep);
+	Object[] message = new Object[7];
+	String name = "";
+	if (step != null)
+	    name = step.name;
+	message[0] = "Name";
+	message[1] = (new JTextField(name));
+	message[2] = (new JRadioButton("Initial step", isIStep));
+	message[3] = "Action";
+	message[4] = (new JTextField(""));
+	message[5] = "Existing actions";
+	message[6] = (actionList);
+	String[] options = {"Ok", "Cancel"};
+	
+	int result = JOptionPane.showOptionDialog(
+	    null,
+	    message,
+	    title,
+	    JOptionPane.DEFAULT_OPTION,
+	    JOptionPane.INFORMATION_MESSAGE,
+	    null,
+	    options,
+	    options[0]);
+	if (result == 0) {
+	    if (step == null)
+		step = this.eSFC.addStep(((JTextField)message[1]).getText(), x, y);
+	    step.name = ((JTextField)message[1]).getText();
+	    if (((JRadioButton)message[2]).isSelected())
+		this.eSFC.getSFC().istep = step;
+	    else
+		if (isIStep)
+		    this.eSFC.getSFC().istep = null;
+	    if (!((JTextField)message[4]).getText().equals(""))
+		statusMessage.setText("SAP's are not parsed yet");
+	    step.actions = this.getStepActions(actionJList);
+	}
+	//this.pack();
+    }
+    
+    // FIX ME: Auf jeden Fall optimieren !!!
+    private int[] getActionIndices(Step step) {
+	SFC sfc = this.eSFC.getSFC();
+	if (sfc == null)
+	    return new int[0];
+	LinkedList actionList = sfc.actions;
+	LinkedList stepActionList = new LinkedList();
+	if (step != null)
+	    stepActionList = step.actions;
+	int[] actionIndizies = new int[stepActionList.size()];
+	for (int i=0; i<stepActionList.size(); i++) {
+	    StepAction stepAction = (StepAction)stepActionList.get(i);
+	    for (int j=0; j<actionList.size(); j++) {
+		absynt.Action action = (absynt.Action)actionList.get(j);
+		if (action.a_name.equals(stepAction.a_name)) 
+		    actionIndizies[i] = j;
+	    }
+	}
+	return actionIndizies;
+    }
+
+    private LinkedList getStepActions(JList actionJList) {
+	LinkedList stepAction = new LinkedList();
+	int[] selectedIndices = actionJList.getSelectedIndices();
+	LinkedList actionList = this.eSFC.getSFC().actions;
+	for (int i=0; i<selectedIndices.length; i++) {
+	    absynt.Action action = (absynt.Action)actionList.get(selectedIndices[i]);
+	    stepAction.add(new StepAction(new Nqual(), action.a_name));
+	}
+	return stepAction;
     }
 
     protected void evaluateSingleMouseClickOn(int x, int y) {
@@ -319,24 +452,8 @@ public final class Editor extends JComponent implements ChangeListener{
 	}
 	else {
 	    statusMessage.setText("Adding a new step.");
-	    Object[] message = new Object[2];
-	    message[0] = "Name";
-	    message[1] = new JTextField();
-	    String[] options = {"Add", "Cancel"};
-	    
-	    int result = JOptionPane.showOptionDialog(
-		null,
-		message,
-		"Add new step ...",
-		JOptionPane.DEFAULT_OPTION,
-		JOptionPane.INFORMATION_MESSAGE,
-		null,
-		options,
-		options[0]);
-	    if (result == 0)
-		this.eSFC.addStep(((JTextField)message[1]).getText(), x, y);
+	    this.stepDialogWindow("New step ...", null, x, y);
 	}
-	//this.pack();
     }
     
     protected void evaluateMouseDragged(int x0, int y0, int x1, int y1) {
@@ -368,6 +485,10 @@ public final class Editor extends JComponent implements ChangeListener{
 	Step step = this.determineSelectedStep(this.eSFC.getSFC().steps, x, y);
 	Object o = this.eSFC.getSelectedObject();
 	this.eSFC.setSelectedObject(step);
+	if (step != o) {
+	    int[] selectedIndices = this.getActionIndices(step);
+	    this.actionJList.setSelectedIndices(selectedIndices);
+	}
 	return (step != o);
     }
 
@@ -431,34 +552,112 @@ public final class Editor extends JComponent implements ChangeListener{
 		this.statusMessage.setText("No target step(s) selected");
 		return;
 	    }
-	    this.statusMessage.setText("New transition(s) added");
-	    this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
-				    null, 
-				    this.eSFC.getTargetSteps());
-	    this.toggleMode(SOURCE_MODE);
+
+	    Object[] o;
+	    SFC sfc = this.eSFC.getSFC();
+	    if (sfc == null)
+		o = new Object[0];
+	    else {
+		LinkedList transitionList = sfc.transs;
+		LinkedList guards = new LinkedList();
+		for (int i=0; i<transitionList.size(); i++) {
+		    Transition transition = (Transition)transitionList.get(i);
+		    Expr guard = transition.guard;
+		    String name = this.eSFC.output(guard);
+		    if (!this.isStringInList(guards, name))
+			guards.add(name);
+		}
+	    o = guards.toArray();
+	    }
+	    JList guardJList = new JList(o);
+	    guardJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+	    JScrollPane guardList = new JScrollPane(guardJList);
+	    
+	    Object[] message = new Object[4];
+	    message[0] = "Expression";
+	    message[1] = (new JTextField(""));
+	    message[2] = "Existing guards";
+	    message[3] = (guardList);
+	    String[] options = {"Ok", "Cancel"};
+	    
+	    int result = JOptionPane.showOptionDialog(
+		null,
+		message,
+		"Add new transition",
+		JOptionPane.DEFAULT_OPTION,
+		JOptionPane.INFORMATION_MESSAGE,
+		null,
+		options,
+		options[0]);
+	    if (result == 0) {
+		if (((JTextField)message[1]).getText().equals("")) {
+		    String name = (String)guardJList.getSelectedValue();
+		    if (name == null) {
+			this.statusMessage.setText("No guard selected");
+		    } else {
+			Expr eGuard = null; 
+			LinkedList transitionList = this.eSFC.getSFC().transs;
+			for (int i=0; i<transitionList.size(); i++) {
+			    Transition transition = (Transition)transitionList.get(i);
+			    Expr guard = transition.guard;
+			    if (this.eSFC.output(guard).equals(name))
+				eGuard = guard;
+			}
+			this.statusMessage.setText("New transition(s) added");
+			this.eSFC.addTransition(this.eSFC.getSourceSteps(), 
+						eGuard, 
+						this.eSFC.getTargetSteps());
+			this.toggleMode(SOURCE_MODE);
+		    }
+		} else {
+		    this.statusMessage.setText("Expression input not parsed yet");
+		}
+	    }
 	}
-	//this.pack();
     }
 
-//      public static void main(String[] argv) {
-//  	SFC sfc1 = Example.getExample1();
-//  	SFC sfc2 = Example.getExample1();
-//  	for (int i=0; i < sfc1.steps.size(); i++) {
-//  	    Step step = (Step)(sfc1.steps).get(i);
-//  	    step.pos = new Position((float)(i*40),40.0f);
-//  	}
-//  	for (int i=0; i < sfc2.steps.size(); i++) {
-//  	    Step step = (Step)(sfc2.steps).get(i);
-//  	    step.pos = new Position((float)(i*40),40.0f);
-//  	}
-//  	Editor editor = new Editor(sfc1);
-//  	editor.add(sfc2);
-//      }
+    public void mouseClicked(MouseEvent e) {
+	e.consume();
+	this.statusMessage.setText(":-(");
+	Object[] selectedValues = this.guardJList.getSelectedValues();
+	LinkedList transitionList = this.eSFC.getSFC().transs;
+	for (int i=0; i<transitionList.size(); i++) {
+	    Transition transition = (Transition)transitionList.get(i);
+	    this.eSFC.deHighlight(transition);
+	    Expr guard = transition.guard;
+	    String name = this.eSFC.output(guard);
+	    for (int j=0; j<selectedValues.length; j++) {
+		String name2 = (String)selectedValues[j];
+		if (name2.equals(name))
+		    this.eSFC.highlight(transition, Color.green);
+	    }
+	}
+	ScrollPane c = (ScrollPane)this.drawBoardTabbedPane.getSelectedComponent();
+	DrawBoard d = (DrawBoard)c.getComponent(0); // FIX ME: So nicht, aber es geht :-)
+	d.repaint();
+    }
+
+    public void mouseEntered(MouseEvent e) {
+	this.requestFocus();
+	e.consume();
+	this.statusMessage.setText(":-)");
+    }
+
+    public void mouseExited(MouseEvent e) {
+	e.consume();
+    }
+
+    public void mousePressed(MouseEvent e) {
+	e.consume();
+	this.statusMessage.setText(":-(");
+    }
+
+    public void mouseReleased(MouseEvent e) {
+	e.consume();
+	this.statusMessage.setText(":-(");
+    }
+
 }
-
-
-
-
 
 
 

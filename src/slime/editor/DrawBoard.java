@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.6 2002-06-07 14:36:25 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.7 2002-06-08 20:20:54 swprakt Exp $
  */
 
 final class DrawBoard extends Canvas
@@ -148,7 +148,7 @@ final class DrawBoard extends Canvas
 				     +this.mousePressedOnY+") to ("
 				     +e.getX()+","
 				     +e.getY()+")");
-	this.repaint();
+	//this.repaint();
     }
 
     public void mouseMoved(MouseEvent e) {

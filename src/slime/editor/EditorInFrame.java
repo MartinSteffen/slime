@@ -11,8 +11,13 @@ import javax.swing.event.*;
 
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
+ * <br><br>
+ * There are some new functions but the help button is out of date. 
+ * Wait for later updates. Sometimes the editor crashes because of
+ * unchecked SFC's. Please report all other crashes and bugs !!!
+ * 
  * @author Andreas Niemann
- * @version $Id: EditorInFrame.java,v 1.3 2002-06-07 14:36:26 swprakt Exp $
+ * @version $Id: EditorInFrame.java,v 1.4 2002-06-08 20:20:55 swprakt Exp $
  */
 
 public final class EditorInFrame extends JFrame {

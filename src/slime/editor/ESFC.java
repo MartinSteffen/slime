@@ -9,15 +9,16 @@ import java.util.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.4 2002-06-07 14:36:26 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.5 2002-06-08 20:20:54 swprakt Exp $
  */
 
 final class ESFC{
 
-    private static final Color INITIAL = Color.darkGray;
-    private static final Color SOURCE  = Color.blue;
-    private static final Color TARGET  = Color.red;
-    private static final Color NORMAL  = Color.black;
+    private static final Color INITIAL            = Color.darkGray;
+    private static final Color SOURCE             = Color.blue;
+    private static final Color TARGET             = Color.red;
+    private static final Color STEP_NORMAL        = Color.black;
+    private static final Color TRANSITION_NORMAL  = Color.gray;
 
     private SFC        sfc;
     private LinkedList sourceSteps;
@@ -25,6 +26,7 @@ final class ESFC{
     private Hashtable  colors;
     private DrawBoard  drawBoard;
     private Object     selectedObject;
+    private Object     markedObject;
     
     protected ESFC(SFC sfc) {
 	this.sfc    = sfc;
@@ -72,7 +74,7 @@ final class ESFC{
     protected void clearSourceSteps() {
 	for (int i=0; i<this.sourceSteps.size(); i++) {
 	    Step step = (Step)this.sourceSteps.get(i);
-	    this.colors.put(step, NORMAL);
+	    this.colors.put(step, STEP_NORMAL);
 	}
 	this.sourceSteps = new LinkedList();
     }
@@ -80,7 +82,7 @@ final class ESFC{
     protected void clearTargetSteps() {
 	for (int i=0; i<this.targetSteps.size(); i++) {
 	    Step step = (Step)this.targetSteps.get(i);
-	    this.colors.put(step, NORMAL);
+	    this.colors.put(step, STEP_NORMAL);
 	}
 	this.targetSteps = new LinkedList();
     }
@@ -108,16 +110,18 @@ final class ESFC{
   	}
   	this.sfc.steps.remove(step);
 	this.colors.remove(step);
+	if (step == this.sfc.istep)
+	    this.sfc.istep = null;
     }
 
     protected void removeSourceStep(Step step) {
 	this.sourceSteps.remove(step);
-	this.colors.put(step, NORMAL);
+	this.colors.put(step, STEP_NORMAL);
     }
 
     protected void removeTargetStep(Step step) {
 	this.targetSteps.remove(step);
-	this.colors.put(step, NORMAL);
+	this.colors.put(step, STEP_NORMAL);
     }
 
     protected void addSourceStep(Step step) {
@@ -145,27 +149,28 @@ final class ESFC{
 	    if (step == this.sfc.istep)
 		colors.put(step, INITIAL);
 	    else
-		colors.put(step, NORMAL);
+		colors.put(step, STEP_NORMAL);
 	}
 	for (int nr=0; nr<sfc.transs.size(); nr++) { 
 	    Transition transition = (Transition)(this.sfc.transs).get(nr);
-	    colors.put(transition, Color.black);
+	    colors.put(transition, TRANSITION_NORMAL);
 	}
 	return colors;
     }
 
-    protected void addStep(String name, int x, int y) {
+    protected Step addStep(String name, int x, int y) {
 	Step step = new Step(name);
 	Position position = new Position((float)x, (float)y);
 	step.pos = position;
 	this.sfc.steps.add(step);
-	colors.put(step, NORMAL);
+	colors.put(step, STEP_NORMAL);
+	return step;
     }
 
     protected void addTransition(LinkedList source, Expr expr, LinkedList target) {
 	Transition transition = new Transition(source, expr, target);
 	this.sfc.transs.add(transition);
-	colors.put(transition, NORMAL);
+	colors.put(transition, TRANSITION_NORMAL);
 	this.clearSourceSteps();
 	this.clearTargetSteps();
     }
@@ -180,7 +185,14 @@ final class ESFC{
     }
 
     protected void deHighlight(Object key) {
-	this.highlight(key, NORMAL); //FIX ME: Inititial Step != NORMAL!!!!
+	if (key instanceof Transition)
+	    this.highlight(key, TRANSITION_NORMAL);
+	if (key instanceof Step)
+	    if (key == this.sfc.istep)
+		this.highlight(key, INITIAL);
+	    else
+		this.highlight(key, STEP_NORMAL);
+	this.highlight(key, STEP_NORMAL);
     }
 
     public static int getWidth(Step step) {
@@ -217,12 +229,12 @@ final class ESFC{
 		return output((Declaration)absynt);
 	    if(absynt instanceof Skip)
 		return output((Skip)absynt);
+	    if(absynt instanceof Assign)
+		return output((Assign)absynt);
 	    if(absynt instanceof Stmt)
 		return output((Stmt)absynt);
 	    if(absynt instanceof Variable)
 		return output((Variable)absynt);
-	    if(absynt instanceof Assign)
-		return output((Assign)absynt);
 	    if(absynt instanceof B_expr)
 		return output((B_expr)absynt);
 	    if(absynt instanceof U_expr)
@@ -238,13 +250,16 @@ final class ESFC{
 	    /*if(absynt instanceof M_Type)
 	      output((M_Type)absynt);*/
 	}
-	return "";
+	return "*";
     }
 		       
     public String output(absynt.Action action){
 	String s = action.a_name + ": ";
-	for (Iterator i = action.sap.iterator(); i.hasNext();)
+	for (Iterator i = action.sap.iterator(); i.hasNext();) {
 	    s += print((Stmt)i.next());
+	    if (i.hasNext())
+		s += ", ";
+	}
 	return s;
     }
     
@@ -284,8 +299,6 @@ final class ESFC{
     
     public String output(Stmt stmt){
 	String s = "";
-	if (stmt instanceof Assign) 
-	    s = output((Assign)stmt);
 	return s;
     }
 
@@ -298,7 +311,7 @@ final class ESFC{
     public String output(Assign assign){
 	String s = "";
 	s += print(assign.var)+":=";
-	s += print(assign.val)+"; ";
+	s += print(assign.val);
 	return s;
     }
 
@@ -312,8 +325,14 @@ final class ESFC{
 
     public String output(Expr expr){
 	String s = "";
-	//if (expr instanceof Constval)
-	    
+	if(expr instanceof B_expr)
+	    return output((B_expr)expr);
+	if(expr instanceof U_expr)
+	    return output((U_expr)expr);
+	if(expr instanceof Constval)
+	    return output((Constval)expr);
+	if(expr instanceof Variable)
+	    return output((Variable)expr);
 	return s;
     }    
     
@@ -332,46 +351,46 @@ final class ESFC{
 	String string;
 	switch(op){
 	case 0 :
-	    string ="+ ";
+	    string ="+";
 	    break;
 	case 1:
-	    string ="- ";
+	    string ="-";
 	    break;
 	case 2:
-	    string ="* ";
+	    string ="*";
 	    break;
 	case 3:
-	    string ="/ ";
+	    string ="/";
 	    break;
 	case 4:
-	    string ="& ";
+	    string ="&";
 	    break;
 	case 5:
-	    string ="| ";
+	    string ="|";
 	    break;
 	case 6:
-	    string ="! ";
+	    string ="!";
 	    break;
 	case 7:
-	    string ="= ";
+	    string ="=";
 	    break;
 	case 8:
-	    string ="< ";
+	    string ="<";
 	    break;
 	case 9:
-	    string ="> ";
+	    string =">";
 	    break;
 	case 10:
-	    string ="<= ";
+	    string ="<=";
 	    break;
 	case 11:
-	    string ="=> ";
+	    string ="=>";
 	    break;
 	case 12:
-	    string ="<> ";
+	    string ="<>";
 	    break;
 	default:
-	    string ="NULL ";
+	    string ="NULL";
 	    break;
 	}
     	return string;
