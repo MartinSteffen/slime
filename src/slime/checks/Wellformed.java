@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.13 2002-07-11 06:24:40 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.14 2002-07-11 06:30:08 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors (combined into one exception) together with the
  * checker proper, which recurs over the abstract syntax.
@@ -159,6 +159,8 @@ public class Wellformed {
 	  throw new WException("null source or target in transition.");
 	if (source.isEmpty() || target.isEmpty())
 	  throw new WException ("no source or no target step in transition.");
+	if ((source.size() > 1) && target.size() > 1)
+	  throw new WException ("transition with more than one source and at the same time more than one target step.");
 	try {
 	  for (Iterator i = source.iterator(); i.hasNext(); ) {
 	    Step s  = (Step)i.next();
@@ -203,6 +205,13 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.13  2002/07/11 06:24:40  swprakt
+//    sources and targets of a transition are checked for
+//    	- non null-ness
+//    	- non emptyness (at least one source or target must exist)
+//
+//    [Steffen]
+//
 //    Revision 1.12  2002/07/11 06:05:48  swprakt
 //    *** empty log message ***
 //
