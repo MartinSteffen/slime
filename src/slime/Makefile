@@ -1,22 +1,13 @@
-
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.16 2002-06-28 15:14:08 swprakt Exp $
+# $Id: Makefile,v 1.17 2002-06-28 15:54:59 swprakt Exp $
 #----------------------------------------------------------------------
-
+#
 # The targets installing gobal web-infos can be executed only
 # by the maintainers
 # 
-# Why should the developers(students) not be informed about
-# what is happening with their files ??? (mwe)
-# $Log: not supported by cvs2svn $
-# Revision 1.15  2002/06/28 15:07:31  swprakt
-# Added Log-Entries.
-# Everybody should see what is happening and who has done what.
-# For this file i recommend "cvs annotate Makefile". (mwe)
-#
-#
-
+# "cvs log Makefile" for version log
+# "cvs annotate Makefile" for changed lines in each version
 #
 ######################################
 
@@ -40,7 +31,6 @@ PACKAGEDIRS   = absynt\
 
 
 ################################################
-
 
 
 all:	packets $(patsubst %.java,%.class,$(wildcard *.java))
@@ -72,11 +62,9 @@ jar:
 	    ./checks/*.class\
 	    ./io/*.class\
 	    ./sfcparser/*.class
-		
 
 jarinstall: 
 	cp snot_v*.jar $(BASELINESDIR)
-
 
 clean:
 	(cd ./absynt; make clean)
@@ -88,14 +76,13 @@ clean:
 	(cd ./simulator; make clean)
 	(cd ./sfcparser; make clean)
 
-
 %.class:	%.java
 		javac $(JAVACOPTS) $<
-
 
 localdoc:	;
 	javadoc  -version -author -d $(LOCALDOCDIR) $(PACKAGEDIRS)
 	cp ./simulator/specification.txt $(LOCALDOCDIR)
+
 
 
 
