@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.39 2002-07-02 07:54:06 swprakt Exp $
+## $Id: Errors.txt,v 1.40 2002-07-02 07:54:24 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -37,7 +37,7 @@ Rules of the game:
 
 Error 28:     grammar for stmt
  package:     sfcparser (cup)
- class:       dubious (found by code inspection)
+ class:       dubious (found by code inspection, not tested)
  status:      reported, 2.7.02, Steffen
  description: seems like the grammer enforces 2 `;' in a row,
               cf second alternative of sfcprogram + the fact that
