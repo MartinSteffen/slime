@@ -5,13 +5,14 @@ import java.io.Serializable;
 /**
  * Types for the assgnement language of Slime, with the concrete
  * types as subclasses.
- * @author Initially provided by Martin Steffen.
- * @version $Id: Type.java,v 1.7 2002-07-10 17:04:29 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+
+ * @version $Id: Type.java,v 1.8 2002-07-11 05:58:34 swprakt Exp $
  */
 
 public abstract class Type extends Absynt implements Serializable { 
    public Object accept (Visitors.IType ask) throws Exception
-  { throw new  Exception();}
+  { throw new  Exception("This type does not accept visititors (yet).");}
 
   public abstract boolean equals (Type t);
 }
@@ -23,9 +24,18 @@ public abstract class Type extends Absynt implements Serializable {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Type.java,v 1.7 2002-07-10 17:04:29 swprakt Exp $
+//	$Id: Type.java,v 1.8 2002-07-11 05:58:34 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.7  2002/07/10 17:04:29  swprakt
+//	As announced in the group meeting: I added the
+//	equals method to the types. This overrides the
+//	build-in equals method (from Object). Types are
+//	compared to their ``class'', not according to
+//	their identity as intance.
+//	
+//	[Steffen]
+//	
 //	Revision 1.6  2002/07/10 14:32:49  swprakt
 //	visitor interface made smaller.
 //	[Steffen/Niemann]
