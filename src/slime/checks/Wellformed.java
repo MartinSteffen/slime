@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.7 2002-07-09 13:00:24 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.8 2002-07-09 13:51:56 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors as exceptions together with the
  * checker proper, which recurs over the abstract syntax.
@@ -107,7 +107,7 @@ public class Wellformed {
 
   public class Consistency {
     slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint(); //temporary
-    private HashMap steptable = new HashMap();    // hash table for steps
+    private HashSet stepset  = new HashSet();    // set of steps (resp. their names)
 
     public boolean check (SFC s)  throws Wellformed.WException {
       try {
@@ -134,9 +134,9 @@ public class Wellformed {
 	for (Iterator i = steps.iterator(); i.hasNext(); ){
 	  Step s = (Step)i.next();
 	  pp.print(s);
-	  if (steptable.containsKey(s.name))
+	  if (stepset.contains(s.name))
 	    throw new WException("duplicated step, named: " + s.name);  
-	  steptable.put(s.name, null);
+	  stepset.add(s.name);
 	}
 	return (new Boolean(true)); // stub
       }
@@ -170,6 +170,9 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.7  2002/07/09 13:00:24  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.6  2002/07/09 12:58:25  swprakt
 //    *** empty log message ***
 //
