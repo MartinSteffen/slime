@@ -15,10 +15,17 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.3 2002-06-26 08:27:04 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.4 2002-06-26 09:19:33 swprakt Exp $
  *
  * Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.3  2002/06/26 08:27:04  swprakt
+ * neues Makefile, JLex jetzt in Slime/src/JLex,
+ * von wo aus es beim kompilieren auch aufgerufen
+ * wird.
+ *
+ * CVS ----------------------------------------------------------------------
+ *
  * Revision 1.2  2002/06/26 06:50:57  swprakt
  * removed unused entries in SFC.lex
  * and removed wrong entry in SFC.cup "stmtblock" in "stmtlist"
@@ -55,6 +62,8 @@ import java_cup.*;
 import java.io.*;
 import java.util.*;
 import java.lang.String;
+
+
 
 // --------------------------------------------------------------------------- 
 
@@ -120,6 +129,7 @@ action code {:
     } // end of pOut
 
 
+
     :} // end of Action Code
 
 // --------------------------------------------------------------------------- 
@@ -131,6 +141,30 @@ action code {:
 parser code {:
 
     SFCLex lexer;
+
+/** 
+ * <b> pOut </b>
+ * @param java.lang.int lineFlag - determines type of output to Stdout.
+ * @param java.lang.String outputString - the ParserOutput which should be displayed
+ */
+    public void pOut(int lineFlag, java.lang.String outputString) {
+	boolean viewOutputOnStdOut = true;
+	boolean debug = true;
+	if (viewOutputOnStdOut) {
+	    if (lineFlag==1) {
+		System.out.println( outputString );
+	    } else if ( (lineFlag==2) && (debug==true) ) {
+		// output even debuglines
+		System.out.println( outputString );
+	    } else {
+		// lineFlag == 0
+	    } // end of if-lineFlag
+	} else {
+	    // show nothing
+	} // end of if-viewOutputOnStdOut
+    } // end of pOut
+
+
 
 /**
  * <b>CUP: report_fatal_error</b><br>
@@ -257,8 +291,10 @@ parser code {:
     public slime.absynt.Expr parseExpression(java.lang.String sfcexpr) throws SFCParseException {
 	slime.absynt.Expr expr = null;
 	try {
+	    pOut(1, "Setting Lexer to SFCLex" );
 	    lexer = new SFCLex( new StringReader( sfcexpr ) );
 	    setScanner(lexer);
+	    pOut(1, "Beginning parsing expression" );
 	    expr = (slime.absynt.Expr)parse().value;
 	} catch (Exception le) {
 	    System.out.println("Error parsing expression");
@@ -336,8 +372,16 @@ precedence left LPAREN, RPAREN;				   // (,)
 start with sfcbegin;
 
 /** SFCBEGIN ------------------------------------------------- **/
-sfcbegin ::=	sfcprogram:p {:  RESULT=p;  :}
-             |  expr:e       {:  RESULT=e;  :}
+sfcbegin ::=	sfcprogram:p 
+	 {:  
+	     pOut( 1, "SFC " );
+	     RESULT=p;  
+	 :}
+	|       expr:e       
+	 {:	
+	     pOut( 1, "SFC-Expression" );	   
+             RESULT=e;  
+	 :}
 ;
 
 /** SFCPROGRAM ------------------------------------------------- **/
@@ -345,6 +389,7 @@ sfcprogram ::=	SFCPRG
                 IDENTIFIER:progname
                 stmtblock:b 
                 {: 
+		   pOut( 1, progname+" { // now SFC program begins " );
 		   RESULT=new slime.absynt.absfc.SFCabtree( 
 		      progname, (java.util.LinkedList)b ); 
 		 :}
@@ -356,6 +401,7 @@ sfcprogram ::=	SFCPRG
 		stmtlist:b2 
 		RPSET
                 {: 
+		   pOut( 1, progname+" { // now SFC program begins " );
 		    java.util.LinkedList blist = new java.util.LinkedList();
 		    blist.add(b1);blist.addAll(b2);
 		   RESULT=new slime.absynt.absfc.SFCabtree( 
@@ -366,6 +412,7 @@ sfcprogram ::=	SFCPRG
 /** STMTLIST ------------------------------------------------- **/
 stmtlist ::=  stmt:s        
               {:  
+	        pOut( 1, " // processing a single stmt of a stmtlist " );
 	        alist.clear();
 	        alist.addLast( s );
 	        RESULT=alist;
@@ -374,6 +421,7 @@ stmtlist ::=  stmt:s
            |  stmt:s  
               stmtlist:sl 
               {:  
+  	        pOut( 1, " // processing the head-stmt of a stmtlist " );
 		  alist.clear();
 		  alist.addLast(s);
 		  alist.addAll( (java.util.LinkedList)sl);
@@ -384,10 +432,14 @@ stmtlist ::=  stmt:s
 /** STMTBLOCK ------------------------------------------------- **/
 stmtblock ::=  LPSET
                stmtlist:l
-               RPSET {: RESULT=l; :} 
+               RPSET {: 
+	           pOut( 1, " { // now being within a block " );
+		   RESULT=l; 
+		   :} 
             |  LPSET
                RPSET 
                {:
+	          pOut( 1, " {} // now being within an empty block " );
 		  alist.clear();
 		  alist.addLast(
 		      new slime.absynt.absfc.Comment( "// empty block" ) 
@@ -421,6 +473,7 @@ stmtif ::= IF
            RPAREN
            stmtblock:b 
            {: 
+              pOut( 1, " if (expr) { " );
 	      RESULT = new slime.absynt.absfc.StmtIf( 
 		            e, (java.util.LinkedList)b 
 	      ); 
@@ -436,6 +489,7 @@ stmtifelse ::=	IF
                 ELSE
                 stmtblock:b2 
                 {: 
+	          pOut( 1, " if (expr) {b1} else {b2}  " );
 		   RESULT = new slime.absynt.absfc.StmtIfElse( 
 		             e, 
 			     (java.util.LinkedList) b1, 
@@ -451,6 +505,7 @@ stmtloopwhile ::= WHILE
                   RPAREN  
                   stmtblock:b 
                   {: 
+		      pOut( 1, " while (expr) { " );
 		     RESULT = new slime.absynt.absfc.StmtWhile( 
 			         e, (java.util.LinkedList) b 
 		     ); 
@@ -464,7 +519,7 @@ stmtlooprepeat ::= REPEAT
                    LPAREN
                    expr:e
                    RPAREN 
-                   {: 
+                   {: pOut( 1, " repeat {b} until (expr) " );
 		      RESULT = new slime.absynt.absfc.StmtRepeat( 
 			          e, (java.util.LinkedList) b ); 
 		    :}
@@ -480,7 +535,8 @@ stmtoutput ::=	OUTPUT
                 RPAREN
                 SEMICOLON 
                 {: 
-  		   RESULT = new slime.absynt.absfc.StmtOutput( 
+	           pOut( 1, " output() " );
+   		   RESULT = new slime.absynt.absfc.StmtOutput( 
 		              new slime.absynt.Variable(name), e ); 
 		 :}
 ;
@@ -494,6 +550,7 @@ stmtinput ::=	INPUT
                 RPAREN
                 SEMICOLON 
                 {: 
+	          pOut( 1, " input()  " );
 		 RESULT = new slime.absynt.absfc.StmtInput( 
 		              new slime.absynt.Variable(name), e ); 
 		 :}
@@ -502,6 +559,7 @@ stmtinput ::=	INPUT
 /** STMTDUMMY ----------------------------------------------- **/
 stmtdummy ::=	COMMENT:c 
                 {: 
+	          pOut( 1, " // comment: "+c );
 		   RESULT = new slime.absynt.absfc.Comment( 
 		                  (String)c 
 		   ); 
@@ -519,6 +577,7 @@ assignment ::=	IDENTIFIER:vname
                 expr:e
                 SEMICOLON
                 {: 
+	          pOut( 1, " assignment ...  " );
 		 RESULT = new slime.absynt.absfc.StmtAssign( 
 		     new slime.absynt.Variable(vname), e ); 
 		 :}
@@ -529,6 +588,7 @@ vardeclaration::= vartype:vtype
                   IDENTIFIER:vname
                   SEMICOLON 
                   {: 
+	  	          pOut( 1, " declaration " );
 		   RESULT = new slime.absynt.absfc.StmtDecl( 
 		                new slime.absynt.Variable(vname), 
 				(slime.absynt.Type)vtype ); 
@@ -539,6 +599,7 @@ vardeclaration::= vartype:vtype
 	          expr:e
 	          SEMICOLON 
                   {: 
+		      pOut( 1, " declaration " );
 		      RESULT = new slime.absynt.absfc.StmtDecl( 
 			           new slime.absynt.Variable(vname), 
 				   (slime.absynt.Type)vtype, e );  
@@ -555,6 +616,7 @@ stmtsplit ::= 	SPLIT
                 processlist:pl
                 RPSET 
                 {: 
+	          pOut( 1, " split  " );
 		    RESULT = new slime.absynt.absfc.StmtSplit(
 			       (java.util.LinkedList) pl 
 		    ); 
@@ -567,6 +629,7 @@ stmtjoin ::=	JOIN
                 procidlist:pidl
                 RPAREN 
                 {: 
+	          pOut( 1, " join  " );
 		   RESULT = new slime.absynt.absfc.StmtJoin( 
 		               (java.util.LinkedList) pidl 
 		   ); 
@@ -621,55 +684,76 @@ process ::= PROCESS
 /** VARTYPE ---------------------------------------------- **/
 vartype ::= INTTYPE    {: RESULT = new slime.absynt.IntType(); :} 
         |   BOOLTYPE   {: RESULT = new slime.absynt.BoolType(); :} 
-//      |   DOUBLETYPE {: RESULT = new slime.absynt.DoubleType(); :} 
-//      |   STRINGTYPE {: RESULT = new slime.absynt.StringType(); :} 
-//      |   LISTTYPE   {: RESULT = new slime.absynt.LinkedListType(); :};
 ;
 
 /** OP --------------------------------------------------- **/
 op ::=
-  ADD {: pOut(0,"+") ;RESULT=new Integer(slime.absynt.Expr.PLUS); :}  ///  0
-| MUL {: pOut(0,"*") ;RESULT=new Integer(slime.absynt.Expr.TIMES); :} ///  2
-| SUB {: pOut(0,"-") ;RESULT=new Integer(slime.absynt.Expr.MINUS); :} ///  1
-| DIV {: pOut(0,"/") ;RESULT=new Integer(slime.absynt.Expr.DIV); :}   ///  3
-| AND {: pOut(0,"&&");RESULT=new Integer(slime.absynt.Expr.AND); :}   ///  4
-|  OR {: pOut(0,"||");RESULT=new Integer(slime.absynt.Expr.OR); :}    ///  5
-| NOT {: pOut(0,"!") ;RESULT=new Integer(slime.absynt.Expr.NEG); :}   ///  6
-|  EQ {: pOut(0,"==");RESULT=new Integer(slime.absynt.Expr.EQ); :}    ///  7
-|  LT {: pOut(0,"<") ;RESULT=new Integer(slime.absynt.Expr.LESS); :}  ///  8
-|  GT {: pOut(0,">") ;RESULT=new Integer(slime.absynt.Expr.GREATER); :}/// 9
-| LEQ {: pOut(0,"<=");RESULT=new Integer(slime.absynt.Expr.LEQ); :}   /// 10
-| GEQ {: pOut(0,">=");RESULT=new Integer(slime.absynt.Expr.GEQ); :}   /// 11
-| NEQ {: pOut(0,"!=");RESULT=new Integer(slime.absynt.Expr.NEQ); :}   /// 12 
+  ADD {: pOut(1,"+") ;RESULT=new Integer(slime.absynt.Expr.PLUS); :}  ///  0
+| MUL {: pOut(1,"*") ;RESULT=new Integer(slime.absynt.Expr.TIMES); :} ///  2
+| SUB {: pOut(1,"-") ;RESULT=new Integer(slime.absynt.Expr.MINUS); :} ///  1
+| DIV {: pOut(1,"/") ;RESULT=new Integer(slime.absynt.Expr.DIV); :}   ///  3
+| AND {: pOut(1,"&&");RESULT=new Integer(slime.absynt.Expr.AND); :}   ///  4
+|  OR {: pOut(1,"||");RESULT=new Integer(slime.absynt.Expr.OR); :}    ///  5
+| NOT {: pOut(1,"!") ;RESULT=new Integer(slime.absynt.Expr.NEG); :}   ///  6
+|  EQ {: pOut(1,"==");RESULT=new Integer(slime.absynt.Expr.EQ); :}    ///  7
+|  LT {: pOut(1,"<") ;RESULT=new Integer(slime.absynt.Expr.LESS); :}  ///  8
+|  GT {: pOut(1,">") ;RESULT=new Integer(slime.absynt.Expr.GREATER); :}/// 9
+| LEQ {: pOut(1,"<=");RESULT=new Integer(slime.absynt.Expr.LEQ); :}   /// 10
+| GEQ {: pOut(1,">=");RESULT=new Integer(slime.absynt.Expr.GEQ); :}   /// 11
+| NEQ {: pOut(1,"!=");RESULT=new Integer(slime.absynt.Expr.NEQ); :}   /// 12 
 ;
 
 /** EXPR -------------------------------------------------- **/
 expr ::= 
-  TRUE          
-  {: RESULT = new slime.absynt.Constval(true); :} // boolean - TRUE
-| FALSE         
-  {: RESULT = new slime.absynt.Constval(false); :} // boolean - FALSE
-| INTEGER:n     
-  {: RESULT = new slime.absynt.Constval( n.intValue() ); :} // integer 
-//| DOUBLE:d   
-//{: RESULT = new slime.absynt.Constval( d.doubleValue()); :} // double 
-| IDENTIFIER:id 
-  {: RESULT = new slime.absynt.Variable(id); :}  // identifier
-| var:v         
-  {: RESULT = v; :} // variable
-| constval:cv	
-  {: RESULT = cv; :} // constant value
-| op:o 
-  expr:e        
-  {: RESULT = new slime.absynt.U_expr(o.intValue(), e); :} // unary expression
-| expr:l 
-  op:o 
-  expr:r        
-  {: RESULT = new slime.absynt.B_expr(l, o.intValue(), r); :} // binary expression
-| LPAREN 
-  expr:e 
-  RPAREN        
-  {: RESULT = e; :} // expression with outer parenthesis
+
+LPAREN 
+expr:e 
+RPAREN        
+{: pOut( 1, " ( expr ) " ); RESULT = e; :} // expression with outer parenthesis
+
+|
+
+expr:l 
+op:o 
+expr:r        
+{: pOut( 1, "expr1 op expr2" ); RESULT = new slime.absynt.B_expr(l, o.intValue(), r); :} // binary expression
+
+|
+
+op:o 
+expr:e        
+{: pOut( 1, "unary expression" ); RESULT = new slime.absynt.U_expr(o.intValue(), e); :} // unary expression
+
+|
+
+TRUE          
+{: pOut( 1, " true " ); RESULT = new slime.absynt.Constval(true); :} // boolean - TRUE
+
+|
+
+FALSE
+{: pOut( 1, " false " ); RESULT = new slime.absynt.Constval(false); :} // boolean - FALSE
+
+|
+
+INTEGER:n     
+{: pOut( 1, " integer("+n+") " ); RESULT = new slime.absynt.Constval( n.intValue() ); :} // integer 
+
+|
+
+IDENTIFIER:id 
+{: pOut( 1, id );  RESULT = new slime.absynt.Variable(id); :}  // identifier
+
+|
+
+var:v         
+{: pOut( 1, "variable" ); RESULT = v; :} // variable
+
+|
+
+constval:cv	
+{: pOut( 1, "constval" ); RESULT = cv; :} // constant value
+
 ;
 
 

@@ -2,7 +2,7 @@ package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.3 2002-06-26 08:27:05 swprakt Exp $
+    * $Id: SFC.lex,v 1.4 2002-06-26 09:19:34 swprakt Exp $
     * -----
     * $Log: not supported by cvs2svn $
     * Revision 1.2  2002/06/26 06:50:57  swprakt
@@ -75,6 +75,28 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 
 {space}	   {}
 {comment}  {return new Symbol(SFCSymbols.COMMENT);}
+";"        {return new Symbol(SFCSymbols.SEMICOLON);	/* */}
+"{"        {return new Symbol(SFCSymbols.LPSET); 	/* */}
+"}"        {return new Symbol(SFCSymbols.RPSET); 	/* */}
+"("        {return new Symbol(SFCSymbols.LPAREN); 	/* */}
+")"        {return new Symbol(SFCSymbols.RPAREN); 	/* */}
+"SFC"      {return new Symbol(SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
+"input"    {return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
+"output"   {return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
+"split"    {return new Symbol(SFCSymbols.SPLIT); 	/* */}
+"join"     {return new Symbol(SFCSymbols.JOIN); 	/* */}
+"process"  {return new Symbol(SFCSymbols.PROCESS); 	/* */}
+"if"       {return new Symbol(SFCSymbols.IF); 		/* */}
+"else"     {return new Symbol(SFCSymbols.ELSE); 	/* */}
+"while"    {return new Symbol(SFCSymbols.LPSET); 	/* */}
+"repeat"   {return new Symbol(SFCSymbols.REPEAT); 	/* */}
+"until"    {return new Symbol(SFCSymbols.UNTIL); 	/* */}
+"skip"     {return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
+":="       {return new Symbol(SFCSymbols.ASSIGN); 	/* Class Assign */}
+"int"      {return new Symbol(SFCSymbols.INTTYPE); 	/* Class IntType */}
+"bool"     {return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
+"true"     {return new Symbol(SFCSymbols.TRUE);	        /* */}
+"false"    {return new Symbol(SFCSymbols.FALSE); 	/* */}
 "+"        {return new Symbol(SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
 "-"        {return new Symbol(SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
 "*"        {return new Symbol(SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
@@ -89,31 +111,8 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "<="       {return new Symbol(SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
 ">="       {return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
 "!="       {return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
-"true"     {return new Symbol(SFCSymbols.TRUE);	        /* */}
-"false"    {return new Symbol(SFCSymbols.FALSE); 	/* */}
-"int"      {return new Symbol(SFCSymbols.INTTYPE); 	/* Class IntType */}
-"bool"     {return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
-"="        {return new Symbol(SFCSymbols.ASSIGN); 	/* Class Assign */}
-"skip"     {return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
-"("        {return new Symbol(SFCSymbols.LPAREN); 	/* */}
-")"        {return new Symbol(SFCSymbols.RPAREN); 	/* */}
-"{"        {return new Symbol(SFCSymbols.LPSET); 	/* */}
-"}"        {return new Symbol(SFCSymbols.RPSET); 	/* */}
 ","        {return new Symbol(SFCSymbols.COMMA); 	/* */}
-";"        {return new Symbol(SFCSymbols.SEMICOLON);	/* */}
-"SFC"      {return new Symbol(SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
-"input"    {return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
-"output"   {return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
 
-"split"    {return new Symbol(SFCSymbols.SPLIT); 	/* */}
-"join"     {return new Symbol(SFCSymbols.JOIN); 	/* */}
-"process"  {return new Symbol(SFCSymbols.PROCESS); 	/* */}
-
-"if"       {return new Symbol(SFCSymbols.IF); 		/* */}
-"else"     {return new Symbol(SFCSymbols.ELSE); 	/* */}
-"while"    {return new Symbol(SFCSymbols.LPSET); 	/* */}
-"repeat"   {return new Symbol(SFCSymbols.REPEAT); 	/* */}
-"until"    {return new Symbol(SFCSymbols.UNTIL); 	/* */}
 
 {identif}  {return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}

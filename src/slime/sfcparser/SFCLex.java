@@ -2,7 +2,7 @@ package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFCLex.java,v 1.2 2002-06-26 08:27:05 swprakt Exp $
+    * $Id: SFCLex.java,v 1.3 2002-06-26 09:19:34 swprakt Exp $
     * -----
     * $Log: not supported by cvs2svn $
     * Revision 1.2  2002/06/26 06:50:57  swprakt
@@ -302,8 +302,8 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 51 */ YY_NO_ANCHOR,
 		/* 52 */ YY_NOT_ACCEPT,
 		/* 53 */ YY_NO_ANCHOR,
-		/* 54 */ YY_NOT_ACCEPT,
-		/* 55 */ YY_NO_ANCHOR,
+		/* 54 */ YY_NO_ANCHOR,
+		/* 55 */ YY_NOT_ACCEPT,
 		/* 56 */ YY_NO_ANCHOR,
 		/* 57 */ YY_NO_ANCHOR,
 		/* 58 */ YY_NO_ANCHOR,
@@ -317,7 +317,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 66 */ YY_NO_ANCHOR,
 		/* 67 */ YY_NO_ANCHOR,
 		/* 68 */ YY_NO_ANCHOR,
-		/* 69 */ YY_NOT_ACCEPT,
+		/* 69 */ YY_NO_ANCHOR,
 		/* 70 */ YY_NO_ANCHOR,
 		/* 71 */ YY_NO_ANCHOR,
 		/* 72 */ YY_NO_ANCHOR,
@@ -334,7 +334,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 83 */ YY_NO_ANCHOR,
 		/* 84 */ YY_NO_ANCHOR,
 		/* 85 */ YY_NO_ANCHOR,
-		/* 86 */ YY_NO_ANCHOR,
+		/* 86 */ YY_NOT_ACCEPT,
 		/* 87 */ YY_NO_ANCHOR,
 		/* 88 */ YY_NO_ANCHOR,
 		/* 89 */ YY_NO_ANCHOR,
@@ -352,49 +352,56 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 101 */ YY_NO_ANCHOR,
 		/* 102 */ YY_NO_ANCHOR,
 		/* 103 */ YY_NO_ANCHOR,
-		/* 104 */ YY_NO_ANCHOR
+		/* 104 */ YY_NO_ANCHOR,
+		/* 105 */ YY_NO_ANCHOR,
+		/* 106 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,258,
-"3:8,4:2,1,3,4,1,3:18,4,13,3:3,10,11,3,6,7,5,8,33,9,3,2,41:10,3,34,15,14,16," +
-"3:2,22,27,35,39,20,21,39,38,25,36,29,23,39,26,28,30,39,18,24,17,19,39,37,39" +
-":3,3:4,40,3,22,27,35,39,20,21,39,38,25,36,29,23,39,26,28,30,39,18,24,17,19," +
-"39,37,39:3,31,12,32,3:130,0:2")[0];
+"3:8,4:2,1,3,4,1,3:18,4,36,3:3,33,34,3,6,7,5,31,39,32,3,2,42:10,28,8,37,29,3" +
+"8,3:2,26,30,13,40,23,12,40,25,14,21,27,20,40,15,19,16,40,22,11,18,17,40,24," +
+"40:3,3:4,41,3,26,30,13,40,23,12,40,25,14,21,27,20,40,15,19,16,40,22,11,18,1" +
+"7,40,24,40:3,9,35,10,3:130,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,105,
-"0,1,2,3,1:2,4,1:4,5,6,7,8,9,1:4,10,11,1:6,12:16,13,14,15,13,16,17,18,19:2,2" +
-"0,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,19,36,12,37,38,39,40,41,42,4" +
-"3,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,12,64,65,66,6" +
-"7,68")[0];
+	private int yy_rmap[] = unpackFromString(1,107,
+"0,1,2,3,1:2,4,1:4,5,1:3,6,7,8,1,9,10,11,1:7,11:15,12,13,14,12,15,16,17,18:2" +
+",19,20,21,22,23,11,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42" +
+",43,44,45,46,47,48,49,50,18,51,52,53,54,55,56,57,58,11,59,60,61,62,63,64,65" +
+",66,67,68,69")[0];
 
-	private int yy_nxt[][] = unpackFromString(69,42,
-"1,2,3,4,2,5,6,7,8,9,10,45,49,11,12,13,14,15,93,96,97,98,99:2,68,46,99,100,1" +
-"01,99,102,16,17,18,19,99,103,104,99:3,20,-1:43,2,-1:2,2,-1:39,21,-1:2,44,-1" +
-":41,69,-1:50,24,-1:41,25,-1:41,26,-1:41,27,-1:44,99,70,99:12,-1:4,99:5,71:2" +
-",-1:41,20,-1:2,21:40,-1:17,99:14,-1:4,99:5,71:2,-1:2,44:3,48,44:36,-1:11,22" +
-",-1:47,99:4,28,99:4,53,99:4,-1:4,99:5,71:2,-1:2,47,44:2,48,44:36,-1:12,23,-" +
-"1:46,99:14,-1:4,29,99:4,71:2,-1:2,52:3,54,52:36,-1:17,30,99:12,85,-1:4,99:5" +
-",71:2,-1:2,52:3,54,52,51,52:34,-1:17,99:3,31,99:10,-1:4,99:5,71:2,-1:17,99:" +
-"3,32,99:10,-1:4,99:5,71:2,-1:17,99:13,33,-1:4,99:5,71:2,-1:17,99:6,34,99:7," +
-"-1:4,99:5,71:2,-1:17,99:9,35,99:4,-1:4,99:5,71:2,-1:17,99:6,36,99:7,-1:4,99" +
-":5,71:2,-1:17,99:3,37,99:10,-1:4,99:5,71:2,-1:17,38,99:13,-1:4,99:5,71:2,-1" +
-":17,39,99:13,-1:4,99:5,71:2,-1:17,99:3,40,99:10,-1:4,99:5,71:2,-1:17,41,99:" +
-"13,-1:4,99:5,71:2,-1:17,42,99:13,-1:4,99:5,71:2,-1:17,99:7,43,99:6,-1:4,99:" +
-"5,71:2,-1:17,99:4,50,99:7,76,95,-1:4,99:5,71:2,-1:17,99:2,55,99:11,-1:4,99:" +
-"5,71:2,-1:17,99:13,81,-1:4,99:5,71:2,-1:17,82,99:13,-1:4,99:5,71:2,-1:17,99" +
-":7,56,99:6,-1:4,99:5,71:2,-1:17,99:6,83,99:7,-1:4,99:5,71:2,-1:17,99:8,57,9" +
-"9:5,-1:4,99:5,71:2,-1:17,99:11,58,99:2,-1:4,99:5,71:2,-1:17,99:11,87,99:2,-" +
-"1:4,99:5,71:2,-1:17,99:8,59,99:5,-1:4,99:5,71:2,-1:17,99:8,88,99:5,-1:4,99:" +
-"5,71:2,-1:17,99:3,89,99:10,-1:4,99:5,71:2,-1:17,99:8,60,99:5,-1:4,99:5,71:2" +
-",-1:17,99:7,61,99:6,-1:4,99:5,71:2,-1:17,99:8,62,99:5,-1:4,99:5,71:2,-1:17," +
-"99:2,63,99:11,-1:4,99:5,71:2,-1:17,99:13,90,-1:4,99:5,71:2,-1:17,99:14,-1:4" +
-",91,99:4,71:2,-1:17,99:6,64,99:7,-1:4,99:5,71:2,-1:17,99:5,65,99:8,-1:4,99:" +
-"5,71:2,-1:17,99:2,66,99:11,-1:4,99:5,71:2,-1:17,99:3,92,99:10,-1:4,99:5,71:" +
-"2,-1:17,99:7,67,99:6,-1:4,99:5,71:2,-1:17,99:3,72,99:10,-1:4,99:5,71:2,-1:1" +
-"7,86,99:13,-1:4,99:5,71:2,-1:17,99:6,84,99:7,-1:4,99:5,71:2,-1:17,99:9,73,9" +
-"9:4,-1:4,99:5,71:2,-1:17,99:6,74,99:7,-1:4,99:5,71:2,-1:17,99:5,75,99:8,-1:" +
-"4,99:5,71:2,-1:17,99:11,77,99:2,-1:4,99:5,71:2,-1:17,99:2,94,99:11,-1:4,99:" +
-"5,71:2,-1:17,99,78,99:12,-1:4,99:5,71:2,-1:17,99:11,79,99:2,-1:4,99:5,71:2," +
-"-1:17,99:14,-1:4,99:3,80,99,71:2");
+	private int yy_nxt[][] = unpackFromString(70,43,
+"1,2,3,4,2,5,6,7,8,9,10,11,85,95,46,95,97,99,100,101,95,102,103,104,105,95:3" +
+",45,49,106,12,13,14,53,56,15,16,17,18,95:2,19,-1:44,2,-1:2,2,-1:40,20,-1:2," +
+"44,-1:42,86,-1:48,95,50,95:3,54,95:10,57,-1:2,95,-1:9,95,58:2,-1:29,26,-1:4" +
+"2,27,-1:42,28,-1:55,19,-1:2,20:41,-1:11,95:17,-1:2,95,-1:9,95,58:2,-1:2,44:" +
+"3,48,44:37,-1:29,22,-1:24,95,21,95:2,59,95:12,-1:2,95,-1:9,95,58:2,-1:2,47," +
+"44:2,48,44:37,-1:29,23,-1:24,95:2,29,95:14,-1:2,95,-1:9,95,58:2,-1:2,52:3,5" +
+"5,52:37,-1:34,24,-1:19,95:9,98,95:7,-1:2,95,-1:9,95,58:2,-1:2,52:3,55,52,51" +
+",52:35,-1:35,25,-1:18,95:3,65,95:13,-1:2,95,-1:9,95,58:2,-1:11,95:5,91,95,3" +
+"0,95:9,-1:2,95,-1:9,95,58:2,-1:11,95:8,66,95:8,-1:2,95,-1:9,95,58:2,-1:11,9" +
+"5:7,67,95:9,-1:2,95,-1:9,95,58:2,-1:11,95:6,68,95:10,-1:2,95,-1:9,95,58:2,-" +
+"1:11,95:5,70,95:11,-1:2,95,-1:9,95,58:2,-1:11,71,95:16,-1:2,95,-1:9,95,58:2" +
+",-1:11,95:5,31,95:11,-1:2,95,-1:9,95,58:2,-1:11,95:2,94,95:14,-1:2,95,-1:9," +
+"95,58:2,-1:11,95:3,77,95:13,-1:2,95,-1:9,95,58:2,-1:11,95:12,32,95:4,-1:2,9" +
+"5,-1:9,95,58:2,-1:11,95:4,33,95:12,-1:2,95,-1:9,95,58:2,-1:11,95:12,79,95:4" +
+",-1:2,95,-1:9,95,58:2,-1:11,95:12,34,95:4,-1:2,95,-1:9,95,58:2,-1:11,95:9,8" +
+"0,95:7,-1:2,95,-1:9,95,58:2,-1:11,95:9,35,95:7,-1:2,95,-1:9,95,58:2,-1:11,9" +
+"5:7,36,95:9,-1:2,95,-1:9,95,58:2,-1:11,95:12,37,95:4,-1:2,95,-1:9,95,58:2,-" +
+"1:11,95:7,38,95:9,-1:2,95,-1:9,95,58:2,-1:11,95:9,39,95:7,-1:2,95,-1:9,95,5" +
+"8:2,-1:11,95:6,82,95:10,-1:2,95,-1:9,95,58:2,-1:11,95:15,83,95,-1:2,95,-1:9" +
+",95,58:2,-1:11,95:12,40,95:4,-1:2,95,-1:9,95,58:2,-1:11,84,95:16,-1:2,95,-1" +
+":9,95,58:2,-1:11,95:7,41,95:9,-1:2,95,-1:9,95,58:2,-1:11,95:7,42,95:9,-1:2," +
+"95,-1:9,95,58:2,-1:11,43,95:16,-1:2,95,-1:9,95,58:2,-1:11,95:15,87,95,-1:2," +
+"95,-1:9,95,58:2,-1:11,95:9,93,95:7,-1:2,95,-1:9,95,58:2,-1:11,95:3,69,95:13" +
+",-1:2,95,-1:9,95,58:2,-1:11,95:8,73,95:8,-1:2,95,-1:9,95,58:2,-1:11,95:7,92" +
+",95:9,-1:2,95,-1:9,95,58:2,-1:11,95:6,76,95:10,-1:2,95,-1:9,95,58:2,-1:11,9" +
+"5:5,78,95:11,-1:2,95,-1:9,95,58:2,-1:11,75,95:16,-1:2,95,-1:9,95,58:2,-1:11" +
+",95:12,81,95:4,-1:2,95,-1:9,95,58:2,-1:11,95:3,72,95:13,-1:2,95,-1:9,95,58:" +
+"2,-1:11,95:11,60,95:5,-1:2,95,-1:9,95,58:2,-1:11,95:3,74,95:13,-1:2,95,-1:9" +
+",95,58:2,-1:11,95:4,61,95:12,-1:2,95,-1:9,95,58:2,-1:11,95:11,62,95:5,-1:2," +
+"95,-1:9,95,58:2,-1:11,95:6,90,95:10,-1:2,95,-1:9,95,58:2,-1:11,95:8,88,95:8" +
+",-1:2,95,-1:9,95,58:2,-1:11,95:12,63,95:4,-1:2,95,-1:9,95,58:2,-1:11,95:9,6" +
+"4,95:7,-1:2,95,-1:9,95,58:2,-1:11,95:14,96,95:2,-1:2,95,-1:9,95,58:2,-1:11," +
+"95:8,89,95:8,-1:2,95,-1:9,95,58:2");
 
 	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
@@ -472,44 +479,44 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -8:
 						break;
 					case 8:
-						{return new Symbol(SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
+						{return new Symbol(SFCSymbols.SEMICOLON);	/* */}
 					case -9:
 						break;
 					case 9:
-						{return new Symbol(SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
+						{return new Symbol(SFCSymbols.LPSET); 	/* */}
 					case -10:
 						break;
 					case 10:
-						{return new Symbol(SFCSymbols.MOD); 	/* Expr.MOD     =  undef */}
+						{return new Symbol(SFCSymbols.RPSET); 	/* */}
 					case -11:
 						break;
 					case 11:
-						{return new Symbol(SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
 					case -12:
 						break;
 					case 12:
-						{return new Symbol(SFCSymbols.ASSIGN); 	/* Class Assign */}
+						{return new Symbol(SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
 					case -13:
 						break;
 					case 13:
-						{return new Symbol(SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
+						{return new Symbol(SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
 					case -14:
 						break;
 					case 14:
-						{return new Symbol(SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
+						{return new Symbol(SFCSymbols.MOD); 	/* Expr.MOD     =  undef */}
 					case -15:
 						break;
 					case 15:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{return new Symbol(SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
 					case -16:
 						break;
 					case 16:
-						{return new Symbol(SFCSymbols.LPSET); 	/* */}
+						{return new Symbol(SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
 					case -17:
 						break;
 					case 17:
-						{return new Symbol(SFCSymbols.RPSET); 	/* */}
+						{return new Symbol(SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
 					case -18:
 						break;
 					case 18:
@@ -517,44 +524,44 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -19:
 						break;
 					case 19:
-						{return new Symbol(SFCSymbols.SEMICOLON);	/* */}
+						{return new Symbol(SFCSymbols.INTEGER, 
+		   new Integer(yytext())); 		/* t INTEGER */}
 					case -20:
 						break;
 					case 20:
-						{return new Symbol(SFCSymbols.INTEGER, 
-		   new Integer(yytext())); 		/* t INTEGER */}
+						{return new Symbol(SFCSymbols.COMMENT);}
 					case -21:
 						break;
 					case 21:
-						{return new Symbol(SFCSymbols.COMMENT);}
+						{return new Symbol(SFCSymbols.IF); 		/* */}
 					case -22:
 						break;
 					case 22:
-						{return new Symbol(SFCSymbols.AND); 	/* Expr.AND     =  4 */}
+						{return new Symbol(SFCSymbols.ASSIGN); 	/* Class Assign */}
 					case -23:
 						break;
 					case 23:
-						{return new Symbol(SFCSymbols.OR);  	/* Expr.OR      =  5 */}
+						{return new Symbol(SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
 					case -24:
 						break;
 					case 24:
-						{return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
+						{return new Symbol(SFCSymbols.AND); 	/* Expr.AND     =  4 */}
 					case -25:
 						break;
 					case 25:
-						{return new Symbol(SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
+						{return new Symbol(SFCSymbols.OR);  	/* Expr.OR      =  5 */}
 					case -26:
 						break;
 					case 26:
-						{return new Symbol(SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
+						{return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
 					case -27:
 						break;
 					case 27:
-						{return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
+						{return new Symbol(SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
 					case -28:
 						break;
 					case 28:
-						{return new Symbol(SFCSymbols.IF); 		/* */}
+						{return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
 					case -29:
 						break;
 					case 29:
@@ -566,27 +573,27 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -31:
 						break;
 					case 31:
-						{return new Symbol(SFCSymbols.TRUE);	        /* */}
+						{return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
 					case -32:
 						break;
 					case 32:
-						{return new Symbol(SFCSymbols.ELSE); 	/* */}
+						{return new Symbol(SFCSymbols.TRUE);	        /* */}
 					case -33:
 						break;
 					case 33:
-						{return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
+						{return new Symbol(SFCSymbols.JOIN); 	/* */}
 					case -34:
 						break;
 					case 34:
-						{return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
+						{return new Symbol(SFCSymbols.ELSE); 	/* */}
 					case -35:
 						break;
 					case 35:
-						{return new Symbol(SFCSymbols.JOIN); 	/* */}
+						{return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
 					case -36:
 						break;
 					case 36:
-						{return new Symbol(SFCSymbols.UNTIL); 	/* */}
+						{return new Symbol(SFCSymbols.SPLIT); 	/* */}
 					case -37:
 						break;
 					case 37:
@@ -594,11 +601,11 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -38:
 						break;
 					case 38:
-						{return new Symbol(SFCSymbols.SPLIT); 	/* */}
+						{return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
 					case -39:
 						break;
 					case 39:
-						{return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
+						{return new Symbol(SFCSymbols.UNTIL); 	/* */}
 					case -40:
 						break;
 					case 40:
@@ -606,11 +613,11 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -41:
 						break;
 					case 41:
-						{return new Symbol(SFCSymbols.REPEAT); 	/* */}
+						{return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
 					case -42:
 						break;
 					case 42:
-						{return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
+						{return new Symbol(SFCSymbols.REPEAT); 	/* */}
 					case -43:
 						break;
 					case 43:
@@ -650,18 +657,22 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -50:
 						break;
 					case 53:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{System.out.println( "Error during lexical analysis"+
+	    "\nLine number = "  + yyline + 
+	    "\nChar number = "  + yychar +
+	    "\nText content = " + yytext() ); 		/* LexError */}
 					case -51:
 						break;
-					case 55:
+					case 54:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -52:
 						break;
 					case 56:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
+						{System.out.println( "Error during lexical analysis"+
+	    "\nLine number = "  + yyline + 
+	    "\nChar number = "  + yychar +
+	    "\nText content = " + yytext() ); 		/* LexError */}
 					case -53:
 						break;
 					case 57:
@@ -724,87 +735,87 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		    yytext()); 				/* t IDENTIFIER */}
 					case -65:
 						break;
-					case 70:
+					case 69:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -66:
 						break;
-					case 71:
+					case 70:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -67:
 						break;
-					case 72:
+					case 71:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -68:
 						break;
-					case 73:
+					case 72:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -69:
 						break;
-					case 74:
+					case 73:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -70:
 						break;
-					case 75:
+					case 74:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -71:
 						break;
-					case 76:
+					case 75:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -72:
 						break;
-					case 77:
+					case 76:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -73:
 						break;
-					case 78:
+					case 77:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -74:
 						break;
-					case 79:
+					case 78:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -75:
 						break;
-					case 80:
+					case 79:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -76:
 						break;
-					case 81:
+					case 80:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -77:
 						break;
-					case 82:
+					case 81:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -78:
 						break;
-					case 83:
+					case 82:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -79:
 						break;
-					case 84:
+					case 83:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -80:
 						break;
-					case 85:
+					case 84:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -81:
 						break;
-					case 86:
+					case 85:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -82:
@@ -898,6 +909,16 @@ public class SFCLex implements java_cup.runtime.Scanner {
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -100:
+						break;
+					case 105:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -101:
+						break;
+					case 106:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -102:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);
