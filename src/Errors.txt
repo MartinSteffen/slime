@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.181 2002-07-10 07:26:10 swprakt Exp $
+## $Id: Errors.txt,v 1.182 2002-07-11 10:30:42 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -373,7 +373,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.181 2002-07-10 07:26:10 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.182 2002-07-11 10:30:42 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -511,11 +511,6 @@ Error 20: Makefile
 
 
 
-Error 8:       Manifest
- package:      Gui/all
- status:       emailed to Norbert, 24.06.02, M. Steffen
- class:        unclear, perhaps dubious/fatal depending on how it works
- description:  Is the Manifest-file at the right place (src/META-INF/Manifest)
                cf. also Error 4.
    
 Error 6:       Makefile
@@ -525,12 +520,6 @@ Error 6:       Makefile
   description: top-level make does not work, make a better concept
 
 
-Error 4:       Manifest file, toplevel file
-  package:     Gui
-  status:      reported 12.6.02, M. Steffen
-  class:       promised feature missing
-  description: Gui should provide a top-level file + Manifest to
-               offer jar-rability
 
 Error 3:      doc warnings
   package:    layout/paers
@@ -556,6 +545,21 @@ Error 1:  parser warnings
 
 -------------------- Repaired errors -------------------------
 
+
+Error 4:       Manifest file, toplevel file
+  package:     Gui
+  status:      reported 12.6.02, M. Steffen, done, 11.07.02
+  class:       promised feature missing
+  description: Gui should provide a top-level file + Manifest to
+               offer jar-rability
+
+
+
+Error 8:       Manifest
+ package:      Gui/all
+ status:       emailed to Norbert, 24.06.02, M. Steffen, done Steffen 11.07.02
+ class:        unclear, perhaps dubious/fatal depending on how it works
+ description:  Is the Manifest-file at the right place (src/META-INF/Manifest)
 
 
 Error 74:    inconsistency, docu
