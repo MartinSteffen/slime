@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.179 2002-07-10 07:06:10 swprakt Exp $
+## $Id: Errors.txt,v 1.180 2002-07-10 07:13:23 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,32 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+Error 89:     no reaction, user interface
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.close shows no reaction (probably not integrated)
+               what's the intendended difference between options.close and file.exit?
+
+Error 88:     no reaction
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.help shows no reaction (probably not integrated)
+
+Error 87:     no reaction
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.layout shows no reaction (probably not integrated)
+
+Error 86:     no reaction
+ package:     gui
+ class:       fatal
+ status:      reported, 10.7.02, Steffen
+ description: the button options.check shows no reaction (probably not integrated)
 
 
 Error 85(2):    ``speichern.nichtaenderns.sfc''
@@ -339,7 +365,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.179 2002-07-10 07:06:10 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.180 2002-07-10 07:13:23 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
