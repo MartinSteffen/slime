@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Visitors for Slime abstract syntax (just for the fun of it)
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version  $Id: Visitors.java,v 1.10 2002-06-25 08:01:17 swprakt Exp $
+ * @version  $Id: Visitors.java,v 1.11 2002-06-25 10:55:46 swprakt Exp $
  */
 
 
@@ -55,9 +55,7 @@ public class Visitors {
 				LinkedList target) throws Exception;
   }
 
-  public interface IDeclist{
-    public Object forDeclist(LinkedList dl) throws Exception;
-  }
+
 
   public interface IDeclaration{
     public Object forDeclaration(Variable var, Type type, Constval val)
@@ -70,6 +68,7 @@ public class Visitors {
     public Object forUndefType() throws Exception;
     public Object forUnitType()  throws Exception;
   }
+
 }
 
 
@@ -78,8 +77,11 @@ public class Visitors {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Visitors.java,v 1.10 2002-06-25 08:01:17 swprakt Exp $
+//	$Id: Visitors.java,v 1.11 2002-06-25 10:55:46 swprakt Exp $
 // //	$Log: not supported by cvs2svn $
+// //	Revision 1.10  2002/06/25 08:01:17  swprakt
+// //	Stmt-visitor added. [Steffen]
+// //	
 // //	Revision 1.9  2002/06/25 07:52:10  swprakt
 // //	New visitors added (for actions). [Steffen]
 // //	

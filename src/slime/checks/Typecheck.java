@@ -2,7 +2,7 @@
 package slime.checks;
 
 import java.lang.*;
-import java.util.LinkedList;
+import java.util.*;
 import slime.absynt.*;
 
 
@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.12 2002-06-25 08:23:38 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.13 2002-06-25 10:55:47 swprakt Exp $
  */
 
 public class Typecheck {
@@ -76,6 +76,12 @@ public class Typecheck {
 			 LinkedList actions, 
 			 LinkedList declist) throws Exception {
       istep.accept(new StepV());
+      // each step int the list of steps must be well-typed
+      // if one of the single steps fails, it will raise an error. 
+      for (Iterator i = steps.iterator(); i.hasNext(); ) {
+ 	Step s = (Step)i.next();
+	s.accept(new StepV()); 
+      }
       return new UnitType();
     }
   }
@@ -111,6 +117,7 @@ public class Typecheck {
 
   public class ActionV implements Visitors.IAction{
     public Object forAction(String a_name, LinkedList sap) throws Exception{
+      // XXXXX this does not work:    sap.accept(new StmtlistV());
       // XXX add typechecking for sap
       return new UnitType();
     }
@@ -280,24 +287,23 @@ public class Typecheck {
   }
 
 
-  /** Type check for declaration list. It has to check
-   *  for each element of the list, whether it is a variable
-   *  declaration and whether no variable occurs twice.
-   *
-   * Additionally we have to tackle the inconvience, that 
-   * declaration lists are just linked list in Java.
+  /** Type check visitor for a stmt list. It has to check,
+   *   whether each element of the list is well-typed. According
+   * to the grammar, each statement can only be of Unit-type.
    */
+  
 
-  public class DeclistV implements Visitors.IDeclist{
-    public Object forDeclist(LinkedList forDeclist) throws CheckException {
-      try {
-	return new Object();
-      }
-      catch (Exception e) {
-	throw ((CheckException)e);
-      }
-    }
-  }
+
+  //  public class DeclistV implements Visitors.IDeclist{
+//      public Object forDeclist(LinkedList forDeclist) throws CheckException {
+//        try {
+//  	return new Object();
+//        }
+//        catch (Exception e) {
+//  	throw ((CheckException)e);
+//        }
+  //    }
+  //  }
 
 
 
@@ -317,6 +323,11 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.12  2002/06/25 08:23:38  swprakt
+//    Except the linked list and the context, the checker is through.
+//
+//    [Steffen]
+//
 //    Revision 1.11  2002/06/25 08:20:10  swprakt
 //    typechecking for statements. [Steffen]
 //
@@ -363,6 +374,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.12 2002-06-25 08:23:38 swprakt Exp $
+//    $Id: Typecheck.java,v 1.13 2002-06-25 10:55:47 swprakt Exp $
 //
 //---------------------------------------------------------------------
