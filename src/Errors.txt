@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.21 2002-06-26 12:34:39 swprakt Exp $
+## $Id: Errors.txt,v 1.22 2002-06-26 16:17:50 swprakt Exp $
 ###########################################################
 
 
@@ -40,6 +40,13 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+Error 18:      compolation broken
+  package:     all
+  class:      fatal and deadly!!!
+  status:     reported, 26.6.02, Boeck/Steffen
+  description: probably confussion with the new stuff added by 
+               sfc parser. breaks everything!!!
 
 Error 17:      structure
  package:      all
