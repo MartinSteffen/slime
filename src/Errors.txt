@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.114 2002-07-06 12:28:39 swprakt Exp $
+## $Id: Errors.txt,v 1.115 2002-07-06 12:52:37 swprakt Exp $
 ###########################################################
 
 
@@ -42,6 +42,12 @@ Rules of the game:
 
 
 
+Error 56:     typechecking
+ class:       fatal
+ status:      reported 6.7.02, Steffen
+ package:     checks
+ description: unexcpected undeclared variable error, 
+ 
 
 
 
@@ -56,19 +62,6 @@ Errors 55:     entry point
 	       file and putting it into the top-level Makefile
 	       there's no integration)
 	       
-Error 54:    typecheck error
- class:      fatal
- status:     reported, 6.7.02, Steffen:
- package:    checks
- description: sfc1 raises 
-               TypecheckTest: slime.checks.Typecheck$DuplicatedDeclaration: Variable bound twice.
-              TypecheckTest: Variable bound twice.
-	      But the program seems ok.
-
-	      Explanation: DeclarationV add the variable 
-	      to the Environment, but the look in the declaration
-	      list does so, too.
- 
 
 Error 53:    hacks
  class:      non-fatal, not too important
@@ -146,7 +139,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.114 2002-07-06 12:28:39 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.115 2002-07-06 12:52:37 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -328,6 +321,22 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 55:    typecheck error
+ class:      fatal
+ status:     reported, 6.7.02, Steffen, repaired, Steffen
+ package:    checks
+ description: sfc1 raises 
+               TypecheckTest: slime.checks.Typecheck$DuplicatedDeclaration: Variable bound twice.
+              TypecheckTest: Variable bound twice.
+	      But the program seems ok.
+
+	      Explanation: DeclarationV add the variable 
+	      to the Environment, but the look in the declaration
+	      list does so, too.
+ 
+
 
 
 Error 54(2):    type check
