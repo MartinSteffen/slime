@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.124 2002-07-07 09:13:43 swprakt Exp $
+## $Id: Errors.txt,v 1.125 2002-07-07 09:46:52 swprakt Exp $
 ###########################################################
 
 
@@ -41,6 +41,13 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 64:     naming
+ package:     checker
+ class:       non-fata;
+ status:      reported, steffen, 7.7.02
+ description:  perhaps it's better to use Typecheck.Exception
+              than Typecheck.TypecheckException, duplicated 
+
 Error 63:     one-time checker
  class:       non-fatal (``feature'')
  status:      reported 7.7.02, Steffen
@@ -65,24 +72,7 @@ Error 62:     hiding
                testing.
  
 
-Error 61:     curious Exception
- class:       probably fatal
- status:      reported, 6.7.02, Steffen
- package:     checks
- description: if I do (for testing)
-	env.add(var, t_dec);  // 1: key, 2: value
-	env.add(var, t_dec);  // 1: key, 2: value
-	it raised this error:
- 
-  TypecheckTest: java.lang.ClassCastException: java.lang.ClassCastException
-  TypecheckTest: java.lang.ClassCastException
 
-Error 60:     undeclared var
- class:       unclear, check this
- status:      reported, 6.7.02, Steffen
- package:     cheks
- description: undeclared var raised, justified?
-              The error has to do with hashtable lookup!
    
  
 
@@ -204,7 +194,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.124 2002-07-07 09:13:43 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.125 2002-07-07 09:46:52 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -386,6 +376,28 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
+Error 60:     undeclared var
+ class:       unclear, check this
+ status:      disappeared during debugging of type checker, 7.7.02; reported, 6.7.02, Steffen
+ package:     cheks
+ description: undeclared var raised, justified?
+              The error has to do with hashtable lookup!
+
+
+
+Error 61:     curious Exception
+ class:       probably fatal
+ status:      disappeared, 7.7.02 during repair of type checker;  reported, 6.7.02, Steffen, 
+ package:     checks
+ description: if I do (for testing)
+	env.add(var, t_dec);  // 1: key, 2: value
+	env.add(var, t_dec);  // 1: key, 2: value
+	it raised this error:
+ 
+  TypecheckTest: java.lang.ClassCastException: java.lang.ClassCastException
+  TypecheckTest: java.lang.ClassCastException
 
 
 Error 59:    prettyprinter
