@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Snot project
-# $Id: Makefile,v 1.1 2002-04-16 13:53:13 swprakt Exp $
+# $Id: Makefile,v 1.2 2002-04-16 14:27:41 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -17,13 +17,13 @@ BASELINESDIR  = $(WEBDIR)/baselines
 SNAPSHOTSDIR  = $(WEBDIR)/snapshots
 LOCALDOCDIR   = doc
 PACKAGEDIRS   = absynt\
-	        utils\
-	        editor\
-	        gui\
-	        smv\
-	        checks\
-	        simulator\
-                io
+	        utils
+#	        editor\
+#	        gui\
+#	        smv\
+#	        checks\
+#	        simulator\
+#                io
 
 
 ################################################
