@@ -54,7 +54,7 @@ jar:
 
 ## for the cd-rom, I incorporate the cup and lex sources
 #  for dynamic loading. This allows to start the stuff
-#  with java -x slime.jar.  For the version on our web-page
+#  with java -jar slime.jar.  For the version on our web-page
 #  I don't want to incorporate external code into the package.
 
 cdjar:
@@ -81,6 +81,6 @@ jarinstall:
 
 
 #----------------------------------------------------------------------
-# $Id: Makefile,v 1.30 2002-07-19 13:53:28 swprakt Exp $
+# $Id: Makefile,v 1.31 2003-05-30 14:02:15 swprakt Exp $
 #----------------------------------------------------------------------
 
