@@ -8,7 +8,7 @@ import javax.swing.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: DrawBoard.java,v 1.3 2002-06-03 18:07:00 swprakt Exp $
+ * @version $Id: DrawBoard.java,v 1.4 2002-06-06 14:20:39 swprakt Exp $
  */
 
 final class DrawBoard extends Canvas
@@ -53,8 +53,9 @@ final class DrawBoard extends Canvas
 	    Position position = step.pos;
 	    int x = (int)position.x;
 	    int y = (int)position.y;
-	    if (x > maxX)
-		maxX = x;
+	    int stepWidth = this.eSFC.getWidth(step);
+	    if ((x + stepWidth) > maxX)
+		maxX = x + stepWidth;
 	    if (x < minX)
 		minX = x;
 	    if (y > maxY)
@@ -74,7 +75,7 @@ final class DrawBoard extends Canvas
 	    position.x -= (float)minX;
 	    position.y -= (float)minY;
 	}
-	this.setSize(maxX+32, maxY+32);
+	this.setSize(maxX, maxY+32);
     }
     
     public void mouseClicked(MouseEvent e) {

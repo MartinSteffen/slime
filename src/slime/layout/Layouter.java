@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: Layouter.java,v 1.4 2002-05-30 13:04:37 swprakt Exp $
+ * @version $Id: Layouter.java,v 1.5 2002-06-06 14:20:40 swprakt Exp $
  */
 
 public final class Layouter {
@@ -246,8 +246,11 @@ public final class Layouter {
 		    int preSource = this.getIntStepNumber(stepList.get(s-1));
 		    Step target = (Step)this.sfc.steps.get(preSource);
 		    int preX = (int)(target.pos.x);
-		    if ((preX+30) > x)
-			x = preX+30+10;
+		    int stepWidth = target.name.length()*7+8;
+		    if (stepWidth < 30)
+			stepWidth = 30;
+		    if ((preX+stepWidth) > x)
+			x = preX+stepWidth+10;
 		} 
 		Step sourceStep2 = (Step)this.sfc.steps.get(source);
 		this.debug.writeln(x);

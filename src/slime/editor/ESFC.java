@@ -10,7 +10,7 @@ import java.util.Hashtable;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: ESFC.java,v 1.1 2002-05-30 13:03:52 swprakt Exp $
+ * @version $Id: ESFC.java,v 1.2 2002-06-06 14:20:39 swprakt Exp $
  */
 
 final class ESFC{
@@ -172,8 +172,17 @@ final class ESFC{
     }
 
     protected void deHighlight(Object key) {
-	this.highlight(key, NORMAL);
+	this.highlight(key, NORMAL); //FIX ME: Inititial Step != NORMAL!!!!
     }
+
+    protected int getWidth(Step step) {
+	final int MIN_WIDTH = 30;
+	final int WIDTH_PER_CHARACTER = 7;
+	int lengthOfName = step.name.length();
+	int width = WIDTH_PER_CHARACTER * lengthOfName + 8;
+	return (MIN_WIDTH > width) ? MIN_WIDTH : width;
+    }
+
 }
 
 

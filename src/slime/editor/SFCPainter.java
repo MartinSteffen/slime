@@ -10,13 +10,14 @@ import java.util.Hashtable;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: SFCPainter.java,v 1.2 2002-05-30 13:03:53 swprakt Exp $
+ * @version $Id: SFCPainter.java,v 1.3 2002-06-06 14:20:39 swprakt Exp $
  */
 
 final class SFCPainter{
 
     private static final int STEP_HEIGHT = 30;
-    private static final int STEP_WIDTH  = 30;
+    private static final Font DATA_FONT =
+	new Font( "Courier", Font.PLAIN, 12 );
 
     private ESFC      eSFC;
     private SFC       sfc;
@@ -27,6 +28,7 @@ final class SFCPainter{
     }
 
     protected void paintSFC(Graphics g) {
+	g.setFont(DATA_FONT);
 	this.paintTransitions(g);
 	this.paintSteps(g);
     }
@@ -44,10 +46,11 @@ final class SFCPainter{
 	String text = step.name;
 	int    x0   = (int)(step.pos.x);
 	int    y0   = (int)(step.pos.y);
+	int    stepWidth = this.eSFC.getWidth(step);
 	g.drawString(text, x0+4, y0+5+STEP_HEIGHT/2);
-	g.drawRect(x0, y0, STEP_WIDTH-1, STEP_HEIGHT-1);
+	g.drawRect(x0, y0, stepWidth-1, STEP_HEIGHT-1);
 	if (step == this.sfc.istep)
-	    g.drawRect(x0+2, y0+2, STEP_WIDTH-5, STEP_HEIGHT-5);
+	    g.drawRect(x0+2, y0+2, stepWidth-5, STEP_HEIGHT-5);
     }
 
     private void paintTransitions(Graphics g) {

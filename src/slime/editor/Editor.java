@@ -14,7 +14,7 @@ import javax.swing.event.*;
  * <BR> <BR>
  * Feel free to play around with this initial version of an SFC-editor.  
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.3 2002-06-03 18:07:00 swprakt Exp $
+ * @version $Id: Editor.java,v 1.4 2002-06-06 14:20:39 swprakt Exp $
  */
 
 public final class Editor extends JComponent implements ChangeListener{
@@ -301,9 +301,10 @@ public final class Editor extends JComponent implements ChangeListener{
 	Position position = step.pos;
 	int xOfStep = (int)position.x;
 	int yOfStep = (int)position.y;
+	int stepWidth = this.eSFC.getWidth(step);
 	if (x < xOfStep) return false;
 	if (y < yOfStep) return false;
-	if (x > (xOfStep + 30)) return false;
+	if (x > (xOfStep + stepWidth)) return false;
 	if (y > (yOfStep + 30)) return false;
 	return true;
     }
