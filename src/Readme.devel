@@ -1,5 +1,5 @@
 ############################################################
-# $Id: Readme.devel,v 1.5 2002-04-26 12:08:45 swprakt Exp $
+# $Id: Readme.devel,v 1.6 2002-06-12 09:08:46 swprakt Exp $
 ############################################################
 
 
@@ -12,7 +12,7 @@ o Requirements:
 
     Platform: java-1.4
     
-    other packages: JLex + Cup
+    other packages: JLex + Cup (JLex-1.2.5/cup-0.10k)
     
     CLASSPATH = <WORKINGDIRECTORY>/src
 
