@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.69 2002-07-05 08:46:50 swprakt Exp $
+## $Id: Errors.txt,v 1.70 2002-07-05 08:51:04 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -57,7 +57,14 @@ Error 41:     super/sub confusion
                General typecheck exception
                General exception of the checks-package
 
-	       only line 3 is wanted.
+
+	       only line 3 is wanted. If I overwrite also
+	       the get_message, then it is ok:
+
+                  General exception of the checks-package
+                  General exception of the checks-package
+                  General typecheck exception
+                  General typecheck exception
 
 Error 40:     typecheck expressions
  package:     checks (but partially branched out)
