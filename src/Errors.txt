@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.78 2002-07-05 11:37:41 swprakt Exp $
+## $Id: Errors.txt,v 1.79 2002-07-05 11:48:29 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,6 +35,19 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+Error 44:     null-pointer
+ package:     sfcparser (
+ class:       should not happen
+ status:      reported, 5.7.02, Steffen
+ description: java slime.sfcparser.ParserTest -3 =>
+
+             ParserTest: before File
+             ParserTest: before SFCParser
+             ParserTest: before parseFile
+             ParserTest: java.lang.NullPointerException
+ 
+      
 Error 43:     non-portanble code
  package:     sfcparser (v1.22, not branched one)
  class:       currenly non-fatal, in terms of compilation, but makes code non-maintanable, breaks abstraction,
@@ -63,7 +76,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.78 2002-07-05 11:37:41 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.79 2002-07-05 11:48:29 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
