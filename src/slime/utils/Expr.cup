@@ -4,7 +4,7 @@
  * Offers the methods parseExpr 
  *
  * @author Karsten Stahl, Martin Steffen
- * @version $Id: Expr.cup,v 1.5 2002-07-04 15:32:32 swprakt Exp $
+ * @version $Id: Expr.cup,v 1.6 2002-07-05 16:05:50 swprakt Exp $
  *
  * The grammar definition contains 4 parts:
  *    -  initialization declarations and how to generate the parser
@@ -118,9 +118,9 @@ non terminal    Integer           op;    // int does not work! RESULT must be an
 /* ---        precedences and associativity ------- */
 
 
+precedence left AND, OR, NEQ, LESS, LEQ, GREATER, GEQ, EQ;
 precedence left PLUS, MINUS;
 precedence left TIMES, DIV;
-precedence left AND, OR, NEQ, LESS, LEQ, GREATER, GEQ, EQ;
 precedence left NEG;
 
 
