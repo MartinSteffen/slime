@@ -1,0 +1,115 @@
+// ##################################################
+// # $Id: TODO,v 1.1 2002-06-25 15:02:54 swprakt Exp $ 
+// # Author: initialy provided by Marco Wendel
+// ##################################################
+// # 
+// # ***OK*** 		- 	already done
+// # ***MORE***		-	some done, more to come
+// # ***INPROGRESS***	-	work in progress
+// # ***MAYBE***	-	optional part
+// # ***RFC***		-	request for comments
+// #
+// ##################################################
+// # $Log: not supported by cvs2svn $
+// # Revision 1.3  2002/06/14 18:01:42  mwe
+// # completely new version with the two step
+// # approach. sfc-files are first parsed into a
+// # slime.absynt.absfc.SFCabtree             
+// # the next step is to process this generated tree
+// # three times:
+// #              1. generate list for variables
+// #                 generate list for declarations
+// #                 generate list for processes
+// #              2. generate step list for simple statements
+// #                 generate step list for if/while statements
+// #                 generate step list for processes
+// #                 generate step list for whole program  
+// #              3. run through tree and insert 
+// #                 steplists at the right position
+// #                 into the right transition and generate
+// #                 the transition list for the SFC-object
+// #
+// # Revision 1.3  2002/05/05 22:24:12  mwe
+// # added something from the grammar
+// # i think something like slime.absynt.process
+// # might be useful. some constructors within
+// # slime.absynt.constval have to be added if
+// # double/string support is required.
+// #
+// # is someone else using the cvsrep ?
+// # i have not seen any other files...
+// #
+// # Revision 1.2  2002/05/01 11:11:37  mwe
+// # added another missing ":" after Log
+// #
+// ##################################################
+
+TASKS { 
+
+SELFASSIGNED {
+
+THINK { SFC language } ***OK***
+DO    { SFC create concrete syntax } ***OK***
+DO    { cup: non-terminals } ***OK***
+DO    { cup: program, declarations, constval } ***OK***
+THINK { cup: cup ==> absfc.SFCabtree ==> abstract syntax tree absynt } ***OK***
+THINK { cup: step-counting, -numbering, -replacement } ***OK***
+DO    { cup: parse to abstract SFC tree } ***OK***
+DO    { cup: simple assignments } ***OK***
+DO    { cup: expressions }  ***OK***
+THINK { cup: branches for if-then-else-recursion }  ***OK***
+DO    { cup: if-then-else - create dummy steps }  ***OK***
+DO    { cup: while - create dummy(NOP) steps, trueGuard(JMP) }  ***OK***
+DO    { cup: type declaration } ***OK***
+DO    { cup: verify parser } ***INPROGRESS***
+DO    { lex: unary operators -E +E } ***OK***
+
+} // end of SELFASSIGNED
+
+
+ASSIGNED_BY_OTHER {
+
+THINK {}
+DO    {}
+EXPORT{ <sample new function - providing sample new output> }
+
+} // end of ASSIGNED_BY_OTHERS
+
+} // end of TASKS
+
+
+MEETINGS {
+    Wednesday 16:00h Ue1
+    April 16 2002 Start of course
+    April 23 2002 Assignment of modules
+    April 30 2002 Review of modules :( 
+    May 1 2002 "Tag der Arbeit" :)
+    May 8 2002 Talk about module parser and other modules :)
+    daily meanwhile working
+    July 17 2002 End of course
+DO { create overview of module parser }
+DO { go to meetings :) }
+DO { }
+
+} // end of MEETINGS
+
+TEAM {
+    1,ms@informatik.uni-kiel.de,	Martin Steffen,	TECHING
+    2,kst@informatik.uni-kiel.de,	Karsten Stahl, TEACHING
+    3,richter@thomas-richter.de,	Thomas Richter, unknown
+    4,BenjaminBahnsen@web.de,		Benjamin Bahnsen, EDITOR 
+    5,nbueck@web.de,			Norbert Bueck, GUI 
+    6,jenss@pclab.ifg.uni-kiel.de,	Jens Schneider von Deimling, unknown
+    7,immograbe@gmx.de,			Immo Grabe, SIMULATOR
+    8,ani@informatik.uni-kiel.de,	Andreas Niemann, PLACEMENT
+    9,f.picchiarellu@tiscalinet.it,	Fabrizio Piccharecci, CHECKS-LEFT-TEAM
+   10,jes@informatik.uni-kiel.de,	Jens Sch"onborn, unknown
+   11,y_taskin@web.de,			Yasin Taskin, CHECKS
+   12,mwe@informatik.uni-kiel.de,	Marco Wendel, PARSER
+} // end of TEAM
+
+
+
+
+
+

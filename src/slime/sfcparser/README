@@ -1,0 +1,53 @@
+SFCParser v1.0 - part of the Slime Project
+[Programming-in-the-many: Java SS2002 CAU Kiel]
+
+The SFCParser should be capable to read an ASCII-file
+in SFC-format into the abstract syntax tree defined
+by the module absynt from the Slime Package.
+
+
+README:		This file.
+
+TODO:		List containing things to be done.
+		Please keep the style of notation
+		for your hints/comments/requirements.
+
+URLS:		Short list of JLex and CUP related URLs.
+
+Makefile:	Makefile for gnumake. Run "make all" to create the
+		SFCParser.class, otherwise run "make help"
+
+SFC.lex:	JLex specification needed for the generation of
+		SFCLexer.java. JLex has to be installed and must
+		reside in the JavaClassPath.
+
+SFCLex.java:    JLex Scanner Code 
+
+SFCParser.java: CUP Parser Code
+
+Absfc2SFCConverter.java:
+		Object is should be capable to convert a
+		slime.absynt.absfc.SFCabtree into a wanted/
+		required slime.absynt.SFC.
+
+SFC.cup:	CUP specification needed for the generation of
+		SFCParser.java and SFCSymbols.java. 
+
+SFCParseException.java:
+		ExceptionClass for passing internal 
+		parsing errors to the other modules/GUI.
+
+ParserTest.java:
+		Commandline Testtool for the SFCParser
+
+examples/:	Subdirectory containing some examples for the
+		SFC language parsable by SFCParser.
+		
+apidoc/:	Subdirectory containing the javadoc documentation
+
+Kiel, 28.4.2002
+Marco Wendel
+mwe@informatik.uni-kiel.de
+
+
+
