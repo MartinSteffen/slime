@@ -9,7 +9,7 @@ import slime.absynt.*;
  * A little testing of the wellformedness checker, using the parser
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl. 
- * @version $Id: WellformedTest.java,v 1.1 2002-07-07 14:57:47 swprakt Exp $
+ * @version $Id: WellformedTest.java,v 1.2 2002-07-08 10:25:28 swprakt Exp $
  * ---------------------------------------------------------------
  */
 
@@ -24,8 +24,18 @@ public class WellformedTest {
     slime.utils.PrettyPrint             pp = new slime.utils.PrettyPrint();
     slime.checks.Typecheck              tc =  new slime.checks.Typecheck();
     slime.checks.Wellformed             wc =  new slime.checks.Wellformed();
+    SFC sfc1 = Example.getExample1();
     //     slime.checks.Wellformed.Initcheck wci  =  new slime.checks.Wellformed.Initcheck();
-    wc.check(null);    
+    try {
+      wc.check(null);
+      wc.check(sfc1);    
+    }
+    catch (Exception ex) {
+      System.out.println (ex.toString());
+      System.out.println (ex.getMessage());
+      System.out.println ("Well formed exception");
+      System.exit(0);
+    }
     // wci.Initcheck.check(null);
     // slime.sfcparser.PPActions prettyPrinter =  new slime.sfcparser.PPActions(); for the version without that StepAction...
     slime.sfcparser.PrettyPrint4Absfc   prettyAbsfc = new slime.sfcparser.PrettyPrint4Absfc();
@@ -56,7 +66,6 @@ public class WellformedTest {
 	  }
       }; // end loop
       System.out.println ("checking programs now");
-      SFC sfc1 = Example.getExample1();
       pp.print(sfc1);
       slime.absynt.Type t = tc.check(sfc1);
       System.out.print ("Result type = ");

@@ -12,7 +12,7 @@ import slime.absynt.*;
 /** checking well-formedness for Slime programs
  *
  * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
- * @version $Id: Wellformed.java,v 1.4 2002-07-08 09:01:32 swprakt Exp $
+ * @version $Id: Wellformed.java,v 1.5 2002-07-08 10:25:27 swprakt Exp $
  * <p>
  * The checker consists of various well-formed errors as exceptions together with the
  * checker proper, which recurs over the abstract syntax.
@@ -32,13 +32,19 @@ public class Wellformed {
   /* Next the list of exceptions */
 
   /**
-   *  General, non-specific exception when doing type checking.
+   *  General, non-specific exception when doing wellformed checking.
    *  The exception is subclassed by various specific, concrete
    *  exceptions and the checker never throws the the general one.
    */
 
-  public class WException extends CheckException {
+  public class WException extends CheckException { // Exception as name not possible
     String message = "general well-formedness exception";    
+
+    public WException () {};
+
+    public WException (String m) {
+      message = m;}
+    
     public String getMessage(){return message;  }
   }
 
@@ -46,12 +52,16 @@ public class Wellformed {
 
 
   public boolean check (SFC s) throws WException { 
+    if (s == null)
+      throw (new WException("sfc is empty")); 
+    (new Initcheck()).check(s);
+    (new Consistency()).check(s);
     return true;}
 
 
 
 
-  /** Type check visitor for SFC's, the entry point of the recursion.
+  /** Visitor for SFC's, the entry point of the recursion.
    *  To cope with contextual information, we use a  hash table.
    *  The key objects are the variables, the values are the types.
    *
@@ -72,14 +82,49 @@ public class Wellformed {
     
     class SFCV implements Visitors.ISFC{
       public Object forSFC(Step istep, 
-			   LinkedList steps,
+			   LinkedList steps, // list of steps
 			   LinkedList transs,
 			   LinkedList actions, 
 			   LinkedList declist) throws Exception {
-	return (new Boolean(true));
+	// trickle down the list to see whether there
+	// it contains a step with identical name.
+	for (Iterator i = steps.iterator(); i.hasNext(); ) {
+	  Step s  = (Step)i.next();
+	  if (s.equals(istep))
+	    return (new Boolean(true)); // exit loop
+	}
+	throw new Wellformed.WException();
       }
     }
   }
+
+  /** Inner class for consistency checking. Encapsulates and 
+   *  groups together the  visitor classes that recur down the sfc structure.
+   *
+   */
+
+  public class Consistency {
+    public boolean check (SFC s)  throws Wellformed.WException {
+      try {
+	Boolean  b = (Boolean)(s.accept(new SFCV()));
+	return b.booleanValue();
+      }
+      catch (Exception ex) {
+	throw (Wellformed.WException)(ex);}
+    }
+    
+    class SFCV implements Visitors.ISFC{
+      public Object forSFC(Step istep, 
+			   LinkedList steps, // list of steps
+			   LinkedList transs,
+			   LinkedList actions, 
+			   LinkedList declist) throws Exception {
+	return (new Boolean(true)); // stub
+      }
+    }
+  }
+
+
 
 }
 
@@ -90,6 +135,9 @@ public class Wellformed {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.4  2002/07/08 09:01:32  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.3  2002/07/07 14:57:46  swprakt
 //    ok for today [Steffen]
 //

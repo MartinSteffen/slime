@@ -4,6 +4,7 @@ all:	$(patsubst %.java,%.class,$(wildcard *.java))
 
 test:  
 	java slime.checks.tests.TypecheckTest
+	java slime.checks.tests.WellformedTest
 
 %.class:	%.java
 		javac $(JAVACOPTS) $<
@@ -17,5 +18,5 @@ localdoc:	;
 
 
 ######################################################
-## $Id: Makefile,v 1.3 2002-07-05 17:38:32 swprakt Exp $
+## $Id: Makefile,v 1.4 2002-07-08 10:25:28 swprakt Exp $
 ######################################################
