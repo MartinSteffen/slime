@@ -1,5 +1,6 @@
 
 all:	$(patsubst %.java,%.class,$(wildcard *.java))
+	cd tests; make
 
 
 %.class:	%.java
@@ -15,5 +16,5 @@ localdoc:	;
 
 
 ######################################################
-## $Id: Makefile,v 1.4 2002-07-10 17:04:31 swprakt Exp $
+## $Id: Makefile,v 1.5 2002-07-10 17:22:01 swprakt Exp $
 ######################################################
