@@ -2,18 +2,22 @@ package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFCLex.java,v 1.1 2002-06-25 15:02:51 swprakt Exp $
+    * $Id: SFCLex.java,v 1.2 2002-06-26 08:27:05 swprakt Exp $
     * -----
     * $Log: not supported by cvs2svn $
+    * Revision 1.2  2002/06/26 06:50:57  swprakt
+    * removed unused entries in SFC.lex
+    * and removed wrong entry in SFC.cup "stmtblock" in "stmtlist"
+    *
+    * Revision 1.1  2002/06/25 15:02:51  swprakt
+    * missing files added
+    *
     * Revision 1.3  2002/05/05 22:24:12  mwe
     * added something from the grammar
     * i think something like slime.absynt.process
     * might be useful. some constructors within
     * slime.absynt.constval have to be added if
     * double/string support is required.
-    *
-    * is someone else using the cvsrep ?
-    * i have not seen any other files...
     *
     * Revision 1.2  2002/05/01 11:35:08  mwe
     * first version of SFC.lex
@@ -288,34 +292,34 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 41 */ YY_NO_ANCHOR,
 		/* 42 */ YY_NO_ANCHOR,
 		/* 43 */ YY_NO_ANCHOR,
-		/* 44 */ YY_NO_ANCHOR,
+		/* 44 */ YY_NOT_ACCEPT,
 		/* 45 */ YY_NO_ANCHOR,
 		/* 46 */ YY_NO_ANCHOR,
 		/* 47 */ YY_NO_ANCHOR,
-		/* 48 */ YY_NO_ANCHOR,
+		/* 48 */ YY_NOT_ACCEPT,
 		/* 49 */ YY_NO_ANCHOR,
 		/* 50 */ YY_NO_ANCHOR,
 		/* 51 */ YY_NO_ANCHOR,
-		/* 52 */ YY_NO_ANCHOR,
-		/* 53 */ YY_NOT_ACCEPT,
-		/* 54 */ YY_NO_ANCHOR,
+		/* 52 */ YY_NOT_ACCEPT,
+		/* 53 */ YY_NO_ANCHOR,
+		/* 54 */ YY_NOT_ACCEPT,
 		/* 55 */ YY_NO_ANCHOR,
 		/* 56 */ YY_NO_ANCHOR,
 		/* 57 */ YY_NO_ANCHOR,
-		/* 58 */ YY_NOT_ACCEPT,
+		/* 58 */ YY_NO_ANCHOR,
 		/* 59 */ YY_NO_ANCHOR,
 		/* 60 */ YY_NO_ANCHOR,
 		/* 61 */ YY_NO_ANCHOR,
 		/* 62 */ YY_NO_ANCHOR,
-		/* 63 */ YY_NOT_ACCEPT,
+		/* 63 */ YY_NO_ANCHOR,
 		/* 64 */ YY_NO_ANCHOR,
-		/* 65 */ YY_NOT_ACCEPT,
+		/* 65 */ YY_NO_ANCHOR,
 		/* 66 */ YY_NO_ANCHOR,
-		/* 67 */ YY_NOT_ACCEPT,
+		/* 67 */ YY_NO_ANCHOR,
 		/* 68 */ YY_NO_ANCHOR,
 		/* 69 */ YY_NOT_ACCEPT,
 		/* 70 */ YY_NO_ANCHOR,
-		/* 71 */ YY_NOT_ACCEPT,
+		/* 71 */ YY_NO_ANCHOR,
 		/* 72 */ YY_NO_ANCHOR,
 		/* 73 */ YY_NO_ANCHOR,
 		/* 74 */ YY_NO_ANCHOR,
@@ -329,7 +333,7 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 82 */ YY_NO_ANCHOR,
 		/* 83 */ YY_NO_ANCHOR,
 		/* 84 */ YY_NO_ANCHOR,
-		/* 85 */ YY_NOT_ACCEPT,
+		/* 85 */ YY_NO_ANCHOR,
 		/* 86 */ YY_NO_ANCHOR,
 		/* 87 */ YY_NO_ANCHOR,
 		/* 88 */ YY_NO_ANCHOR,
@@ -348,80 +352,49 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		/* 101 */ YY_NO_ANCHOR,
 		/* 102 */ YY_NO_ANCHOR,
 		/* 103 */ YY_NO_ANCHOR,
-		/* 104 */ YY_NO_ANCHOR,
-		/* 105 */ YY_NO_ANCHOR,
-		/* 106 */ YY_NO_ANCHOR,
-		/* 107 */ YY_NO_ANCHOR,
-		/* 108 */ YY_NO_ANCHOR,
-		/* 109 */ YY_NO_ANCHOR,
-		/* 110 */ YY_NO_ANCHOR,
-		/* 111 */ YY_NO_ANCHOR,
-		/* 112 */ YY_NO_ANCHOR,
-		/* 113 */ YY_NO_ANCHOR,
-		/* 114 */ YY_NO_ANCHOR,
-		/* 115 */ YY_NO_ANCHOR,
-		/* 116 */ YY_NO_ANCHOR,
-		/* 117 */ YY_NO_ANCHOR,
-		/* 118 */ YY_NO_ANCHOR,
-		/* 119 */ YY_NO_ANCHOR,
-		/* 120 */ YY_NO_ANCHOR,
-		/* 121 */ YY_NO_ANCHOR,
-		/* 122 */ YY_NO_ANCHOR,
-		/* 123 */ YY_NO_ANCHOR,
-		/* 124 */ YY_NO_ANCHOR,
-		/* 125 */ YY_NO_ANCHOR,
-		/* 126 */ YY_NO_ANCHOR,
-		/* 127 */ YY_NO_ANCHOR
+		/* 104 */ YY_NO_ANCHOR
 	};
 	private int yy_cmap[] = unpackFromString(1,258,
-"3:8,4:2,1,3,4,1,3:18,4,13,3,41,3,10,11,3,6,7,5,8,37,9,40,2,48:10,39,38,15,1" +
-"4,16,3:2,22,27,42,29,20,21,30,45,25,43,31,23,46,26,28,32,46,18,24,17,19,46," +
-"44,46:3,33,3,34,3,47,3,22,27,42,29,20,21,30,45,25,43,31,23,46,26,28,32,46,1" +
-"8,24,17,19,46,44,46:3,35,12,36,3:130,0:2")[0];
+"3:8,4:2,1,3,4,1,3:18,4,13,3:3,10,11,3,6,7,5,8,33,9,3,2,41:10,3,34,15,14,16," +
+"3:2,22,27,35,39,20,21,39,38,25,36,29,23,39,26,28,30,39,18,24,17,19,39,37,39" +
+":3,3:4,40,3,22,27,35,39,20,21,39,38,25,36,29,23,39,26,28,30,39,18,24,17,19," +
+"39,37,39:3,31,12,32,3:130,0:2")[0];
 
-	private int yy_rmap[] = unpackFromString(1,128,
-"0,1,2,3,1:2,4,1:4,5,6,7,8,9,1:7,10,1,11,12,1:6,13,14,13:2,15,13:15,16,17,18" +
-",16,15,19,20,21,22,23,24,25,22,26,27,28,23,29,19,30,31,32,33,34,35,36,37,38" +
-",39,40,41,42,22,43,13,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61" +
-",62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,13,77,78,79,80,81,82")[0];
+	private int yy_rmap[] = unpackFromString(1,105,
+"0,1,2,3,1:2,4,1:4,5,6,7,8,9,1:4,10,11,1:6,12:16,13,14,15,13,16,17,18,19:2,2" +
+"0,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,19,36,12,37,38,39,40,41,42,4" +
+"3,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,12,64,65,66,6" +
+"7,68")[0];
 
-	private int yy_nxt[][] = unpackFromString(83,49,
-"1,2,3,4,2,5,6,7,8,9,10,54,59,11,12,13,14,15,114,118,119,120,121:2,84,55,121" +
-",122,123,124,121:2,125,16,17,18,19,20,21,22,23,24,121,126,127,121:3,25,-1:5" +
-"0,2,-1:2,2,-1:46,26,-1:2,53,-1:48,85,-1:57,29,-1:48,30,-1:48,31,-1:48,32,-1" +
-":51,121,86,121:14,-1:9,121:5,87:2,-1:48,34,-1:20,58,-1:19,57,-1:7,25,-1:2,2" +
-"6:47,-1:17,121:16,-1:9,121:5,87:2,-1:20,58,-1:27,34,-1:20,71,-1:27,37,-1:2," +
-"53:3,63,53:43,-1:11,27,-1:54,121:4,33,121:4,64,121:6,-1:9,121:5,87:2,-1:8,6" +
-"9:2,-1:38,62,-1:12,28,-1:53,121:16,-1:9,35,121:4,87:2,-1:2,65:3,67,65:43,-1" +
-":48,62,-1:2,56,53:2,63,53:43,-1:17,36,121:14,103,-1:9,121:5,87:2,-1:17,121:" +
-"3,38,121:12,-1:9,121:5,87:2,-1:2,65:3,67,65,61,65:41,-1:17,121:3,39,121:12," +
-"-1:9,121:5,87:2,-1:17,121:15,40,-1:9,121:5,87:2,-1:17,121:6,41,121:9,-1:9,1" +
-"21:5,87:2,-1:17,121:9,42,121:6,-1:9,121:5,87:2,-1:17,121:6,43,121:9,-1:9,12" +
-"1:5,87:2,-1:17,121:3,44,121:12,-1:9,121:5,87:2,-1:17,45,121:15,-1:9,121:5,8" +
-"7:2,-1:17,46,121:15,-1:9,121:5,87:2,-1:17,121:3,47,121:12,-1:9,121:5,87:2,-" +
-"1:17,48,121:15,-1:9,121:5,87:2,-1:17,121:13,49,121:2,-1:9,121:5,87:2,-1:17," +
-"50,121:15,-1:9,121:5,87:2,-1:17,121:3,51,121:12,-1:9,121:5,87:2,-1:17,121:7" +
-",52,121:8,-1:9,121:5,87:2,-1:17,92,121:3,60,121:9,93,116,-1:9,121:5,87:2,-1" +
-":17,121:2,66,121:13,-1:9,121:5,87:2,-1:17,121:15,99,-1:9,121:5,87:2,-1:17,1" +
-"00,121:15,-1:9,121:5,87:2,-1:17,121:7,68,121:8,-1:9,121:5,87:2,-1:17,121:6," +
-"101,121:9,-1:9,121:5,87:2,-1:17,121,117,121:14,-1:9,121:5,87:2,-1:17,121:8," +
-"70,121:7,-1:9,121:5,87:2,-1:17,121:11,72,121:4,-1:9,121:5,87:2,-1:17,121:2," +
-"105,121:13,-1:9,121:5,87:2,-1:17,121:11,106,121:4,-1:9,121:5,87:2,-1:17,121" +
-":8,73,121:7,-1:9,121:5,87:2,-1:17,121:8,107,121:7,-1:9,121:5,87:2,-1:17,121" +
-":3,108,121:12,-1:9,121:5,87:2,-1:17,121:8,74,121:7,-1:9,121:5,87:2,-1:17,12" +
-"1:7,75,121:8,-1:9,121:5,87:2,-1:17,121:8,76,121:7,-1:9,121:5,87:2,-1:17,121" +
-":2,77,121:13,-1:9,121:5,87:2,-1:17,121:15,110,-1:9,121:5,87:2,-1:17,121:10," +
-"111,121:5,-1:9,121:5,87:2,-1:17,121:16,-1:9,112,121:4,87:2,-1:17,121:6,78,1" +
-"21:9,-1:9,121:5,87:2,-1:17,121:5,79,121:10,-1:9,121:5,87:2,-1:17,121:9,80,1" +
-"21:6,-1:9,121:5,87:2,-1:17,121:2,81,121:13,-1:9,121:5,87:2,-1:17,121:6,82,1" +
-"21:9,-1:9,121:5,87:2,-1:17,121:3,113,121:12,-1:9,121:5,87:2,-1:17,121:7,83," +
-"121:8,-1:9,121:5,87:2,-1:17,121:3,88,121:12,-1:9,121:5,87:2,-1:17,104,121:1" +
-"5,-1:9,121:5,87:2,-1:17,121:6,102,121:9,-1:9,121:5,87:2,-1:17,121:8,109,121" +
-":7,-1:9,121:5,87:2,-1:17,121:9,89,121:6,-1:9,121:5,87:2,-1:17,121:6,90,121:" +
-"9,-1:9,121:5,87:2,-1:17,121:5,91,121:10,-1:9,121:5,87:2,-1:17,121:11,94,121" +
-":4,-1:9,121:5,87:2,-1:17,121:2,115,121:13,-1:9,121:5,87:2,-1:17,121:11,95,1" +
-"21:4,-1:9,121:5,87:2,-1:17,121,96,121:14,-1:9,121:5,87:2,-1:17,121:11,97,12" +
-"1:4,-1:9,121:5,87:2,-1:17,121:16,-1:9,121:3,98,121,87:2");
+	private int yy_nxt[][] = unpackFromString(69,42,
+"1,2,3,4,2,5,6,7,8,9,10,45,49,11,12,13,14,15,93,96,97,98,99:2,68,46,99,100,1" +
+"01,99,102,16,17,18,19,99,103,104,99:3,20,-1:43,2,-1:2,2,-1:39,21,-1:2,44,-1" +
+":41,69,-1:50,24,-1:41,25,-1:41,26,-1:41,27,-1:44,99,70,99:12,-1:4,99:5,71:2" +
+",-1:41,20,-1:2,21:40,-1:17,99:14,-1:4,99:5,71:2,-1:2,44:3,48,44:36,-1:11,22" +
+",-1:47,99:4,28,99:4,53,99:4,-1:4,99:5,71:2,-1:2,47,44:2,48,44:36,-1:12,23,-" +
+"1:46,99:14,-1:4,29,99:4,71:2,-1:2,52:3,54,52:36,-1:17,30,99:12,85,-1:4,99:5" +
+",71:2,-1:2,52:3,54,52,51,52:34,-1:17,99:3,31,99:10,-1:4,99:5,71:2,-1:17,99:" +
+"3,32,99:10,-1:4,99:5,71:2,-1:17,99:13,33,-1:4,99:5,71:2,-1:17,99:6,34,99:7," +
+"-1:4,99:5,71:2,-1:17,99:9,35,99:4,-1:4,99:5,71:2,-1:17,99:6,36,99:7,-1:4,99" +
+":5,71:2,-1:17,99:3,37,99:10,-1:4,99:5,71:2,-1:17,38,99:13,-1:4,99:5,71:2,-1" +
+":17,39,99:13,-1:4,99:5,71:2,-1:17,99:3,40,99:10,-1:4,99:5,71:2,-1:17,41,99:" +
+"13,-1:4,99:5,71:2,-1:17,42,99:13,-1:4,99:5,71:2,-1:17,99:7,43,99:6,-1:4,99:" +
+"5,71:2,-1:17,99:4,50,99:7,76,95,-1:4,99:5,71:2,-1:17,99:2,55,99:11,-1:4,99:" +
+"5,71:2,-1:17,99:13,81,-1:4,99:5,71:2,-1:17,82,99:13,-1:4,99:5,71:2,-1:17,99" +
+":7,56,99:6,-1:4,99:5,71:2,-1:17,99:6,83,99:7,-1:4,99:5,71:2,-1:17,99:8,57,9" +
+"9:5,-1:4,99:5,71:2,-1:17,99:11,58,99:2,-1:4,99:5,71:2,-1:17,99:11,87,99:2,-" +
+"1:4,99:5,71:2,-1:17,99:8,59,99:5,-1:4,99:5,71:2,-1:17,99:8,88,99:5,-1:4,99:" +
+"5,71:2,-1:17,99:3,89,99:10,-1:4,99:5,71:2,-1:17,99:8,60,99:5,-1:4,99:5,71:2" +
+",-1:17,99:7,61,99:6,-1:4,99:5,71:2,-1:17,99:8,62,99:5,-1:4,99:5,71:2,-1:17," +
+"99:2,63,99:11,-1:4,99:5,71:2,-1:17,99:13,90,-1:4,99:5,71:2,-1:17,99:14,-1:4" +
+",91,99:4,71:2,-1:17,99:6,64,99:7,-1:4,99:5,71:2,-1:17,99:5,65,99:8,-1:4,99:" +
+"5,71:2,-1:17,99:2,66,99:11,-1:4,99:5,71:2,-1:17,99:3,92,99:10,-1:4,99:5,71:" +
+"2,-1:17,99:7,67,99:6,-1:4,99:5,71:2,-1:17,99:3,72,99:10,-1:4,99:5,71:2,-1:1" +
+"7,86,99:13,-1:4,99:5,71:2,-1:17,99:6,84,99:7,-1:4,99:5,71:2,-1:17,99:9,73,9" +
+"9:4,-1:4,99:5,71:2,-1:17,99:6,74,99:7,-1:4,99:5,71:2,-1:17,99:5,75,99:8,-1:" +
+"4,99:5,71:2,-1:17,99:11,77,99:2,-1:4,99:5,71:2,-1:17,99:2,94,99:11,-1:4,99:" +
+"5,71:2,-1:17,99,78,99:12,-1:4,99:5,71:2,-1:17,99:11,79,99:2,-1:4,99:5,71:2," +
+"-1:17,99:14,-1:4,99:3,80,99,71:2");
 
 	public java_cup.runtime.Symbol next_token ()
 		throws java.io.IOException {
@@ -532,199 +505,206 @@ public class SFCLex implements java_cup.runtime.Scanner {
 					case -16:
 						break;
 					case 16:
-						{return new Symbol(SFCSymbols.LPFIELD); 	/* */}
+						{return new Symbol(SFCSymbols.LPSET); 	/* */}
 					case -17:
 						break;
 					case 17:
-						{return new Symbol(SFCSymbols.RPFIELD); 	/* */}
+						{return new Symbol(SFCSymbols.RPSET); 	/* */}
 					case -18:
 						break;
 					case 18:
-						{return new Symbol(SFCSymbols.LPSET); 	/* */}
+						{return new Symbol(SFCSymbols.COMMA); 	/* */}
 					case -19:
 						break;
 					case 19:
-						{return new Symbol(SFCSymbols.RPSET); 	/* */}
+						{return new Symbol(SFCSymbols.SEMICOLON);	/* */}
 					case -20:
 						break;
 					case 20:
-						{return new Symbol(SFCSymbols.COMMA); 	/* */}
+						{return new Symbol(SFCSymbols.INTEGER, 
+		   new Integer(yytext())); 		/* t INTEGER */}
 					case -21:
 						break;
 					case 21:
-						{return new Symbol(SFCSymbols.SEMICOLON);	/* */}
+						{return new Symbol(SFCSymbols.COMMENT);}
 					case -22:
 						break;
 					case 22:
-						{return new Symbol(SFCSymbols.DDOT); 	/* */}
+						{return new Symbol(SFCSymbols.AND); 	/* Expr.AND     =  4 */}
 					case -23:
 						break;
 					case 23:
-						{return new Symbol(SFCSymbols.DOT);		/* */}
+						{return new Symbol(SFCSymbols.OR);  	/* Expr.OR      =  5 */}
 					case -24:
 						break;
 					case 24:
-						{return new Symbol(SFCSymbols.HASH); 	/* */}
+						{return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
 					case -25:
 						break;
 					case 25:
-						{return new Symbol(SFCSymbols.INTEGER, 
-		   new Integer(yytext())); 		/* t INTEGER */}
+						{return new Symbol(SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
 					case -26:
 						break;
 					case 26:
-						{return new Symbol(SFCSymbols.COMMENT);}
+						{return new Symbol(SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
 					case -27:
 						break;
 					case 27:
-						{return new Symbol(SFCSymbols.AND); 	/* Expr.AND     =  4 */}
+						{return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
 					case -28:
 						break;
 					case 28:
-						{return new Symbol(SFCSymbols.OR);  	/* Expr.OR      =  5 */}
+						{return new Symbol(SFCSymbols.IF); 		/* */}
 					case -29:
 						break;
 					case 29:
-						{return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
+						{return new Symbol(SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
 					case -30:
 						break;
 					case 30:
-						{return new Symbol(SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
+						{return new Symbol(SFCSymbols.INTTYPE); 	/* Class IntType */}
 					case -31:
 						break;
 					case 31:
-						{return new Symbol(SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
+						{return new Symbol(SFCSymbols.TRUE);	        /* */}
 					case -32:
 						break;
 					case 32:
-						{return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
+						{return new Symbol(SFCSymbols.ELSE); 	/* */}
 					case -33:
 						break;
 					case 33:
-						{return new Symbol(SFCSymbols.IF); 		/* */}
+						{return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
 					case -34:
 						break;
 					case 34:
-						{return new Symbol(SFCSymbols.DOUBLE, 
-		   new Double(yytext())); 		/* t DOUBLE */}
+						{return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
 					case -35:
 						break;
 					case 35:
-						{return new Symbol(SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
+						{return new Symbol(SFCSymbols.JOIN); 	/* */}
 					case -36:
 						break;
 					case 36:
-						{return new Symbol(SFCSymbols.INTTYPE); 	/* Class IntType */}
+						{return new Symbol(SFCSymbols.UNTIL); 	/* */}
 					case -37:
 						break;
 					case 37:
-						{return new Symbol(SFCSymbols.DOUBLE, 
-	  	   new Double(yytext())); 		/* t DOUBLE */}
+						{return new Symbol(SFCSymbols.FALSE); 	/* */}
 					case -38:
 						break;
 					case 38:
-						{return new Symbol(SFCSymbols.TRUE);	        /* */}
+						{return new Symbol(SFCSymbols.SPLIT); 	/* */}
 					case -39:
 						break;
 					case 39:
-						{return new Symbol(SFCSymbols.ELSE); 	/* */}
+						{return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
 					case -40:
 						break;
 					case 40:
-						{return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
+						{return new Symbol(SFCSymbols.LPSET); 	/* */}
 					case -41:
 						break;
 					case 41:
-						{return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
+						{return new Symbol(SFCSymbols.REPEAT); 	/* */}
 					case -42:
 						break;
 					case 42:
-						{return new Symbol(SFCSymbols.JOIN); 	/* */}
+						{return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
 					case -43:
 						break;
 					case 43:
-						{return new Symbol(SFCSymbols.UNTIL); 	/* */}
+						{return new Symbol(SFCSymbols.PROCESS); 	/* */}
 					case -44:
 						break;
-					case 44:
-						{return new Symbol(SFCSymbols.FALSE); 	/* */}
-					case -45:
-						break;
 					case 45:
-						{return new Symbol(SFCSymbols.SPLIT); 	/* */}
-					case -46:
-						break;
-					case 46:
-						{return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
-					case -47:
-						break;
-					case 47:
-						{return new Symbol(SFCSymbols.LPSET); 	/* */}
-					case -48:
-						break;
-					case 48:
-						{return new Symbol(SFCSymbols.REPEAT); 	/* */}
-					case -49:
-						break;
-					case 49:
-						{return new Symbol(SFCSymbols.STRINGTYPE);   /* undef StringType */}
-					case -50:
-						break;
-					case 50:
-						{return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
-					case -51:
-						break;
-					case 51:
-						{return new Symbol(SFCSymbols.DOUBLETYPE);   /* undef DoubleType */}
-					case -52:
-						break;
-					case 52:
-						{return new Symbol(SFCSymbols.PROCESS); 	/* */}
-					case -53:
-						break;
-					case 54:
 						{System.out.println( "Error during lexical analysis"+
 	    "\nLine number = "  + yyline + 
 	    "\nChar number = "  + yychar +
 	    "\nText content = " + yytext() ); 		/* LexError */}
-					case -54:
+					case -45:
+						break;
+					case 46:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -46:
+						break;
+					case 47:
+						{return new Symbol(SFCSymbols.COMMENT);}
+					case -47:
+						break;
+					case 49:
+						{System.out.println( "Error during lexical analysis"+
+	    "\nLine number = "  + yyline + 
+	    "\nChar number = "  + yychar +
+	    "\nText content = " + yytext() ); 		/* LexError */}
+					case -48:
+						break;
+					case 50:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -49:
+						break;
+					case 51:
+						{return new Symbol(SFCSymbols.COMMENT);}
+					case -50:
+						break;
+					case 53:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -51:
 						break;
 					case 55:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
-					case -55:
+					case -52:
 						break;
 					case 56:
-						{return new Symbol(SFCSymbols.COMMENT);}
-					case -56:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -53:
 						break;
 					case 57:
-						{return new Symbol(SFCSymbols.DOUBLE, 
-		   new Double(yytext())); 		/* t DOUBLE */}
-					case -57:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -54:
+						break;
+					case 58:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -55:
 						break;
 					case 59:
-						{System.out.println( "Error during lexical analysis"+
-	    "\nLine number = "  + yyline + 
-	    "\nChar number = "  + yychar +
-	    "\nText content = " + yytext() ); 		/* LexError */}
-					case -58:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -56:
 						break;
 					case 60:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
-					case -59:
+					case -57:
 						break;
 					case 61:
-						{return new Symbol(SFCSymbols.COMMENT);}
-					case -60:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -58:
 						break;
 					case 62:
-						{return new Symbol(SFCSymbols.DOUBLE, 
-		   new Double(yytext())); 		/* t DOUBLE */}
-					case -61:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -59:
+						break;
+					case 63:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -60:
 						break;
 					case 64:
+						{return new Symbol(SFCSymbols.IDENTIFIER, 
+		    yytext()); 				/* t IDENTIFIER */}
+					case -61:
+						break;
+					case 65:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -62:
@@ -734,290 +714,190 @@ public class SFCLex implements java_cup.runtime.Scanner {
 		    yytext()); 				/* t IDENTIFIER */}
 					case -63:
 						break;
-					case 68:
+					case 67:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -64:
 						break;
-					case 70:
+					case 68:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -65:
 						break;
-					case 72:
+					case 70:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -66:
 						break;
-					case 73:
+					case 71:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -67:
 						break;
-					case 74:
+					case 72:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -68:
 						break;
-					case 75:
+					case 73:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -69:
 						break;
-					case 76:
+					case 74:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -70:
 						break;
-					case 77:
+					case 75:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -71:
 						break;
-					case 78:
+					case 76:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -72:
 						break;
-					case 79:
+					case 77:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -73:
 						break;
-					case 80:
+					case 78:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -74:
 						break;
-					case 81:
+					case 79:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -75:
 						break;
-					case 82:
+					case 80:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -76:
 						break;
-					case 83:
+					case 81:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -77:
 						break;
-					case 84:
+					case 82:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -78:
 						break;
-					case 86:
+					case 83:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -79:
 						break;
-					case 87:
+					case 84:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -80:
 						break;
-					case 88:
+					case 85:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -81:
 						break;
-					case 89:
+					case 86:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -82:
 						break;
-					case 90:
+					case 87:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -83:
 						break;
-					case 91:
+					case 88:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -84:
 						break;
-					case 92:
+					case 89:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -85:
 						break;
-					case 93:
+					case 90:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -86:
 						break;
-					case 94:
+					case 91:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -87:
 						break;
-					case 95:
+					case 92:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -88:
 						break;
-					case 96:
+					case 93:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -89:
 						break;
-					case 97:
+					case 94:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -90:
 						break;
-					case 98:
+					case 95:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -91:
 						break;
-					case 99:
+					case 96:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -92:
 						break;
-					case 100:
+					case 97:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -93:
 						break;
-					case 101:
+					case 98:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -94:
 						break;
-					case 102:
+					case 99:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -95:
 						break;
-					case 103:
+					case 100:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -96:
 						break;
-					case 104:
+					case 101:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -97:
 						break;
-					case 105:
+					case 102:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -98:
 						break;
-					case 106:
+					case 103:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -99:
 						break;
-					case 107:
+					case 104:
 						{return new Symbol(SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
 					case -100:
-						break;
-					case 108:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -101:
-						break;
-					case 109:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -102:
-						break;
-					case 110:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -103:
-						break;
-					case 111:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -104:
-						break;
-					case 112:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -105:
-						break;
-					case 113:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -106:
-						break;
-					case 114:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -107:
-						break;
-					case 115:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -108:
-						break;
-					case 116:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -109:
-						break;
-					case 117:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -110:
-						break;
-					case 118:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -111:
-						break;
-					case 119:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -112:
-						break;
-					case 120:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -113:
-						break;
-					case 121:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -114:
-						break;
-					case 122:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -115:
-						break;
-					case 123:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -116:
-						break;
-					case 124:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -117:
-						break;
-					case 125:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -118:
-						break;
-					case 126:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -119:
-						break;
-					case 127:
-						{return new Symbol(SFCSymbols.IDENTIFIER, 
-		    yytext()); 				/* t IDENTIFIER */}
-					case -120:
 						break;
 					default:
 						yy_error(YY_E_INTERNAL,false);

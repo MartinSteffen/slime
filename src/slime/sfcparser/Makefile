@@ -1,9 +1,13 @@
 ##########################
-# $Id: Makefile,v 1.3 2002-06-26 07:28:38 swprakt Exp $                       
+# $Id: Makefile,v 1.4 2002-06-26 08:27:04 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.3  2002/06/26 07:28:38  swprakt
+# ParserTest.java gehoert nun zum Package slime.sfcparser
+# CVS
+#
 # Revision 1.2  2002/06/26 06:33:04  swprakt
 # Makefile geaendert nun mit fuer Slime gueltigem CLASSPATH "../..".
 # Absfc2SFCConverter.java nun in slime.sfcparser-package.
@@ -31,6 +35,9 @@ ICLASSPATH=../..
 
 all:	SFCParser.class Absfc2SFCConverter ParserTest
 
+test:
+	java -classpath $(ICLASSPATH) slime.sfcparser.ParserTest
+
 Absfc2SFCConverter:
 	javac -classpath $(ICLASSPATH) Absfc2SFCConverter.java
 
@@ -38,14 +45,14 @@ ParserTest:
 #	jar cf sfcparser.jar ../../slime/sfcparser/*.class
 	javac -classpath $(ICLASSPATH) ParserTest.java
 
-SFCParser.class: SFCLex.class SFCParseException.class SFCParser.java
+SFCParser.class:  SFCParseException.class SFCParser.java SFCLex.class
 	javac -classpath $(ICLASSPATH) SFCParser.java SFCSymbols.java 
 
 SFCLex.java: #
 	#  SFC.lex
 	java -classpath $(ICLASSPATH) JLex.Main SFC.lex >$(JLEXLOGFILE)
 	mv SFC.lex.java SFCLex.java
-	
+
 SFCLex.class: SFCLex.java
 	javac -classpath $(ICLASSPATH) SFCLex.java
 
@@ -68,15 +75,15 @@ SFCSymbols.java:
 
 clean:
 	rm -f *.class
-	
+
 mrproper: clean
-	rm -f SFCLexer.java SFCSymbols.java SFCParser.java $(JLEXLOGFILE) $(JCUPLOGFILE) *.bak *~ *.tmp
+	rm -f SFCLex.java SFCSymbols.java SFCParser.java $(JLEXLOGFILE) $(JCUPLOGFILE) *.bak *~ *.tmp
 
 
 ############## Creating Documentation ################
 
 doc:
-	SFCParser.java SFCSymbols.java SFCParseException.java SFCLexer.java
+	SFCParser.java SFCSymbols.java SFCParseException.java SFCLex.java
 	javadoc -version -author -d $(DOCDIR) *.java
 
 install:
@@ -97,6 +104,6 @@ help:
 	#echo clean		-	Delete SFCParser.class
 	#echo mrproper		-	Clean all produced files
 	#echo doc		-	Create Java/Documentation
-	
+
 
 

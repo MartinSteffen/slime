@@ -2,9 +2,13 @@ package slime.sfcparser;
 import java_cup.runtime.Symbol;
   /**
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.2 2002-06-26 06:50:57 swprakt Exp $
+    * $Id: SFC.lex,v 1.3 2002-06-26 08:27:05 swprakt Exp $
     * -----
     * $Log: not supported by cvs2svn $
+    * Revision 1.2  2002/06/26 06:50:57  swprakt
+    * removed unused entries in SFC.lex
+    * and removed wrong entry in SFC.cup "stmtblock" in "stmtlist"
+    *
     * Revision 1.1  2002/06/25 15:02:51  swprakt
     * missing files added
     *
@@ -115,10 +119,6 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 		    yytext()); 				/* t IDENTIFIER */}
 {number}   {return new Symbol(SFCSymbols.INTEGER, 
 		   new Integer(yytext())); 		/* t INTEGER */}
-{rnumber}  {return new Symbol(SFCSymbols.DOUBLE, 
-	  	   new Double(yytext())); 		/* t DOUBLE */}
-{enumber}  {return new Symbol(SFCSymbols.DOUBLE, 
-		   new Double(yytext())); 		/* t DOUBLE */}
 .          {System.out.println( "Error during lexical analysis"+
 	    "\nLine number = "  + yyline + 
 	    "\nChar number = "  + yychar +
