@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.172 2002-07-10 06:35:06 swprakt Exp $
+## $Id: Errors.txt,v 1.173 2002-07-10 06:38:08 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -43,6 +43,8 @@ Error 80:     null-pointer:
  description: starting the gui and clicking ``open'' then giving a non existing
               file name gives java.lang.NullPointerException
 	      A NullPointerException is nothing a user can make sense of.
+	      
+	      Actually, this also happens, if the file exists!
 
 
 Error 79:     German
@@ -292,7 +294,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.172 2002-07-10 06:35:06 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.173 2002-07-10 06:38:08 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
