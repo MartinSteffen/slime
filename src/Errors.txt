@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.9 2002-06-24 17:15:03 swprakt Exp $
+## $Id: Errors.txt,v 1.10 2002-06-24 17:17:40 swprakt Exp $
 ###########################################################
 
 
@@ -36,6 +36,14 @@ Rules of the game:
 
 
 ------------------- Open errors ---------------------------------------
+Error 8:       Manifest
+ package:      Gui/all
+ status:       emailed to Norbert, 24.06.02, M. Steffen
+ class:        dubios to fatal
+ description:  Is the Manifest-file at the right place?
+               cf. also Error 4.
+ 
+
 
 Error 7:       no code
  package:      simulator
