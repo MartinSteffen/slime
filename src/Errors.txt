@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.11 2002-06-24 17:25:13 swprakt Exp $
+## $Id: Errors.txt,v 1.12 2002-06-25 05:51:27 swprakt Exp $
 ###########################################################
 
 
@@ -36,6 +36,14 @@ Rules of the game:
 
 
 ------------------- Open errors ---------------------------------------
+
+Error 9:       structure
+ package:      parser/absynt
+ status:       reported 25.6.02. Steffen (also asked Marco via email, no reply)
+ class:        non-fatal, but doesn't look nice
+ description:  Is the deep structure under absynt needed?
+               if not we shoud remove it (also from the repos)
+
 Error 8:       Manifest
  package:      Gui/all
  status:       emailed to Norbert, 24.06.02, M. Steffen
