@@ -1,5 +1,5 @@
 ########################################################
-## $Id: Makefile,v 1.1 2002-04-15 06:27:51 swprakt Exp $
+## $Id: Makefile,v 1.2 2002-04-15 07:56:50 swprakt Exp $
 ########################################################
 
 
@@ -14,7 +14,7 @@ HEVEA       = hevea
 HEVEAOPTS   = -fix -exec xxdate.exe
 HACHA       = hacha
 
-WEBDIR      = /home/info/www/inf/deRoever/SS01/Java/Snot
+WEBDIR      = /home/info/www/inf/deRoever/SS02/Java/Slime
 
 
 
