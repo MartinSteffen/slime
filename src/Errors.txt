@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.186 2002-07-15 16:16:27 swprakt Exp $
+## $Id: Errors.txt,v 1.187 2002-07-19 07:32:00 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,12 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 93:     compilation
+ package:     all
+ class:       show-stop
+ status:      reported, 18.7.02
+ description: compilation breaks, it could be  that 
+              Nieman can compile.
 
 Error 92:     CD
  package:     integration
@@ -344,7 +350,7 @@ Error 43:     non-portable code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.186 2002-07-15 16:16:27 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.187 2002-07-19 07:32:00 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
