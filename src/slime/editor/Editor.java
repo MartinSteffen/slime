@@ -19,7 +19,7 @@ import javax.swing.border.*;
  * Status: about 80% should be implemented. <br>
  * Known bugs: Some semantic problems. But who cares if there are no checks.<br>
  * @author Andreas Niemann
- * @version $Id: Editor.java,v 1.14 2002-06-20 11:25:06 swprakt Exp $
+ * @version $Id: Editor.java,v 1.15 2002-06-20 13:10:25 swprakt Exp $
  */
 
 public final class Editor extends JComponent 
@@ -299,6 +299,7 @@ public final class Editor extends JComponent
 	    else
 		if (isIStep)
 		    this.eSFC.getSFC().istep = null;
+	    step.actions = this.getStepActions(actionScrollList.getList());
 	}
     }
     
