@@ -1,7 +1,7 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.15 2002-06-25 17:30:55 swprakt Exp $
+# $Id: Makefile,v 1.16 2002-06-26 18:08:59 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -23,9 +23,9 @@ PACKAGEDIRS   = slime.absynt\
 	        slime.layout\
 	        slime.editor\
 	        slime.checks\
-	        slime.sfcparser
-#	        gui\
-#	        simulator\
+	        slime.sfcparser\
+                slime.gui\
+		slime.simulator
 #                io
 
 

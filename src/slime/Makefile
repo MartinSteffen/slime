@@ -1,7 +1,7 @@
 
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.12 2002-06-13 09:28:12 swprakt Exp $
+# $Id: Makefile,v 1.13 2002-06-26 18:09:01 swprakt Exp $
 #----------------------------------------------------------------------
 
 # The targets installing gobal web-infos can be executed only
@@ -18,12 +18,12 @@ BASELINESDIR  = $(WEBDIR)/baselines
 SNAPSHOTSDIR  = $(WEBDIR)/snapshots
 LOCALDOCDIR   = doc
 PACKAGEDIRS   = absynt\
-	        utils\
 	        layout\
 	        editor\
-	        checks
+	        checks\
+	        simulator
 #	        gui\
-#	        simulator\
+#	        utils\
 #                io
 
 
@@ -40,6 +40,8 @@ run:	all
 
 
 
+
+
 packets:
 	(cd ./absynt; make)
 	(cd ./utils; make)
@@ -51,7 +53,7 @@ packets:
 	(cd ./io; make)
 
 jar:
-	jar cvf snot.jar ./absynt/*.class \
+	jar cvf slime.jar ./absynt/*.class \
 	    ./utils/*.class \
             ./editor/*.class\
             ./gui/*.class\

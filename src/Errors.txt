@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.22 2002-06-26 16:17:50 swprakt Exp $
+## $Id: Errors.txt,v 1.23 2002-06-26 18:08:59 swprakt Exp $
 ###########################################################
 
 
@@ -41,12 +41,18 @@ Rules of the game:
 
 
 
-Error 18:      compolation broken
+Error 18:      compilation broken
   package:     all
-  class:      fatal and deadly!!!
+  Class:      fatal and deadly!!!
   status:     reported, 26.6.02, Boeck/Steffen
   description: probably confussion with the new stuff added by 
-               sfc parser. breaks everything!!!
+               sfc parser. breaks everything!!! Probably name confusion
+	       with the sfcparser-Parser with the utils-Parser.
+
+	        The error in more than one sub-directory is a cup-error:
+
+                java java_cup.Main -symbols sym -parser Parser -nonterms -package utils SAP.cup  
+               Unrecognized option "SAP.cup"
 
 Error 17:      structure
  package:      all

@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.19 2002-06-26 05:13:58 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.20 2002-06-26 18:09:01 swprakt Exp $
  */
 
 public class Typecheck {
@@ -35,14 +35,47 @@ public class Typecheck {
    * the declaration of the exceptions must ``enclose''
    * the place where the can be thrown, here the  check-routines below.
    */
+
+
+  /**
+   *  The environment for type checking contains the association
+   *  of variables to types. It is a wrapper around the hash table from
+   * the library.  Unlike as for hash tables, we don't allow duplicated
+   * entries.
+   */
+
+  public class TEnv {
+    // Hashmap is more efficient that Hashtable (but not thread safe)
+    private HashMap e = new HashMap();  
+    public void add (Variable x, Type t) throws DuplicatedBinding { 
+      if (e.containsKey(x))
+	throw new DuplicatedBinding();
+      e.put(x,t);}
+
+    public Type lookup (Variable x)  {
+      return (Type)(e.get(x));}
+  };
+
+  TEnv env  = new TEnv();  // initially emtpy
+
+  /* Next the list of exceptions */
   public class TypecheckException extends CheckException {
+  }
+
+
+  private class DuplicatedBinding extends Exception { // not for users
+    String message = "Environments assume unique bindings";
+  }
+
+
+  public class  DuplicatedDeclaration extends TypecheckException {
+    String message = "Variable bound twice.";
+    String explanation = "No variable must be bound more than once";
   }
 
   public  class NonuniqueDeclaration extends TypecheckException {
     String explanation = "No variable may occur twice int the declaration list";  
   }
-  
-    
     
   public class UnbooleanGuard extends TypecheckException {
     String explanation = "The guard of a transition must be an expression\n of boolean type. This error indicates the occurrence of a\n well-typed guard-expression, but with a type other than a boolean." ;
@@ -92,11 +125,15 @@ public class Typecheck {
 	a.accept(new ActionV()); 
       }
       for (Iterator i = transs.iterator(); i.hasNext(); ) {
-	// XXX Make c context
  	Declaration d  = (Declaration)i.next();
 	d.accept(new DeclarationV()); 
+	try {
+	  env.add(d.var, d.type); // 1: key, 2: value
+	}
+	catch (DuplicatedBinding e) {
+	  throw new DuplicatedDeclaration(); 
+	}
       }
-
       return new UnitType();
     }
   }
@@ -204,36 +241,38 @@ public class Typecheck {
             // complains if we don't wrap up the method int a try-catch statement
             // and hand give back the more concrete exception.
         }
-        public Object forU_Expr(Expr e, int o) throws CheckException {
-            /**
-             * Unary expressions are negations on booleans and minus on integers
-             */
-            
-            try {
-                Type t = (Type)(e.accept(this));   // we have to cast, that part of it.
-                if     ((t instanceof BoolType) &&  (o == Expr.NEG)) return t;
-                else if ((t instanceof IntType) &&  (o == Expr.MINUS)) return t;
-                else throw new CheckException();
-            }
-            catch (Exception e2) {
-                throw new CheckException();
-            }
-        }
-        
-        public Object forVariable(String s, Type t) {
-	  // XXX: this is not ok here. No context
-            return t;
-        }
-        
-        public Object forConstval(Object v) throws CheckException {
-            /**
-             * Constant values can be integers or booleans.
-             */
-            if      (v instanceof Boolean) return new BoolType();
-            else if (v instanceof Integer) return new IntType();
-            else throw new CheckException();
-        }
+    public Object forU_Expr(Expr e, int o) throws CheckException {
+      /**
+       * Unary expressions are negations on booleans and minus on integers
+       */
+      
+      try {
+	Type t = (Type)(e.accept(this));   // we have to cast, that part of it.
+	if     ((t instanceof BoolType) &&  (o == Expr.NEG)) return t;
+	else if ((t instanceof IntType) &&  (o == Expr.MINUS)) return t;
+	else throw new CheckException();
+      }
+      catch (Exception e2) {
+	throw new CheckException();
+      }
     }
+        
+    public Object forVariable(String s, Type t) throws CheckException {
+      Type t_dec = env.lookup(new Variable(s));
+      if (t_dec == null)
+	throw new UndeclaredVariable();
+      return t_dec;
+    }
+        
+    public Object forConstval(Object v) throws CheckException {
+      /**
+       * Constant values can be integers or booleans.
+       */
+      if      (v instanceof Boolean) return new BoolType();
+      else if (v instanceof Integer) return new IntType();
+      else throw new CheckException();
+    }
+  }
 
   /** Type checking visitor for action qualified.
    *  an action qualifier is always well-typed.
@@ -282,7 +321,6 @@ public class Typecheck {
    */
   public class DeclarationV implements Visitors.IDeclaration{
     public Object forDeclaration(Variable var, Type type, Constval val)
-    // XXX context
       throws CheckException {
       try{
 	if ((var == null) || (type == null) || val == null)
@@ -293,6 +331,8 @@ public class Typecheck {
 	Type t_act = (Type)(val.accept(new ExprV()));  // actual type
 	if (!(t_dec.equals(t_act)))
 	  throw  new TypeMismatch();
+	// --- add the binding x:T to the enviroment.
+	env.add(var, t_dec);
 	return new Object();
       }
       catch (Exception e){
@@ -328,6 +368,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.19  2002/06/26 05:13:58  swprakt
+//    *** empty log message ***
+//
 //    Revision 1.18  2002/06/25 17:30:56  swprakt
 //    ok
 //
@@ -407,6 +450,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.19 2002-06-26 05:13:58 swprakt Exp $
+//    $Id: Typecheck.java,v 1.20 2002-06-26 18:09:01 swprakt Exp $
 //
 //---------------------------------------------------------------------
