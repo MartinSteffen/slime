@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.147 2002-07-08 07:44:59 swprakt Exp $
+n## $Id: Errors.txt,v 1.148 2002-07-08 13:48:21 swprakt Exp $
 ## $Author: swprakt $
 ###########################################################
 
@@ -50,6 +50,13 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+
+
+Errors 67:    compilation error
+ package:     utils
+ class:       fatal, show-stop
+ status:      Steffen, 7.7.02
+ description: does not compile
 
 Errors 66:    interface
  package:     checks
@@ -215,7 +222,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.147 2002-07-08 07:44:59 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.148 2002-07-08 13:48:21 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
