@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.47 2002-07-02 11:23:42 swprakt Exp $
+## $Id: Errors.txt,v 1.48 2002-07-02 14:30:11 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -40,7 +40,7 @@ Error 33:     grammar: stmt
  status:      reported/discussed, 2.7.02, Steffen + Wendel
  description: the clause for stmt does not give back a result,
               may be the cause also for other errors that
-	      Wendel talks about/
+	      Wendel talks about.
 
 
 Error 32:     grammar-precedences
