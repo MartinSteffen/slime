@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.20 2002-06-26 12:34:22 swprakt Exp $
+## $Id: Errors.txt,v 1.21 2002-06-26 12:34:39 swprakt Exp $
 ###########################################################
 
 
@@ -43,7 +43,7 @@ Rules of the game:
 
 Error 17:      structure
  package:      all
- status:       reported
+ status:       reported, 26.6.02
  class:        potentially fatal, cause of confusion
  description:   new subdir's added, but not announces, nor
                 added to the readme, nor added to the Makefile
