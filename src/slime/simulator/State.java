@@ -11,7 +11,7 @@ import  slime.absynt.Declaration;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: State.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
  */
 
 
@@ -80,7 +80,7 @@ class State{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: State.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
  */
 
 
@@ -177,14 +177,4 @@ class Assignment{
 
 
 
-
-//----------------------------------------------------------------------
-//  Abstract syntax for Slime programs
-//  ------------------------------------
-//
-//  $Id: <dollar>
-//
-//  $Log: <dollar>
-//
-//---------------------------------------------------------------------
 

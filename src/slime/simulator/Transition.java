@@ -7,7 +7,7 @@ import java.io.Serializable;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Transition.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
  */
 
 
@@ -85,14 +85,4 @@ class Transition implements Serializable {
 
 
 
-
-//----------------------------------------------------------------------
-//	Abstract syntax for Slime programs
-//	------------------------------------
-//
-//	$Id: <dollar>
-//
-//	$Log: <dollar>
-//
-//---------------------------------------------------------------------
 

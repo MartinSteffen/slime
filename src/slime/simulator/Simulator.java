@@ -10,7 +10,7 @@ import  slime.editor.Editor;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Simulator.java,v 1.4 2002-07-18 14:48:16 swprakt Exp $
+ * @version $Id: Simulator.java,v 1.5 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -182,14 +182,4 @@ public class Simulator extends JFrame implements ActionListener, ChangeListener,
 }
 
 
-
-//----------------------------------------------------------------------
-//  Abstract syntax for Slime programs
-//  ------------------------------------
-//
-//  $Id: <dollar>
-//
-//  $Log: <dollar>
-//
-//---------------------------------------------------------------------
 

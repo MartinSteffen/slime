@@ -7,7 +7,7 @@ import  slime.absynt.Example;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Test.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
  */
 
 
@@ -19,14 +19,4 @@ public class Test{
 
 
 
-
-//----------------------------------------------------------------------
-//	Abstract syntax for Slime programs
-//	------------------------------------
-//
-//	$Id: <dollar>
-//
-//	$Log: <dollar>
-//
-//---------------------------------------------------------------------
 

@@ -10,7 +10,7 @@ import  slime.absynt.SFC;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: SimSFC.java,v 1.3 2002-07-19 09:04:58 swprakt Exp $
+ * @version $Id: SimSFC.java,v 1.4 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -97,14 +97,4 @@ public class SimSFC{
 
 
 
-
-//----------------------------------------------------------------------
-//  Abstract syntax for Slime programs
-//  ------------------------------------
-//
-//  $Id: <dollar>
-//
-//  $Log: <dollar>
-//
-//---------------------------------------------------------------------
 

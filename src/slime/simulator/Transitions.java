@@ -6,7 +6,7 @@ import  java.util.LinkedList;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Transitions.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
  */
 
 
@@ -59,14 +59,4 @@ class Transitions{
 
 
 
-
-//----------------------------------------------------------------------
-//	Abstract syntax for Slime programs
-//	------------------------------------
-//
-//	$Id: <dollar>
-//
-//	$Log: <dollar>
-//
-//---------------------------------------------------------------------
 

@@ -7,7 +7,7 @@ import  java.util.LinkedList;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Steps.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
  */
 
 
@@ -106,14 +106,4 @@ class Steps{
 
 
 
-
-//----------------------------------------------------------------------
-//	Abstract syntax for Slime programs
-//	------------------------------------
-//
-//	$Id: <dollar>
-//
-//	$Log: <dollar>
-//
-//---------------------------------------------------------------------
 

@@ -12,7 +12,7 @@ import  slime.absynt.Constval;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -87,7 +87,7 @@ abstract class Expression{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -101,7 +101,7 @@ abstract class ArithmeticExpression extends Expression {
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -156,7 +156,7 @@ class ArithmeticOperation extends ArithmeticExpression {
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -182,7 +182,7 @@ class NumericVariable extends ArithmeticExpression{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 class NumericValue extends ArithmeticExpression {
@@ -207,7 +207,7 @@ class NumericValue extends ArithmeticExpression {
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -220,7 +220,7 @@ abstract class BooleanExpression extends Expression {
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -282,7 +282,7 @@ class Comparison extends BooleanExpression {
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -331,7 +331,7 @@ class Conjunction extends BooleanExpression {
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -365,7 +365,7 @@ class Negation extends BooleanExpression {
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 
@@ -391,7 +391,7 @@ class BooleanVariable extends BooleanExpression{
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: Expression.java,v 1.2 2002-07-19 08:00:51 swprakt Exp $
+ * @version $Id: Expression.java,v 1.3 2002-07-19 09:09:07 swprakt Exp $
  */
 
 

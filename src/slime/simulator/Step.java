@@ -6,7 +6,7 @@ package slime.simulator;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Step.java,v 1.2 2002-07-19 09:09:08 swprakt Exp $
  */
 
 
@@ -84,14 +84,4 @@ class Step{
 }
 
 
-
-//----------------------------------------------------------------------
-//	Abstract syntax for Slime programs
-//	------------------------------------
-//
-//	$Id: <dollar>
-//
-//	$Log: <dollar>
-//
-//---------------------------------------------------------------------
 
