@@ -1,16 +1,10 @@
 ######################################################
-# $Id: eval.txt,v 1.13 2002-07-03 16:30:12 swprakt Exp $
+# $Id: eval.txt,v 1.14 2002-07-12 05:16:12 swprakt Exp $
 ######################################################
 
 raw list.
 ========
 
-
-+ good spec
-
-+ nice overall result
-
-+ nice division of work.
 
 
 
@@ -29,9 +23,6 @@ raw list.
 
 - smoothness
 
-- not much people, many drop-outs
-
-- late info' that someone drops out -> late reaction
 
 - late checking in of stuff.
 
@@ -54,14 +45,14 @@ raw list.
      
 - communication, no discussions, no feedback, only flame wars
 
-- checking in stuff revant for all without prior communication (and more than once)
+- checking in stuff relevant for all without prior communication (and more than once)
 
 
 - too late communication of errors (for instance 
     change wishes for absynt.)
 
 
-- nothing checked in till 19 june by most of the groups
+- nothing checked in till 26 june by most of the groups
 
 - technical problems with using cvs still mid of June (at least)
 
@@ -70,10 +61,10 @@ raw list.
   is going on! (i.e. no reactions)
 
 
-o make a time line, make a statistics
 
 
 
-####################################################################################
-## $Id: eval.txt,v 1.13 2002-07-03 16:30:12 swprakt Exp $
-####################################################################################
+
+##############################################################################
+## $Id: eval.txt,v 1.14 2002-07-12 05:16:12 swprakt Exp $
+##############################################################################
