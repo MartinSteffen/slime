@@ -1,6 +1,6 @@
 #----------------------------------------------------------------------
 # developers' top-level Makefile for the Slime project
-# $Id: Makefile,v 1.30 2002-07-09 12:02:50 swprakt Exp $
+# $Id: Makefile,v 1.31 2002-07-09 12:22:37 swprakt Exp $
 #----------------------------------------------------------------------
 #
 # The targets installing gobal web-infos can be executed only
@@ -62,15 +62,22 @@ packets:
 
 
 
-#### the following target is to be used _with care_! it's a temporary
-# hack to keep on working. Of course one could also just branch
-# off, but since we are at the end of the course, we better should
-# not, and so this is just a target for convenience that I know for 
-# which files there will be conflicts/need for coordination and that
-# I can continue with the checker until they are resolved. [Steffen]
+#### the following target is to be used _with care_!  It can be used to get
+# a copy that complies _all_ packets, including checks!  
+#
+# It's a temporary hack to keep on working. Of course one could also just
+# branch off, but since we are at the end of the course, we better should
+# not, and so this is just a target for convenience that I know for which
+# files there will be conflicts/need for coordination and that I can
+# continue with the checker until they are resolved. [Steffen]
+
 
 backintime1:
-	cvs update -r secondcompilation-sep absynt/DoubleType.java absynt/Visitors.java 
+	cvs update -r secondcompilation-sep \
+             absynt/DoubleType.java\
+	     absynt/Visitors.java\
+	     absynt/InputAction.java\
+	     absynt/OutputAction.java
 
 
 clean:
