@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.101 2002-07-06 10:09:40 swprakt Exp $
+## $Id: Errors.txt,v 1.102 2002-07-06 10:19:52 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -33,6 +33,20 @@ Rules of the game:
 	  to the repaired errors section
 
 ------------------- Open errors ---------------------------------------
+
+
+
+Errors 55:     entry point
+ class:        in the end, fatal
+ status:       reported, 6.7.02, Steffen
+ package:      gui/all
+ description:  where is the main file? without it
+               (and documenting that _this_ is the main
+	       file and putting it into the top-level Makefile
+	       there's no integration)
+	       
+   
+ 
 
 
 Error 54:    typecheck error
@@ -125,7 +139,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.101 2002-07-06 10:09:40 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.102 2002-07-06 10:19:52 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
