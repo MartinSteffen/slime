@@ -1,114 +1,18 @@
-#########################################################################
-## $Id: Status,v 1.14 2002-07-05 19:39:39 swprakt Exp $
-#########################################################################
+#########################################################
+## $Id: Status,v 1.15 2002-07-19 13:00:12 swprakt Exp $
+#########################################################
 
 
+  the overall status at the end of the semester:
+
+   not really integrated, but commonly compilable,
+   the editor can call all other packagages, but
+   for instance the simulator is rather stand-alone.
+
+   Also there are probably still problems with simulator
+   and parser (and also the rest) as it is not really 
+   tested together.
 
 
-Project-internal status file, currently informally formatted.
--------------------------------------------------------------
-
-
-Status for the meeting at Julu 10:
-	- 
-	- parser:        finished.
-
-
-Status for the meeting at July 3.:
-
-	- gui:             unclear
-	- checks/absynt:  no real progress. equals is implemented
-	- parser:          quite some progress
-	- editor:          stable
-	- simulator:       no progress
-
-
-
-
-
-Points of discussion (accord. to email):
----  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  
-1) (wie immer) Fortschrittsbericht pro Paket, insbesondere in
-    Hinblick auf die 
-
-	- vorgenommenen Pl"ane der Vergangenen Woche, + 
-	  die Tatsache, da"s 30% der von dort gerechneten Restlaufzeit
-	  vor"uber sind
-        - und der Tatsache, da"s wir immer noch keine Integration
-	  habe (Stand Dienstag morgen) noch nichtmal Gesamtkompilation
-	  von zwischenzeitlichen Erfolgserl"ebnissen abgesehen.
-
-2) Ansprechen von Fehlern
-
-
-3) Entscheidung "uber folgende w"ahrende der Woche aufgetretenden
-   Diskussionspunkte (diese sind nicht miteinander gekoppelt, aber die
-   Entscheidung "uber die Punkte sollte zumindest eine
-   konsistente/Zusammenpassende Kombination geben (insbesondere
-   in Zusammenhang mit e):
-
-	a) sollen Classfiles eingecheckt werden oder nicht?
-
-	b) sollen allgemein ``generierte'' Files eingecheckt werden
-	   (durch javadoc generierte, durch jar generierte, durch
-	    lex und yacc generierte)
-
-	c) Wie steht's mit jar-files, HTML-Seiten?
-
-        d) soll "offentlich erh"altliche Software eingecheckt
-	   werden oder nicht
-
-	e) Wie sieht der Classpath aus? (bislang gilt das
-	   schriftlich in den Doku's festgehaltene).
-	   Was kommt vorne im CLASSPATH, was weiter hinten
-	   (lokal vs. global)
-
-	f) was tun wir in die Makefiles.
-
-
-4) Sonstiges
----  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  ---  
- 
-	
-Snapshots
-  
-
-Status for the meeting at 26'': not done
-   	        >  privat field + accessors: not done
-	        >  iterators: not done, proposal to cancel this
-
-            postponed (last time): 
-	        > cloneable/singleton?
-
-	- editor: 
-	      > everything's clear? we got no feedback as yet!
-	      > discuss with the gui, how gui invokes editor etc.
-	         and also with the other groups
-
-	- parser:
-	     > feedback: ok
-	     > promised: syntax proposal/example-program
-	 
-        - simulator:
-	     > feedback: ?
-	     > is the semantics clear?
-	
-	   
-	
-	 
-       
-	
   
 	
-
-
-	    
-
-
-	
-
-	
-
-
-
-

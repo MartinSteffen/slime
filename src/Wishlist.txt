@@ -1,8 +1,6 @@
 ###########################################################
-# $Id: Wishlist.txt,v 1.9 2002-07-12 08:45:00 swprakt Exp $
+# $Id: Wishlist.txt,v 1.10 2002-07-19 13:00:50 swprakt Exp $
 ###########################################################
-
-
 
 
 o specific packages:
@@ -21,6 +19,7 @@ o specific packages:
          is a bit of a hack
    
   > checks:
+
        - the exception structure is not nice, it would
          be better to have an abstract superclass 
 	 that requires message and explanation,
@@ -29,10 +28,13 @@ o specific packages:
 	 be thrown with an argument.
 
   > utils: 
+
        - make the Pp a visitor?
        - make the Pp give back a string.
 
+
   > editor:
+
        - print facility
 
 
