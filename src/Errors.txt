@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.118 2002-07-06 13:33:05 swprakt Exp $
+## $Id: Errors.txt,v 1.119 2002-07-06 13:49:42 swprakt Exp $
 ###########################################################
 
 
@@ -41,6 +41,11 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+Error 60:     undeclared var
+ class:       unclear, check this
+ status:      reported, 6.7.02, Steffen
+ package:     cheks
+ description: undeclared var raised, justified?
  
 
 Error 59:     prettyprinter
@@ -160,7 +165,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.118 2002-07-06 13:33:05 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.119 2002-07-06 13:49:42 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
