@@ -4,11 +4,19 @@
  * converts a given {@link slime.absfc.SFCabtree} to<br>
  * a required {@link slime.absynt.SFC}.<br>
  * @author initialy provided by Marco Wendel<br>
- * @version $Id: Absfc2SFCConverter.java,v 1.13 2002-07-08 18:25:22 swprakt Exp $<br>
+ * @version $Id: Absfc2SFCConverter.java,v 1.14 2002-07-08 20:30:24 swprakt Exp $<br>
 */
 /*
  * Changelog:<br>
  * $Log: not supported by cvs2svn $
+ * Revision 1.13  2002/07/08 18:25:22  swprakt
+ * Corrected processWhile, there was an important
+ * transition missing. Now it jumps not to whileStart,
+ * but to loopStart and the guardiancheck is taken 2 times,
+ * 1. when entering the while-loop and then
+ * 2. after every successful execution of the loop.
+ * (mwe)
+ *
  * Revision 1.12  2002/07/08 13:10:06  swprakt
  * Small changes due to adding assignment-declarations-values
  * as remarked by Andreas Niemann. (mwe)
@@ -777,7 +785,7 @@ public class Absfc2SFCConverter {
 
 	    sourceStep = (slime.absynt.Step)loopEnd;
 	    targetStep = loopStart;
-	    newTransition( sourceStep, (slime.absynt.Expr)whileGuard, targetStep );
+	    newTransition( sourceStep, (slime.absynt.Expr)whileuard, targetStep );
 
 	    sourceStep = (slime.absynt.Step)loopEnd;
 	    targetStep = whileEnd;
