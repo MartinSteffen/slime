@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.44 2002-07-02 08:17:55 swprakt Exp $
+## $Id: Errors.txt,v 1.45 2002-07-02 08:24:57 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,18 +34,19 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
-Error 30:     grammar
- package:     sfcparser (cup)
- class:       question  (by code inspection)
- status:      reported, 2.7.02, Steffen
- description: what's the difference between stmtlist and stmtblock?
-              can they be merged? Especially since in the clause
-	      for sfcprogram, there seem to be a
 
-	         ``{ stmt; stmtlist }''
-	       which is the same as stmt-block, i.e., there's
-	       an overlap. (SFC.cup v1.10)
-              
+
+
+Error 31:     grammar for stmtblock
+ package:     sfcparser.SFC.cup v.10
+ class:       question (by code inspection)
+ status:      reported, 2.7.02, Steffen
+ description: overlap in the clauses of stmtblock and stmtlist
+               for the case {stmt}?
+
+
+       
+               
 
 Error 29:     grammar for stmt
  package:     sfcparser (cup)
@@ -58,7 +59,7 @@ Error 28:     grammar for stmt
  package:     sfcparser (cup)
  class:       dubious (found by code inspection, not tested)
  status:      reported, 2.7.02, Steffen
- description: seems like the grammer enforces 2 `;' in a row,
+ description: seems like the grammar enforces 2 `;' in a row,
               cf second alternative of sfcprogram + the fact that
 	      all stmt's end in a semicolon. (Version 1.10 of SFC.cup)
 
@@ -208,6 +209,27 @@ Error 1:  parser warnings
 	        (cf. lex/yacc output: 10 terminals declared but not used)
 
 -------------------- Repaired errors -------------------------
+
+
+Error 30:     grammar
+ package:     sfcparser (cup)
+ class:       question  (by code inspection)
+ status:      reported, 2.7.02, Steffen,
+              answered, 2.7.02, Steffen
+ description: what's the difference between stmtlist and stmtblock?
+              can they be merged? Especially since in the clause
+	      for sfcprogram, there seem to be a
+
+	         ``{ stmt; stmtlist }''
+	       which is the same as stmt-block, i.e., there's
+	       an overlap. (SFC.cup v1.10).
+	       One difference seems to be that stmt-block can
+	       be empty.
+	        
+	       Seems ok, stmt-block uses stmt-list, so that's
+	       no duplication (but see question 31)
+
+	       
 
 Error 19:     doc problem
  package:     sfcparser.SFCLex
