@@ -40,19 +40,18 @@ DeclParser.java: Decl.cup
 tests: 
 	cd test; make all
 
+
 clean:
 	\rm -f *.class *~ Yylex.java Scanner.lex.java sym.java Parser.java DeclParser.java ExprParser.java $(LEXLOGFILE) $(CUPLOGFILE)
 
 
-localdoc: Parser.java ExprParser.java sym.java
-	javadoc  -version -author -d $(LOCALDOCDIR) *.java
-
-www:
-	cp $(LOCALDOCDIR)/*.html $(WEBDIR)
 
 
 # ------------------------------------------------------------------
 #	$Log: not supported by cvs2svn $
+#	Revision 1.6  2002/07/03 16:34:26  swprakt
+#	*** empty log message ***
+#	
 #	Revision 1.5  2002/06/26 15:43:10  swprakt
 #	added declaration parser
 #	
