@@ -4,10 +4,24 @@ import java_cup.runtime.Symbol;
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.12 2002-07-02 12:29:48 swprakt Exp $
+    * $Id: SFC.lex,v 1.13 2002-07-02 13:09:53 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.12  2002/07/02 12:29:48  swprakt
+   /* Phase 1 completed, correct parsing of complex
+   /* SFC programs into slime.absynt.absfc.SFCabtree.
+   /*
+   /* Phase 2 still in progress: today fixed some bug
+   /* with PrettyPrint4Absfc - partially the print(SFCabtree)
+   /* by simply outcommenting the lists for vars and decls.
+   /*
+   /* Left to do in phase 2:
+   /* verifying the correct(and complete!) creation of
+   /* the varlist, decllist for the slime.absynt.SFC.
+   /*
+   /* 02.07.2002 mwe@informatik.uni-kiel.de
+   /*
    /* Revision 1.11  2002/06/28 20:30:50  swprakt
    /* updated package information
    /*
@@ -145,7 +159,7 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 "process"  {return new Symbol(slime.sfcparser.SFCSymbols.PROCESS); 	/* */}
 "if"       {return new Symbol(slime.sfcparser.SFCSymbols.IF); 		/* */}
 "else"     {return new Symbol(slime.sfcparser.SFCSymbols.ELSE); 	/* */}
-"while"    {return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
+"while"    {return new Symbol(slime.sfcparser.SFCSymbols.WHILE); 	/* */}
 "repeat"   {return new Symbol(slime.sfcparser.SFCSymbols.REPEAT); 	/* */}
 "until"    {return new Symbol(slime.sfcparser.SFCSymbols.UNTIL); 	/* */}
 "skip"     {return new Symbol(slime.sfcparser.SFCSymbols.SKIP); 	/* Class Skip */}

@@ -1,0 +1,504 @@
+ParserTest: before File
+ParserTest: before SFCParser
+ParserTest: before parseFile
+ParserTest: before prettyAbsfc.print
+[SFCabtree] 
+|   testprog
+[Counters] 
+|   procCnt = 0
+|   stmtCnt = 0
+|   varCnt = 0
+|   decCnt = 0
+[Statements] 
+|   [Declaration] 
+|   |   [Variable] y
+|   |   [IntType] 
+|   [Declaration] 
+|   |   [Variable] z
+|   |   [IntType] 
+|   [Assignment] 
+|   |   [Variable] y
+|   |   [Constval] 5
+|   [Input] 
+|   |   [Variable]
+|   |   [Variable] z
+|   |   [Modified with expression]
+|   |   [B_expr] 
+|   |   |   [Variable] z
+|   |   |   <DIV> 
+|   |   |   [Constval] 2
+|   [If] 
+|   |   [if-case]
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] z
+|   |   |   |   [Constval] 1
+|   |   [Condition] 
+|   |   [Constval] true
+|   [If-Else] 
+|   |   [if-case]
+|   |   |   [Declaration] 
+|   |   |   |   [Variable] z
+|   |   |   |   [IntType] 
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] z
+|   |   |   |   [Constval] 6
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] y
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <DIV> 
+|   |   |   |   |   [Constval] 2
+|   |   [Condition] 
+|   |   [Constval] true
+|   |   [else-case] 
+|   |   |   [Declaration] 
+|   |   |   |   [Variable] test
+|   |   |   |   [IntType] 
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] test
+|   |   |   |   [Constval] 4
+|   [Repeat] 
+|   |   [repeat-loop]
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] z
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 2
+|   |   [until Condition] 
+|   |   [B_expr] 
+|   |   |   [Variable] z
+|   |   |   <GREATER> 
+|   |   |   [Constval] 32
+|   [While] 
+|   |   [while-loop]
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] y
+|   |   |   |   [Constval] 1
+|   |   [Condition] 
+|   |   [Constval] true
+|   [Repeat] 
+|   |   [repeat-loop]
+|   |   |   [Repeat] 
+|   |   |   |   [repeat-loop]
+|   |   |   |   |   [Repeat] 
+|   |   |   |   |   |   [repeat-loop]
+|   |   |   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   |   |   |   <TIMES> 
+|   |   |   |   |   |   |   |   |   [Constval] 2
+|   |   |   |   |   |   [until Condition] 
+|   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   |   <GREATER> 
+|   |   |   |   |   |   |   [Constval] 32
+|   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   |   <TIMES> 
+|   |   |   |   |   |   |   [Constval] 2
+|   |   |   |   [until Condition] 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <GREATER> 
+|   |   |   |   |   [Constval] 32
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] z
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Variable] z
+|   |   |   |   |   <TIMES> 
+|   |   |   |   |   [Constval] 2
+|   |   [until Condition] 
+|   |   [B_expr] 
+|   |   |   [Variable] z
+|   |   |   <GREATER> 
+|   |   |   [Constval] 32
+|   [If-Else] 
+|   |   [if-case]
+|   |   |   [If-Else] 
+|   |   |   |   [if-case]
+|   |   |   |   |   [Declaration] 
+|   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   [IntType] 
+|   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   [Constval] 6
+|   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   [Variable] z
+|   |   |   |   |   |   |   <DIV> 
+|   |   |   |   |   |   |   [Constval] 2
+|   |   |   |   [Condition] 
+|   |   |   |   [Constval] true
+|   |   |   |   [else-case] 
+|   |   |   |   |   [Declaration] 
+|   |   |   |   |   |   [Variable] test
+|   |   |   |   |   |   [IntType] 
+|   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   [Variable] test
+|   |   |   |   |   |   [Constval] 4
+|   |   |   |   |   [If-Else] 
+|   |   |   |   |   |   [if-case]
+|   |   |   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   |   |   [Variable] test
+|   |   |   |   |   |   |   |   [Constval] 1
+|   |   |   |   |   |   [Condition] 
+|   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   [Variable] test
+|   |   |   |   |   |   |   |   <EQ> 
+|   |   |   |   |   |   |   |   [Constval] 4
+|   |   |   |   |   |   |   <AND> 
+|   |   |   |   |   |   |   [U_Expr] 
+|   |   |   |   |   |   |   |   <NEG>
+|   |   |   |   |   |   |   |   [Constval] false
+|   |   |   |   |   |   [else-case] 
+|   |   |   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   |   |   [Variable] test
+|   |   |   |   |   |   |   |   [Constval] 8
+|   |   [Condition] 
+|   |   [Constval] true
+|   |   [else-case] 
+|   |   |   [Declaration] 
+|   |   |   |   [Variable] test
+|   |   |   |   [IntType] 
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] test
+|   |   |   |   [Constval] 4
+|   |   |   [Repeat] 
+|   |   |   |   [repeat-loop]
+|   |   |   |   |   [Declaration] 
+|   |   |   |   |   |   [Variable] x
+|   |   |   |   |   |   [IntType] 
+|   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   [Variable] x
+|   |   |   |   |   |   [Constval] 9999999
+|   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   <TIMES> 
+|   |   |   |   |   |   |   [Variable] x
+|   |   |   |   [until Condition] 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Constval] false
+|   |   |   |   |   <OR> 
+|   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   <GREATER> 
+|   |   |   |   |   |   [Constval] 999999999
+|   [While] 
+|   |   [while-loop]
+|   |   |   [Assignment] 
+|   |   |   |   [Variable] y
+|   |   |   |   [Constval] 1
+|   |   |   [Repeat] 
+|   |   |   |   [repeat-loop]
+|   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   <PLUS> 
+|   |   |   |   |   |   |   [Constval] 2
+|   |   |   |   |   [While] 
+|   |   |   |   |   |   [while-loop]
+|   |   |   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   <MINUS> 
+|   |   |   |   |   |   |   |   |   [Constval] 1
+|   |   |   |   |   |   |   [If-Else] 
+|   |   |   |   |   |   |   |   [if-case]
+|   |   |   |   |   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   |   |   <PLUS> 
+|   |   |   |   |   |   |   |   |   |   |   [Constval] 1
+|   |   |   |   |   |   |   |   [Condition] 
+|   |   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   <GREATER> 
+|   |   |   |   |   |   |   |   |   [Constval] 500
+|   |   |   |   |   |   |   |   [else-case] 
+|   |   |   |   |   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   |   |   <PLUS> 
+|   |   |   |   |   |   |   |   |   |   |   [Constval] 2
+|   |   |   |   |   |   |   |   |   [If] 
+|   |   |   |   |   |   |   |   |   |   [if-case]
+|   |   |   |   |   |   |   |   |   |   |   [Assignment] 
+|   |   |   |   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   |   |   |   |   <MINUS> 
+|   |   |   |   |   |   |   |   |   |   |   |   |   [Constval] 200
+|   |   |   |   |   |   |   |   |   |   [Condition] 
+|   |   |   |   |   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   |   |   |   |   <EQ> 
+|   |   |   |   |   |   |   |   |   |   |   [Constval] 499
+|   |   |   |   |   |   [Condition] 
+|   |   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   |   <LESS> 
+|   |   |   |   |   |   |   [Constval] 1000
+|   |   |   |   [until Condition] 
+|   |   |   |   [B_expr] 
+|   |   |   |   |   [Constval] false
+|   |   |   |   |   <OR> 
+|   |   |   |   |   [B_expr] 
+|   |   |   |   |   |   [Variable] y
+|   |   |   |   |   |   <GREATER> 
+|   |   |   |   |   |   [Constval] 1000
+|   |   [Condition] 
+|   |   [Constval] true
+|   [Output] 
+|   |   [Variable]
+|   |   [Variable] y
+|   |   [Modified with expression]
+|   |   [B_expr] 
+|   |   |   [Variable] y
+|   |   |   <TIMES> 
+|   |   |   [Constval] 2
+ParserTest: before Absfc2SFCConverter
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 2.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtInput
+StmtInput - finished processing input
+StmtIf
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 4.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIf - finished processing stmtlist
+StmtIfElse
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 6.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 7.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse - finished processing ifstmtlist
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 9.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse - finished processing elsestmtlist
+StmtIf - finished processing stmtlist
+StmtRepeat
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 10.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtRepeat - finished processing stmtlist
+StmtRepeat - finished processing repeat-until
+StmtWhile
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 11.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtWhile - finished processing stmtlist
+StmtWhile - finished processing while
+StmtRepeat
+StmtRepeat
+StmtRepeat
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 12.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtRepeat - finished processing stmtlist
+StmtRepeat - finished processing repeat-until
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 13.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtRepeat - finished processing stmtlist
+StmtRepeat - finished processing repeat-until
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 14.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtRepeat - finished processing stmtlist
+StmtRepeat - finished processing repeat-until
+StmtIfElse
+StmtIfElse
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 16.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 17.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse - finished processing ifstmtlist
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 19.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 20.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse - finished processing ifstmtlist
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 21.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse - finished processing elsestmtlist
+StmtIf - finished processing stmtlist
+StmtIfElse - finished processing elsestmtlist
+StmtIf - finished processing stmtlist
+StmtIfElse - finished processing ifstmtlist
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 23.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtRepeat
+StmtDecl
+next: adding new action to myActionlist.
+StmtDecl - finished processing declaration
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 25.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 26.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtRepeat - finished processing stmtlist
+StmtRepeat - finished processing repeat-until
+StmtIfElse - finished processing elsestmtlist
+StmtIf - finished processing stmtlist
+StmtWhile
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 27.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtRepeat
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 28.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtWhile
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 29.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 30.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIfElse - finished processing ifstmtlist
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 31.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIf
+StmtAssign
+next: adding assignment to sap-list for action.
+next: creating new action with number 32.
+next: increasing actionCounter.
+next: adding new action to myActionlist.
+next: creating new step with actionlist.
+StmtIf - finished processing stmtlist
+StmtIfElse - finished processing elsestmtlist
+StmtIf - finished processing stmtlist
+StmtWhile - finished processing stmtlist
+StmtWhile - finished processing while
+StmtRepeat - finished processing stmtlist
+StmtRepeat - finished processing repeat-until
+StmtWhile - finished processing stmtlist
+StmtWhile - finished processing while
+StmtOutput
+StmtOutput - finished processing output
+Comment: nop
+ParserTest: before getSFC
+ParserTest: before prettyPrinter.print
+[SFC] 
+|   [Step] 0
+[StepList] 
+|   [Step] 0
+|   [Step] 1
+|   [Step] 2
+ParserTest: java.lang.ClassCastException: slime.absynt.Action

@@ -15,11 +15,25 @@
  *    -  grammar definition
  *
  * @author initialy provided by Marco Wendel
- * @version $Id: SFC.cup,v 1.11 2002-07-02 12:29:48 swprakt Exp $
+ * @version $Id: SFC.cup,v 1.12 2002-07-02 13:09:53 swprakt Exp $
  *
  */
 /* Changelog:
  * $Log: not supported by cvs2svn $
+ * Revision 1.11  2002/07/02 12:29:48  swprakt
+ * Phase 1 completed, correct parsing of complex
+ * SFC programs into slime.absynt.absfc.SFCabtree.
+ *
+ * Phase 2 still in progress: today fixed some bug
+ * with PrettyPrint4Absfc - partially the print(SFCabtree)
+ * by simply outcommenting the lists for vars and decls.
+ *
+ * Left to do in phase 2:
+ * verifying the correct(and complete!) creation of
+ * the varlist, decllist for the slime.absynt.SFC.
+ *
+ * 02.07.2002 mwe@informatik.uni-kiel.de
+ *
  * Revision 1.10  2002/06/29 21:23:07  swprakt
  * Finally I provide my fully functioning JLex.jar
  * and java_cup.jar. The files were created on
@@ -542,11 +556,11 @@ stmtloopwhile ::= WHILE
                   LPAREN 
                   expr:e 
                   RPAREN  
-                  stmtblock:b 
-                  {: 
+                  stmtblock:blockInWhile 
+                 {: 
 		   // pOut( 1, " while (expr) {b} " );
 		     RESULT = new slime.absynt.absfc.StmtWhile( 
-			         e, (java.util.LinkedList) b 
+			         e, blockInWhile 
 		     ); 
 		   :}
 ;
