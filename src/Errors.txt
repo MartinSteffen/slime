@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.125 2002-07-07 09:46:52 swprakt Exp $
+## $Id: Errors.txt,v 1.126 2002-07-07 14:45:11 swprakt Exp $
 ###########################################################
 
 
@@ -40,6 +40,10 @@ Rules of the game:
 
 ------------------- Open errors ---------------------------------------
 
+Error 65:     interface
+ class:       non-fatal
+ status:      reported, Steffen 7.7.02
+ description: reduce visibility for well-formed checks
 
 Error 64:     naming
  package:     checker
@@ -194,7 +198,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.125 2002-07-07 09:46:52 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.126 2002-07-07 14:45:11 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
@@ -376,6 +380,8 @@ Error 1:  parser warnings
 
 
 -------------------- Repaired errors -------------------------
+
+
 
 
 Error 60:     undeclared var
