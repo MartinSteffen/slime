@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.173 2002-07-10 06:38:08 swprakt Exp $
+## $Id: Errors.txt,v 1.174 2002-07-10 06:40:19 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,14 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+Error 81:     main-class
+ package:     gui/all
+ class:       design
+ status:      reported, 10.7.02, Steffen
+ description: if gui/StartSlime really is the toplevel class, I
+              prefer that it is called Main and resides in    
+	      the directory slime.
 
 
 Error 80:     null-pointer:
@@ -294,7 +302,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.173 2002-07-10 06:38:08 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.174 2002-07-10 06:40:19 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
