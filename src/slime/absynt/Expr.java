@@ -5,8 +5,8 @@ import java.io.Serializable;
 /**
  * Abstract class for simple expressions
  * 
- * @author Initially provided by Martin Steffen.
- * @version $Id: Expr.java,v 1.8 2002-07-04 16:30:42 swprakt Exp $
+ * @author <a href="http://www.informatik.uni-kiel.de/~ms" target="_top">Martin Steffen</a> and Karsten Stahl.
+ * @version $Id: Expr.java,v 1.9 2002-07-11 07:49:50 swprakt Exp $
  */
 
 
@@ -47,9 +47,15 @@ public abstract class Expr extends Absynt implements Serializable{
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Expr.java,v 1.8 2002-07-04 16:30:42 swprakt Exp $
+//	$Id: Expr.java,v 1.9 2002-07-11 07:49:50 swprakt Exp $
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.8  2002/07/04 16:30:42  swprakt
+//	I hope that Martin was not working on them the same time:)
+//	Updated Visitors Interfaces for Statements (forInput & forOutput,
+//	forDouble), extended Expr. now we have support for power and
+//	modulo. (mwe)
+//	
 //	Revision 1.7  2002/06/13 12:34:27  swprakt
 //	Started to add vistors + typechecks [M. Steffen]
 //	
