@@ -5,7 +5,7 @@ import java.util.LinkedList;
 /**
  * Visitors for Slime abstract syntax (just for the fun of it)
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version  $Id: Visitors.java,v 1.12 2002-07-04 16:30:43 swprakt Exp $
+ * @version  $Id: Visitors.java,v 1.13 2002-07-10 13:57:53 swprakt Exp $
  */
 
 
@@ -30,8 +30,8 @@ public class Visitors {
   public interface IStmt {
     public Object forSkip() throws Exception;
     public Object forAssign(Variable x, Expr e) throws Exception;
-    public Object forInput(Variable x, Expr e) throws Exception;
-    public Object forOutput(Variable x, Expr e) throws Exception;
+//    public Object forInput(Variable x, Expr e) throws Exception;
+//    public Object forOutput(Variable x, Expr e) throws Exception;
   }
     
 
@@ -65,7 +65,7 @@ public class Visitors {
   }
 
   public interface IType{
-      public Object forDoubleType() throws Exception;
+//      public Object forDoubleType() throws Exception;
       public Object forIntType() throws Exception;
       public Object forBoolType() throws Exception;
       public Object forUndefType() throws Exception;
@@ -80,8 +80,14 @@ public class Visitors {
 //	Abstract syntax for Slime programs
 //	------------------------------------
 //
-//	$Id: Visitors.java,v 1.12 2002-07-04 16:30:43 swprakt Exp $
+//	$Id: Visitors.java,v 1.13 2002-07-10 13:57:53 swprakt Exp $
 // //	$Log: not supported by cvs2svn $
+// //	Revision 1.12  2002/07/04 16:30:43  swprakt
+// //	I hope that Martin was not working on them the same time:)
+// //	Updated Visitors Interfaces for Statements (forInput & forOutput,
+// //	forDouble), extended Expr. now we have support for power and
+// //	modulo. (mwe)
+// //	
 // //	Revision 1.11  2002/06/25 10:55:46  swprakt
 // //	First iterator added for one linked list.
 // //	[Steffen]
