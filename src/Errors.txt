@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.180 2002-07-10 07:13:23 swprakt Exp $
+## $Id: Errors.txt,v 1.181 2002-07-10 07:26:10 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -34,6 +34,14 @@ Rules of the game:
 ------------------- Open errors ---------------------------------------
 
 
+
+
+Error 90:     doc
+ package:     gui
+ class:       non-fatal
+ status:      reported, 10.7.02, Steffen
+ description: the classes of gui.model are uncommented in java doc (no author, for
+              instance, comment what it is good for. etc)
 
 Error 89:     no reaction, user interface
  package:     gui
@@ -365,7 +373,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.180 2002-07-10 07:13:23 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.181 2002-07-10 07:26:10 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
