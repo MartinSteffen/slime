@@ -1,0 +1,14 @@
+################################################
+# $Id: Wishlist.txt,v 1.1 2002-06-14 05:24:51 swprakt Exp $
+################################################
+
+
+
+
+o specific packages:
+
+  > absynt
+
+       - use inner classes perhaps for better grouping.
+         for instance collect the types together etc.
+         
