@@ -25,7 +25,7 @@ import slime.absynt.*;
  * ExprV for the visitor of absynt.Expr. Note that it is not
  * possible to give it the same name.</P>
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version $Id: Typecheck.java,v 1.11 2002-06-25 08:20:10 swprakt Exp $
+ * @version $Id: Typecheck.java,v 1.12 2002-06-25 08:23:38 swprakt Exp $
  */
 
 public class Typecheck {
@@ -234,25 +234,6 @@ public class Typecheck {
       }
     }
 
-  /** Type check for declaration list. It has to check
-   *  for each element of the list, whether it is a variable
-   *  declaration and whether no variable occurs twice.
-   *
-   * Additionally we have to tackle the inconvience, that 
-   * declaration lists are just linked list in Java.
-   */
-
-  public class DeclistV implements Visitors.IDeclist{
-    public Object forDeclist(LinkedList forDeclist) throws CheckException {
-      try {
-	return new Object();
-      }
-      catch (Exception e) {
-	throw ((CheckException)e);
-      }
-    }
-  }
-
   /** Type checking visitor for a declaration.
    *  A declaration must have all three fields filled in, i.e.,
    *  non is allowed to be a nil-reference. Furthermore the type
@@ -278,12 +259,6 @@ public class Typecheck {
     }
   }
 
-       
-
-
-
-
-
   /** Type checking visitor for a type itself.
    *  This is the end of the recursion and the visitor returns
    *  the object itself. The only thing that can goto wrong is that
@@ -303,8 +278,38 @@ public class Typecheck {
     public Object forUndefType() {
       return new UndefType();}
   }
- 
+
+
+  /** Type check for declaration list. It has to check
+   *  for each element of the list, whether it is a variable
+   *  declaration and whether no variable occurs twice.
+   *
+   * Additionally we have to tackle the inconvience, that 
+   * declaration lists are just linked list in Java.
+   */
+
+  public class DeclistV implements Visitors.IDeclist{
+    public Object forDeclist(LinkedList forDeclist) throws CheckException {
+      try {
+	return new Object();
+      }
+      catch (Exception e) {
+	throw ((CheckException)e);
+      }
     }
+  }
+
+
+
+       
+
+
+
+
+
+
+ 
+}
 
 
 //----------------------------------------------------------------------
@@ -312,6 +317,9 @@ public class Typecheck {
 //    ----------------------------------------
 //
 //    $Log: not supported by cvs2svn $
+//    Revision 1.11  2002/06/25 08:20:10  swprakt
+//    typechecking for statements. [Steffen]
+//
 //    Revision 1.10  2002/06/25 07:52:11  swprakt
 //    New visitors added (for actions). [Steffen]
 //
@@ -355,6 +363,6 @@ public class Typecheck {
 //    Revision 1.1  2002/06/13 12:34:28  swprakt
 //    Started to add vistors + typechecks [M. Steffen]
 //
-//    $Id: Typecheck.java,v 1.11 2002-06-25 08:20:10 swprakt Exp $
+//    $Id: Typecheck.java,v 1.12 2002-06-25 08:23:38 swprakt Exp $
 //
 //---------------------------------------------------------------------
