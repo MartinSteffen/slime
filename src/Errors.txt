@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.41 2002-07-02 08:04:29 swprakt Exp $
+## $Id: Errors.txt,v 1.42 2002-07-02 08:04:57 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -36,7 +36,7 @@ Rules of the game:
 
 
 
-Error 28:     grammar for stmt
+Error 29:     grammar for stmt
  package:     sfcparser (cup)
  class:       question 
  status:      reported, 2.7.02, Steffen
