@@ -1,3 +1,4 @@
+
 package slime.layout;
 
 import slime.absynt.*;
@@ -8,7 +9,7 @@ import java.awt.*;
 /**
  * For the Slime project of the Fortgeschrittenen-Praktikum.
  * @author Andreas Niemann
- * @version $Id: Layouter.java,v 1.8 2002-06-12 18:52:05 swprakt Exp $
+ * @version $Id: Layouter.java,v 1.9 2002-06-13 08:24:54 swprakt Exp $
  */
 
 public final class Layouter {
