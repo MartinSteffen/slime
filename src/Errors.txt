@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.14 2002-06-25 06:59:45 swprakt Exp $
+## $Id: Errors.txt,v 1.15 2002-06-25 09:18:19 swprakt Exp $
 ###########################################################
 
 
@@ -38,6 +38,23 @@ Rules of the game:
 
 
 ------------------- Open errors ---------------------------------------
+
+
+
+Error 13:      package struture 
+ package:      sfcparser
+ status:       fatal (in the end)
+ reported:     25.6.02, Steffen
+ description:  there's no package declaration in the javafiles.
+               perhaps this also leads to the non-generation of doc-documents.
+
+         
+Error 12:      tons  of doc warnings
+ package:      sfcparser
+ status:       reported, 25.06.02, Steffen
+ class:        fatal, (because no doc is generated)
+ description:  the parser generates a huge amout and also 
+               serious sounding warnings! way over 100!
 
 
 Error 11:      Grammar missing
