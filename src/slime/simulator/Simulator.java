@@ -10,7 +10,7 @@ import  slime.editor.Editor;
  * some description
  * Bla
  * @author Initially provided by Immo Grabe.
- * @version $Id: <dollar>
+ * @version $Id: Simulator.java,v 1.4 2002-07-18 14:48:16 swprakt Exp $
  */
 
 
