@@ -1,0 +1,62 @@
+
+\infrule{Input}{
+  \eta' = \eta\setto{\vec{x}}{\vec{v}}
+  \andalso
+  \vec{x} = \Varin
+  \andalso 
+  A = \{ a \suchthat
+  \exists s \in S. s \in \sigma \land a \in \act(s)\}
+  \}
+  \
+  }{
+  (\sigma,\eta,\waitinput) \transin{v}
+  (\sigma,\eta',\doneinput{A})
+  }
+
+\\
+
+\infrule{Act}{%
+  a \in A
+  \andalso
+  \eta' = \sem{}{a}(\eta)
+  }{
+  (\sigma,\eta,\doneinput{A}) 
+  \trans{}
+  (\sigma,\eta,\doneinput{A\without a})
+  }
+
+\infrule{No-Act}{
+  T =
+  }{
+  (\sigma,\eta,\doneinput{\emptyset})
+  \trans{}
+  (\sigma,\eta,\finished{T})
+  }
+
+\\
+
+\infrule{Next-Step}{%
+  t \in T
+  \andalso
+  \src{t}  \in\sigma
+  \andalso
+  \sigma' = (\sigma \union \target{t}) \without \src{t}
+  }{
+  (\sigma,\eta,\finished{T})
+  \trans{}
+  (\sigma',\eta,\finished{\src{T}})
+  }
+
+\infrule{Output}{%
+  \vec{v} = \sem{\eta}{\vec{x}}
+  \andalso
+  \vec{x} = \Varout
+  }{%
+  (\sigma,\eta, \finished{\emptyset}) \transout{\vec{v}}
+  (\sigma,\eta,\waitinput)
+  }
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End: 
