@@ -1,13 +1,19 @@
 package slime.sfcparser;
 import java_cup.runtime.Symbol;
+import slime.sfcparser.*;
   /**
     *  <b>SFC.lex</b><br>
     *
     * initially provided by Marco Wendel <mwe@informatik.uni-kiel.de>
-    * $Id: SFC.lex,v 1.9 2002-06-28 08:03:12 swprakt Exp $
+    * $Id: SFC.lex,v 1.10 2002-06-28 20:01:08 swprakt Exp $
     * -----
     */
    /* $Log: not supported by cvs2svn $
+   /* Revision 1.9  2002/06/28 08:03:12  swprakt
+   /* old versions did conflict with "global" Makefile
+   /* in src/slime, albeight the GLOBAL Makefile should
+   /* exist in src. (mwe)
+   /*
    /* Revision 1.8  2002/06/27 20:20:18  swprakt
    /* The SFCSymbols.EOF symbol has is an int with value 0.
    /* The YYlex.EOF is a symbol with int value -1.
@@ -74,7 +80,7 @@ import java_cup.runtime.Symbol;
 %full
 %public
 %eofval{
-    return new Symbol(SFCSymbols.EOF); //Symbol(-1);
+    return new Symbol(slime.sfcparser.SFCSymbols.EOF); //Symbol(-1);
 %eofval}
 %cup
 %eof{
@@ -100,49 +106,48 @@ string  = (\"({space}|{alpha}|{digit}|{sign}|{extra})*\")
 %%  
 
 {space}    { }
-{comment}  { /* return new Symbol(SFCSymbols.COMMENT); */ }
-";"        {return new Symbol(SFCSymbols.SEMICOLON);	/* */}
-"{"        {return new Symbol(SFCSymbols.LPSET); 	/* */}
-"}"        {return new Symbol(SFCSymbols.RPSET); 	/* */}
-"("        {return new Symbol(SFCSymbols.LPAREN); 	/* */}
-")"        {return new Symbol(SFCSymbols.RPAREN); 	/* */}
-"SFC"      {return new Symbol(SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
-"input"    {return new Symbol(SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
-"output"   {return new Symbol(SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
-"split"    {return new Symbol(SFCSymbols.SPLIT); 	/* */}
-"join"     {return new Symbol(SFCSymbols.JOIN); 	/* */}
-"process"  {return new Symbol(SFCSymbols.PROCESS); 	/* */}
-"if"       {return new Symbol(SFCSymbols.IF); 		/* */}
-"else"     {return new Symbol(SFCSymbols.ELSE); 	/* */}
-"while"    {return new Symbol(SFCSymbols.LPSET); 	/* */}
-"repeat"   {return new Symbol(SFCSymbols.REPEAT); 	/* */}
-"until"    {return new Symbol(SFCSymbols.UNTIL); 	/* */}
-"skip"     {return new Symbol(SFCSymbols.SKIP); 	/* Class Skip */}
-":="       {return new Symbol(SFCSymbols.ASSIGN); 	/* Class Assign */}
-"int"      {return new Symbol(SFCSymbols.INTTYPE); 	/* Class IntType */}
-"bool"     {return new Symbol(SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
-"true"     {return new Symbol(SFCSymbols.TRUE);	        /* */}
-"false"    {return new Symbol(SFCSymbols.FALSE); 	/* */}
-"+"        {return new Symbol(SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
-"-"        {return new Symbol(SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
-"*"        {return new Symbol(SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
-"/"        {return new Symbol(SFCSymbols.DIV); 	/* Expr.DIV     =  3 "%"        {return new Symbol(SFCSymbols.MOD); 	 Expr.MOD     =  undef */}
-"&&"       {return new Symbol(SFCSymbols.AND); 	/* Expr.AND     =  4 */}
-"||"       {return new Symbol(SFCSymbols.OR);  	/* Expr.OR      =  5 */}
-"!"        {return new Symbol(SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
-"=="	   {return new Symbol(SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
-"<"        {return new Symbol(SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
-">"        {return new Symbol(SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
-"<="       {return new Symbol(SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
-">="       {return new Symbol(SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
-"!="       {return new Symbol(SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
-","        {return new Symbol(SFCSymbols.COMMA); 	/* */}
-"."        {return new Symbol(SFCSymbols.DOT); 	/* */}
-"#"        {return new Symbol(SFCSymbols.HASH); 	/* END OF FILE, END OF EXPRESSION MARKER */}
-
-{identif}  {return new Symbol(SFCSymbols.IDENTIFIER, 
+{comment}  { /* return new Symbol(slime.sfcparser.SFCSymbols.COMMENT); */ }
+";"        {return new Symbol(slime.sfcparser.SFCSymbols.SEMICOLON);	/* */}
+"{"        {return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
+"}"        {return new Symbol(slime.sfcparser.SFCSymbols.RPSET); 	/* */}
+"("        {return new Symbol(slime.sfcparser.SFCSymbols.LPAREN); 	/* */}
+")"        {return new Symbol(slime.sfcparser.SFCSymbols.RPAREN); 	/* */}
+"SFC"      {return new Symbol(slime.sfcparser.SFCSymbols.SFCPRG);	/* Begin SFC-Source-File */}
+"input"    {return new Symbol(slime.sfcparser.SFCSymbols.INPUT); 	/* ***RFC*** syntax !? */}
+"output"   {return new Symbol(slime.sfcparser.SFCSymbols.OUTPUT); 	/* ***RFC*** syntax !? */}
+"split"    {return new Symbol(slime.sfcparser.SFCSymbols.SPLIT); 	/* */}
+"join"     {return new Symbol(slime.sfcparser.SFCSymbols.JOIN); 	/* */}
+"process"  {return new Symbol(slime.sfcparser.SFCSymbols.PROCESS); 	/* */}
+"if"       {return new Symbol(slime.sfcparser.SFCSymbols.IF); 		/* */}
+"else"     {return new Symbol(slime.sfcparser.SFCSymbols.ELSE); 	/* */}
+"while"    {return new Symbol(slime.sfcparser.SFCSymbols.LPSET); 	/* */}
+"repeat"   {return new Symbol(slime.sfcparser.SFCSymbols.REPEAT); 	/* */}
+"until"    {return new Symbol(slime.sfcparser.SFCSymbols.UNTIL); 	/* */}
+"skip"     {return new Symbol(slime.sfcparser.SFCSymbols.SKIP); 	/* Class Skip */}
+":="       {return new Symbol(slime.sfcparser.SFCSymbols.ASSIGN); 	/* Class Assign */}
+"int"      {return new Symbol(slime.sfcparser.SFCSymbols.INTTYPE); 	/* Class IntType */}
+"bool"     {return new Symbol(slime.sfcparser.SFCSymbols.BOOLTYPE); 	/* Class BoolType */}
+"true"     {return new Symbol(slime.sfcparser.SFCSymbols.TRUE);	        /* */}
+"false"    {return new Symbol(slime.sfcparser.SFCSymbols.FALSE); 	/* */}
+"+"        {return new Symbol(slime.sfcparser.SFCSymbols.ADD); 	/* Expr.PLUS    =  0 */}
+"-"        {return new Symbol(slime.sfcparser.SFCSymbols.SUB); 	/* Expr.MINUS   =  1 */}
+"*"        {return new Symbol(slime.sfcparser.SFCSymbols.MUL); 	/* Expr.TIMES   =  2 */}
+"/"        {return new Symbol(slime.sfcparser.SFCSymbols.DIV); 	/* Expr.DIV     =  3 "%"        {return new Symbol(slime.sfcparser.SFCSymbols.MOD); 	 Expr.MOD     =  undef */}
+"&&"       {return new Symbol(slime.sfcparser.SFCSymbols.AND); 	/* Expr.AND     =  4 */}
+"||"       {return new Symbol(slime.sfcparser.SFCSymbols.OR);  	/* Expr.OR      =  5 */}
+"!"        {return new Symbol(slime.sfcparser.SFCSymbols.NOT); 	/* Expr.NEG     =  6 */}
+"=="	   {return new Symbol(slime.sfcparser.SFCSymbols.EQ);   /* Expr.EQ      =  7 */}
+"<"        {return new Symbol(slime.sfcparser.SFCSymbols.LT);  	/* Expr.LESS    =  8 */}
+">"        {return new Symbol(slime.sfcparser.SFCSymbols.GT);  	/* Expr.GREATER =  9 */}
+"<="       {return new Symbol(slime.sfcparser.SFCSymbols.LEQ); 	/* Expr.LEQ     = 10 */}
+">="       {return new Symbol(slime.sfcparser.SFCSymbols.GEQ); 	/* Expr.GEQ     = 11 */}
+"!="       {return new Symbol(slime.sfcparser.SFCSymbols.NEQ); 	/* Expr.NEQ     = 12 */}
+","        {return new Symbol(slime.sfcparser.SFCSymbols.COMMA); 	/* */}
+"."        {return new Symbol(slime.sfcparser.SFCSymbols.DOT); 	/* */}
+"#"        {return new Symbol(slime.sfcparser.SFCSymbols.HASH); 	/* END OF FILE, END OF EXPRESSION MARKER */}
+{identif}  {return new Symbol(slime.sfcparser.SFCSymbols.IDENTIFIER, 
 		    yytext()); 				/* t IDENTIFIER */}
-{number}   {return new Symbol(SFCSymbols.INTEGER, 
+{number}   {return new Symbol(slime.sfcparser.SFCSymbols.INTEGER, 
 		   new Integer( yytext() ) ); 		/* t INTEGER */}
 .          {System.out.println( "Error during lexical analysis"+
 	    "\nLine number = "  + yyline + 

@@ -7,10 +7,15 @@ import java.io.*;
  * for testing the SFCParser class in commandline <br>
  * mode with ASCII SFC-formated files or short sfc expressions<br>
  * @author Marco Wendel
- * @version $Id: ParserTest.java,v 1.7 2002-06-28 08:03:12 swprakt Exp $
+ * @version $Id: ParserTest.java,v 1.8 2002-06-28 20:01:07 swprakt Exp $
  * ---------------------------------------------------------------
  */
 /* $Log: not supported by cvs2svn $
+/* Revision 1.7  2002/06/28 08:03:12  swprakt
+/* old versions did conflict with "global" Makefile
+/* in src/slime, albeight the GLOBAL Makefile should
+/* exist in src. (mwe)
+/*
 /* Revision 1.6  2002/06/27 19:39:36  swprakt
 /* slightly improved exceptionhandling
 /*
@@ -53,7 +58,8 @@ public class ParserTest {
 	slime.absynt.absfc.SFCabtree        absfctree = null;
 	slime.sfcparser.SFCParser           mySFCParser = null;
 	slime.sfcparser.Absfc2SFCConverter  theConverter = null;
-
+	slime.utils.PrettyPrint             prettyPrinter = new slime.utils.PrettyPrint();
+	slime.sfcparser.PrettyPrint4Absfc   prettyAbsfc = new slime.sfcparser.PrettyPrint4Absfc();
 
 	if ( (args.length == 0)  || (args.length > 100) )
 	{
@@ -80,22 +86,31 @@ public class ParserTest {
 		{
 		    System.out.println("SFCParser: " + args[1] + " is no allowed sfc expression.");
 		} else {
+		    prettyPrinter.print( sfcexpr );
 		    // 
 		    // ***MORE*** parseExpression errorhandling ***RFC***
 		    // 
 		} // end of if-sfcexpr
 	    } else {
+		System.out.println("ParserTest: before File");
 	        File sfcfile = new File( args[0] );
+		System.out.println("ParserTest: before SFCParser");
 		mySFCParser = new slime.sfcparser.SFCParser();
 		// mSFCParser.debug=1;
+		System.out.println("ParserTest: before parseFile");
 		absfctree = mySFCParser.parseFile( sfcfile );
-		// theConverter = new slime.sfcparser.Absfc2SFCConverter( absfctree );
-		// slime.absynt.SFC theSFC = theConverter.getSFC();
-		System.out.println("after parseFile");
-		treestring = absfctree.toString();
-		System.out.println("after absfctree.toString() ");
-		
-		System.out.println( treestring );
+		System.out.println("ParserTest: before prettyAbsfc.print");
+		prettyAbsfc.print( absfctree );
+		System.out.println("ParserTest: before Absfc2SFCConverter");
+		theConverter = new slime.sfcparser.Absfc2SFCConverter( absfctree );
+		System.out.println("ParserTest: before getSFC");
+		theSFC = theConverter.getSFC();
+		System.out.println("ParserTest: before prettyPrinter.print");
+		prettyPrinter.print( theSFC );
+		//System.out.println("after parseFile");
+		//treestring = absfctree.toString();
+		//System.out.println("after absfctree.toString() ");
+		//System.out.println( treestring );
 		// ***MORE*** 
 	    } // end of if-args-else
 	} catch (FileNotFoundException fnfe) {

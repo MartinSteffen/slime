@@ -1,9 +1,14 @@
 ##########################
-# $Id: Makefile,v 1.7 2002-06-28 08:03:12 swprakt Exp $                       
+# $Id: Makefile,v 1.8 2002-06-28 20:01:07 swprakt Exp $                       
 # Makefile for SFCParser 
 # initially provided by Marco Wendel <mwe@informatik.uni-kiel.de> 
 ##########################
 # $Log: not supported by cvs2svn $
+# Revision 1.7  2002/06/28 08:03:12  swprakt
+# old versions did conflict with "global" Makefile
+# in src/slime, albeight the GLOBAL Makefile should
+# exist in src. (mwe)
+#
 # Revision 1.6  2002/06/27 19:39:36  swprakt
 # slightly improved exceptionhandling
 #
@@ -45,19 +50,19 @@ JCUPLOGFILE=JCup.log
 
 ############# Compile Package SFCParser #############
 
-all:	SFCParser.class Absfc2SFCConverter ParserTest
+all:	SFCParser.class Absfc2SFCConverter.class ParserTest.class
 
 test:
 	java slime.sfcparser.ParserTest
 
-Absfc2SFCConverter:
+Absfc2SFCConverter.class:
 	javac Absfc2SFCConverter.java
 
-ParserTest:
+ParserTest.class:
 	javac ParserTest.java
 
 SFCParser.class:  SFCParseException.class SFCParser.java SFCLex.class
-	javac SFCParser.java SFCSymbols.java 
+	javac SFCParser.java
 
 SFCLex.java: 
 	#  SFC.lex
@@ -65,6 +70,7 @@ SFCLex.java:
 	mv SFC.lex.java SFCLex.java
 
 SFCLex.class: SFCLex.java
+	javac SFCSymbols.java
 	javac SFCLex.java
 
 SFCParser.java:
