@@ -1,5 +1,5 @@
 ###########################################################
-## $Id: Errors.txt,v 1.178 2002-07-10 07:02:58 swprakt Exp $
+## $Id: Errors.txt,v 1.179 2002-07-10 07:06:10 swprakt Exp $
 ###########################################################
 
 This file contains errors, bugs, features etc encountered in the
@@ -35,11 +35,16 @@ Rules of the game:
 
 
 
-Error 85:    ``speichern.nichtaenderns.sfc''
+Error 85(2):    ``speichern.nichtaenderns.sfc''
  package:     gui
- class:       fatal
+ class:       performance
  status:      reported, 10.7.02, Steffen
  description: I don't succeed in changing this text.
+              correction: it's possible, but the textfield has a reaction
+	      time of over 2 minutes. (on gollum) Perhaps I clicked the 
+	      ``Speichern'' button a couple of times an this was buffered,
+	       such that it was not ready to accept new inputs?
+          
 
 
 Error 84:    ``speichern''
@@ -334,7 +339,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.178 2002-07-10 07:02:58 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.179 2002-07-10 07:06:10 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
