@@ -1,5 +1,5 @@
 ############################################################
-## $Id: Readme,v 1.10 2002-07-19 12:06:09 swprakt Exp $
+## $Id: Readme,v 1.11 2002-07-19 13:40:47 swprakt Exp $
 ############################################################
 
 
@@ -15,8 +15,9 @@ package contains the following files and subdirectories:
                          development steps
   
 
+    o sfcintro/          slides for an intro about sfc's
     o requirements/      description of the task
-    o evaluation/        end-of-semester evaluation, summary (including talk)
+    o review/            end-of-semester review, summary (including talk)
     o web/               web-site material for coordination,
                          tracking the progress etc.
     o org/               internal information about members etc
@@ -24,6 +25,8 @@ package contains the following files and subdirectories:
     o cd/                info's for the cd-rom
     o src/               the Java-sources
     o tex/               common LaTeX-macros 
+
+  
 
     o lib/               external libraries (here the lex/yacc archives,
 	                 included for better coordination.
