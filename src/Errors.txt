@@ -1,5 +1,5 @@
 ###########################################################
-n## $Id: Errors.txt,v 1.155 2002-07-09 05:37:33 swprakt Exp $
+n## $Id: Errors.txt,v 1.156 2002-07-09 07:01:03 swprakt Exp $
 ###########################################################
 
 
@@ -52,6 +52,13 @@ Rules of the game:
 
 
 
+
+
+Error 71:    jar Error
+ package:    all/integration
+ class:      fatal
+ status:     reported Steffen 9.7.02
+ description:  the target jar in src/slime does not work
 
 Error 70:    compilation error
  package:    sfc-parser
@@ -228,7 +235,7 @@ Error 43:     non-portanble code
 Error 42:     Nullpointer
  package:     sfcparser (but on the snapshot firstcompilaton-sep, so it's not clear whether
               it's in the real parser. 
-	      Version =  $Id: Errors.txt,v 1.155 2002-07-09 05:37:33 swprakt Exp $ *
+	      Version =  $Id: Errors.txt,v 1.156 2002-07-09 07:01:03 swprakt Exp $ *
  class:       fatal (in also in the main branch), otherwise ok
  status:      reported, 5.7.02, Steffen
  description: parsing of   "true and false" gives:
