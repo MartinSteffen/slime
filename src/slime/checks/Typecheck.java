@@ -6,7 +6,7 @@ import slime.absynt.*;
 /**
  * Type checker for Slime programs
  * @author Initially provided by Martin Steffen and Karsten Stahl.
- * @version  $Id: Typecheck.java,v 1.2 2002-06-14 06:37:41 swprakt Exp $
+ * @version  $Id: Typecheck.java,v 1.3 2002-06-14 16:50:33 swprakt Exp $
  */
 
 /** 
@@ -18,7 +18,6 @@ import slime.absynt.*;
  */
 
 
-public class Typecheck {
   /**
    * The class typecheck contains as inner classes
    * the various cases. For each syntactic category, the visitor
@@ -26,6 +25,12 @@ public class Typecheck {
    * ExprV for the visitor of absynt.Expr. Note that it is not
    * possible to give it the same name.
    */
+
+public class Typecheck {
+
+  /**
+     Visitor for expressions
+  */
   public class ExprV implements Visitors.IExpr{
 
     public Object forB_Expr(Expr l, int o, Expr r) throws CheckException { // binary expressions
@@ -38,7 +43,7 @@ public class Typecheck {
 	  else throw new CheckException();}
 	else if  ((o == Expr.PLUS) || (o == Expr.MINUS) || (o == Expr.TIMES) || (o == Expr.DIV))
 	  {if ((t_l instanceof IntType) && (t_r instanceof IntType))
-	    return new BoolType();
+	    return new IntType();
 	  else throw new CheckException();}
 	else if ((o == Expr.EQ) || (o == Expr.NEQ))
 	  {if (((t_l instanceof IntType) && (t_r instanceof IntType)) ||
@@ -82,13 +87,19 @@ public class Typecheck {
   }
 
   // --------------------------
+
+  /**
+     Visitor for transitions
+  */
+
   public class TransitionV implements Visitors.ITransition{
     public Object forTransition(LinkedList source, 
 				Expr guard,
 				LinkedList target) throws CheckException {
       try {
 	Type t = (Type)guard.accept(new ExprV());
-	if (t instanceof BoolType) return t;
+	if (t instanceof BoolType) // guards must be boolean
+	  return new UnitType();   // transitions don't give back a value
 	else throw new CheckException();
       }
       catch (Exception e) {throw ((CheckException)e);}
@@ -96,21 +107,20 @@ public class Typecheck {
 }
 
 
-
-
-
-
-
-
-
 //----------------------------------------------------------------------
 //	checks/static analysis  Slime programs
 //	----------------------------------------
 //
 //	$Log: not supported by cvs2svn $
+//	Revision 1.2  2002/06/14 06:37:41  swprakt
+//	SFC's may be  named, now (as decided 12.6.2002).
+//	Corresponding field + constructors added.
+//	
+//	[M. Steffen]
+//	
 //	Revision 1.1  2002/06/13 12:34:28  swprakt
 //	Started to add vistors + typechecks [M. Steffen]
 //	
-//	$Id: Typecheck.java,v 1.2 2002-06-14 06:37:41 swprakt Exp $
+//	$Id: Typecheck.java,v 1.3 2002-06-14 16:50:33 swprakt Exp $
 //
 //---------------------------------------------------------------------

@@ -1,10 +1,10 @@
 ############################################################
-# $Id: Readme.devel,v 1.6 2002-06-12 09:08:46 swprakt Exp $
+# $Id: Readme.devel,v 1.7 2002-06-14 16:50:51 swprakt Exp $
 ############################################################
 
 
 Project-internal ``Readme'' for the developers of the Slime project
--------------------------------------------
+-------------------------------------------------------------------
 
 
 o Requirements:
@@ -20,18 +20,18 @@ o Files and directories
 
   - Java packages/subdirectories
 
-    simulator/
-    editor/
-    utils/
-    absynt/
-    checks/
-    layout/
-    gui/
+    slime/simulator/
+    slime/editor/
+    slime/utils/
+    slime/absynt/
+    slime/checks/
+    slime/layout/
+    slime/gui/
     
    - other files
 
       > Readme.devel:   this file
-      > Readme:         general Information, for outside users
+      > Readme:         general information, for outside users
       > Todo:           list of things to do
 
       > Status:         current status to survey the progress
@@ -44,6 +44,11 @@ o Files and directories
                         detailed record of particular things
                         to be fixed  and bugs  that have shown
                         up.
+      > Wishlist.txt    Things that are not nice but not critical
+	                and could be done better next time.
+	                It refers to the actual implementation,
+	                critique and evaluation of the development
+	                process are kept in the evaluation directory.
 
          templates/     How to mark the package and to
                         use cvs-logs in java-doc comments.
