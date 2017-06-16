@@ -13,29 +13,22 @@ For the webpages of the course, see [[http://heim.ifi.uio.no/msteffen/teaching/s
 This is the root of the Slime-project from the summer term 2002.  The
 package contains the following files and subdirectories:
 
+  
 
-    o Readme:            this file
-
-
-
-    o Snapshots:         short description about major
+    - Readme:            this file
+    - Snapshots:         short description about major
                          development steps
-  
-
-    o sfcintro/          slides for an intro about sfc's
-    o requirements/      description of the task
-    o review/            end-of-semester review, summary (including talk)
-    o web/               web-site material for coordination,
+    - sfcintro/          slides for an intro about sfc's
+    - requirements/      description of the task
+    - review/            end-of-semester review, summary (including talk)
+    - web/               web-site material for coordination,
                          tracking the progress etc.
-    o org/               internal information about members etc
+    - org/               internal information about members etc
 
-    o cd/                info's for the cd-rom
-    o src/               the Java-sources
-    o tex/               common LaTeX-macros 
-
-  
-
-    o lib/               external libraries (here the lex/yacc archives,
+    - cd/                info's for the cd-rom
+    - src/               the Java-sources
+    - tex/               common LaTeX-macros 
+    - lib/               external libraries (here the lex/yacc archives,
 	                 included for better coordination.
 
 
