@@ -1,7 +1,15 @@
-############################################################
-## $Id: Readme,v 1.12 2003-01-23 16:17:56 swprakt Exp $
-############################################################
 
+
+** Abstract
+The repository collects the /sources/ of the ``Slime'' project (Sequential
+Function Charts Modelling Environment), in the software programming lab
+course ``Programming in the Many'', summer semester 2002, at the University
+Kiel.
+
+For the webpages of the course, see [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss02/pitm-slime/slime/][here]].
+
+
+** Structure
 This is the root of the Slime-project from the summer term 2002.  The
 package contains the following files and subdirectories:
 
@@ -30,3 +38,7 @@ package contains the following files and subdirectories:
     o lib/               external libraries (here the lex/yacc archives,
 	                 included for better coordination.
 
+
+############################################################
+## $Id: Readme,v 1.12 2003-01-23 16:17:56 swprakt Exp $
+############################################################
