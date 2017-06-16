@@ -32,9 +32,16 @@ package contains the following files and subdirectories:
 	                 included for better coordination.
 
 
+** Historical notes
+
+The repository has been migrated from ~cvs~ via svn (using ~cvs2svn~) and
+from there to ~git~. Caveats concerning missing branches apply.
+
 #+BEGIN_QUOTE
+
 ############################################################
 ## $Id: Readme,v 1.12 2003-01-23 16:17:56 swprakt Exp $
 ############################################################
+
 #+END_QUOTE
 
