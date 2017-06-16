@@ -6,7 +6,7 @@ Function Charts Modelling Environment), in the software programming lab
 course ``Programming in the Many'', summer semester 2002, at the University
 Kiel.
 
-For the webpages of the course, see [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss02/pitm-slime/slime/][here]].
+For the webpages of the course, see [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss02/pitm-slime/slime/][here]]
 
 
 ** Structure
@@ -23,8 +23,6 @@ package contains the following files and subdirectories:
     - [[./review/]]            end-of-semester review, summary (including talk)
     - [[./web/]]               web-site material for coordination,
                            tracking the progress etc.
-    - [[./org/]]               internal information about members etc
-
     - [[./cd]]/                info's for the cd-rom
     - [[./src/]]               the Java-sources
     - [[./tex/]]               common LaTeX-macros 
