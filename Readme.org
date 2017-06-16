@@ -17,19 +17,19 @@ package contains the following files and subdirectories:
 
     - [[,/Readme.org]]:            this file
     - [[./Snapshots]]:         short description about major
-                         development steps
-    - sfcintro/          slides for an intro about sfc's
+                           development steps
+    - [[./sfcintro/]]          slides for an intro about sfc's
     - [[./requirements/]]      description of the task
-    - review/            end-of-semester review, summary (including talk)
-    - web/               web-site material for coordination,
-                         tracking the progress etc.
-    - org/               internal information about members etc
+    - [[./review/]]            end-of-semester review, summary (including talk)
+    - [[./web/]]               web-site material for coordination,
+                           tracking the progress etc.
+    - [[./org/]]               internal information about members etc
 
     - [[./cd]]/                info's for the cd-rom
     - [[./src/]]               the Java-sources
-    - tex/               common LaTeX-macros 
-    - lib/               external libraries (here the lex/yacc archives,
-	                 included for better coordination.
+    - [[./tex/]]               common LaTeX-macros 
+    - [[./lib/]]               external libraries (here the lex/yacc archives,
+	                  included for better coordination.
 
 
 ** Historical notes
