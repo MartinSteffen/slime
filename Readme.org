@@ -1,5 +1,3 @@
-
-
 ** Abstract
 The repository collects the /sources/ of the ``Slime'' project (Sequential
 Function Charts Modelling Environment), in the software programming lab
