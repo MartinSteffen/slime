@@ -2,6 +2,7 @@ clean:
 	\rm -rf toburn/*
 
 
+
 fetch: clean
 	scp -r swprakt@sokrates:/home/swprakt/cvsroot/Slime      toburn
 	mkdir  toburn/cvsroot
