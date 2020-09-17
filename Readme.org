@@ -4,7 +4,8 @@ Function Charts Modelling Environment), in the software programming lab
 course ``Programming in the Many'', summer semester 2002, at the University
 Kiel.
 
-For the webpages of the course, see [[http://heim.ifi.uio.no/msteffen/teaching/softtech/ss02/pitm-slime/slime/][here]]
+
+For the webpages of the course, see [[https://martinsteffen.github.io/teaching/softtech/ss02/pitm-slime/][here]], resp [[https://martinsteffen.github.io/teaching/softtech/ss02/pitm-slime/slime/][Slime project webpage]].
 
 
 ** Structure
