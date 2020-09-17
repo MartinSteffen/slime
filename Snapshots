@@ -1,7 +1,7 @@
 
-########################################################
+%%%########################################################
 ## $Id: Snapshots,v 1.15 2002-07-19 13:50:57 swprakt Exp $
-########################################################
+###########################################################
 
 This file contains, for quick reference, a list of the major development
 steps, called snapshots or baselines, as kept in cvs's symbolic tags.
@@ -51,11 +51,6 @@ the form snapshot<nr> as those are reserved for the global snapshots.
              Now, everything compiles, including parser.
 	     But the compilation is still separate one by one per
 	     subdirectory.
-	  
-	
-
-
-
 
 
  snapshot2:  3.7.2002
